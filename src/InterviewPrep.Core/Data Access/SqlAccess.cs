@@ -3,7 +3,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
-using Microsoft.Data.Entity;
 
 namespace InterviewPrep.Core.Data_Access
 {
