@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace InterviewPrep.Core.LinkedLists
+namespace InterviewPrep.Core.Lists.SingleLinkedList
 {
     public class SingleLinkedList<T>
     {

@@ -1,7 +1,8 @@
-﻿using InterviewPrep.Core.LinkedLists;
+﻿using InterviewPrep.Core.Lists;
+using InterviewPrep.Core.Lists.SingleLinkedList;
 using Xunit;
 
-namespace InterviewPrep.Tests
+namespace InterviewPrep.Tests.Lists
 {
     public class LinkedListTests
     {
