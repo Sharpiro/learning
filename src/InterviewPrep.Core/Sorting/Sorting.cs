@@ -14,14 +14,14 @@ namespace InterviewPrep.Core.Sorting
         {
             if (low < high)
             {
-                var pivot = Partition(list, low, high);
+                var pivot = PartitionEasy(list, low, high);
                 QuickSortEasy(list, low, pivot - 1);
                 QuickSortEasy(list, pivot + 1, high);
             }
             return list;
         }
 
-        private static int Partition(int[] list, int low, int high)
+        private static int PartitionEasy(int[] list, int low, int high)
         {
             var pivot = list[high];
             var globalIndex = low;
@@ -29,16 +29,19 @@ namespace InterviewPrep.Core.Sorting
             {
                 if (list[i] <= pivot)
                 {
-                    var temp = list[i];
-                    list[i] = list[globalIndex];
-                    list[globalIndex] = temp;
+                    Swap(ref list[i], ref list[globalIndex]);
                     globalIndex++;
                 }
             }
-            var temp2 = list[high];
-            list[high] = list[globalIndex];
-            list[globalIndex] = temp2;
+            Swap(ref list[high], ref list[globalIndex]);
             return globalIndex;
+        }
+
+        private static void Swap(ref int number1, ref int number2)
+        {
+            var temp = number1;
+            number1 = number2;
+            number2 = temp;
         }
     }
 }

@@ -21,10 +21,7 @@ namespace InterviewPrep.Core.Data_Access
         {
             using (var connection = new SqlConnection(connectionString))
             {
-                var command = new SqlCommand(sqlString, connection)
-                {
-                    CommandType = CommandType.Text
-                };
+                var command = new SqlCommand(sqlString, connection);
 
                 connection.Open();
                 var reader = command.ExecuteReader();
