@@ -4,34 +4,45 @@
     {
         private BstNode _root;
 
-        public void Add(int data)
-        {
-            var node = Insert(_root, data);
-            if (_root == null)
-                _root = node;
-            BalanceTree(node);
-        }
-
         private void BalanceTree(BstNode node)
         {
-            
+
         }
 
-        private BstNode Insert(BstNode root, int data)
+        public void Insert(int data)
         {
-            if (root == null)
+            _root = InsertRecursive(_root, data);
+        }
+
+        public void Delete(int data)
+        {
+            _root = InsertRecursive(_root, data);
+        }
+
+        private BstNode DeleteRecursive(BstNode currentNode, int data)
+        {
+            if (currentNode.Data == data)
             {
-                root = new BstNode { Data = data };
+
             }
-            else if (data <= root.Data)
+            return currentNode;
+        }
+
+        private BstNode InsertRecursive(BstNode currentNode, int data)
+        {
+            if (currentNode == null)
             {
-                root.Left = Insert(root.Left, data);
+                currentNode = new BstNode { Data = data };
             }
-            else if (data > root.Data)
+            else if (data <= currentNode.Data)
             {
-                root.Right = Insert(root.Right, data);
+                currentNode.Left = InsertRecursive(currentNode.Left, data);
             }
-            return root;
+            else if (data > currentNode.Data)
+            {
+                currentNode.Right = InsertRecursive(currentNode.Right, data);
+            }
+            return currentNode;
         }
     }
 }

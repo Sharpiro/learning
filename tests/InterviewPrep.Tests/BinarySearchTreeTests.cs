@@ -11,7 +11,7 @@ namespace InterviewPrep.Tests
             var tree = new BinarySearchTree();
             for (var i = 0; i < 10; i++)
             {
-                tree.Add(i);
+                tree.Insert(i);
             }
         }
     }
