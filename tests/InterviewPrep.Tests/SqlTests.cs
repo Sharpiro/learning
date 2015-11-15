@@ -14,6 +14,12 @@ namespace InterviewPrep.Tests
         }
 
         [Fact]
+        public void ExecuteDapperTest()
+        {
+            SqlAccess.ExecuteDapper(ConnectionString, "SELECT * FROM dbo.AspNetRoles");
+        }
+
+        [Fact]
         public void ExecuteSqlCommandTest()
         {
             SqlAccess.ExecuteSqlCommand(ConnectionString, "SELECT * FROM dbo.AspNetRoles");

@@ -3,6 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
+using Dapper;
 
 namespace InterviewPrep.Core.Data_Access
 {
@@ -14,6 +15,14 @@ namespace InterviewPrep.Core.Data_Access
             using (var context = new Context())
             {
                 var roles = context.Users.ToList();
+            }
+        }
+
+        public static void ExecuteDapper(string connectionString, string sqlString)
+        {
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var result = connection.Query<Role>(sqlString);
             }
         }
 
