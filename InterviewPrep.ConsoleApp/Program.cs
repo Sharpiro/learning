@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using InterviewPrep.DailyProgrammer;
 
 namespace InterviewPrep.ConsoleApp
@@ -7,8 +8,11 @@ namespace InterviewPrep.ConsoleApp
     {
         public static void Main()
         {
-            var cocoCounter = new CoconutCounter();
-            cocoCounter.CountCocounuts(5);
+            var path = $"{Directory.GetCurrentDirectory()}\\files\\wordsquaresdict.txt";
+            var helper = new WordSquaresHelper(path);
+            const string input = "4 eeeeddoonnnsssrv";
+            helper.Find(input);
+            Console.ReadLine();
         }
     }
 }

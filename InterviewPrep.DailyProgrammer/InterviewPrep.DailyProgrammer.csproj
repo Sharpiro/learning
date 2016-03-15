@@ -47,12 +47,26 @@
   <ItemGroup>
     <Compile Include="AtbashCipherer.cs" />
     <Compile Include="CoconutCounter.cs" />
+    <Compile Include="WordSquaresHelper.cs" />
+    <Content Include="files\wordsquaresdict.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="files\presidents.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Include="LightSwitcher.cs" />
     <Compile Include="Oblique.cs" />
+    <Compile Include="PresidentHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InterviewPrep.Core\InterviewPrep.Core.csproj">
+      <Project>{79463cce-2350-42fe-aa78-df0644de52a7}</Project>
+      <Name>InterviewPrep.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
