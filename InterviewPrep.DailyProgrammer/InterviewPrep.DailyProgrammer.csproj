@@ -47,6 +47,8 @@
   <ItemGroup>
     <Compile Include="AtbashCipherer.cs" />
     <Compile Include="CoconutCounter.cs" />
+    <Compile Include="GarageOpener.cs" />
+    <Compile Include="MagicSquares261.cs" />
     <Compile Include="WordSquaresHelper.cs" />
     <Content Include="files\wordsquaresdict.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

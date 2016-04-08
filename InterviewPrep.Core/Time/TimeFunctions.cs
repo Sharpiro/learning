@@ -29,7 +29,7 @@ namespace InterviewPrep.Core.Time
             var split = departureTimeString.Split(':');
             if (split.All(s => s != null) && split.Length != 2)
                 throw new InvalidDataException("the time string must only contain hours, minutes, " +
-                                               "and am/pm in the format '9:20pm' or '21:20'");
+                    "and am/pm in the format '9:20pm' or '21:20'");
             int hours;
             var isNumber = int.TryParse(split.FirstOrDefault(), out hours);
             if (!isNumber)
@@ -43,7 +43,7 @@ namespace InterviewPrep.Core.Time
             var newMinutes = minutes - now.Minute;
             if (newMinutes < 0)
             {
-                newMinutes *= -1;
+                newMinutes += 60;
                 newHours -= 1;
             }
             return $"{newHours}:{newMinutes}";

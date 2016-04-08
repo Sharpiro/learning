@@ -7,86 +7,117 @@ namespace InterviewPrep.DailyProgrammer
 {
     public class WordSquaresHelper
     {
-        private readonly string _dictionaryPath;
-        private IEnumerable<string> _dictionary;
+        private IReadOnlyCollection<string> _dictionary;
         private int _size;
         private string _data;
         private IList<string> _matches;
-        private IList<string> _newMatches;
+        private List<string> _wordSquare;
 
         public WordSquaresHelper(string dictionaryPath)
         {
-            _dictionaryPath = dictionaryPath;
+            _dictionary = File.ReadAllLines(dictionaryPath);
             _matches = new List<string>();
-            _newMatches = new List<string>();
+            _wordSquare = new List<string>();
         }
 
         public void Find(string input)
         {
-            HandleInput(input);
-            _dictionary = File.ReadAllLines(_dictionaryPath).Where(d => d.Length == _size).ToList();
-            GetWordsInData();
+            _data = input;
+            _size = (int)Math.Sqrt(_data.Length);
+            _dictionary = _dictionary.Where(d => d.Length == _size).ToList();
+            _matches = _dictionary.Where(CheckWord).ToList();
+            _matches.Remove("odes");
+            //_matches.Remove("odor");
+            //_matches = new List<string> { "rose", "oven", "send", "ends" };
             //CheckSquare();
-            //var temp = _matches.Aggregate(string.Empty, (current, match) => $"{current}\n{match}");
+            //foreach (var word in _matches)
+            //{
+            //    if (_wordSquare.Count == 4)
+            //        break;
+            //}
             const string word = "rose";
+            _wordSquare = new List<string> { word };
             DoRecursion(word, 0);
             Clear();
         }
 
-        private void DoRecursion(string word, int position)
+        //word1 = rose
+        //  word2[0] =  word1[1];
+        //	    word3[1] = word2[2]
+        //		    word4[2] = word3[3]
+        //  word3[0] = word1[2]
+        //	    word4[2] = word3[3]
+        //  word4[0] =  word1[3]
+        private bool DoRecursion(string word, int position)
         {
-            foreach (var character in word)
-            {
-                foreach (var word2 in _matches)
-                {
-                    if (word2[position] == character)
-                    {
-                        DoRecursion(word2, position + 1);
-                    }
-                }
-            }
-        }
-
-        private void CheckSquare()
-        {
-            foreach (var word in _matches)
+            if (position >= _size)
+                throw new InvalidDataException("the position must be less than size");
+            Console.WriteLine(position);
+            var shouldContinue = false;
+            foreach (var nextWord in _matches)
             {
                 var counter = 0;
-                var addWord = false;
-                foreach (var character in word)
+                for (var i = 0; i < _wordSquare.Count; i++)
                 {
-                    foreach (var x in _matches)
+                    if (_wordSquare[i][i + 1] == nextWord[position])
                     {
-                        if (character == x.FirstOrDefault())
+                        counter++;
+                        if (counter == _wordSquare.Count)
                         {
-                            counter++;
-                            if (counter == _size)
-                            {
-                                addWord = true;
-                            }
-                            break;
+                            if (position + 1 == _size - 1)
+                                _wordSquare.Add(nextWord);
+                            return true;
                         }
                     }
-                    if (addWord)
+                    else
                     {
-                        _newMatches.Add(word);
-                        addWord = false;
+                        shouldContinue = true;
+                        break;
                     }
                 }
+                if (shouldContinue)
+                {
+                    shouldContinue = false;
+                    continue;
+                }
+
+                _wordSquare.Add(nextWord);
+                var isMatch = DoRecursion(nextWord, position + 1);
+                if (isMatch) // && temp + position == _size - 1)
+                    break;
+                _wordSquare.RemoveAt(position + 1);
             }
+            return false;
         }
 
-        private void GetWordsInData()
-        {
-            foreach (var word in _dictionary)
-            {
-                var isMatch = CheckWord(word);
-                if (isMatch)
-                {
-                    _matches.Add(word);
-                }
-            }
-        }
+        //private void CheckSquare()
+        //{
+        //    foreach (var word in _matches)
+        //    {
+        //        var counter = 0;
+        //        var addWord = false;
+        //        foreach (var character in word)
+        //        {
+        //            foreach (var x in _matches)
+        //            {
+        //                if (character == x.FirstOrDefault())
+        //                {
+        //                    counter++;
+        //                    if (counter == _size)
+        //                    {
+        //                        addWord = true;
+        //                    }
+        //                    break;
+        //                }
+        //            }
+        //            if (addWord)
+        //            {
+        //                _newMatches.Add(word);
+        //                addWord = false;
+        //            }
+        //        }
+        //    }
+        //}
 
         private bool CheckWord(string word)
         {
@@ -103,23 +134,11 @@ namespace InterviewPrep.DailyProgrammer
             return true;
         }
 
-        private void HandleInput(string input)
-        {
-            var split = input.Split(' ');
-            if (split.Length != 2)
-                throw new ArgumentException("the input must contain 2 values", nameof(split));
-            int.TryParse(split.FirstOrDefault(), out _size);
-            if (_size <= 0)
-                throw new ArgumentOutOfRangeException(nameof(_size), "other");
-            _data = split.LastOrDefault();
-            if (_data != null && _data.Length != (int)Math.Pow(_size, 2))
-                throw new ArgumentException("the data must be equal to Math.Pow(n, 2)", nameof(_data));
-        }
-
         private void Clear()
         {
             _size = 0;
             _data = null;
+            _matches = new List<string>();
         }
     }
 }
