@@ -9,9 +9,8 @@ namespace InterviewPrep.Core
     {
         public event Getter MyEvent;
 
-        public void CallEvent()
+        private void OnMyEvent()
         {
-            OnMyEvent();
             MyEvent?.Invoke();
         }
 
@@ -41,11 +40,6 @@ namespace InterviewPrep.Core
         private static void DoNothingActionDelegate()
         {
             //Do nothing
-        }
-
-        protected virtual void OnMyEvent()
-        {
-            MyEvent?.Invoke();
         }
     }
 }

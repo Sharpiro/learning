@@ -5,6 +5,10 @@ using System.Linq;
 
 namespace InterviewPrep.DailyProgrammer
 {
+    //var path = $"{Directory.GetCurrentDirectory()}\\files\\wordsquaresdict.txt";
+    //var helper = new WordSquaresHelper(path);
+    //const string input = "eeeeddoonnnsssrv";
+    //helper.Find(input);
     public class WordSquaresHelper
     {
         private IReadOnlyCollection<string> _dictionary;
