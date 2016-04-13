@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CarContext.cs" />
-    <Compile Include="Entities\Manufacturer.cs" />
+    <Compile Include="Entities\Make.cs" />
     <Compile Include="Entities\Model.cs" />
     <Compile Include="GenericEventHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

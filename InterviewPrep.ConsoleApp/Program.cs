@@ -1,5 +1,7 @@
 ﻿using System;
 using InterviewPrep.Generics;
+using InterviewPrep.Generics.Entities;
+using System.Linq;
 
 namespace InterviewPrep.ConsoleApp
 {
@@ -7,16 +9,22 @@ namespace InterviewPrep.ConsoleApp
     {
         public static void Main()
         {
-            var helper = new GenericEventHelper<double>();
-            helper.ThingHappened += ThingHappened;
-            helper.SayHello();
+            var context = new CarContext("123");
+            using (var makeRepo = new CarRepository<Make>(context))
+            {
+                using (var modelRepo = new CarRepository<Model>(context))
+                {
+                    var make1 = new Make { Name = "Ford" };
+                    var model1 = new Model { Name = "Mustang" };
+                    makeRepo.Insert(make1);
+                    modelRepo.Insert(model1);
+                    makeRepo.Commit();
+                    modelRepo.Commit();
+                    var makes = makeRepo.GetAll().ToList();
+                    var models = modelRepo.GetAll().ToList();
+                }
+            }
             Console.ReadLine();
-        }
-
-        private static void ThingHappened(object sender, CustomEventArgs<int> e)
-        {
-            Console.WriteLine("Thing Happened in program.cs");
-            Console.WriteLine($"prop1: {e.Property1}, prop2: {e.Property2}");
         }
     }
 }
