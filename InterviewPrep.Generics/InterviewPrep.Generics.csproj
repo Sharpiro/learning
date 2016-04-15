@@ -49,11 +49,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CarContext.cs" />
+    <Compile Include="RepositoryPattern\CarContext.cs" />
     <Compile Include="Entities\Make.cs" />
     <Compile Include="Entities\Model.cs" />
     <Compile Include="GenericEventHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryPattern\CarRepository.cs" />
+    <Compile Include="RepositoryUser.cs" />
+    <Compile Include="UnitOfWorkPattern\CarRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
