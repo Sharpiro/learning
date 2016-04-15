@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using InterviewPrep.OdeToFoodCore.Models;
+using Microsoft.AspNet.Mvc;
 
 namespace InterviewPrep.OdeToFoodCore.Controllers
 {
@@ -11,9 +12,18 @@ namespace InterviewPrep.OdeToFoodCore.Controllers
             _greeter = greeter;
         }
 
-        public string Index()
+        public IActionResult Index()
         {
-            return _greeter.GetGreeting();
+            var restaurant = new Restaurant { Id = 1, Name = "Sabatino's" };
+            return View(restaurant);
+            //return new ObjectResult(restaurant);
+            //return Content(_greeter.GetGreeting());
+        }
+
+        public string Basic()
+        {
+            const string basicResponse = "basic response string";
+            return basicResponse;
         }
     }
 }
