@@ -1,5 +1,7 @@
-﻿using InterviewPrep.Generics;
-using System;
+﻿using System;
+using InterviewPrep.Generics;
+using InterviewPrep.Generics.Entities;
+using System.Linq;
 
 namespace InterviewPrep.ConsoleApp
 {
@@ -7,8 +9,8 @@ namespace InterviewPrep.ConsoleApp
     {
         public static void Main()
         {
-            var user = new RepositoryUser();
-            user.UseRepositoryPattern();
+            var helper = new ReflectionHelper();
+            helper.Do();
             Console.ReadLine();
         }
     }
