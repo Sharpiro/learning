@@ -1,12 +1,19 @@
-﻿@model InterviewPrep.OdeToFoodCore.Models.Restaurant
+﻿@model InterviewPrep.OdeToFoodCore.ViewModels.HomePageViewModel
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Home</title>
 </head>
 <body>
-    <h1>Welcome!</h1>
-    <div>
-        @Model.Name
-    </div>
+    <h1>@Model.CurrentGreeting</h1>
+    <table>
+        @foreach (var restaurant in Model.Restaurants)
+            {
+            <tr>
+                <td>@restaurant.Id</td>
+                <td>@Html.ActionLink(restaurant.Name, "Details", new { id = restaurant.Id })</td>
+            </tr>
+        }
+    </table>
+    @Html.ActionLink("Create New", "Create")
 </body>
 </html>

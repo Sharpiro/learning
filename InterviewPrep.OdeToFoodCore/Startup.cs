@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Builder;
+﻿using InterviewPrep.OdeToFoodCore.Services;
+using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +21,7 @@ namespace InterviewPrep.OdeToFoodCore
         {
             services.AddSingleton(provider => Configuration);
             services.AddSingleton<IGreeter, ConfigurationGreeter>();
+            services.AddScoped<IRestaurantRepository, InMemoryRestaurantRepository>();
             services.AddMvc();
         }
 
