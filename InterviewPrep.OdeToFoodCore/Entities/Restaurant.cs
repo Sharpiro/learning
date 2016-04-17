@@ -1,6 +1,11 @@
 ﻿namespace InterviewPrep.OdeToFoodCore.Entities
 {
-    public class Restaurant
+    public interface IBaseEntity
+    {
+        int Id { get; set; }
+    }
+
+    public class Restaurant : IBaseEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

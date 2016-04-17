@@ -1,5 +1,5 @@
-﻿using InterviewPrep.OdeToFoodCore.Entities;
-using InterviewPrep.OdeToFoodCore.Services;
+﻿using InterviewPrep.OdeToFoodCore.DataAccess;
+using InterviewPrep.OdeToFoodCore.Entities;
 using InterviewPrep.OdeToFoodCore.ViewModels;
 using Microsoft.AspNet.Mvc;
 using System;
@@ -10,9 +10,9 @@ namespace InterviewPrep.OdeToFoodCore.Controllers
     public class HomeController : Controller
     {
         private readonly IGreeter _greeter;
-        private readonly IRestaurantRepository _restaurantRepository;
+        private readonly IFoodRepository<Restaurant> _restaurantRepository;
 
-        public HomeController(IGreeter greeter, IRestaurantRepository restaurantRepository)
+        public HomeController(IGreeter greeter, IFoodRepository<Restaurant> restaurantRepository)
         {
             if (greeter == null)
                 throw new ArgumentNullException(nameof(greeter));
@@ -40,9 +40,11 @@ namespace InterviewPrep.OdeToFoodCore.Controllers
         [HttpPost]
         public IActionResult Create(RestaurantEditViewModel model)
         {
+            if (!ModelState.IsValid)
+                return View();
             var restaurant = new Restaurant { Name = model.Name, Cuisine = model.Cuisine };
             _restaurantRepository.Add(restaurant);
-            return View("Details", restaurant);
+            return RedirectToAction("Details", new { id = restaurant.Id });
         }
 
         public IActionResult Details(int id)

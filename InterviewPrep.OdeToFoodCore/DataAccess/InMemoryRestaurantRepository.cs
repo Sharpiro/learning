@@ -2,17 +2,11 @@
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using InterviewPrep.OdeToFoodCore.DataAccess;
 
 namespace InterviewPrep.OdeToFoodCore.Services
 {
-    public interface IRestaurantRepository
-    {
-        IEnumerable<Restaurant> GetAll();
-        Restaurant Get(int id);
-        void Add(Restaurant restaurant);
-    }
-
-    public class InMemoryRestaurantRepository : IRestaurantRepository
+    public class InMemoryRestaurantRepository : IFoodRepository<Restaurant>
     {
         private IList<Restaurant> _restaurants;
 
@@ -30,6 +24,16 @@ namespace InterviewPrep.OdeToFoodCore.Services
         {
             restaurant.Id = _restaurants.Max(r => r.Id) + 1;
             _restaurants.Add(restaurant);
+        }
+
+        public void Commit()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            _restaurants = null;
         }
 
         public Restaurant Get(int id)

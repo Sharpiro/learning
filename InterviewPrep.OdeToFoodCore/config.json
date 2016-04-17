@@ -1,3 +1,6 @@
 ﻿{
-    "greeting": "a configurable data item"
+  "greeting": "a configurable data item",
+  "database": {
+    "connection": "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=OdeToFood"
+  }
 }
