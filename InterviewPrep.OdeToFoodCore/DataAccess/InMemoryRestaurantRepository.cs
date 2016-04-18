@@ -1,12 +1,11 @@
-﻿using InterviewPrep.OdeToFoodCore.Entities;
+﻿using System;
 using System.Collections.Generic;
-using System;
 using System.Linq;
-using InterviewPrep.OdeToFoodCore.DataAccess;
+using InterviewPrep.OdeToFoodCore.Entities;
 
-namespace InterviewPrep.OdeToFoodCore.Services
+namespace InterviewPrep.OdeToFoodCore.DataAccess
 {
-    public class InMemoryRestaurantRepository : IFoodRepository<Restaurant>
+    public class InMemoryRestaurantRepository : IRepository<Restaurant>
     {
         private IList<Restaurant> _restaurants;
 
@@ -20,10 +19,10 @@ namespace InterviewPrep.OdeToFoodCore.Services
             };
         }
 
-        public void Add(Restaurant restaurant)
+        public void Add(Restaurant entity)
         {
-            restaurant.Id = _restaurants.Max(r => r.Id) + 1;
-            _restaurants.Add(restaurant);
+            entity.Id = _restaurants.Max(r => r.Id) + 1;
+            _restaurants.Add(entity);
         }
 
         public void Commit()

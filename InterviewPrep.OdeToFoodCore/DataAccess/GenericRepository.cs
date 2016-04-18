@@ -6,12 +6,12 @@ using System;
 
 namespace InterviewPrep.OdeToFoodCore.DataAccess
 {
-    public class SqlFoodRepo<T> : IFoodRepository<T> where T : class, IBaseEntity
+    public class GenericRepository<T> : IRepository<T> where T : class, IBaseEntity
     {
         private readonly DbContext _context;
         private readonly DbSet<T> _set;
 
-        public SqlFoodRepo(DbContext context)
+        public GenericRepository(DbContext context)
         {
             if (context == null)
                 throw new ArgumentNullException(nameof(context));
@@ -19,9 +19,9 @@ namespace InterviewPrep.OdeToFoodCore.DataAccess
             _set = _context.Set<T>();
         }
 
-        public void Add(T restaurant)
+        public void Add(T entity)
         {
-            _set.Add(restaurant);
+            _set.Add(entity);
         }
 
         public void Commit()
