@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace InterviewPrep.OdeToFoodCore.DataAccess
 {
-    public interface IFoodRepository<T> : IDisposable
+    public interface IRepository<T> : IDisposable
     {
         IEnumerable<T> GetAll();
         T Get(int id);
-        void Add(T restaurant);
+        void Add(T entity);
         void Commit();
     }
 

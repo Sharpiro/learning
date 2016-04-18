@@ -10,9 +10,9 @@ namespace InterviewPrep.OdeToFoodCore.Controllers
     public class HomeController : Controller
     {
         private readonly IGreeter _greeter;
-        private readonly IFoodRepository<Restaurant> _restaurantRepository;
+        private readonly IRepository<Restaurant> _restaurantRepository;
 
-        public HomeController(IGreeter greeter, IFoodRepository<Restaurant> restaurantRepository)
+        public HomeController(IGreeter greeter, IRepository<Restaurant> restaurantRepository)
         {
             if (greeter == null)
                 throw new ArgumentNullException(nameof(greeter));
@@ -44,6 +44,7 @@ namespace InterviewPrep.OdeToFoodCore.Controllers
                 return View();
             var restaurant = new Restaurant { Name = model.Name, Cuisine = model.Cuisine };
             _restaurantRepository.Add(restaurant);
+            _restaurantRepository.Commit();
             return RedirectToAction("Details", new { id = restaurant.Id });
         }
 
