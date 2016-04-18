@@ -1,19 +1,19 @@
 ﻿@model InterviewPrep.OdeToFoodCore.ViewModels.HomePageViewModel
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>Home</title>
-</head>
-<body>
-    <h1>@Model.CurrentGreeting</h1>
-    <table>
-        @foreach (var restaurant in Model.Restaurants)
+@{
+    ViewBag.Title = "Home";
+}
+
+<table>
+    @foreach (var restaurant in Model.Restaurants)
             {
-            <tr>
-                <td>@Html.ActionLink(restaurant.Id.ToString(), "Details", new { id = restaurant.Id })</td>
-                <td>@restaurant.Name</td>
-            </tr>
-        }
-    </table>
-    @Html.ActionLink("Create New", "Create")
-</body>
-</html>
+        <tr>
+            <td>@Html.ActionLink(restaurant.Id.ToString(), "Details", new { id = restaurant.Id })</td>
+            <td>@restaurant.Name</td>
+        </tr>
+    }
+</table>
+@Html.ActionLink("Create New", "Create")
+
+@section footer{
+    <div>@Model.CurrentGreeting</div>
+}
