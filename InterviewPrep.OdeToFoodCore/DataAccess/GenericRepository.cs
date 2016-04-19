@@ -24,10 +24,15 @@ namespace InterviewPrep.OdeToFoodCore.DataAccess
             _set.Add(entity);
         }
 
-        public void Commit()
+        public int Commit()
         {
-            _context.SaveChanges();
+            return _context.SaveChanges();
         }
+
+        //public void Update(T restaurant)
+        //{
+        //    _set.Update(restaurant);
+        //}
 
         public T Get(int id)
         {

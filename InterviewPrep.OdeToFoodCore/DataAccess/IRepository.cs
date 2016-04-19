@@ -8,7 +8,8 @@ namespace InterviewPrep.OdeToFoodCore.DataAccess
         IEnumerable<T> GetAll();
         T Get(int id);
         void Add(T entity);
-        void Commit();
+        int Commit();
+        //void Update(T restaurant);
     }
 
     //public interface IInMemoryRepository<T> : IFoodRepository<T>

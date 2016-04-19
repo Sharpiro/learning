@@ -5,14 +5,20 @@
 
 <table>
     @foreach (var restaurant in Model.Restaurants)
-            {
+    {
         <tr>
-            <td>@Html.ActionLink(restaurant.Id.ToString(), "Details", new { id = restaurant.Id })</td>
             <td>@restaurant.Name</td>
+            <td>@Html.ActionLink(restaurant.Id.ToString(), "Details", new { id = restaurant.Id })</td>
+            <td><a asp-action="Details" asp-route-id="@restaurant.Id">Details</a></td>
+            <td><a asp-action="Edit" asp-route-id="@restaurant.Id">Edit</a></td>
         </tr>
     }
 </table>
+
 @Html.ActionLink("Create New", "Create")
+<a asp-action="Create">Create New</a>
+
+
 
 @section footer{
     <div>@Model.CurrentGreeting</div>
