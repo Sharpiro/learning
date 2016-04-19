@@ -56,6 +56,32 @@ namespace InterviewPrep.OdeToFoodCore.Controllers
             return View(restaurant);
         }
 
+        public IActionResult Edit(int id)
+        {
+            var model = _restaurantRepository.Get(id);
+            if (model == null)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id, RestaurantEditViewModel inputModel)
+        {
+            using (_restaurantRepository)
+            {
+                var restaurant = _restaurantRepository.Get(id);
+                if (restaurant == null || !ModelState.IsValid)
+                    return View(restaurant);
+                restaurant.Name = inputModel.Name;
+                restaurant.Cuisine = inputModel.Cuisine;
+                //_restaurantRepository.Update(restaurant);
+                _restaurantRepository.Commit();
+                return RedirectToAction("Details", new { id = restaurant.Id });
+            }
+        }
+
         public IEnumerable<Restaurant> GetAll()
         {
             var restaurants = _restaurantRepository.GetAll();

@@ -25,10 +25,15 @@ namespace InterviewPrep.OdeToFoodCore.DataAccess
             _restaurants.Add(entity);
         }
 
-        public void Commit()
+        public int Commit()
         {
-            throw new NotImplementedException();
+            return 0;
         }
+
+        //public void Update(Restaurant restaurant)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public void Dispose()
         {
