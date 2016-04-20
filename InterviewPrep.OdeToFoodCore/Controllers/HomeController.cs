@@ -1,32 +1,30 @@
 ﻿using InterviewPrep.OdeToFoodCore.DataAccess;
 using InterviewPrep.OdeToFoodCore.Entities;
 using InterviewPrep.OdeToFoodCore.ViewModels;
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 using System;
 using System.Collections.Generic;
 
 namespace InterviewPrep.OdeToFoodCore.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
-        private readonly IGreeter _greeter;
         private readonly IRepository<Restaurant> _restaurantRepository;
 
-        public HomeController(IGreeter greeter, IRepository<Restaurant> restaurantRepository)
+        public HomeController(IRepository<Restaurant> restaurantRepository)
         {
-            if (greeter == null)
-                throw new ArgumentNullException(nameof(greeter));
             if (restaurantRepository == null)
                 throw new ArgumentNullException(nameof(restaurantRepository));
-            _greeter = greeter;
             _restaurantRepository = restaurantRepository;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var model = new HomePageViewModel();
             model.Restaurants = _restaurantRepository.GetAll();
-            model.CurrentGreeting = _greeter.GetGreeting();
             return View(model);
             //return new ObjectResult(restaurant);
             //return Content(_greeter.GetGreeting());

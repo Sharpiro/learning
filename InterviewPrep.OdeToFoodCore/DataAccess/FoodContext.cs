@@ -1,19 +1,24 @@
 ﻿using System;
 using InterviewPrep.OdeToFoodCore.Entities;
 using Microsoft.Data.Entity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace InterviewPrep.OdeToFoodCore.DataAccess
 {
-    public class FoodContext : DbContext
+    public class FoodContext : IdentityDbContext<User>
     {
         private readonly string _connectionString;
         private readonly ConnectionType _type;
         public DbSet<Restaurant> Restaurants { get; set; }
 
+        public FoodContext()
+        {
+        }
+
         public FoodContext(string connectionString, ConnectionType type)
         {
             if (string.IsNullOrEmpty(connectionString))
-                throw new ArgumentException(null, nameof(connectionString));
+                throw new ArgumentException("test error", nameof(connectionString));
             if (type == ConnectionType.None)
                 throw new ArgumentException("Must provide valid connection type", nameof(type));
             _connectionString = connectionString;

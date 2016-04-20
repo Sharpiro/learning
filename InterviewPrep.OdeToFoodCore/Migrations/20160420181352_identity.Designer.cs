@@ -8,9 +8,10 @@ using InterviewPrep.OdeToFoodCore.DataAccess;
 namespace InterviewPrep.OdeToFoodCore.Migrations
 {
     [DbContext(typeof(FoodContext))]
-    partial class FoodContextModelSnapshot : ModelSnapshot
+    [Migration("20160420181352_identity")]
+    partial class identity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")

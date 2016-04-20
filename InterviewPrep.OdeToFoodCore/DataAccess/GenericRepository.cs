@@ -3,6 +3,7 @@ using System.Linq;
 using InterviewPrep.OdeToFoodCore.Entities;
 using System.Collections.Generic;
 using System;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace InterviewPrep.OdeToFoodCore.DataAccess
 {

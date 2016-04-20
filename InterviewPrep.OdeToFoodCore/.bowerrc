@@ -1,5 +1,7 @@
 {
-	"directory": "wwwroot/lib",
-	"proxy":"http://proxy.wellsfargo.com:8080",
-	"https-proxy":"http://proxy.wellsfargo.com:8080"
+  "directory": "wwwroot/lib",
+  "naada": {
+    "proxy": "http://proxy.wellsfargo.com:8080",
+    "https-proxy": "http://proxy.wellsfargo.com:8080"
+  }
 }
