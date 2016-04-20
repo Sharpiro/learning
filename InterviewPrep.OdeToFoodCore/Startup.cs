@@ -1,6 +1,8 @@
 ﻿using InterviewPrep.OdeToFoodCore.DataAccess;
+using InterviewPrep.OdeToFoodCore.Entities;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Data.Entity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,14 +24,17 @@ namespace InterviewPrep.OdeToFoodCore
         {
             var connectionString = Configuration["database:connection"];
             services.AddMvc();
-            //services.AddEntityFramework()
-            //    .AddSqlServer()
-            //    .AddDbContext<FoodContext>(options => options.UseSqlServer(connectionString));
+            services.AddEntityFramework()
+                .AddSqlServer()
+                .AddDbContext<FoodContext>(options => options.UseSqlServer(connectionString));
             services.AddTransient<DbContext>(provider => new FoodContext(connectionString, ConnectionType.Sql));
             //services.AddTransient<DbContext, FoodContext>();
             services.AddSingleton(provider => Configuration);
             services.AddSingleton<IGreeter, ConfigurationGreeter>();
             services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
+
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<FoodContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +45,8 @@ namespace InterviewPrep.OdeToFoodCore
                 app.UseDeveloperExceptionPage();
 
             app.UseFileServer();
+
+            app.UseIdentity();
             app.UseMvc(routeBuilder => routeBuilder.MapRoute("default", "{controller=Home}/{action=Index}/{id?}"));
         }
 

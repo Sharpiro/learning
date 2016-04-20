@@ -1,0 +1,20 @@
+﻿@model RegisterViewModel
+@{
+    ViewBag.Title = "Login";
+}
+<h1>Login</h1>
+@using (Html.BeginForm())
+{
+    <div>
+        @Html.LabelFor(m => m.UserName)
+        @Html.EditorFor(m => m.UserName)
+    </div>
+    <div>
+        @Html.LabelFor(m => m.Password)
+        @Html.EditorFor(m => m.Password)
+    </div>
+    <div>
+        <input type="submit" value="Login" />
+        @Html.ValidationSummary()
+    </div>
+}
