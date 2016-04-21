@@ -6,6 +6,9 @@
         "angular": "*",
         "angular-ui-router": "*",
         "angular-ui-bootstrap": "*",
-        "toastr": "*"
+        "toastr": "*",
+        "bootstrap": "*",
+        "jquery-validation": "*",
+        "jquery-validation-unobtrusive": "*"
     }
 }

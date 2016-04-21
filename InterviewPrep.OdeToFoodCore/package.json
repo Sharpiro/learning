@@ -3,7 +3,11 @@
     "name": "test",
     "private": true,
     "devDependencies": {
+
+    },
+    "dependencies": {
         "bower": "1.7.9",
-        "express": "4.13.4"
+        "express": "4.13.4",
+        "bootstrap": "^3.3.6"
     }
 }
