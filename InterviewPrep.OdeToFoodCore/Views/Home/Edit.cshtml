@@ -9,7 +9,8 @@
 <form asp-action="Edit" method="post">
     <div>
         <label asp-for="Name"></label>
-        <input asp-for="Name" />
+        @*<input asp-for="Name"/>*@
+        @Html.EditorFor(m => m.Name)
         @Html.DropDownListFor(m => m.Cuisine, Html.GetEnumSelectList<CuisineType>())
     </div>
 

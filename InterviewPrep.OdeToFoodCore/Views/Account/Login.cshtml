@@ -1,9 +1,11 @@
-﻿@model RegisterViewModel
+﻿@using Microsoft.AspNet.Mvc.Rendering
+@model LoginViewModel
 @{
     ViewBag.Title = "Login";
 }
 <h1>Login</h1>
-@using (Html.BeginForm())
+
+@using (Html.BeginForm(new { ReturnUrl = @Model.ReturnUrl }))
 {
     <div>
         @Html.LabelFor(m => m.UserName)
