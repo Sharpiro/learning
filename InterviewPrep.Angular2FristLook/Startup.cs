@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
+using Microsoft.AspNet.StaticFiles;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 
@@ -17,9 +18,17 @@ namespace InterviewPrep.Angular2FristLook
         {
             app.UseIISPlatformHandler();
 
+            app.UseRequestMiddleware();
+
             app.UseNodeModules(env);
 
+            //var options = new DefaultFilesOptions();
+            //options.DefaultFileNames.Clear();
+            //options.DefaultFileNames.Add("index.html");
+            //app.UseDefaultFiles(options);
+            //app.UseStaticFiles();
             app.UseFileServer();
+
         }
 
         // Entry point for the application.
