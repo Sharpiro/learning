@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.FileProviders;
+﻿using InterviewPrep.Angular2FristLook.CustomMiddleware;
+using Microsoft.AspNet.FileProviders;
 using Microsoft.AspNet.StaticFiles;
 using Microsoft.Extensions.PlatformAbstractions;
 
@@ -11,6 +12,12 @@ namespace Microsoft.AspNet.Builder
         {
             var options = new StaticFileOptions { FileProvider = new PhysicalFileProvider(env.ApplicationBasePath) };
             app.UseStaticFiles(options);
+            return app;
+        }
+
+        public static IApplicationBuilder UseRequestMiddleware(this IApplicationBuilder app)
+        {
+            app.UseMiddleware<RedirectMiddleware>();
             return app;
         }
     }
