@@ -1,4 +1,4 @@
-﻿@model Restaurant
+﻿@model RestaurantEditViewModel
 
 @{
     ViewBag.Title = $"Edit {Model.Name}";
@@ -9,15 +9,16 @@
 <form asp-action="Edit" method="post">
     <div>
         <label asp-for="Name"></label>
-        @*<input asp-for="Name"/>*@
-        @Html.EditorFor(m => m.Name)
-        @Html.DropDownListFor(m => m.Cuisine, Html.GetEnumSelectList<CuisineType>())
+        <input asp-for="Name"/>
+        <span asp-validation-for="Name"></span>
+        @*@Html.EditorFor(m => m.Name)*@
     </div>
 
     <div>
-        <span asp-validation-for="Name"></span>
+        @Html.DropDownListFor(m => m.Cuisine, Html.GetEnumSelectList<CuisineType>())
         <span asp-validation-for="Cuisine"></span>
     </div>
+
     <div>
         <input type="submit" value="Save" />
     </div>
