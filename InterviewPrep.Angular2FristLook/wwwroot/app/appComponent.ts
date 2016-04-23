@@ -2,11 +2,12 @@
 import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
 import {VehicleService} from "./shared/vehicleService"
 import {DashboardComponent} from "./dashboard/dashboardComponent"
+import { HTTP_PROVIDERS } from 'angular2/http';
 
 @Component({
     selector: "my-app",
     directives: [ROUTER_DIRECTIVES],
-    providers: [VehicleService, ROUTER_PROVIDERS],
+    providers: [VehicleService, ROUTER_PROVIDERS, HTTP_PROVIDERS],
     template: "<router-outlet></router-outlet>"
 })
 @RouteConfig([
@@ -14,5 +15,4 @@ import {DashboardComponent} from "./dashboard/dashboardComponent"
 ])
 export class AppComponent
 {
-
 }
