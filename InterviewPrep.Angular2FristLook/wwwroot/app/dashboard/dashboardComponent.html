@@ -1,4 +1,6 @@
 ﻿<h1>Angular 2 First Look</h1>
-<div *ngFor="#vehicle of vehicles">
+<div *ngFor="#vehicle of vehicles" (click)="select(vehicle)" class="list" [class.selected]="vehicle === selectedVehicle">
     {{vehicle.name}}
 </div>
+
+<nested *ngIf="selectedVehicle" [vehicle]="selectedVehicle"></nested>

@@ -1,0 +1,7 @@
+﻿.list {
+}
+
+    .list.selected {
+        background-color: #ccc;
+        width: 250px;
+    }

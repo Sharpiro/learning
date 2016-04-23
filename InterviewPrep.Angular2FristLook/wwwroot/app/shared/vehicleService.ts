@@ -1,15 +1,20 @@
-﻿import {Injectable} from 'angular2/core';
+﻿import {Inject, Injectable} from 'angular2/core';
+import { Http, Response } from 'angular2/http';
+import 'rxjs/Rx'; // load the full rxjs
+import {Observable} from "rxjs/Rx" // load the full rxjs
 
 @Injectable()
 export class VehicleService
 {
-    public getVehicles(): Array<IBaseData>
+    constructor(private httpService: Http)
     {
-        const data: Array<IBaseData> = [
-            { id: 1, name: "X-Wing Fighter" },
-            { id: 2, name: "Tie Fighter" },
-            { id: 3, name: "Y-Wing Fighter" }
-        ];
-        return data;
+
+    }
+
+    public getVehicles(): Observable<any>
+    {
+        var promise = this.httpService.get("/content/json/vehicles.json")
+            .map((response: Response) => response.json().data);
+        return promise;
     }
 }
