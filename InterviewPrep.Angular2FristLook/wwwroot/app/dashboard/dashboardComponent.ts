@@ -1,4 +1,4 @@
-﻿import {Component} from "angular2/core";
+﻿import {Component, Output, EventEmitter} from "angular2/core";
 import {VehicleService} from "../shared/vehicleService"
 import {NestedComponent} from "../shared/nestedComponent"
 
@@ -12,6 +12,7 @@ export class DashboardComponent
 {
     public vehicles: Array<IBaseData>;
     public selectedVehicle: IBaseData;
+    @Output() changed = new EventEmitter<IBaseData>();
 
     constructor(private dataService: VehicleService)
     {
@@ -21,7 +22,7 @@ export class DashboardComponent
     public select(vehicle: IBaseData): void
     {
         this.selectedVehicle = vehicle;
-        console.log("vehicle selected");
+        this.changed.emit(this.selectedVehicle);
     }
 
     public compare(item1: IBaseData, item2: IBaseData): boolean
