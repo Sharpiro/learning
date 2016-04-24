@@ -8,7 +8,7 @@ import { HTTP_PROVIDERS } from 'angular2/http';
 
 @Component({
     selector: "my-app",
-    directives: [ROUTER_DIRECTIVES],
+    directives: [ROUTER_DIRECTIVES, DashboardComponent],
     providers: [VehicleService, ROUTER_PROVIDERS, HTTP_PROVIDERS],
     template: "<router-outlet></router-outlet>"
 })
