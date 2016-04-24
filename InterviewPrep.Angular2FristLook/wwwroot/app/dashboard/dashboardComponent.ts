@@ -24,9 +24,4 @@ export class DashboardComponent
         this.selectedVehicle = vehicle;
         this.changed.emit(this.selectedVehicle);
     }
-
-    public compare(item1: IBaseData, item2: IBaseData): boolean
-    {
-        return true;
-    }
 }
