@@ -1,6 +1,10 @@
 ﻿<h1>Angular 2 First Look</h1>
-<div *ngFor="#vehicle of vehicles" (click)="select(vehicle)" class="list" [class.selected]="vehicle === selectedVehicle">
-    {{vehicle.name}}
+<div class="row">
+    <div *ngFor="#vehicle of vehicles" (click)="select(vehicle)" class="list" [ngClass]="{ selected: selectedVehicle === vehicle }">
+        {{vehicle.name}}
+    </div>
+
+    <nested *ngIf="selectedVehicle" [vehicle]="selectedVehicle"></nested>
 </div>
 
-<nested *ngIf="selectedVehicle" [vehicle]="selectedVehicle"></nested>
+<div class="row">{{transformMe | CustomPipe}}</div>
