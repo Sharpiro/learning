@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.StaticFiles;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 
@@ -11,6 +10,7 @@ namespace InterviewPrep.Angular2FristLook
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -22,13 +22,7 @@ namespace InterviewPrep.Angular2FristLook
 
             app.UseNodeModules(env);
 
-            //var options = new DefaultFilesOptions();
-            //options.DefaultFileNames.Clear();
-            //options.DefaultFileNames.Add("index.html");
-            //app.UseDefaultFiles(options);
-            //app.UseStaticFiles();
             app.UseFileServer();
-
         }
 
         // Entry point for the application.

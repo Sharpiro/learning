@@ -1,16 +1,18 @@
 ﻿/// <reference path="../../typings/browser.d.ts" />
 
 import {Component} from 'angular2/core';
-import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
-import {VehicleService} from "./shared/vehicleService"
+import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router'
+//import {StaticVehicleService} from "./shared/staticVehicleService"
 import {DashboardComponent} from "./dashboard/dashboardComponent"
-import { HTTP_PROVIDERS } from 'angular2/http';
+import { HTTP_PROVIDERS } from 'angular2/http'
+
+//export let IVEHICLESERVICE = new OpaqueToken('IVEHICLESERVICE');
 
 @Component({
     selector: "my-app",
     directives: [ROUTER_DIRECTIVES, DashboardComponent],
-    providers: [VehicleService, ROUTER_PROVIDERS, HTTP_PROVIDERS],
-    template: "<router-outlet></router-outlet>"
+    providers: [ROUTER_PROVIDERS, HTTP_PROVIDERS],
+    template: "<router-outlet></router-outlet>",
 })
 @RouteConfig([
     { path: '/dashboard', name: 'Dashboard', component: DashboardComponent, useAsDefault: true },
