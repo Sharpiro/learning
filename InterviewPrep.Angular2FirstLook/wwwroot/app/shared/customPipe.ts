@@ -5,6 +5,6 @@ export class CustomPipe implements PipeTransform
 {
     public transform(value: string, args: any[]): string
     {
-        return "this value has been transformed into me";
+        return "this value has been transformed into me via a custom pipe";
     }
 }

@@ -1,6 +1,9 @@
 ﻿<h1>Angular 2 First Look</h1>
+<div class="row" *ngIf="errorMessage">
+    <div class="col-md-12">{{errorMessage}}</div>
+</div>
 <div class="row">
-    <div *ngFor="#vehicle of vehicles" (click)="select(vehicle)" class="list" [ngClass]="{ selected: selectedVehicle === vehicle }">
+    <div *ngFor="#vehicle of vehicles | async" (click)="select(vehicle)" class="list" [ngClass]="{ selected: selectedVehicle === vehicle }">
         {{vehicle.name}}
     </div>
 

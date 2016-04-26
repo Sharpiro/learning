@@ -10,7 +10,7 @@ namespace InterviewPrep.Angular2FirstLook
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -19,6 +19,8 @@ namespace InterviewPrep.Angular2FirstLook
             app.UseIISPlatformHandler();
 
             app.UseRequestMiddleware();
+
+            app.UseMvc(options => { options.MapRoute("DefaultApi", "api/{controller}/{action}/{id?}"); });
 
             app.UseNodeModules(env);
 
