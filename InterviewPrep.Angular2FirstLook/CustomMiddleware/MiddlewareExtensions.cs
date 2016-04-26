@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using InterviewPrep.Angular2FristLook.CustomMiddleware;
+using InterviewPrep.Angular2FirstLook.CustomMiddleware;
 using Microsoft.AspNet.FileProviders;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.StaticFiles;

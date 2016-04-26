@@ -33,7 +33,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{83A150
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{957C4CE1-0A48-4781-BE5B-B9FA33D94BA9}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "InterviewPrep.Angular2FristLook", "InterviewPrep.Angular2FristLook\InterviewPrep.Angular2FristLook.xproj", "{66D17A91-9CCB-47FD-BD60-28309A1D6960}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "InterviewPrep.Angular2FirstLook", "InterviewPrep.Angular2FirstLook\InterviewPrep.Angular2FirstLook.xproj", "{66D17A91-9CCB-47FD-BD60-28309A1D6960}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{422EC750-B1DF-4E2B-8E05-73808B4B4713}"
+	ProjectSection(SolutionItems) = preProject
+		InterviewPrep.Angular2FirstLook\global.json = InterviewPrep.Angular2FirstLook\global.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
