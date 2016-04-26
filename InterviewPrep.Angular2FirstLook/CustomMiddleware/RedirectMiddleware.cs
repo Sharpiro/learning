@@ -2,7 +2,7 @@
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Http;
 
-namespace InterviewPrep.Angular2FristLook.CustomMiddleware
+namespace InterviewPrep.Angular2FirstLook.CustomMiddleware
 {
     public class RedirectMiddleware
     {

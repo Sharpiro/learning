@@ -3,7 +3,7 @@ using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 
-namespace InterviewPrep.Angular2FristLook
+namespace InterviewPrep.Angular2FirstLook
 {
     public class Startup
     {
