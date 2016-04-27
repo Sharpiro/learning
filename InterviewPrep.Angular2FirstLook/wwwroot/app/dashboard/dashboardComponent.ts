@@ -1,15 +1,14 @@
-﻿import {Component, Output, EventEmitter, OnInit, Inject, Injectable, provide, OpaqueToken} from "angular2/core";
-import {NestedComponent} from "../shared/nestedComponent"
+﻿import {Component, Output, EventEmitter, OnInit, Inject, Injectable, provide, OpaqueToken} from "angular2/core"
+import {IVehicleService, StaticVehicleService} from "../appCore"
 import {CustomPipe} from "../shared/customPipe"
-import {IVehicleService, IVehicleServiceToken} from "../interfaces/IVehicleService"
-import {StaticVehicleService} from "../shared/staticVehicleService"
+import {NestedComponent} from "../shared/nestedComponent"
 import {Observable} from "rxjs/Rx"
+import {IVehicleServiceToken} from "../interfaces/IVehicleService"
 
 @Component({
     selector: "my-app",
     templateUrl: "./app/dashboard/dashboardComponent.html",
     styleUrls: ["./app/dashboard/dashboardComponent.css"],
-    styles: [``],
     directives: [NestedComponent],
     pipes: [CustomPipe]
 })
@@ -28,6 +27,7 @@ export class DashboardComponent implements OnInit
 
     public ngOnInit(): void
     {
+        console.log();
         this.vehicles = this.dataService.getVehicles();
     }
 
@@ -35,11 +35,5 @@ export class DashboardComponent implements OnInit
     {
         this.selectedVehicle = vehicle;
         this.changed.emit(this.selectedVehicle);
-    }
-
-    public setClasses(vehicle: IBaseData): any
-    {
-        const classes = { selected: true, list: true };
-        return classes;
     }
 }
