@@ -1,19 +1,24 @@
-﻿import {Component, provide} from 'angular2/core'
-import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router'
-import {StaticVehicleService} from "./shared/staticVehicleService"
-import {VehicleService} from "./shared/vehicleService"
-import {IVehicleServiceToken} from "./interfaces/IVehicleService"
-import {DashboardComponent} from "./dashboard/dashboardComponent"
-import { HTTP_PROVIDERS } from 'angular2/http'
+﻿import {Component, provide} from "angular2/core"
+import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from "angular2/router"
+import { HTTP_PROVIDERS } from "angular2/http"
+import {DashboardComponent, IVehicleServiceToken, StaticVehicleService, VehicleService, VehicleListComponent, VehicleComponent} from "./appCore"
+
+
 
 @Component({
     selector: "my-app",
     directives: [ROUTER_DIRECTIVES, DashboardComponent],
-    providers: [ROUTER_PROVIDERS, HTTP_PROVIDERS, provide(IVehicleServiceToken, { useClass: VehicleService })],
-    template: "<router-outlet></router-outlet>",
+    providers: [HTTP_PROVIDERS, provide(IVehicleServiceToken, { useClass: StaticVehicleService })],
+    templateUrl: "./app/appComponent.html",
+    styles: [
+        `nav ul {list-style-type: none;}
+        nav ul li {padding: 4px;display:inline-block}`
+    ]
 })
 @RouteConfig([
-    { path: '/dashboard', name: 'Dashboard', component: DashboardComponent, useAsDefault: true },
+    { path: "/dashboard", name: "Dashboard", component: DashboardComponent, useAsDefault: true },
+    { path: "/vehicles", name: "Vehicles", component: VehicleListComponent }
+    //{ path: "/vehicle/:id", name: "Vehicle", component: VehicleComponent }
 ])
 export class AppComponent
 {

@@ -1,6 +1,6 @@
 ﻿import {Injectable} from "angular2/core"
 import {Http} from "angular2/http"
-import {IVehicleService} from "../interfaces/IVehicleService"
+import {IVehicleService} from "../appCore"
 import 'rxjs/Rx';
 import {Observable} from "rxjs/Rx"
 
