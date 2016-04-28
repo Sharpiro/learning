@@ -2,8 +2,7 @@
 import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from "angular2/router"
 import { HTTP_PROVIDERS } from "angular2/http"
 import {DashboardComponent, IVehicleServiceToken, StaticVehicleService, VehicleService, VehicleListComponent, VehicleComponent} from "./appCore"
-
-
+import {VehiclesComponent} from "./vehicles/vehiclesComponent"
 
 @Component({
     selector: "my-app",
@@ -17,8 +16,7 @@ import {DashboardComponent, IVehicleServiceToken, StaticVehicleService, VehicleS
 })
 @RouteConfig([
     { path: "/dashboard", name: "Dashboard", component: DashboardComponent, useAsDefault: true },
-    { path: "/vehicles", name: "Vehicles", component: VehicleListComponent }
-    //{ path: "/vehicle/:id", name: "Vehicle", component: VehicleComponent }
+    { path: "/vehicles/...", name: "Vehicles", component: VehiclesComponent }
 ])
 export class AppComponent
 {

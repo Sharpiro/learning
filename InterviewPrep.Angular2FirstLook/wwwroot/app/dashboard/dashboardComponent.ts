@@ -1,9 +1,9 @@
-﻿import {Component, Output, EventEmitter, OnInit, Inject, Injectable, provide, OpaqueToken} from "angular2/core"
-import {IVehicleService, StaticVehicleService} from "../appCore"
+﻿import {Component, OnInit, Inject, EventEmitter, Output} from "angular2/core"
+import {Observable} from "rxjs/Rx"
+import {IVehicleService } from "../appCore"
+import {IVehicleServiceToken} from "../interfaces/IVehicleService"
 import {CustomPipe} from "../shared/customPipe"
 import {NestedComponent} from "../shared/nestedComponent"
-import {Observable} from "rxjs/Rx"
-import {IVehicleServiceToken} from "../interfaces/IVehicleService"
 
 @Component({
     selector: "my-app",

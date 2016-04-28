@@ -4,7 +4,9 @@
 </div>
 <div class="row">
     <div *ngFor="#vehicle of vehicles | async" (click)="select(vehicle)" class="list" [ngClass]="{ selected: selectedVehicle === vehicle }">
-        {{vehicle.name}}
+        <a href="" [routerLink]="['Vehicle', {id: vehicle.id}]">
+            {{vehicle.name}}
+        </a>
     </div>
 
     <nested *ngIf="selectedVehicle" [vehicle]="selectedVehicle"></nested>

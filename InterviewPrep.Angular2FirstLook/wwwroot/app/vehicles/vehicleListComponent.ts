@@ -1,13 +1,16 @@
 ﻿import {Component, OnInit, Inject, EventEmitter, Output} from "angular2/core"
 import {Observable} from "rxjs/rx"
-import {IVehicleService, NestedComponent} from "../appCore"
-import {IVehicleServiceToken} from "../interfaces/IVehicleService"
+import {IVehicleService, IVehicleServiceToken, CustomPipe } from "../appCore"
+import {ROUTER_DIRECTIVES, RouteConfig} from "angular2/router"
+import {NestedComponent} from "../shared/nestedComponent"
+import {VehicleComponent} from "./vehicleComponent"
+//import {} from "../interfaces/IVehicleService"
 
 
 @Component({
     selector: "vehicleList",
     templateUrl: "./app/vehicles/vehicleListComponent.html",
-    directives: [NestedComponent]
+    directives: [ROUTER_DIRECTIVES, NestedComponent]
 })
 export class VehicleListComponent implements OnInit
 {
