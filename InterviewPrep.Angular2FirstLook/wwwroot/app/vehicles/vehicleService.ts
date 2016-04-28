@@ -15,4 +15,10 @@ export class VehicleService implements IVehicleService
             .map(responese => <IBaseData[]>(responese.json().data));
         return obs;
     }
+
+    public getVehicle(id: number): Observable<IBaseData>
+    {
+        var promise = this.getVehicles().map(vehicles => vehicles.find(vehicle => vehicle.id === id));
+        return promise;
+    }
 }

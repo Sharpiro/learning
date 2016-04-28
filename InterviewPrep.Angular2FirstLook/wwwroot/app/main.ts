@@ -4,6 +4,5 @@ import {AppComponent} from "./appComponent";
 import {ROUTER_PROVIDERS} from "angular2/router"
 import {LocationStrategy, HashLocationStrategy, APP_BASE_HREF, PathLocationStrategy} from "angular2/platform/common"
 
-bootstrap(AppComponent, [ROUTER_PROVIDERS,
-    provide(APP_BASE_HREF, { useValue: '/' }),
-    provide(LocationStrategy, { useClass: HashLocationStrategy })]); 
+bootstrap(AppComponent, [ROUTER_PROVIDERS, provide(APP_BASE_HREF, { useValue: '/' }),
+    provide(LocationStrategy, { useClass: HashLocationStrategy })]);

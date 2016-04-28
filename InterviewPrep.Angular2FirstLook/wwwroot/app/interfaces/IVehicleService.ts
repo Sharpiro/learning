@@ -4,6 +4,7 @@ import {OpaqueToken} from "angular2/core"
 export interface IVehicleService
 {
     getVehicles(): Observable<IBaseData[]>;
+    getVehicle(id: number): Observable<IBaseData>;
 }
 
-export const IVehicleServiceToken = new OpaqueToken("IVehicleService");
+export let IVehicleServiceToken = new OpaqueToken("IVehicleService");

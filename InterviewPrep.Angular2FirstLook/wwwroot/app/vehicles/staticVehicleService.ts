@@ -18,6 +18,12 @@ export class StaticVehicleService implements IVehicleService
         return promise;
     }
 
+    public getVehicle(id: number): Observable<IBaseData>
+    {
+        var promise = this.getVehicles().map(vehicles => vehicles.find(vehicle => vehicle.id === id));
+        return promise;
+    }
+
     private handleError(error: Response): Observable<any>
     {
         console.error(error);
