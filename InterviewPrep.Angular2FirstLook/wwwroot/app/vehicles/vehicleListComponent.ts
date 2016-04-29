@@ -1,7 +1,7 @@
 ﻿import {Component, OnInit, Inject, EventEmitter, Output} from "angular2/core"
 import {ROUTER_DIRECTIVES, RouteConfig} from "angular2/router"
 import {Observable} from "rxjs/rx"
-import {IVehicleService, IVehicleServiceToken, VehicleComponent } from "./vehicles"
+import {IVehicleService, VehicleComponent } from "./vehicles"
 import {NestedComponent, CustomPipe} from "../blocks/blocks"
 
 @Component({
@@ -15,7 +15,7 @@ export class VehicleListComponent implements OnInit
     public selectedVehicle: IBaseData;
     @Output() changed = new EventEmitter<IBaseData>();
 
-    constructor( @Inject(IVehicleServiceToken) private dataService: IVehicleService) { }
+    constructor( @Inject("IVehicleServiceToken") private dataService: IVehicleService) { }
 
     public ngOnInit(): void
     {

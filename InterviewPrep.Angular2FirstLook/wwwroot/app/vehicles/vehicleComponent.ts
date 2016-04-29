@@ -1,8 +1,6 @@
 ﻿import {Component, Inject, OnInit, Input} from "angular2/core"
 import {RouteParams, Router} from "angular2/router"
-//import {} from "../vehicles/IVehicleService"
-import {IVehicleService, IVehicleServiceToken} from "./vehicles"
-
+import {IVehicleService } from "./vehicles"
 
 @Component({
     selector: "vehicle",
@@ -12,7 +10,7 @@ export class VehicleComponent implements OnInit
 {
     @Input() vehicle: IBaseData;
 
-    constructor(private routeParams: RouteParams, @Inject(IVehicleServiceToken) private vehicleService: IVehicleService,
+    constructor(private routeParams: RouteParams, @Inject("IVehicleServiceToken") private vehicleService: IVehicleService,
         private router: Router)
     {
 
