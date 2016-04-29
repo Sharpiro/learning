@@ -1,6 +1,7 @@
 ﻿import {Component, Inject, OnInit, Input} from "angular2/core"
 import {RouteParams, Router} from "angular2/router"
-import {IVehicleService, IVehicleServiceToken} from "../interfaces/IVehicleService"
+//import {} from "../vehicles/IVehicleService"
+import {IVehicleService, IVehicleServiceToken} from "./vehicles"
 
 
 @Component({

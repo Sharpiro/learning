@@ -1,8 +1,7 @@
 ﻿import {Component, provide} from "angular2/core"
 import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from "angular2/router"
 import { HTTP_PROVIDERS } from "angular2/http"
-import {DashboardComponent, IVehicleServiceToken, StaticVehicleService, VehicleService, VehicleListComponent, VehicleComponent} from "./appCore"
-import {VehiclesComponent} from "./vehicles/vehiclesComponent"
+import {DashboardComponent, StaticVehicleService, IVehicleServiceToken, VehicleService, VehiclesComponent, VehicleListComponent, VehicleComponent} from "./appCore"
 
 @Component({
     selector: "my-app",

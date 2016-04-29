@@ -1,7 +1,13 @@
-﻿.list {
+﻿/*.list {
 }
 
     .list.selected {
         background-color: #ccc;
         width: 250px;
-    }
+    }*/
+
+
+.dashboard-button {
+    width: 200px;
+    height: 70px;
+}

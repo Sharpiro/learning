@@ -1,8 +1,6 @@
 ﻿import {Component} from "angular2/core"
 import {RouteConfig, ROUTER_DIRECTIVES} from "angular2/router"
-import {VehicleListComponent} from "./vehicleListComponent"
-import {VehicleComponent} from "./vehicleComponent"
-
+import {VehicleComponent, VehicleListComponent} from "./vehicles"
 
 @Component({
     selector: "story-vehicles-root",
