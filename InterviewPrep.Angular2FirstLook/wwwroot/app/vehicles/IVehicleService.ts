@@ -7,8 +7,6 @@ export interface IVehicleService
     getVehicle(id: number): Observable<IBaseData>;
 }
 
-export let IVehicleServiceToken = new OpaqueToken("IVehicleService");
-
 //export class IVehicleServiceToken { }
 
 //export let IVehicleServiceToken = "IVehicleServiceToken";

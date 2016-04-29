@@ -1,6 +1,6 @@
 ﻿import {Component, OnInit, Inject, EventEmitter, Output} from "angular2/core"
 import {Observable} from "rxjs/Rx"
-import {IVehicleService, IVehicleServiceToken} from "../vehicles/vehicles"
+import {IVehicleService} from "../vehicles/vehicles"
 import {CustomPipe, NestedComponent} from "../blocks/blocks"
 
 @Component({
@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit
     @Output() changed = new EventEmitter<IBaseData>();
     private errorMessage: any;
 
-    constructor( @Inject(IVehicleServiceToken) private dataService: IVehicleService)
+    constructor( @Inject("IVehicleServiceToken") private dataService: IVehicleService)
     {
         this.transformMe = "data123";
     }
