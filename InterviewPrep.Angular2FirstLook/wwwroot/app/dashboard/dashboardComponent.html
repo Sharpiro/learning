@@ -4,7 +4,7 @@
 </div>
 <div class="row">
     <div *ngFor="#vehicle of vehicles | async" (click)="select(vehicle)" class="list" [ngClass]="{ selected: selectedVehicle === vehicle }">
-        {{vehicle.name}}
+        <button class="dashboard-button">{{vehicle.name}}</button>
     </div>
 
     <nested *ngIf="selectedVehicle" [vehicle]="selectedVehicle"></nested>

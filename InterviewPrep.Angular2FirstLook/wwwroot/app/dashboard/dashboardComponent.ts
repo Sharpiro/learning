@@ -1,9 +1,7 @@
 ﻿import {Component, OnInit, Inject, EventEmitter, Output} from "angular2/core"
 import {Observable} from "rxjs/Rx"
-import {IVehicleService } from "../appCore"
-import {IVehicleServiceToken} from "../interfaces/IVehicleService"
-import {CustomPipe} from "../shared/customPipe"
-import {NestedComponent} from "../shared/nestedComponent"
+import {IVehicleService, IVehicleServiceToken} from "../vehicles/vehicles"
+import {CustomPipe, NestedComponent} from "../blocks/blocks"
 
 @Component({
     selector: "my-app",

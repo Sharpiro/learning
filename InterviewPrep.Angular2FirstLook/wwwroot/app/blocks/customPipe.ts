@@ -3,10 +3,6 @@
 @Pipe({ name: "CustomPipe" })
 export class CustomPipe implements PipeTransform
 {
-    constructor()
-    {
-        console.log("created");
-    }
     public transform(value: string, args: any[]): string
     {
         return "this value has been transformed into me via a custom pipe";

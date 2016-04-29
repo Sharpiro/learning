@@ -1,8 +1,7 @@
 ﻿import {Injectable} from 'angular2/core';
-import { Http, Response } from 'angular2/http';
-import 'rxjs/Rx';
+import {Http, Response} from 'angular2/http';
 import {Observable} from "rxjs/Rx"
-import {IVehicleService} from "../appCore"
+import {IVehicleService} from "./vehicles"
 
 @Injectable()
 export class StaticVehicleService implements IVehicleService

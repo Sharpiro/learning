@@ -1,11 +1,8 @@
 ﻿import {Component, OnInit, Inject, EventEmitter, Output} from "angular2/core"
-import {Observable} from "rxjs/rx"
-import {IVehicleService, IVehicleServiceToken, CustomPipe } from "../appCore"
 import {ROUTER_DIRECTIVES, RouteConfig} from "angular2/router"
-import {NestedComponent} from "../shared/nestedComponent"
-import {VehicleComponent} from "./vehicleComponent"
-//import {} from "../interfaces/IVehicleService"
-
+import {Observable} from "rxjs/rx"
+import {IVehicleService, IVehicleServiceToken, VehicleComponent } from "./vehicles"
+import {NestedComponent, CustomPipe} from "../blocks/blocks"
 
 @Component({
     selector: "vehicleList",

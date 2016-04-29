@@ -1,8 +1,7 @@
 ﻿import {Injectable} from "angular2/core"
 import {Http} from "angular2/http"
-import {IVehicleService} from "../appCore"
-import 'rxjs/Rx';
 import {Observable} from "rxjs/Rx"
+import {IVehicleService} from "./vehicles"
 
 @Injectable()
 export class VehicleService implements IVehicleService
