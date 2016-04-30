@@ -3,8 +3,8 @@
     <div class="col-md-12">{{errorMessage}}</div>
 </div>
 <div class="row">
-    <div *ngFor="#vehicle of vehicles | async" (click)="select(vehicle)" class="list" [ngClass]="{ selected: selectedVehicle === vehicle }">
-        <button class="dashboard-button">{{vehicle.name}}</button>
+    <div *ngFor="let vehicle of vehicles | async" class="list" [ngClass]="{ selected: selectedVehicle === vehicle }">
+        <button (click)="select(vehicle)" class="dashboard-button">{{vehicle.name}}</button>
     </div>
 
     <nested *ngIf="selectedVehicle" [vehicle]="selectedVehicle"></nested>

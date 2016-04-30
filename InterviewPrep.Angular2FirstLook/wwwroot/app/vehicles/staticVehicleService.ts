@@ -10,7 +10,7 @@ export class StaticVehicleService implements IVehicleService
 
     public getVehicles(): Observable<IBaseData[]>
     {
-        var promise = this.httpService.get("/content/json/vehicles.json")
+        var promise = this.httpService.get("/api/vehicles.json")
             .map((response: Response) => <IBaseData[]>(response.json().data))
             .do(data => console.log())
             .catch(this.handleError);

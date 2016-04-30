@@ -2,9 +2,12 @@
 <div class="row" *ngIf="errorMessage">
     <div class="col-md-12">{{errorMessage}}</div>
 </div>
+
+<filterText (changed)="filterListComponentChanged($event)"></filterText>
+
 <div class="row">
-    <div *ngFor="#vehicle of vehicles | async" (click)="select(vehicle)" class="list" [ngClass]="{ selected: selectedVehicle === vehicle }">
-        <a href="" [routerLink]="['Vehicle', {id: vehicle.id}]">
+    <div *ngFor="let vehicle of filteredVehicles" class="list" [ngClass]="{ selected: selectedVehicle === vehicle }">
+        <a href="" [routerLink]="['Vehicle', {id: vehicle.id}]" (click)="select(vehicle)">
             {{vehicle.name}}
         </a>
     </div>
