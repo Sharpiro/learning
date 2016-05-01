@@ -29,6 +29,7 @@ export class VehicleListComponent implements OnInit
 
     public select(vehicle: IBaseData): void
     {
+        var temp = this.filterComponent;
         this.selectedVehicle = vehicle;
         this.changed.emit(this.selectedVehicle);
     }
@@ -38,7 +39,8 @@ export class VehicleListComponent implements OnInit
         this.dataService.getVehicles().subscribe(vehicles =>
         {
             this.filteredVehicles = this.vehicles = vehicles
-            this.filterComponent.clear();
+            if (this.filterComponent)
+                this.filterComponent.clear();
         });
     }
 
