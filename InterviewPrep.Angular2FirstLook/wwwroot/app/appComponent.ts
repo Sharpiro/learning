@@ -1,7 +1,7 @@
 ﻿import {Component, provide, OpaqueToken} from "angular2/core"
 import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from "angular2/router"
 import {InMemoryBackendService, SEED_DATA}  from 'a2-in-memory-web-api/core';
-import {InMemoryDb} from "../api/inMemoryDb"
+import {InMemoryDb} from "../fakeApi/inMemoryDb"
 import {HTTP_PROVIDERS, XHRBackend} from "angular2/http"
 import {DashboardComponent, StaticVehicleService, VehicleService, VehiclesComponent, VehicleListComponent, VehicleComponent} from "./appCore"
 
@@ -9,8 +9,8 @@ import {DashboardComponent, StaticVehicleService, VehicleService, VehiclesCompon
     selector: "my-app",
     directives: [ROUTER_DIRECTIVES, DashboardComponent],
     providers: [HTTP_PROVIDERS, provide("IVehicleServiceToken", { useClass: StaticVehicleService }),
-        provide(XHRBackend, { useClass: InMemoryBackendService }), // in-mem server
-        provide(SEED_DATA, { useClass: InMemoryDb })], // in-mem server data,
+        provide(XHRBackend, { useClass: InMemoryBackendService }),
+        provide(SEED_DATA, { useClass: InMemoryDb })],
     templateUrl: "./app/appComponent.html",
     styles: [
         `nav ul {list-style-type: none;}

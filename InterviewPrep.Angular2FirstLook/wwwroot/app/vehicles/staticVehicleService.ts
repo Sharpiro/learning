@@ -1,6 +1,6 @@
 ﻿import {Injectable} from 'angular2/core';
 import {Http, Response} from 'angular2/http';
-import {Observable} from "rxjs/Rx"
+import {Observable, Operator} from "rxjs/Rx"
 import {IVehicleService} from "./vehicles"
 
 @Injectable()
@@ -10,10 +10,17 @@ export class StaticVehicleService implements IVehicleService
 
     public getVehicles(): Observable<IBaseData[]>
     {
-        var promise = this.httpService.get("/api/vehicles.json")
+        var promise = this.httpService.get("/api/vehicles")
             .map((response: Response) => <IBaseData[]>(response.json().data))
             .do(data => console.log())
             .catch(this.handleError);
+
+        //var promise2 = Observable.create((observer: any) =>
+        //{
+        //    var data: IBaseData[] = [{ id: 1, name: "whatever", type: "space" }, { id: 2, name: "whatever2", type: "space" }];
+        //    observer.next(data);
+        //    observer.complete();
+        //});
         return promise;
     }
 
