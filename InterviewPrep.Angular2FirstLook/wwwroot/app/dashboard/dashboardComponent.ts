@@ -1,14 +1,14 @@
 ﻿import {Component, OnInit, Inject, EventEmitter, Output} from "angular2/core"
 import {Observable} from "rxjs/Rx"
 import {IVehicleService} from "../vehicles/vehicles"
-import {CustomPipe, NestedComponent} from "../blocks/blocks"
+import {CustomPipe, NestedComponent, LowerCasePipe} from "../blocks/blocks"
 
 @Component({
     selector: "my-app",
     templateUrl: "./app/dashboard/dashboardComponent.html",
     styleUrls: ["./app/dashboard/dashboardComponent.css"],
     directives: [NestedComponent],
-    pipes: [CustomPipe]
+    pipes: [CustomPipe, LowerCasePipe]
 })
 export class DashboardComponent implements OnInit
 {
