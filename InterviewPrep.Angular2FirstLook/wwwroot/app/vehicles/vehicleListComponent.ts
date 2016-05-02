@@ -1,17 +1,27 @@
-﻿import {Component, OnInit, Inject, EventEmitter, Output, ViewChild} from "angular2/core"
+﻿import {Component, OnInit, AfterViewInit, Inject, EventEmitter, Output, ViewChild} from "angular2/core"
 import {ROUTER_DIRECTIVES, RouteConfig} from "angular2/router"
 import {Observable} from "rxjs/rx"
 import {IVehicleService, VehicleComponent } from "./vehicles"
-import {NestedComponent, CustomPipe, FilterTextService} from "../blocks/blocks"
-import {FilterTextComponent} from "../blocks/filterText/filterTextComponent"
+import {NestedComponent, CustomPipe, FilterTextService, FilterTextComponent, LowerCasePipe} from "../blocks/blocks"
 
 @Component({
     selector: "vehicleList",
     templateUrl: "./app/vehicles/vehicleListComponent.html",
+    styles: [`.columns {
+        -moz-columns: 3;
+        -webkit-columns: 3;
+        columns: 3;
+        }
+        .dashboard-button {
+            width: 200px;
+            height: 70px;
+        }`
+    ],
     directives: [FilterTextComponent, ROUTER_DIRECTIVES, NestedComponent],
-    providers: [FilterTextService]
+    providers: [FilterTextService],
+    pipes: [LowerCasePipe]
 })
-export class VehicleListComponent implements OnInit
+export class VehicleListComponent implements OnInit, AfterViewInit
 {
     public vehicles: IBaseData[];
     public filteredVehicles: IBaseData[];
@@ -22,7 +32,9 @@ export class VehicleListComponent implements OnInit
     constructor( @Inject("IVehicleServiceToken") private dataService: IVehicleService,
         private filterService: FilterTextService) { }
 
-    public ngOnInit(): void
+    public ngOnInit(): void { }
+
+    public ngAfterViewInit(): void
     {
         this.getVehicles();
     }
