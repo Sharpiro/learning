@@ -2,20 +2,23 @@
 import {Http, Response} from 'angular2/http';
 import {Observable, Operator} from "rxjs/Rx"
 import {IVehicleService} from "./vehicles"
+import {SpinnerService} from "../blocks/blocks"
 
 @Injectable()
 export class StaticVehicleService implements IVehicleService
 {
-    constructor(private httpService: Http) { }
+    constructor(private httpService: Http, private _spinnerService: SpinnerService) { }
 
     public getVehicles(): Observable<IBaseData[]>
     {
+        this._spinnerService.show();
         var promise = this.httpService.get("/api/vehicles")
             .map((response: Response) => <IBaseData[]>(response.json().data))
             .do(data => console.log())
-            .catch(this.handleError);
+            .catch(this.handleError)
+            .finally(() => this._spinnerService.hide());
 
-        //var promise2 = Observable.create((observer: any) =>
+        //var promise = Observable.create((observer: any) =>
         //{
         //    var data: IBaseData[] = [{ id: 1, name: "whatever", type: "space" }, { id: 2, name: "whatever2", type: "space" }];
         //    observer.next(data);

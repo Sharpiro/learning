@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, AfterViewInit, Inject, EventEmitter, Output, ViewChild} from "angular2/core"
+﻿import {Component, OnInit, AfterViewInit, Inject, EventEmitter, Output, ViewChild, ChangeDetectorRef} from "angular2/core"
 import {ROUTER_DIRECTIVES, RouteConfig} from "angular2/router"
 import {Observable} from "rxjs/rx"
 import {IVehicleService, VehicleComponent } from "./vehicles"
@@ -30,13 +30,14 @@ export class VehicleListComponent implements OnInit, AfterViewInit
     @ViewChild(FilterTextComponent) filterComponent: FilterTextComponent;
 
     constructor( @Inject("IVehicleServiceToken") private dataService: IVehicleService,
-        private filterService: FilterTextService) { }
+        private filterService: FilterTextService, private cdrService: ChangeDetectorRef) { }
 
     public ngOnInit(): void { }
 
     public ngAfterViewInit(): void
     {
         this.getVehicles();
+        this.cdrService.detectChanges();
     }
 
     public select(vehicle: IBaseData): void

@@ -3,14 +3,16 @@ import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from "angular2/router
 import {InMemoryBackendService, SEED_DATA}  from 'a2-in-memory-web-api/core';
 import {InMemoryDb} from "../fakeApi/inMemoryDb"
 import {HTTP_PROVIDERS, XHRBackend} from "angular2/http"
-import {DashboardComponent, StaticVehicleService, VehicleService, VehiclesComponent, VehicleListComponent, VehicleComponent} from "./appCore"
+import {DashboardComponent, StaticVehicleService, VehicleService, VehiclesComponent,
+VehicleListComponent, VehicleComponent, SpinnerComponent, SpinnerService} from "./appCore"
 
 @Component({
     selector: "my-app",
-    directives: [ROUTER_DIRECTIVES, DashboardComponent],
+    directives: [ROUTER_DIRECTIVES, DashboardComponent, SpinnerComponent],
     providers: [HTTP_PROVIDERS, provide("IVehicleServiceToken", { useClass: StaticVehicleService }),
         provide(XHRBackend, { useClass: InMemoryBackendService }),
-        provide(SEED_DATA, { useClass: InMemoryDb })],
+        provide(SEED_DATA, { useClass: InMemoryDb }),
+        SpinnerService],
     templateUrl: "./app/appComponent.html",
     styles: [
         `nav ul {list-style-type: none;}
