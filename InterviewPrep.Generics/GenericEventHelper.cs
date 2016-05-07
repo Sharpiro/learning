@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace InterviewPrep.Generics
 {
@@ -6,17 +7,35 @@ namespace InterviewPrep.Generics
     {
         public T GenericProp1 { get; set; }
 
+        public GenericEventHelper()
+        {
+            Task.Delay(50000).ContinueWith((task) => Task.Run((Action)TriggerEvent));
+            //TriggerEvent();
+        }
+
         public TOutput Map<TOutput>(T input, Func<T, TOutput> converter)
         {
             return converter(input);
         }
 
+        private event Action _actionEvent;
         public event EventHandler<CustomEventArgs<int>> ThingHappened;
 
-        public void SayHello()
+        private void TriggerEvent()
         {
-            Console.WriteLine("Hello there");
-            OnThingHappened(12, 13);
+            _actionEvent.Invoke();
+            //OnThingHappened(12, 13);
+        }
+
+        public void Register(Action action)
+        {
+            _actionEvent += action.Invoke;
+            Console.WriteLine("action registered...");
+        }
+
+        private void GenericEventHelper_ThingHappened(object sender, CustomEventArgs<int> e)
+        {
+            throw new NotImplementedException();
         }
 
         private void OnThingHappened(int thing1, int thing2)
@@ -41,6 +60,6 @@ namespace InterviewPrep.Generics
         T GenericProp1 { get; set; }
         TOutput Map<TOutput>(T input, Func<T, TOutput> converter);
         event EventHandler<CustomEventArgs<int>> ThingHappened;
-        void SayHello();
+        //void TriggerEvent();
     }
 }
