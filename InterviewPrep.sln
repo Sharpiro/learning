@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterviewPrep.Core", "InterviewPrep.Core\InterviewPrep.Core.csproj", "{79463CCE-2350-42FE-AA78-DF0644DE52A7}"
 EndProject
@@ -39,6 +39,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		InterviewPrep.Angular2FirstLook\global.json = InterviewPrep.Angular2FirstLook\global.json
 	EndProjectSection
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "InterviewPrep.SqlServer", "InterviewPrep.SqlServer\InterviewPrep.SqlServer.sqlproj", "{8C99DFC4-6876-4FA1-95ED-16B2F5DA89FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -90,6 +92,12 @@ Global
 		{66D17A91-9CCB-47FD-BD60-28309A1D6960}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66D17A91-9CCB-47FD-BD60-28309A1D6960}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66D17A91-9CCB-47FD-BD60-28309A1D6960}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C99DFC4-6876-4FA1-95ED-16B2F5DA89FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C99DFC4-6876-4FA1-95ED-16B2F5DA89FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C99DFC4-6876-4FA1-95ED-16B2F5DA89FF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{8C99DFC4-6876-4FA1-95ED-16B2F5DA89FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C99DFC4-6876-4FA1-95ED-16B2F5DA89FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C99DFC4-6876-4FA1-95ED-16B2F5DA89FF}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -108,5 +116,6 @@ Global
 		{83A15037-A988-49F8-B5AF-DB449D440B3B} = {227B7B39-0251-46A7-A3AF-6834337AAE4C}
 		{957C4CE1-0A48-4781-BE5B-B9FA33D94BA9} = {227B7B39-0251-46A7-A3AF-6834337AAE4C}
 		{66D17A91-9CCB-47FD-BD60-28309A1D6960} = {957C4CE1-0A48-4781-BE5B-B9FA33D94BA9}
+		{8C99DFC4-6876-4FA1-95ED-16B2F5DA89FF} = {83A15037-A988-49F8-B5AF-DB449D440B3B}
 	EndGlobalSection
 EndGlobal
