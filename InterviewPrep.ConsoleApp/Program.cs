@@ -1,5 +1,4 @@
-﻿using System;
-using InterviewPrep.Generics;
+﻿using InterviewPrep.Core.Compiler;
 
 namespace InterviewPrep.ConsoleApp
 {
@@ -7,15 +6,17 @@ namespace InterviewPrep.ConsoleApp
     {
         public static void Main()
         {
-            var helper = new GenericEventHelper<int>();
-            var obj = new { Id = 1, Name = "name1" };
-            helper.Register(() => DoOtherStuff(obj.Id));
-            Console.ReadLine();
-        }
-
-        private static void DoOtherStuff(int id)
-        {
-            Console.WriteLine($"some event went down in an action, var: {id}");
+            const string source = @"
+                public class Test
+                {
+	                public void Do()
+	                {
+		                System.Console.WriteLine(""Hello World"");
+                    }
+                }
+            ";
+            var analyzer = new LexicalAnalyzer(source);
+            analyzer.Analayze();
         }
     }
 }
