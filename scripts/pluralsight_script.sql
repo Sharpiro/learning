@@ -63,6 +63,8 @@ INNER JOIN Orders
 ON PO.OrderId = Orders.Id
 INNER JOIN Customers
 ON Orders.CustomerId = Customers.Id
+Where Products.Id IN(1,2)
 ORDER BY Orders.Id
+
 
 ROLLBACK TRANSACTION
