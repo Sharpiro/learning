@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace InterviewPrep.Angular2FirstLook.Api
+namespace InterviewPrep.Angular2.Api
 {
     public class VehiclesController
     {

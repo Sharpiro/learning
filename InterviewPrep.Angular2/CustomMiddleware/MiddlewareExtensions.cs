@@ -1,18 +1,18 @@
 ﻿using System.IO;
-using InterviewPrep.Angular2FirstLook.CustomMiddleware;
-using Microsoft.AspNet.FileProviders;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.StaticFiles;
-using Microsoft.Extensions.PlatformAbstractions;
+using InterviewPrep.Angular2.CustomMiddleware;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Http;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.AspNet.Builder
 {
     public static class MiddlewareExtensions
     {
-        public static IApplicationBuilder UseNodeModules(this IApplicationBuilder app, IApplicationEnvironment env)
+        public static IApplicationBuilder UseNodeModules(this IApplicationBuilder app, IHostingEnvironment env)
         {
-            var path = Path.Combine(env.ApplicationBasePath, "node_modules");
+            var path = Path.Combine(env.ContentRootPath, "node_modules");
             var options = new StaticFileOptions { FileProvider = new PhysicalFileProvider(path), RequestPath = new PathString("/node_modules")};
             app.UseStaticFiles(options);
             return app;

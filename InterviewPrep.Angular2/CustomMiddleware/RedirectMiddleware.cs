@@ -1,8 +1,7 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Http;
+﻿using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
 
-namespace InterviewPrep.Angular2FirstLook.CustomMiddleware
+namespace InterviewPrep.Angular2.CustomMiddleware
 {
     public class RedirectMiddleware
     {
