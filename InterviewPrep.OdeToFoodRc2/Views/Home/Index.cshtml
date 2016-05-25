@@ -1,0 +1,13 @@
+﻿@model InterviewPrep.OdeToFoodRc2.ViewModels.HomePageViewModel
+@{
+    ViewBag.Title = "Home";
+}
+
+@foreach (var restaurant in Model.Restaurants)
+{
+    @Html.Partial("_Summary", restaurant)
+}
+
+<div>
+    @Html.ActionLink("Create New", "Create")
+</div>
