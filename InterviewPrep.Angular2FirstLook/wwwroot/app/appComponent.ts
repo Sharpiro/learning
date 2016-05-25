@@ -1,8 +1,8 @@
-﻿import {Component, provide, OpaqueToken} from "angular2/core"
-import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from "angular2/router"
-import {InMemoryBackendService, SEED_DATA}  from 'a2-in-memory-web-api/core';
+﻿import {Component, provide, OpaqueToken} from "@angular/core"
+import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from "@angular/router-deprecated"
+import {InMemoryBackendService, SEED_DATA}  from "angular2-in-memory-web-api/";
 import {InMemoryDb} from "../fakeApi/inMemoryDb"
-import {HTTP_PROVIDERS, XHRBackend} from "angular2/http"
+import {HTTP_PROVIDERS, XHRBackend} from "@angular/http"
 import {DashboardComponent, StaticVehicleService, VehicleService, VehiclesComponent,
 VehicleListComponent, VehicleComponent, SpinnerComponent, SpinnerService} from "./appCore"
 
