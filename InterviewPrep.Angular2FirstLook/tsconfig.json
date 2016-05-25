@@ -2,14 +2,13 @@
   "compileOnSave": true,
   "compilerOptions": {
     "target": "es5",
-    "module": "system",
+    "module": "commonjs",
     "moduleResolution": "node",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": true,
-    "noImplicitAny": true,
-    "noEmitOnError": true
+    "noImplicitAny": true
   },
   "exclude": [
     "node_modules",
