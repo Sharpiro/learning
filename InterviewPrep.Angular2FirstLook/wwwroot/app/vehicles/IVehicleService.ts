@@ -1,5 +1,5 @@
 ﻿import {Observable} from "rxjs/Rx"
-import {OpaqueToken} from "angular2/core"
+import {OpaqueToken} from "@angular/core"
 
 export interface IVehicleService
 {

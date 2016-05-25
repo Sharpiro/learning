@@ -1,5 +1,5 @@
-﻿import {Injectable} from 'angular2/core';
-import {Http, Response} from 'angular2/http';
+﻿import {Injectable} from '@angular/core';
+import {Http, Response} from '@angular/http';
 import {Observable, Operator} from "rxjs/Rx"
 import {IVehicleService} from "./vehicles"
 import {SpinnerService} from "../blocks/blocks"
@@ -13,10 +13,10 @@ export class StaticVehicleService implements IVehicleService
     {
         this._spinnerService.show();
         var promise = this.httpService.get("/api/vehicles")
-            .map((response: Response) => <IBaseData[]>(response.json().data))
             .do(data => console.log())
             .catch(this.handleError)
-            .finally(() => this._spinnerService.hide());
+            .finally(() => this._spinnerService.hide())
+            .map((response: Response) => <IBaseData[]>(response.json().data))
 
         //var promise = Observable.create((observer: any) =>
         //{
