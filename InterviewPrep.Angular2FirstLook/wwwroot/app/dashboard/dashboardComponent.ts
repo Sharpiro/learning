@@ -1,4 +1,4 @@
-﻿import {Component, OnInit, Inject, EventEmitter, Output, AfterViewInit, ChangeDetectorRef} from "angular2/core"
+﻿import {Component, OnInit, Inject, EventEmitter, Output, AfterViewInit, ChangeDetectorRef} from "@angular/core"
 import {Observable} from "rxjs/Rx"
 import {IVehicleService} from "../vehicles/vehicles"
 import {CustomPipe, NestedComponent, LowerCasePipe} from "../blocks/blocks"
