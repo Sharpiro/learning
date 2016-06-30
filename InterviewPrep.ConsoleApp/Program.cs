@@ -1,4 +1,5 @@
 ﻿using InterviewPrep.Core.Compiler;
+using System;
 
 namespace InterviewPrep.ConsoleApp
 {
@@ -11,12 +12,18 @@ namespace InterviewPrep.ConsoleApp
                 {
 	                public void Do()
 	                {
-		                System.Console.WriteLine(""Hello World"");
+		                Writer.WriteStuff(""Hello World"");
                     }
                 }
+                var test = new Test();
             ";
             var analyzer = new LexicalAnalyzer(source);
-            analyzer.Analayze();
+            var tokens = analyzer.Analayze();
+            foreach (var token in tokens)
+            {
+                Console.WriteLine($"<{token.Type}, {token.Value}>");
+            }
+            Console.ReadLine();
         }
     }
 }
