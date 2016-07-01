@@ -59,7 +59,7 @@
     <Compile Include="Compiler\Lib\IEnumerable.cs" />
     <Compile Include="Compiler\Lib\Repository.cs" />
     <Compile Include="Compiler\Lib\Writer.cs" />
-    <Compile Include="Compiler\Models\Parser.cs" />
+    <Compile Include="Compiler\Parser.cs" />
     <Compile Include="Compiler\Models\Token.cs" />
     <Compile Include="Compiler\Models\Tokens.cs" />
     <Compile Include="CsvReader.cs" />
@@ -73,6 +73,7 @@
     <Compile Include="Lists\SingleLinkedList\QueueSll.cs" />
     <Compile Include="Lists\SingleLinkedList\SingleLinkedList.cs" />
     <Compile Include="Lists\SingleLinkedList\StackSll.cs" />
+    <Compile Include="LogicGates\AndGate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Searcher.cs" />
     <Compile Include="Sorting\Sorting.cs" />

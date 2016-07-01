@@ -39,5 +39,10 @@ namespace InterviewPrep.Core.Compiler
         {
             return _tokens.GetEnumerator();
         }
+
+        //public Token GetTokenAt(int index)
+        //{
+        //    return _tokens[index];
+        //}
     }
 }
