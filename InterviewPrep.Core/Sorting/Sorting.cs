@@ -10,30 +10,31 @@ namespace InterviewPrep.Core.Sorting
     /// </summary>
     public static class Sorting
     {
-        public static IEnumerable<int> QuickSortEasy(int[] list, int low, int high)
+        public static IEnumerable<int> QuickSortEasy(int[] list, int lowIndex, int highIndex)
         {
-            if (low < high)
+            if (lowIndex < highIndex)
             {
-                var pivot = PartitionEasy(list, low, high);
-                QuickSortEasy(list, low, pivot - 1);
-                QuickSortEasy(list, pivot + 1, high);
+                var pivotIndex = PartitionEasy(list, lowIndex, highIndex);
+                QuickSortEasy(list, lowIndex, pivotIndex - 1);
+                QuickSortEasy(list, pivotIndex + 1, highIndex);
             }
             return list;
         }
 
-        private static int PartitionEasy(int[] list, int low, int high)
+        private static int PartitionEasy(int[] list, int lowIndex, int highIndex)
         {
-            var pivot = list[high];
-            var globalIndex = low;
-            for (var i = low; i < high; i++)
+            var pivotValue = list[highIndex];
+            var globalIndex = lowIndex;
+            for (var i = lowIndex; i < highIndex; i++)
             {
-                if (list[i] <= pivot)
+                var currentValue = list[i];
+                if (currentValue < pivotValue)
                 {
                     Swap(ref list[i], ref list[globalIndex]);
                     globalIndex++;
                 }
             }
-            Swap(ref list[high], ref list[globalIndex]);
+            Swap(ref list[highIndex], ref list[globalIndex]);
             return globalIndex;
         }
 

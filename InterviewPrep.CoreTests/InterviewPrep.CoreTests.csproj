@@ -51,7 +51,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BinarySearchTreeTests.cs" />
-    <Compile Include="Compiler\TokensTests.cs" />
     <Compile Include="DuplicatesTests.cs" />
     <Compile Include="FibonacciTests.cs" />
     <Compile Include="Lists\LinkedListTests.cs" />

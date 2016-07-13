@@ -55,13 +55,6 @@
   <ItemGroup>
     <Compile Include="BinaryTrees\BinarySearchTree.cs" />
     <Compile Include="BinaryTrees\BstNode.cs" />
-    <Compile Include="Compiler\LexicalAnalyzer.cs" />
-    <Compile Include="Compiler\Lib\IEnumerable.cs" />
-    <Compile Include="Compiler\Lib\Repository.cs" />
-    <Compile Include="Compiler\Lib\Writer.cs" />
-    <Compile Include="Compiler\Parser.cs" />
-    <Compile Include="Compiler\Models\Token.cs" />
-    <Compile Include="Compiler\Models\Tokens.cs" />
     <Compile Include="CsvReader.cs" />
     <Compile Include="Data Access\Context.cs" />
     <Compile Include="Data Access\SqlAccess.cs" />

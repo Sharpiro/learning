@@ -8,17 +8,63 @@ namespace InterviewPrep.CoreTests
     public class SortingTests
     {
         [TestMethod]
-        public void QuickSortTest()
+        public void QuickSortTest1()
         {
-            int[] unsorted1 = { 3, 7, 8, 5, 2, 1, 9, 5, 4 };
-            //int[] unsorted2 = { 1, 3, 9, 8, 2, 7, 5 };
-            //int[] unsorted3 = { 1, 3, 9, 8, 2, 2, 2, 9, 7, 5, 2 };
-            var sorted1 = Sorting.QuickSortEasy(unsorted1, 0, unsorted1.Length - 1);
-            //var sorted2 = Sorting.QuickSortEasy(unsorted2, 0, unsorted2.Length - 1);
-            //var sorted3 = Sorting.QuickSortEasy(unsorted3, 0, unsorted3.Length - 1);
-            Assert.AreEqual(sorted1, unsorted1.OrderBy(i => i));
-            //Assert.Equal(sorted2, unsorted2.OrderBy(i => i));
-            //Assert.Equal(sorted3, unsorted3.OrderBy(i => i));
+            int[] unsorted = { 4, 3, 7, 8, 5, 2, 1, 9, 5, 4 };
+            var expected = unsorted.OrderBy(number => number).ToList();
+            var actual = Sorting.QuickSortEasy(unsorted, 0, unsorted.Length - 1).ToList();
+            for (var i = 0; i < unsorted.Length; i++)
+            {
+                Assert.AreEqual(expected[i], actual[i]);
+            }
+        }
+
+        [TestMethod]
+        public void QuickSortTest2()
+        {
+            int[] unsorted = { 1, 3, 9, 8, 2, 7, 5 };
+            var expected = unsorted.OrderBy(number => number).ToList();
+            var actual = Sorting.QuickSortEasy(unsorted, 0, unsorted.Length - 1).ToList();
+            for (var i = 0; i < unsorted.Length; i++)
+            {
+                Assert.AreEqual(expected[i], actual[i]);
+            }
+        }
+
+        [TestMethod]
+        public void QuickSortTest3()
+        {
+            var unsorted = new int[] { 1, 3, 9, 8, 2, 2, 2, 9, 7, 5, 2 };
+            var expected = unsorted.OrderBy(number => number).ToList();
+            var actual = Sorting.QuickSortEasy(unsorted, 0, unsorted.Length - 1).ToList();
+            for (var i = 0; i < unsorted.Length; i++)
+            {
+                Assert.AreEqual(expected[i], actual[i]);
+            }
+        }
+
+        [TestMethod]
+        public void QuickSortTest4()
+        {
+            var unsorted = new int[] { 12, 7, 14, 9, 10, 11 };
+            var expected = unsorted.OrderBy(number => number).ToList();
+            var actual = Sorting.QuickSortEasy(unsorted, 0, unsorted.Length - 1).ToList();
+            for (var i = 0; i < unsorted.Length; i++)
+            {
+                Assert.AreEqual(expected[i], actual[i]);
+            }
+        }
+
+        [TestMethod]
+        public void QuickSortTest5()
+        {
+            var unsorted = new int[] { 9, 7, 5, 11, 12, 2, 14, 3, 10, 6 };
+            var expected = unsorted.OrderBy(number => number).ToList();
+            var actual = Sorting.QuickSortEasy(unsorted, 0, unsorted.Length - 1).ToList();
+            for (var i = 0; i < unsorted.Length; i++)
+            {
+                Assert.AreEqual(expected[i], actual[i]);
+            }
         }
     }
 }
