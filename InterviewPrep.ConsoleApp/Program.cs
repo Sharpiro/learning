@@ -1,7 +1,5 @@
-﻿using InterviewPrep.Core.Compiler;
-using InterviewPrep.Core.LogicGates;
+﻿using InterviewPrep.Core;
 using System;
-using System.Linq;
 
 namespace InterviewPrep.ConsoleApp
 {
@@ -9,27 +7,13 @@ namespace InterviewPrep.ConsoleApp
     {
         public static void Main()
         {
-            //const string source = @"
-            //    contianer Test
-            //    {
-            //     function Do()
-            //     {
-            //      return 2;
-            //        }
-            //    }
-            //    var test = Test.New();
-            //    test.Do();
-            //";
-            //var analyzer = new LexicalAnalyzer(source);
-            //var tokens = analyzer.Analayze();
-            //var parser = new TokenParser(tokens.ToList());
-            //parser.Parse();
-            //foreach (var token in tokens)
-            //{
-            //    Console.WriteLine($"<{token.Type}, {token.Value}>");
-            //}
-            var andGate = new AndGate();
-            andGate.Run();
+            var table = new CustomHashTable();
+            table.Add(127, 1);
+            table.Add(1023, 2);
+            var value1 = table.Get(127);
+            var value2 = table.Get(1023);
+            if (value1 != 1 || value2 != 2)
+                throw new Exception();
             Console.ReadLine();
         }
     }
