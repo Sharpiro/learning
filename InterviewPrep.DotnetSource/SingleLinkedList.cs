@@ -281,12 +281,17 @@ namespace InterviewPrep.DotnetSource
             return null;
         }
 
-        public Enumerator GetEnumerator()
+        public EnumeratorSource GetEnumerator()
         {
-            return new Enumerator(this);
+            return new EnumeratorSource(this);
         }
 
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
@@ -340,7 +345,7 @@ namespace InterviewPrep.DotnetSource
             count++;
         }
 
-        internal void InternalRemoveNode(LinkedListNode<T> node)
+        private void InternalRemoveNode(LinkedListNode<T> node)
         {
             Debug.Assert(node.list == this, "Deleting the node from another list!");
             Debug.Assert(head != null, "This method shouldn't be called on empty list!");
@@ -466,13 +471,7 @@ namespace InterviewPrep.DotnetSource
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes", Justification = "not an expected scenario")]
-        public struct Enumerator : IEnumerator<T>, IEnumerator
+        public class EnumeratorSource : IEnumerator<T>, IEnumerator
         {
             private LinkedListSource<T> _list;
             private LinkedListNode<T> _node;
@@ -480,7 +479,7 @@ namespace InterviewPrep.DotnetSource
             private T _current;
             private int _index;
 
-            internal Enumerator(LinkedListSource<T> list)
+            internal EnumeratorSource(LinkedListSource<T> list)
             {
                 _list = list;
                 _version = list.version;

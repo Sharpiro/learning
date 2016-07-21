@@ -67,6 +67,10 @@
       <Project>{79463cce-2350-42fe-aa78-df0644de52a7}</Project>
       <Name>InterviewPrep.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\InterviewPrep.DotnetSource\InterviewPrep.DotnetSource.csproj">
+      <Project>{74dd3501-9846-4632-b7e0-8c75c509b59d}</Project>
+      <Name>InterviewPrep.DotnetSource</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
