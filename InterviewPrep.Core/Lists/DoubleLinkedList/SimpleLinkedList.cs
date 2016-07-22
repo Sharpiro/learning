@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace InterviewPrep.Core.Lists.SingleLinkedList
 {
-    public class SimpleLinkedList : IEnumerable<int>
+    public class SimpleLinkedList : IEnumerable<int>, ISimpleLinkedList
     {
         public int Count { get; set; }
         public Node First { get { return head; } }
@@ -61,6 +61,19 @@ namespace InterviewPrep.Core.Lists.SingleLinkedList
                 node = node.next;
             }
             return null;
+        }
+
+        public int FindPos(Node node)
+        {
+            return FindPosPrivate(node, head, 0);
+        }
+
+        private int FindPosPrivate(Node node, Node currentNode, int counter)
+        {
+            if (node == currentNode)
+                return counter;
+            var temp = FindPosPrivate(node, currentNode.next, ++counter);
+            return temp;
         }
 
         public void Remove(Node node)

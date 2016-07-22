@@ -163,5 +163,20 @@ namespace InterviewPrep.CoreTests.Lists
             Assert.AreEqual(3, standardList[2]);
             Assert.AreEqual(standardList.Count, list.Count);
         }
+
+        [TestMethod]
+        public void FindNodePositionTest()
+        {
+            var list = new SimpleLinkedList();
+            for (var i = 0; i < 10; i++)
+            {
+                list.AddLast(i);
+            }
+            var standardList = list.ToList();
+            var node = list.Find(5); ;
+            var pos = list.FindPos(node);
+            Assert.AreEqual(5, standardList[5]);
+            Assert.AreEqual(5, pos);
+        }
     }
 }
