@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace InterviewPrep.Core.Lists.SingleLinkedList
 {
-    public class SimpleLinkedList : IEnumerable<int>, ISimpleLinkedList
+    public class ComplexLinkedList : IEnumerable<int>, IComplexLinkedList
     {
         public int Count { get; set; }
         public Node First { get { return head; } }
@@ -54,12 +54,13 @@ namespace InterviewPrep.Core.Lists.SingleLinkedList
         public Node Find(int value)
         {
             var node = head;
-            while (node != null)
+            do
             {
                 if (node.Value == value)
                     return node;
                 node = node.next;
             }
+            while (node != head);
             return null;
         }
 
@@ -147,13 +148,13 @@ namespace InterviewPrep.Core.Lists.SingleLinkedList
         internal Node next;
         internal Node previous;
 
-        public Node(int value, SimpleLinkedList list)
+        public Node(int value, ComplexLinkedList list)
         {
             Value = value;
             List = list;
         }
 
-        public SimpleLinkedList List { get; private set; }
+        public ComplexLinkedList List { get; private set; }
         public int Value { get; set; }
         public Node Next
         {
@@ -177,9 +178,9 @@ namespace InterviewPrep.Core.Lists.SingleLinkedList
         private int _currentValue;
         private Node _currentNode;
         private int _index;
-        private readonly SimpleLinkedList _list;
+        private readonly ComplexLinkedList _list;
 
-        public LinkedListEnumerator(SimpleLinkedList list)
+        public LinkedListEnumerator(ComplexLinkedList list)
         {
             _list = list;
             _currentNode = _list.head;

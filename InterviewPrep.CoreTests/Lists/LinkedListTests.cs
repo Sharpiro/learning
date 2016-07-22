@@ -10,7 +10,7 @@ namespace InterviewPrep.CoreTests.Lists
         [TestMethod]
         public void AddFirstTest()
         {
-            var list = new SimpleLinkedList();
+            var list = new ComplexLinkedList();
             list.AddLast(1);
             list.AddLast(2);
             list.AddLast(3);
@@ -28,7 +28,7 @@ namespace InterviewPrep.CoreTests.Lists
         [TestMethod]
         public void AddLastTest()
         {
-            var list = new SimpleLinkedList();
+            var list = new ComplexLinkedList();
             list.AddLast(1);
             list.AddLast(2);
             list.AddLast(3);
@@ -46,7 +46,7 @@ namespace InterviewPrep.CoreTests.Lists
         [TestMethod]
         public void AddBeforeTest()
         {
-            var list = new SimpleLinkedList();
+            var list = new ComplexLinkedList();
             list.AddLast(1);
             list.AddLast(2);
             var node = list.AddLast(3);
@@ -64,7 +64,7 @@ namespace InterviewPrep.CoreTests.Lists
         [TestMethod]
         public void AddAfterTest()
         {
-            var list = new SimpleLinkedList();
+            var list = new ComplexLinkedList();
             list.AddLast(1);
             var node = list.AddLast(2);
             list.AddLast(3);
@@ -80,9 +80,21 @@ namespace InterviewPrep.CoreTests.Lists
         }
 
         [TestMethod]
+        public void CountTest()
+        {
+            var list = new ComplexLinkedList();
+            list.AddLast(1);
+            list.AddLast(2);
+            list.AddLast(3);
+            list.AddLast(3);
+            list.AddLast(3);
+            Assert.AreEqual(5, list.Count);
+        }
+
+        [TestMethod]
         public void FindTest()
         {
-            var list = new SimpleLinkedList();
+            var list = new ComplexLinkedList();
             list.AddLast(1);
             list.AddLast(2);
             list.AddLast(3);
@@ -92,9 +104,21 @@ namespace InterviewPrep.CoreTests.Lists
         }
 
         [TestMethod]
+        public void FindNothingTest()
+        {
+            var list = new ComplexLinkedList();
+            list.AddLast(1);
+            list.AddLast(2);
+            list.AddLast(3);
+            list.AddLast(50);
+            var first = list.Find(12); ;
+            Assert.AreEqual(null, first);
+        }
+
+        [TestMethod]
         public void RemoveFirstTest()
         {
-            var list = new SimpleLinkedList();
+            var list = new ComplexLinkedList();
             list.AddLast(1);
             var node = list.AddLast(2);
             list.AddLast(3);
@@ -113,26 +137,48 @@ namespace InterviewPrep.CoreTests.Lists
         [TestMethod]
         public void RemoveLastTest()
         {
-            var list = new SimpleLinkedList();
+            var list = new ComplexLinkedList();
             list.AddLast(1);
-            var node = list.AddLast(2);
+            list.AddLast(2);
             list.AddLast(3);
-            list.AddAfter(node, 50);
             list.RemoveLast();
             var first = list.First;
             var second = first.Next;
             var third = second.Next;
-            var fourth = third.Next;
             Assert.AreEqual(1, first.Value);
             Assert.AreEqual(2, second.Value);
-            Assert.AreEqual(50, third.Value);
-            Assert.AreEqual(null, fourth);
+            Assert.AreEqual(null, third);
+        }
+
+        [TestMethod]
+        public void RemoveLastItemTest()
+        {
+            var list = new ComplexLinkedList();
+            list.AddLast(1);
+            list.RemoveLast();
+            var first = list.First;
+            Assert.AreEqual(null, first);
+        }
+
+        [TestMethod]
+        public void RemoveHeadTest()
+        {
+            var list = new ComplexLinkedList();
+            list.AddLast(1);
+            list.AddLast(2);
+            list.AddLast(4);
+            list.AddLast(8);
+            list.AddLast(2);
+            list.RemoveFirst();
+            var first = list.First;
+            Assert.AreEqual(2, first.Value);
+            Assert.AreEqual(4, list.Count);
         }
 
         [TestMethod]
         public void RemoveTest()
         {
-            var list = new SimpleLinkedList();
+            var list = new ComplexLinkedList();
             list.AddLast(1);
             var node = list.AddLast(2);
             list.AddLast(3);
@@ -151,12 +197,13 @@ namespace InterviewPrep.CoreTests.Lists
         [TestMethod]
         public void ToListTest()
         {
-            var list = new SimpleLinkedList();
+            var list = new ComplexLinkedList();
             for (var i = 3; i >= 1; i--)
             {
                 list.AddLast(i);
             }
             var standardList = list.ToList();
+            standardList = list.ToList();
             standardList.Sort();
             Assert.AreEqual(1, standardList[0]);
             Assert.AreEqual(2, standardList[1]);
@@ -167,7 +214,7 @@ namespace InterviewPrep.CoreTests.Lists
         [TestMethod]
         public void FindNodePositionTest()
         {
-            var list = new SimpleLinkedList();
+            var list = new ComplexLinkedList();
             for (var i = 0; i < 10; i++)
             {
                 list.AddLast(i);
