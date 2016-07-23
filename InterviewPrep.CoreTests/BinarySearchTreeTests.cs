@@ -12,65 +12,114 @@ namespace InterviewPrep.CoreTests
         [TestMethod]
         public void AddTest()
         {
-            var tree = CreateTree(10);
+            var tree = CreateTree(5);
             Assert.IsNotNull(tree.Root);
+            Assert.IsNotNull(tree.Root.Right);
+            Assert.IsNull(tree.Root.Left);
         }
 
         [TestMethod]
-        public void GetMinTest()
+        public void CreateBalancedBSTTest()
         {
-            var tree = CreateTree(10);
-            var minIterative = tree.GetMinIterative();
-            var minRecursive = tree.GetMinRecursive(tree.Root);
-            Assert.AreEqual(minIterative, 0);
-            Assert.AreEqual(minRecursive, 0);
+            var list = new List<int> { 3, 6, 9, 11, 15 };
+            var tree = BinarySearchTree.CreateBalancedBST(list);
         }
 
         [TestMethod]
-        public void GetMaxTest()
+        public void DeleteTest()
         {
-            var tree = CreateTree(10);
-            var maxIterative = tree.GetMaxIterative();
-            var maxRecursive = tree.GetMaxRecursive(tree.Root);
-            Assert.AreEqual(maxIterative, 9);
-            Assert.AreEqual(maxRecursive, 9);
+            throw new NotImplementedException();
         }
 
         [TestMethod]
         public void GetTreeHeightTest()
         {
             var tree = CreateTree(10);
-            var treeHeight = tree.GetTreeHeight(tree.Root);
+            var treeHeight = tree.GetTreeHeight();
             Assert.AreEqual(treeHeight, 9);
         }
 
         [TestMethod]
-        public void GetListPreOrderTest()
-        {
-            var tree = CreateTree(10);
-            var list = new List<int?>();
-            tree.PreOrderTraversal(tree.Root, list);
-        }
-
-        [TestMethod]
-        public void IsBinarySearchTreeTest()
-        {
-            var list = CreateRandomList(50);
-            //var isBinarySearchTree = BinarySearchTree.IsBinarySearchTree(tree, tree.Root, tree.Root.Data);
-        }
-
-        [TestMethod]
-        public void FindMinTest()
+        public void GetMinTest()
         {
             for (var i = 0; i < 50; i++)
             {
                 var list = CreateRandomList(50);
+                var tree = CreateTreeFromList(list);
                 list.Sort();
                 var listMin = list.FirstOrDefault();
-                var tree = CreateTreeFromList(list);
-                var min = tree.Min(tree.Root, tree.Root.Data);
-                Assert.AreEqual(listMin, min);
+                var minRecursive = tree.GetMinRecursive();
+                var minIterative = tree.GetMinIterative();
+                Assert.AreEqual(listMin, minRecursive);
+                Assert.AreEqual(listMin, minIterative);
             }
+        }
+
+        [TestMethod]
+        public void GetMaxTest()
+        {
+            for (var i = 0; i < 50; i++)
+            {
+                var list = CreateRandomList(50);
+                var tree = CreateTreeFromList(list);
+                list.Sort();
+                var listMin = list.LastOrDefault();
+                var maxRecursive = tree.GetMaxRecursive();
+                var maxIterative = tree.GetMaxIterative();
+                Assert.AreEqual(listMin, maxRecursive);
+                Assert.AreEqual(listMin, maxIterative);
+            }
+        }
+
+        [TestMethod]
+        public void PreOrderTest()
+        {
+            var tree = new BinarySearchTree();
+            tree.Add(9);
+            tree.Add(3);
+            tree.Add(6);
+            tree.Add(15);
+            tree.Add(11);
+            var list = tree.PreOrderTraversal();
+            Assert.AreEqual(9, list[0]);
+            Assert.AreEqual(3, list[1]);
+            Assert.AreEqual(6, list[2]);
+            Assert.AreEqual(15, list[3]);
+            Assert.AreEqual(11, list[4]);
+        }
+
+        [TestMethod]
+        public void InOrderTest()
+        {
+            var tree = new BinarySearchTree();
+            tree.Add(9);
+            tree.Add(3);
+            tree.Add(6);
+            tree.Add(15);
+            tree.Add(11);
+            var list = tree.InOrderTraversal();
+            Assert.AreEqual(3, list[0]);
+            Assert.AreEqual(6, list[1]);
+            Assert.AreEqual(9, list[2]);
+            Assert.AreEqual(11, list[3]);
+            Assert.AreEqual(15, list[4]);
+        }
+
+        [TestMethod]
+        public void PostOrderTest()
+        {
+            var tree = new BinarySearchTree();
+            tree.Add(9);
+            tree.Add(3);
+            tree.Add(6);
+            tree.Add(15);
+            tree.Add(11);
+            var list = tree.PostOrderTraversal();
+            Assert.AreEqual(6, list[0]);
+            Assert.AreEqual(3, list[1]);
+            Assert.AreEqual(11, list[2]);
+            Assert.AreEqual(15, list[3]);
+            Assert.AreEqual(9, list[4]);
         }
 
         private BinarySearchTree CreateTree(int maxSize)
@@ -78,7 +127,7 @@ namespace InterviewPrep.CoreTests
             var tree = new BinarySearchTree();
             for (var i = 0; i < maxSize; i++)
             {
-                tree.InsertRecursive(tree.Root, i);
+                tree.Add(i);
             }
             return tree;
         }
@@ -88,7 +137,7 @@ namespace InterviewPrep.CoreTests
             var tree = new BinarySearchTree();
             for (var i = maxSize - 1; i >= minSize; i--)
             {
-                tree.InsertRecursive(tree.Root, i);
+                tree.Add(i);
             }
             return tree;
         }
@@ -98,7 +147,7 @@ namespace InterviewPrep.CoreTests
             var tree = new BinarySearchTree();
             foreach (var number in list)
             {
-                tree.InsertRecursive(tree.Root, number);
+                tree.Add(number);
             }
             return tree;
         }

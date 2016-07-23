@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace InterviewPrep.Core.BinaryTrees
 {
@@ -7,68 +8,118 @@ namespace InterviewPrep.Core.BinaryTrees
     {
         public BstNode Root { get; private set; }
 
-        private void BalanceTree(BstNode node)
+        public static BinarySearchTree CreateBalancedBST(List<int> list)
         {
+            var tree = new BinarySearchTree();
+            PrivateCreateBalancedBST(list, tree, 0, list.Count - 1);
+            return tree;
+            throw new NotImplementedException();
+        }
+        public static void PrivateCreateBalancedBST(List<int> list, BinarySearchTree tree, int lowIndex, int highIndex)
+        {
+            if (lowIndex > highIndex)
+                return;
+            int pivot = (lowIndex + highIndex) / 2;
+            highIndex = lowIndex == highIndex ? 0 : highIndex;
 
+            tree.Add(list[pivot]);
+            PrivateCreateBalancedBST(list, tree, lowIndex, pivot - 1);
+            PrivateCreateBalancedBST(list, tree, pivot + 1, highIndex);
         }
 
         public void Delete(int data)
         {
         }
 
-        public void PreOrderTraversal(BstNode currentNode, IList<int?> list)
+        public IList<int> PreOrderTraversal()
+        {
+            var list = new List<int>();
+            PrivatePreOrderTraversal(Root, list);
+            return list;
+        }
+
+        private void PrivatePreOrderTraversal(BstNode currentNode, IList<int> list)
         {
             if (currentNode != null)
             {
                 list.Add(currentNode.Data);
-                PreOrderTraversal(currentNode.Left, list);
-                PreOrderTraversal(currentNode.Right, list);
+                PrivatePreOrderTraversal(currentNode.Left, list);
+                PrivatePreOrderTraversal(currentNode.Right, list);
             }
         }
 
-        public void InOrderTraversal(BstNode currentNode, IList<int?> list)
+        public IList<int> InOrderTraversal()
+        {
+            var list = new List<int>();
+            PrivateInOrderTraversal(Root, list);
+            return list;
+        }
+
+        public void PrivateInOrderTraversal(BstNode currentNode, IList<int> list)
         {
             if (currentNode != null)
             {
-                PreOrderTraversal(currentNode.Left, list);
+                PrivateInOrderTraversal(currentNode.Left, list);
                 list.Add(currentNode.Data);
-                PreOrderTraversal(currentNode.Right, list);
+                PrivateInOrderTraversal(currentNode.Right, list);
             }
         }
 
-        public void PostOrderTraversal(BstNode currentNode, IList<int?> list)
+        public IList<int> PostOrderTraversal()
+        {
+            var list = new List<int>();
+            PrivatePostOrderTraversal(Root, list);
+            return list;
+        }
+
+        public void PrivatePostOrderTraversal(BstNode currentNode, IList<int> list)
         {
             if (currentNode != null)
             {
-                PreOrderTraversal(currentNode.Left, list);
-                PreOrderTraversal(currentNode.Right, list);
+                PrivatePostOrderTraversal(currentNode.Left, list);
+                PrivatePostOrderTraversal(currentNode.Right, list);
                 list.Add(currentNode.Data);
             }
         }
 
-        public int GetTreeHeight(BstNode currentNode)
+        public int GetTreeHeight()
+        {
+            return PrivateGetTreeHeight(Root);
+        }
+
+        private int PrivateGetTreeHeight(BstNode currentNode)
         {
             if (currentNode == null)
                 return -1;
-            var left = GetTreeHeight(currentNode.Left);
-            var right = GetTreeHeight(currentNode.Right);
+            var left = PrivateGetTreeHeight(currentNode.Left);
+            var right = PrivateGetTreeHeight(currentNode.Right);
             var max = Math.Max(left, right) + 1;
             return max;
         }
 
-        public int GetMinRecursive(BstNode currentNode)
+        public int GetMinRecursive()
+        {
+            return GetMinRecurs(Root);
+        }
+
+        private int GetMinRecurs(BstNode currentNode)
         {
             if (currentNode.Left == null)
                 return currentNode.Data;
-            var data = GetMinRecursive(currentNode.Left);
+            var data = GetMinRecurs(currentNode.Left);
             return data;
         }
 
-        public int GetMaxRecursive(BstNode currentNode)
+        public int GetMaxRecursive()
+        {
+            return GetMaxRecurs(Root);
+        }
+
+        public int GetMaxRecurs(BstNode currentNode)
         {
             if (currentNode.Right == null)
                 return currentNode.Data;
-            var data = GetMaxRecursive(currentNode.Right);
+            var data = GetMaxRecurs(currentNode.Right);
             return data;
         }
 
@@ -101,7 +152,12 @@ namespace InterviewPrep.Core.BinaryTrees
             return currentNode;
         }
 
-        public BstNode InsertRecursive(BstNode currentNode, int data)
+        public BstNode Add(int data)
+        {
+            return InsertRecursive(Root, data);
+        }
+
+        private BstNode InsertRecursive(BstNode currentNode, int data)
         {
             if (currentNode == null)
             {
@@ -120,28 +176,18 @@ namespace InterviewPrep.Core.BinaryTrees
             return currentNode;
         }
 
-        public static bool IsBinarySearchTree(BinarySearchTree tree, BstNode node, int value)
+        private static List<int> GetRangeReal(List<int> list, int lowIndex, int highIndex)
         {
-            return false;
-        }
-
-        public int Min(BstNode node, int value)
-        {
-            if (node == null)
+            var subList = new List<int>();
+            if (lowIndex > highIndex || highIndex > list.Count - 1)
             {
-                return int.MaxValue;
+                return subList;
             }
-            var leftMin = Min(node.Left, node.Data);
-            var rightMin = Min(node.Right, node.Data);
-            var min = Math.Min(leftMin, rightMin);
-            var min2 = Math.Min(min, node.Data);
-            var min3 = Math.Min(min2, value);
-            return min3;
-        }
-
-        public int Max()
-        {
-            return 1;
+            for (var i = lowIndex; i <= highIndex; i++)
+            {
+                subList.Add(list[i]);
+            }
+            return subList;
         }
     }
 }
