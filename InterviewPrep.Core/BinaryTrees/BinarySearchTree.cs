@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace InterviewPrep.Core.BinaryTrees
 {
@@ -8,14 +7,14 @@ namespace InterviewPrep.Core.BinaryTrees
     {
         public BstNode Root { get; private set; }
 
-        public static BinarySearchTree CreateBalancedBST(List<int> list)
+        public static BinarySearchTree CreateBalancedBST(IList<int> list)
         {
             var tree = new BinarySearchTree();
             PrivateCreateBalancedBST(list, tree, 0, list.Count - 1);
             return tree;
             throw new NotImplementedException();
         }
-        public static void PrivateCreateBalancedBST(List<int> list, BinarySearchTree tree, int lowIndex, int highIndex)
+        public static void PrivateCreateBalancedBST(IList<int> list, BinarySearchTree tree, int lowIndex, int highIndex)
         {
             if (lowIndex > highIndex)
                 return;
@@ -29,6 +28,10 @@ namespace InterviewPrep.Core.BinaryTrees
 
         public void Delete(int data)
         {
+            var list = InOrderTraversal();
+            list.Remove(data);
+            var newList = CreateBalancedBST(list);
+            Root = newList.Root;
         }
 
         public IList<int> PreOrderTraversal()
@@ -99,27 +102,27 @@ namespace InterviewPrep.Core.BinaryTrees
 
         public int GetMinRecursive()
         {
-            return GetMinRecurs(Root);
+            return PrivateGetMinRecursive(Root);
         }
 
-        private int GetMinRecurs(BstNode currentNode)
+        private int PrivateGetMinRecursive(BstNode currentNode)
         {
             if (currentNode.Left == null)
                 return currentNode.Data;
-            var data = GetMinRecurs(currentNode.Left);
+            var data = PrivateGetMinRecursive(currentNode.Left);
             return data;
         }
 
         public int GetMaxRecursive()
         {
-            return GetMaxRecurs(Root);
+            return PrivateGetMaxRecursive(Root);
         }
 
-        public int GetMaxRecurs(BstNode currentNode)
+        public int PrivateGetMaxRecursive(BstNode currentNode)
         {
             if (currentNode.Right == null)
                 return currentNode.Data;
-            var data = GetMaxRecurs(currentNode.Right);
+            var data = PrivateGetMaxRecursive(currentNode.Right);
             return data;
         }
 
@@ -141,15 +144,6 @@ namespace InterviewPrep.Core.BinaryTrees
                 tempNode = tempNode.Right;
             }
             return tempNode.Data;
-        }
-
-        private BstNode DeleteRecursive(BstNode currentNode, int data)
-        {
-            if (currentNode.Data == data)
-            {
-
-            }
-            return currentNode;
         }
 
         public BstNode Add(int data)
@@ -174,20 +168,6 @@ namespace InterviewPrep.Core.BinaryTrees
                 currentNode.Right = InsertRecursive(currentNode.Right, data);
             }
             return currentNode;
-        }
-
-        private static List<int> GetRangeReal(List<int> list, int lowIndex, int highIndex)
-        {
-            var subList = new List<int>();
-            if (lowIndex > highIndex || highIndex > list.Count - 1)
-            {
-                return subList;
-            }
-            for (var i = lowIndex; i <= highIndex; i++)
-            {
-                subList.Add(list[i]);
-            }
-            return subList;
         }
     }
 }

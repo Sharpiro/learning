@@ -23,12 +23,26 @@ namespace InterviewPrep.CoreTests
         {
             var list = new List<int> { 3, 6, 9, 11, 15 };
             var tree = BinarySearchTree.CreateBalancedBST(list);
+            var newList = tree.PreOrderTraversal();
+            Assert.AreEqual(9, newList[0]);
+            Assert.AreEqual(3, newList[1]);
+            Assert.AreEqual(6, newList[2]);
+            Assert.AreEqual(11, newList[3]);
+            Assert.AreEqual(15, newList[4]);
         }
 
         [TestMethod]
         public void DeleteTest()
         {
-            throw new NotImplementedException();
+            var list = new List<int> { 3, 6, 9, 11, 15 };
+            var tree = BinarySearchTree.CreateBalancedBST(list);
+            tree.Delete(9);
+            var newList = tree.PreOrderTraversal();
+            Assert.AreEqual(6, newList[0]);
+            Assert.AreEqual(3, newList[1]);
+            Assert.AreEqual(11, newList[2]);
+            Assert.AreEqual(15, newList[3]);
+            Assert.AreEqual(list.Count - 1, newList.Count);
         }
 
         [TestMethod]
