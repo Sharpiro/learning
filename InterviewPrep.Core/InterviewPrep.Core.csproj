@@ -54,7 +54,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BinaryTrees\BinarySearchTree.cs" />
-    <Compile Include="BinaryTrees\BstNode.cs" />
     <Compile Include="CsvReader.cs" />
     <Compile Include="CustomHashTable.cs" />
     <Compile Include="Data Access\Context.cs" />

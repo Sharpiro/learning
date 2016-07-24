@@ -100,7 +100,7 @@ namespace InterviewPrep.Core.BinaryTrees
             return max;
         }
 
-        public int GetMinRecursive()
+        public int GetMin()
         {
             return PrivateGetMinRecursive(Root);
         }
@@ -113,7 +113,7 @@ namespace InterviewPrep.Core.BinaryTrees
             return data;
         }
 
-        public int GetMaxRecursive()
+        public int GetMax()
         {
             return PrivateGetMaxRecursive(Root);
         }
@@ -169,6 +169,13 @@ namespace InterviewPrep.Core.BinaryTrees
             }
             return currentNode;
         }
+    }
+
+    public class BstNode
+    {
+        public int Data { get; set; }
+        public BstNode Left { get; set; }
+        public BstNode Right { get; set; }
     }
 }
 

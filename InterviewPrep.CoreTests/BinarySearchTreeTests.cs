@@ -12,10 +12,17 @@ namespace InterviewPrep.CoreTests
         [TestMethod]
         public void AddTest()
         {
-            var tree = CreateTree(5);
+            var tree = new BinarySearchTree();
+            tree.Add(5);
+            tree.Add(8);
+            tree.Add(3);
             Assert.IsNotNull(tree.Root);
+            Assert.AreEqual(5, tree.Root.Data);
             Assert.IsNotNull(tree.Root.Right);
-            Assert.IsNull(tree.Root.Left);
+            Assert.AreEqual(8, tree.Root.Right.Data);
+            Assert.IsNotNull(tree.Root.Left);
+            Assert.AreEqual(3, tree.Root.Left.Data);
+            Assert.IsNull(tree.Root.Left.Left);
         }
 
         [TestMethod]
@@ -62,8 +69,8 @@ namespace InterviewPrep.CoreTests
                 var tree = CreateTreeFromList(list);
                 list.Sort();
                 var listMin = list.FirstOrDefault();
-                var minRecursive = tree.GetMinRecursive();
-                var minIterative = tree.GetMinIterative();
+                var minRecursive = tree.GetMin();
+                var minIterative = tree.GetMin();
                 Assert.AreEqual(listMin, minRecursive);
                 Assert.AreEqual(listMin, minIterative);
             }
@@ -78,8 +85,8 @@ namespace InterviewPrep.CoreTests
                 var tree = CreateTreeFromList(list);
                 list.Sort();
                 var listMin = list.LastOrDefault();
-                var maxRecursive = tree.GetMaxRecursive();
-                var maxIterative = tree.GetMaxIterative();
+                var maxRecursive = tree.GetMax();
+                var maxIterative = tree.GetMax();
                 Assert.AreEqual(listMin, maxRecursive);
                 Assert.AreEqual(listMin, maxIterative);
             }
