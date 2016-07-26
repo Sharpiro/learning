@@ -70,7 +70,9 @@
     <Compile Include="LogicGates\AndGate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Searcher.cs" />
-    <Compile Include="Sorting\Sorting.cs" />
+    <Compile Include="Sorting\ISorter.cs" />
+    <Compile Include="Sorting\MergeSort.cs" />
+    <Compile Include="Sorting\Quicksort.cs" />
     <Compile Include="StringFunctions.cs" />
     <Compile Include="Time\TimeFunctions.cs" />
   </ItemGroup>

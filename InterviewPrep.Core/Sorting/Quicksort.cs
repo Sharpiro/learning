@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace InterviewPrep.Core.Sorting
 {
@@ -8,9 +9,14 @@ namespace InterviewPrep.Core.Sorting
     /// Worst case: O(n^2)
     /// used by LINQ 2 Objects "OrderBy"
     /// </summary>
-    public static class Sorting
+    public class QuickSort : ISorter
     {
-        public static IEnumerable<int> QuickSortEasy(int[] list, int lowIndex, int highIndex)
+        public IEnumerable<int> Sort(IEnumerable<int> list)
+        {
+            return QuickSortEasy(list.ToArray(), 0, list.Count() - 1);
+        }
+
+        private IEnumerable<int> QuickSortEasy(int[] list, int lowIndex, int highIndex)
         {
             if (lowIndex < highIndex)
             {
@@ -21,7 +27,7 @@ namespace InterviewPrep.Core.Sorting
             return list;
         }
 
-        private static int PartitionEasy(int[] list, int lowIndex, int highIndex)
+        private int PartitionEasy(int[] list, int lowIndex, int highIndex)
         {
             var pivotValue = list[highIndex];
             var globalIndex = lowIndex;
@@ -38,7 +44,7 @@ namespace InterviewPrep.Core.Sorting
             return globalIndex;
         }
 
-        private static void Swap(ref int number1, ref int number2)
+        private void Swap(ref int number1, ref int number2)
         {
             var temp = number1;
             number1 = number2;
