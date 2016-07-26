@@ -8,6 +8,15 @@ namespace InterviewPrep.CoreTests
     public class HashTableTests
     {
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void AddFailTest()
+        {
+            var hasher = new CustomHashTable();
+            hasher.Add(1, 1);
+            hasher.Add(1, 2);
+        }
+
+        [TestMethod]
         public void GetHashTest()
         {
             var hasher = new CustomHashTable();
@@ -16,19 +25,11 @@ namespace InterviewPrep.CoreTests
             Assert.AreEqual(1, hash);
             key = 127;
             hash = hasher.GetHash(key);
+            hasher.Add(key, 1);
             Assert.AreEqual(127, hash);
             key = 1023;
             hash = hasher.GetHash(key);
-            Assert.AreEqual(127, hash);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void AddTest()
-        {
-            var hasher = new CustomHashTable();
-            hasher.Add(1, 1);
-            hasher.Add(1, 2);
+            Assert.AreEqual(0, hash);
         }
 
         [TestMethod]
@@ -61,6 +62,17 @@ namespace InterviewPrep.CoreTests
             Assert.AreEqual(0, hasher.Length);
             hasher.Add(1, 1);
             Assert.AreEqual(1, hasher.Length);
+        }
+
+        [TestMethod]
+        public void RemoveTest()
+        {
+            var hasher = new CustomHashTable();
+            hasher.Add(1, 1);
+            hasher.Add(2, 1);
+            hasher.Add(3, 1);
+            hasher.Remove(2);
+            Assert.AreEqual(2, hasher.Length);
         }
     }
 }

@@ -18,8 +18,6 @@ namespace InterviewPrep.Core
 
         public void Add(int key, int value)
         {
-            if (Length == _maxSize)
-                throw new ArgumentException("Hash table is full.");
             var hash = GetHash(key);
             if (_table[hash] != null)
                 throw new ArgumentException("An item with the same key has already been added.");
@@ -35,8 +33,18 @@ namespace InterviewPrep.Core
             return value;
         }
 
+        public void Remove(int key)
+        {
+            var hash = GetHash(key);
+            if (_table[hash] == null)
+                throw new ArgumentException("no item found with the provided key.");
+            _table[hash] = null;
+        }
+
         public int GetHash(int key)
         {
+            if (Length == _maxSize)
+                throw new ArgumentException("Hash table is full.");
             var hash = key % _maxSize;
             //if set value is null return
             //if set value's keys are equal, return
