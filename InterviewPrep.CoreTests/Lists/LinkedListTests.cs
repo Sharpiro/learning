@@ -8,24 +8,6 @@ namespace InterviewPrep.CoreTests.Lists
     public class LinkedListTests
     {
         [TestMethod]
-        public void AddFirstTest()
-        {
-            var list = new ComplexLinkedList();
-            list.AddLast(1);
-            list.AddLast(2);
-            list.AddLast(3);
-            list.AddFirst(50);
-            var first = list.First;
-            var second = first.Next;
-            var third = second.Next;
-            var fourth = third.Next;
-            Assert.AreEqual(50, first.Value);
-            Assert.AreEqual(1, second.Value);
-            Assert.AreEqual(2, third.Value);
-            Assert.AreEqual(3, fourth.Value);
-        }
-
-        [TestMethod]
         public void AddLastTest()
         {
             var list = new ComplexLinkedList();
@@ -37,10 +19,28 @@ namespace InterviewPrep.CoreTests.Lists
             var second = first.Next;
             var third = second.Next;
             var fourth = third.Next;
-            Assert.AreEqual(1, first.Value);
-            Assert.AreEqual(2, second.Value);
-            Assert.AreEqual(3, third.Value);
-            Assert.AreEqual(50, fourth.Value);
+            Assert.AreEqual(1, first.Data);
+            Assert.AreEqual(2, second.Data);
+            Assert.AreEqual(3, third.Data);
+            Assert.AreEqual(50, fourth.Data);
+        }
+
+        [TestMethod]
+        public void AddFirstTest()
+        {
+            var list = new ComplexLinkedList();
+            list.AddLast(1);
+            list.AddLast(2);
+            list.AddLast(3);
+            list.AddFirst(50);
+            var first = list.First;
+            var second = first.Next;
+            var third = second.Next;
+            var fourth = third.Next;
+            Assert.AreEqual(50, first.Data);
+            Assert.AreEqual(1, second.Data);
+            Assert.AreEqual(2, third.Data);
+            Assert.AreEqual(3, fourth.Data);
         }
 
         [TestMethod]
@@ -55,10 +55,10 @@ namespace InterviewPrep.CoreTests.Lists
             var second = first.Next;
             var third = second.Next;
             var fourth = third.Next;
-            Assert.AreEqual(1, first.Value);
-            Assert.AreEqual(2, second.Value);
-            Assert.AreEqual(50, third.Value);
-            Assert.AreEqual(3, fourth.Value);
+            Assert.AreEqual(1, first.Data);
+            Assert.AreEqual(2, second.Data);
+            Assert.AreEqual(50, third.Data);
+            Assert.AreEqual(3, fourth.Data);
         }
 
         [TestMethod]
@@ -73,22 +73,10 @@ namespace InterviewPrep.CoreTests.Lists
             var second = first.Next;
             var third = second.Next;
             var fourth = third.Next;
-            Assert.AreEqual(1, first.Value);
-            Assert.AreEqual(2, second.Value);
-            Assert.AreEqual(50, third.Value);
-            Assert.AreEqual(3, fourth.Value);
-        }
-
-        [TestMethod]
-        public void CountTest()
-        {
-            var list = new ComplexLinkedList();
-            list.AddLast(1);
-            list.AddLast(2);
-            list.AddLast(3);
-            list.AddLast(3);
-            list.AddLast(3);
-            Assert.AreEqual(5, list.Count);
+            Assert.AreEqual(1, first.Data);
+            Assert.AreEqual(2, second.Data);
+            Assert.AreEqual(50, third.Data);
+            Assert.AreEqual(3, fourth.Data);
         }
 
         [TestMethod]
@@ -100,7 +88,7 @@ namespace InterviewPrep.CoreTests.Lists
             list.AddLast(3);
             list.AddLast(50);
             var first = list.Find(3); ;
-            Assert.AreEqual(3, first.Value);
+            Assert.AreEqual(3, first.Data);
         }
 
         [TestMethod]
@@ -116,6 +104,25 @@ namespace InterviewPrep.CoreTests.Lists
         }
 
         [TestMethod]
+        public void RemoveTest()
+        {
+            var list = new ComplexLinkedList();
+            list.AddLast(1);
+            var node = list.AddLast(2);
+            list.AddLast(3);
+            list.AddLast(50);
+            list.Remove(node);
+            var first = list.First;
+            var second = first.Next;
+            var third = second.Next;
+            var fourth = third.Next;
+            Assert.AreEqual(1, first.Data);
+            Assert.AreEqual(3, second.Data);
+            Assert.AreEqual(50, third.Data);
+            Assert.AreEqual(null, fourth);
+        }
+
+        [TestMethod]
         public void RemoveFirstTest()
         {
             var list = new ComplexLinkedList();
@@ -128,9 +135,9 @@ namespace InterviewPrep.CoreTests.Lists
             var second = first.Next;
             var third = second.Next;
             var fourth = third.Next;
-            Assert.AreEqual(2, first.Value);
-            Assert.AreEqual(50, second.Value);
-            Assert.AreEqual(3, third.Value);
+            Assert.AreEqual(2, first.Data);
+            Assert.AreEqual(50, second.Data);
+            Assert.AreEqual(3, third.Data);
             Assert.AreEqual(null, fourth);
         }
 
@@ -145,8 +152,8 @@ namespace InterviewPrep.CoreTests.Lists
             var first = list.First;
             var second = first.Next;
             var third = second.Next;
-            Assert.AreEqual(1, first.Value);
-            Assert.AreEqual(2, second.Value);
+            Assert.AreEqual(1, first.Data);
+            Assert.AreEqual(2, second.Data);
             Assert.AreEqual(null, third);
         }
 
@@ -171,27 +178,22 @@ namespace InterviewPrep.CoreTests.Lists
             list.AddLast(2);
             list.RemoveFirst();
             var first = list.First;
-            Assert.AreEqual(2, first.Value);
+            Assert.AreEqual(2, first.Data);
             Assert.AreEqual(4, list.Count);
         }
 
         [TestMethod]
-        public void RemoveTest()
+        public void CountTest()
         {
             var list = new ComplexLinkedList();
             list.AddLast(1);
-            var node = list.AddLast(2);
+            list.AddLast(2);
             list.AddLast(3);
-            list.AddLast(50);
-            list.Remove(node);
-            var first = list.First;
-            var second = first.Next;
-            var third = second.Next;
-            var fourth = third.Next;
-            Assert.AreEqual(1, first.Value);
-            Assert.AreEqual(3, second.Value);
-            Assert.AreEqual(50, third.Value);
-            Assert.AreEqual(null, fourth);
+            list.AddLast(3);
+            list.AddLast(3);
+            Assert.AreEqual(5, list.Count);
+            list.RemoveFirst();
+            Assert.AreEqual(4, list.Count);
         }
 
         [TestMethod]
