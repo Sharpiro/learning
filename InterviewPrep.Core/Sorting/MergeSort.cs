@@ -8,53 +8,58 @@
     {
         public int[] Sort(int[] list)
         {
-            if (list.Length == 1)
-                return list;
-            var mid = (list.Length - 1) / 2;
-            var leftList = GetFrom(list, 0, mid);
-            var rightList = GetFrom(list, mid + 1, list.Length - 1);
-            leftList = Sort(leftList);
-            rightList = Sort(rightList);
-            return Merge(leftList, rightList);
+            Sort(list, 0, list.Length - 1);
+            return list;
         }
 
-        private int[] Merge(int[] leftList, int[] rightList)
+        private void Sort(int[] list, int lowIndex, int highIndex)
         {
-            var mergedList = new int[leftList.Length + rightList.Length];
-            var i = 0;
-            var j = 0;
-            var k = 0;
-            while (i < leftList.Length && j < rightList.Length)
+            if (lowIndex < highIndex)
+            {
+                int pivot = (lowIndex + highIndex) / 2;
+                Sort(list, lowIndex, pivot);
+                Sort(list, pivot + 1, highIndex);
+                Merge(list, lowIndex, pivot, highIndex);
+            }
+        }
+
+        private void Merge(int[] list, int lowIndex, int pivot, int highIndex)
+        {
+            var leftList = list.GetFrom(lowIndex, pivot);
+            var rightList = list.GetFrom(pivot + 1, highIndex);
+            int i = 0, j = 0, k;
+
+            for (k = lowIndex; i < leftList.Length && j < rightList.Length; k++)
             {
                 if (leftList[i] > rightList[j])
                 {
-                    mergedList[k] = (rightList[j]);
+                    list[k] = (rightList[j]);
                     j++;
-                    k++;
                 }
                 else
                 {
-                    mergedList[k] = (leftList[i]);
+                    list[k] = (leftList[i]);
                     i++;
-                    k++;
                 }
             }
             while (i < leftList.Length)
             {
-                mergedList[k] = (leftList[i]);
+                list[k] = (leftList[i]);
                 i++;
                 k++;
             }
             while (j < rightList.Length)
             {
-                mergedList[k] = (rightList[j]);
+                list[k] = (rightList[j]);
                 j++;
                 k++;
             }
-            return mergedList;
         }
+    }
 
-        private int[] GetFrom(int[] list, int startIndex, int endIndex)
+    public static class Extensions
+    {
+        public static int[] GetFrom(this int[] list, int startIndex, int endIndex)
         {
             var newList = new int[endIndex - startIndex + 1];
             var j = 0;
