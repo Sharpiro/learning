@@ -27,7 +27,7 @@ namespace InterviewPrep.CoreTests
         }
 
         [TestMethod]
-        public void QuickSortTest1()
+        public void SortTest1()
         {
             int[] unsorted = { 4, 3, 7, 8, 5, 2, 1, 9, 5, 4 };
             var expected = unsorted.OrderBy(number => number).ToList();
@@ -39,7 +39,7 @@ namespace InterviewPrep.CoreTests
         }
 
         [TestMethod]
-        public void QuickSortTest2()
+        public void SortTest2()
         {
             int[] unsorted = { 1, 3, 9, 8, 2, 7, 5 };
             var expected = unsorted.OrderBy(number => number).ToList();
@@ -51,7 +51,7 @@ namespace InterviewPrep.CoreTests
         }
 
         [TestMethod]
-        public void QuickSortTest3()
+        public void SortTest3()
         {
             var unsorted = new int[] { 1, 3, 9, 8, 2, 2, 2, 9, 7, 5, 2 };
             var expected = unsorted.OrderBy(number => number).ToList();
@@ -63,7 +63,7 @@ namespace InterviewPrep.CoreTests
         }
 
         [TestMethod]
-        public void QuickSortTest4()
+        public void SortTest4()
         {
             var unsorted = new int[] { 12, 7, 14, 9, 10, 11 };
             var expected = unsorted.OrderBy(number => number).ToList();
@@ -75,7 +75,7 @@ namespace InterviewPrep.CoreTests
         }
 
         [TestMethod]
-        public void QuickSortTest5()
+        public void SortTest5()
         {
             var unsorted = new int[] { 9, 7, 5, 11, 12, 2, 14, 3, 10, 6 };
             var expected = unsorted.OrderBy(number => number).ToList();

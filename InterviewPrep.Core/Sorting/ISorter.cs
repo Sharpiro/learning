@@ -4,6 +4,6 @@ namespace InterviewPrep.Core.Sorting
 {
     public interface ISorter
     {
-        IEnumerable<int> Sort(IEnumerable<int> list);
+        int[] Sort(int[] list);
     }
 }

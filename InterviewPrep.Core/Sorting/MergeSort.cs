@@ -1,69 +1,67 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace InterviewPrep.Core.Sorting
+﻿namespace InterviewPrep.Core.Sorting
 {
+    /// <summary>
+    /// Average & Worst case: O(n log n)
+    /// still usually worse than quick sort though...
+    /// </summary>
     public class MergeSort : ISorter
     {
-        public IEnumerable<int> Sort(IEnumerable<int> list)
+        public int[] Sort(int[] list)
         {
-            return SortX(list.ToList());
-        }
-
-        private List<int> SortX(List<int> list)
-        {
-            if (list.Count < 2)
+            if (list.Length == 1)
                 return list;
-            var mid = (list.Count - 1) / 2;
+            var mid = (list.Length - 1) / 2;
             var leftList = GetFrom(list, 0, mid);
-            var rightList = GetFrom(list, mid + 1, list.Count - 1);
-            leftList = SortX(leftList);
-            rightList = SortX(rightList);
+            var rightList = GetFrom(list, mid + 1, list.Length - 1);
+            leftList = Sort(leftList);
+            rightList = Sort(rightList);
             return Merge(leftList, rightList);
         }
 
-        private List<int> Merge(List<int> leftList, List<int> rightList)
+        private int[] Merge(int[] leftList, int[] rightList)
         {
-            var mergedList = new List<int>();
+            var mergedList = new int[leftList.Length + rightList.Length];
             var i = 0;
             var j = 0;
             var k = 0;
-            while (i < leftList.Count && j < rightList.Count)
+            while (i < leftList.Length && j < rightList.Length)
             {
                 if (leftList[i] > rightList[j])
                 {
-                    mergedList.Add(rightList[j]);
+                    mergedList[k] = (rightList[j]);
                     j++;
                     k++;
                 }
                 else
                 {
-                    mergedList.Add(leftList[i]);
+                    mergedList[k] = (leftList[i]);
                     i++;
                     k++;
                 }
             }
-            while (i < leftList.Count)
+            while (i < leftList.Length)
             {
-                mergedList.Add(leftList[i]);
+                mergedList[k] = (leftList[i]);
                 i++;
                 k++;
             }
-            while (j < rightList.Count)
+            while (j < rightList.Length)
             {
-                mergedList.Add(rightList[j]);
+                mergedList[k] = (rightList[j]);
                 j++;
                 k++;
             }
             return mergedList;
         }
 
-        private List<int> GetFrom(List<int> list, int startIndex, int endIndex)
+        private int[] GetFrom(int[] list, int startIndex, int endIndex)
         {
-            var newList = new List<int>();
+            var newList = new int[endIndex - startIndex + 1];
+            var j = 0;
             for (var i = startIndex; i <= endIndex; i++)
             {
-                newList.Add(list[i]);
+                newList[j] = (list[i]);
+                j++;
             }
             return newList;
         }

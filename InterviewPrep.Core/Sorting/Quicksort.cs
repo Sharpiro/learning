@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace InterviewPrep.Core.Sorting
+﻿namespace InterviewPrep.Core.Sorting
 {
     /// <summary>
     /// Can be unstable or stable: order is not preserved or preserved respectively if items are equal
@@ -11,12 +8,12 @@ namespace InterviewPrep.Core.Sorting
     /// </summary>
     public class QuickSort : ISorter
     {
-        public IEnumerable<int> Sort(IEnumerable<int> list)
+        public int[] Sort(int[] list)
         {
-            return QuickSortEasy(list.ToArray(), 0, list.Count() - 1);
+            return QuickSortEasy(list, 0, list.Length - 1);
         }
 
-        private IEnumerable<int> QuickSortEasy(int[] list, int lowIndex, int highIndex)
+        private int[] QuickSortEasy(int[] list, int lowIndex, int highIndex)
         {
             if (lowIndex < highIndex)
             {
