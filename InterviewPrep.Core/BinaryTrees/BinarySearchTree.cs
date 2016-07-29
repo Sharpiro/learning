@@ -146,6 +146,23 @@ namespace InterviewPrep.Core.BinaryTrees
             return tempNode.Data;
         }
 
+        public BstNode Find(int data)
+        {
+            return PrivateFind(Root, data);
+        }
+
+        private BstNode PrivateFind(BstNode current, int data)
+        {
+            if (current == null)
+                return null;
+            if (current.Data == data)
+                return current;
+            if (data <= current.Data)
+                return PrivateFind(current.Left, data);
+            else
+                return PrivateFind(current.Right, data);
+        }
+
         public BstNode Add(int data)
         {
             return InsertRecursive(Root, data);

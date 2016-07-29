@@ -26,6 +26,23 @@ namespace InterviewPrep.CoreTests
         }
 
         [TestMethod]
+        public void FindTest()
+        {
+            var tree = new BinarySearchTree();
+            tree.Add(5);
+            tree.Add(8);
+            tree.Add(3);
+            var node1 = tree.Find(5);
+            var node2 = tree.Find(8);
+            var node3 = tree.Find(3);
+            var node4 = tree.Find(99);
+            Assert.AreEqual(5, node1.Data);
+            Assert.AreEqual(8, node2.Data);
+            Assert.AreEqual(3, node3.Data);
+            Assert.AreEqual(null, node4);
+        }
+
+        [TestMethod]
         public void CreateBalancedBSTTest()
         {
             var list = new List<int> { 3, 6, 9, 11, 15 };
