@@ -42,41 +42,9 @@ namespace InterviewPrep.CoreTests
             Assert.AreEqual(null, node4);
         }
 
-        [TestMethod]
-        public void CreateBalancedBSTTest()
-        {
-            var list = new List<int> { 3, 6, 9, 11, 15 };
-            var tree = BinarySearchTree.CreateBalancedBST(list);
-            var newList = tree.PreOrderTraversal();
-            Assert.AreEqual(9, newList[0]);
-            Assert.AreEqual(3, newList[1]);
-            Assert.AreEqual(6, newList[2]);
-            Assert.AreEqual(11, newList[3]);
-            Assert.AreEqual(15, newList[4]);
-        }
-
-        [TestMethod]
-        public void DeleteTest()
-        {
-            var list = new List<int> { 3, 6, 9, 11, 15 };
-            var tree = BinarySearchTree.CreateBalancedBST(list);
-            tree.Delete(9);
-            var newList = tree.PreOrderTraversal();
-            Assert.AreEqual(6, newList[0]);
-            Assert.AreEqual(3, newList[1]);
-            Assert.AreEqual(11, newList[2]);
-            Assert.AreEqual(15, newList[3]);
-            Assert.AreEqual(list.Count - 1, newList.Count);
-        }
-
-        [TestMethod]
-        public void GetTreeHeightTest()
-        {
-            var tree = CreateTree(10);
-            var treeHeight = tree.GetTreeHeight();
-            Assert.AreEqual(treeHeight, 9);
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
         [TestMethod]
         public void GetMinTest()
         {
@@ -86,10 +54,8 @@ namespace InterviewPrep.CoreTests
                 var tree = CreateTreeFromList(list);
                 list.Sort();
                 var listMin = list.FirstOrDefault();
-                var minRecursive = tree.GetMin();
-                var minIterative = tree.GetMin();
-                Assert.AreEqual(listMin, minRecursive);
-                Assert.AreEqual(listMin, minIterative);
+                var minNode = tree.FindMin();
+                Assert.AreEqual(listMin, minNode.Data);
             }
         }
 
@@ -102,10 +68,8 @@ namespace InterviewPrep.CoreTests
                 var tree = CreateTreeFromList(list);
                 list.Sort();
                 var listMin = list.LastOrDefault();
-                var maxRecursive = tree.GetMax();
-                var maxIterative = tree.GetMax();
-                Assert.AreEqual(listMin, maxRecursive);
-                Assert.AreEqual(listMin, maxIterative);
+                var maxNode = tree.FindMax();
+                Assert.AreEqual(listMin, maxNode.Data);
             }
         }
 
@@ -124,6 +88,52 @@ namespace InterviewPrep.CoreTests
             Assert.AreEqual(6, list[2]);
             Assert.AreEqual(15, list[3]);
             Assert.AreEqual(11, list[4]);
+        }
+
+        [TestMethod]
+        public void CreateBalancedBSTTest()
+        {
+            var list = new int[] { 3, 6, 9, 11, 15 };
+            var tree = BinarySearchTree.CreateBalancedTree(list);
+            var newList = tree.PreOrderTraversal();
+            Assert.AreEqual(9, newList[0]);
+            Assert.AreEqual(3, newList[1]);
+            Assert.AreEqual(6, newList[2]);
+            Assert.AreEqual(11, newList[3]);
+            Assert.AreEqual(15, newList[4]);
+        }
+
+        [TestMethod]
+        public void DeleteTest()
+        {
+            var list = new int[] { 3, 6, 9, 11, 15 };
+            var tree = BinarySearchTree.CreateBalancedTree(list);
+            tree.Delete(6);
+            var newList = tree.PreOrderTraversal();
+            Assert.AreEqual(9, newList[0]);
+            Assert.AreEqual(3, newList[1]);
+            Assert.AreEqual(11, newList[2]);
+            Assert.AreEqual(15, newList[3]);
+            Assert.AreEqual(list.Count() - 1, newList.Count);
+            tree.Delete(11);
+            newList = tree.PreOrderTraversal();
+            Assert.AreEqual(9, newList[0]);
+            Assert.AreEqual(3, newList[1]);
+            Assert.AreEqual(15, newList[2]);
+            Assert.AreEqual(list.Count() - 2, newList.Count);
+            tree.Delete(9);
+            newList = tree.PreOrderTraversal();
+            Assert.AreEqual(15, newList[0]);
+            Assert.AreEqual(3, newList[1]);
+            Assert.AreEqual(list.Count() - 3, newList.Count);
+        }
+
+        [TestMethod]
+        public void GetTreeHeightTest()
+        {
+            var tree = CreateTree(10);
+            var treeHeight = tree.GetTreeHeight();
+            Assert.AreEqual(treeHeight, 9);
         }
 
         [TestMethod]
