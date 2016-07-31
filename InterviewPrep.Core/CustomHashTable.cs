@@ -5,7 +5,12 @@ namespace InterviewPrep.Core
 {
     public class CustomHashTable
     {
-        public int Length { get { return _table.Where(set => set != null).Count(); } }
+        public int Length { get { return _table.Count(s => s != null); } }
+        public int this[int index]
+        {
+            get { return Get(index); }
+            set { AddOrUpdate(index, value); }
+        }
 
         private readonly int _maxSize;
         private Set[] _table;
@@ -20,38 +25,42 @@ namespace InterviewPrep.Core
         {
             var hash = GetHash(key);
             if (_table[hash] != null)
-                throw new ArgumentException("An item with the same key has already been added.");
+                throw new ArgumentException("a value with that key already exists");
             _table[hash] = new Set { Key = key, Value = value };
+        }
+
+        public void AddOrUpdate(int key, int value)
+        {
+            var hash = GetHash(key);
+            _table[hash] = new Set { Key = key, Value = value };
+        }
+
+        public int GetHash(int key)
+        {
+            if (Length == _maxSize)
+                throw new ArgumentException("The table is full");
+            var hash = key % _maxSize;
+            while (_table[hash] != null && _table[hash].Key != key)
+            {
+                hash = (hash + 1) % _maxSize;
+            }
+            return hash;
         }
 
         public int Get(int key)
         {
             var hash = GetHash(key);
             if (_table[hash] == null)
-                throw new ArgumentException("The key does not exist in the table");
-            var value = _table[hash].Value;
-            return value;
+                throw new ArgumentException("a value with that key does not exist");
+            return _table[hash].Value;
         }
 
         public void Remove(int key)
         {
             var hash = GetHash(key);
             if (_table[hash] == null)
-                throw new ArgumentException("no item found with the provided key.");
+                throw new ArgumentException("a value with that key does not exist");
             _table[hash] = null;
-        }
-
-        public int GetHash(int key)
-        {
-            if (Length == _maxSize)
-                throw new ArgumentException("Hash table is full.");
-            var hash = key % _maxSize;
-            //if set value is null return
-            //if set value's keys are equal, return
-            //otherwise keep computing
-            while (_table[hash] != null && _table[hash].Key != key)
-                hash = (hash + 1) % _maxSize;
-            return hash;
         }
     }
 

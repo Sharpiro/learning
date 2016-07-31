@@ -21,7 +21,7 @@ namespace InterviewPrep.Core
         public static bool HasDupesHashSet(List<int> list)
         {
             var hashSet = new HashSet<int>();
-            for (var i = 0; i < list.Count - 1; i++)
+            for (var i = 0; i < list.Count; i++)
             {
                 if (hashSet.Contains(list[i]))
                     return true;

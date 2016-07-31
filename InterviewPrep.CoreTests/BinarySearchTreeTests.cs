@@ -42,9 +42,6 @@ namespace InterviewPrep.CoreTests
             Assert.AreEqual(null, node4);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         [TestMethod]
         public void GetMinTest()
         {

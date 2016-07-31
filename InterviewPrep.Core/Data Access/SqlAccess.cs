@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using Dapper;
+using System.Data.Entity;
 
 namespace InterviewPrep.Core.Data_Access
 {
@@ -11,7 +11,8 @@ namespace InterviewPrep.Core.Data_Access
     {
         public static void ExecuteEfSqlCommand(string connectionString, string sqlString)
         {
-            Context.ConnectionString = connectionString;
+            var config = new Config(connectionString);
+            DbConfiguration.SetConfiguration(config);
             using (var context = new Context())
             {
                 var roles = context.Users.ToList();

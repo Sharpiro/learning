@@ -17,6 +17,21 @@ namespace InterviewPrep.CoreTests
             _simpleNoDupes = new List<int> { 1, 2, 99, 34, 55, 3, 9, 100 };
             _largeListNoDupes = Duplicates.CreateLargeList(1000);
         }
+        [TestMethod]
+        public void LastItemIsDupeTest()
+        {
+            var list = new List<int> { 1, 9, 3, 5, 1 };
+            var HasDupesIndex = Duplicates.HasDupesIndex(list);
+            var HasDupesHash = Duplicates.HasDupesHashSet(list);
+            var HasDupesSort = Duplicates.HasDupesSortFirst(list);
+            var HasDupesDistinct = Duplicates.HasDupesDistinct(list);
+            var HasDupesGroup = Duplicates.HasDupesGroupBy(list);
+            Assert.IsTrue(HasDupesIndex);
+            Assert.IsTrue(HasDupesHash);
+            Assert.IsTrue(HasDupesSort);
+            Assert.IsTrue(HasDupesDistinct);
+            Assert.IsTrue(HasDupesGroup);
+        }
 
         [TestMethod]
         public void HasDupesIndexTest()

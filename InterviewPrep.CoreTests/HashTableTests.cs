@@ -17,6 +17,14 @@ namespace InterviewPrep.CoreTests
         }
 
         [TestMethod]
+        public void AddOrUpdateTest()
+        {
+            var hasher = new CustomHashTable();
+            hasher.AddOrUpdate(1, 1);
+            hasher.AddOrUpdate(1, 2);
+        }
+
+        [TestMethod]
         public void GetHashTest()
         {
             var hasher = new CustomHashTable();
@@ -73,6 +81,21 @@ namespace InterviewPrep.CoreTests
             hasher.Add(3, 1);
             hasher.Remove(2);
             Assert.AreEqual(2, hasher.Length);
+        }
+
+        [TestMethod]
+        public void IndexerTest()
+        {
+            var hasher = new CustomHashTable();
+            hasher.Add(1, 1);
+            hasher.Add(127, 3);
+            hasher.Add(1023, 5);
+            var one = hasher[1];
+            var two = hasher[1023];
+            var three = hasher[127];
+            Assert.AreEqual(1, one);
+            Assert.AreEqual(5, two);
+            Assert.AreEqual(3, three);
         }
     }
 }

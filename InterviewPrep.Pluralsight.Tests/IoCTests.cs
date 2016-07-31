@@ -35,7 +35,7 @@ namespace InterviewPrep.Pluralsight.Tests
         {
             var ioc = new Container();
             ioc.For<ILogger>().Use<SqlLogger>();
-            ioc.For<IRepository<Employee>>().Use<SqlRepository<Employee>>();
+            ioc.For<IRepository<BetterEmployee>>().Use<SqlRepository<BetterEmployee>>();
 
             var service = ioc.Resolve<InvoiceService>();
 
