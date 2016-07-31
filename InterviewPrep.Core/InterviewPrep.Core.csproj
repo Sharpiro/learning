@@ -64,9 +64,9 @@
     <Compile Include="Fibonacci.cs" />
     <Compile Include="FizzBuzzWoof.cs" />
     <Compile Include="Lists\DoubleLinkedList\ILinkedList.cs" />
-    <Compile Include="Lists\SingleLinkedList\QueueSll.cs" />
+    <Compile Include="Lists\SingleLinkedList\CustomQueue.cs" />
     <Compile Include="Lists\DoubleLinkedList\ComplexLinkedList.cs" />
-    <Compile Include="Lists\SingleLinkedList\StackSll.cs" />
+    <Compile Include="Lists\SingleLinkedList\CustomStack.cs" />
     <Compile Include="LogicGates\AndGate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Searcher.cs" />

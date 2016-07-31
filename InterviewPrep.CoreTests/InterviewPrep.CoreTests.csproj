@@ -55,6 +55,7 @@
     <Compile Include="FibonacciTests.cs" />
     <Compile Include="HashTableTests.cs" />
     <Compile Include="Lists\LinkedListTests.cs" />
+    <Compile Include="Lists\StackTests.cs" />
     <Compile Include="Lists\QueueTests.cs" />
     <Compile Include="SearcherTests.cs" />
     <Compile Include="SortingTests.cs" />
