@@ -63,10 +63,10 @@
     <Compile Include="Duplicates.cs" />
     <Compile Include="Fibonacci.cs" />
     <Compile Include="FizzBuzzWoof.cs" />
-    <Compile Include="Lists\DoubleLinkedList\ILinkedList.cs" />
-    <Compile Include="Lists\SingleLinkedList\CustomQueue.cs" />
-    <Compile Include="Lists\DoubleLinkedList\ComplexLinkedList.cs" />
-    <Compile Include="Lists\SingleLinkedList\CustomStack.cs" />
+    <Compile Include="Lists\ILinkedList.cs" />
+    <Compile Include="Lists\CustomQueue.cs" />
+    <Compile Include="Lists\ComplexLinkedList.cs" />
+    <Compile Include="Lists\CustomStack.cs" />
     <Compile Include="LogicGates\AndGate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Searcher.cs" />

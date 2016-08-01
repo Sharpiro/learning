@@ -1,4 +1,4 @@
-﻿using InterviewPrep.Core.Lists.SingleLinkedList;
+﻿using InterviewPrep.Core.Lists;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;

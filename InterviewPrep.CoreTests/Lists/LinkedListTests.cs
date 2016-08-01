@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using InterviewPrep.Core.Lists.SingleLinkedList;
+using InterviewPrep.Core.Lists;
 using System.Linq;
 
 namespace InterviewPrep.CoreTests.Lists

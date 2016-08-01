@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace InterviewPrep.Core.Lists.SingleLinkedList
+namespace InterviewPrep.Core.Lists
 {
     public class ComplexLinkedList : IEnumerable<int>
     {

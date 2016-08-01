@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace InterviewPrep.Core.Lists.SingleLinkedList
+namespace InterviewPrep.Core.Lists
 {
     public interface ISimpleLinkedList
     {
