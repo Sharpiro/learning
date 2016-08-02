@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace InterviewPrep.Core
+﻿namespace InterviewPrep.Core
 {
     public static class FizzBuzzWoof
     {

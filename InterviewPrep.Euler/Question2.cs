@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace InterviewPrep.Euler
+﻿namespace InterviewPrep.Euler
 {
     /// <summary>
     /// Question 2

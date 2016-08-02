@@ -17,13 +17,13 @@ namespace InterviewPrep.Core.LogicGates
             var byte3 = Encoding.ASCII.GetBytes(three).FirstOrDefault();
             var byte4 = Encoding.ASCII.GetBytes(four);
             var binary = GetBinary(byte1);
-            var temp = 0 & 1;
-            var temp2 = 0 | 1;
-            var temp3 = 0 | 0;
-            var temp4 = 4 & 5;
-            var temp5 = 16 >> 1;
-            var temp6 = 64 >> 1;
-            var temp7 = 32 << 1;
+            // var temp = 0 & 1;
+            // var temp2 = 0 | 1;
+            // var temp3 = 0 | 0;
+            // var temp4 = 4 & 5;
+            // var temp5 = 16 >> 1;
+            // var temp6 = 64 >> 1;
+            // var temp7 = 32 << 1;
         }
 
         private string GetBinary(byte number)
