@@ -10,6 +10,7 @@ lib/
 *.js
 *.js.map
 */typings
+.vscode/**/*
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
