@@ -7,52 +7,71 @@ namespace InterviewPrep.Core.Graphs
     {
         private readonly List<string> _vertexList;
         private readonly List<Edge> _edgeList;
+        private readonly IDictionary<string, int> _vertexDictionary;
+
 
         public LinearGraph(List<string> vertexList, List<Edge> edgeList)
         {
             _vertexList = vertexList;
             _edgeList = edgeList;
+            _vertexDictionary = new Dictionary<string, int>();
+            InitializeDictionary();
         }
 
-        public bool AreNodesConnected(string nodeOne, string nodeTwo)
+        public bool AreNodesAdjacent(string nodeOne, string nodeTwo)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<int> FindAdjacentNodes(string node)
-        {
-            var nodePosition = FindNodePosition(node);
-            var adjacentNodes = new List<int>();
-            for (var i = 0; i < _edgeList.Count; i++)
+            var positionOne = _vertexDictionary[nodeOne];
+            var positionTwo = _vertexDictionary[nodeTwo];
+            foreach (var edge in _edgeList)
             {
-                var edge = _edgeList[i];
+                if (edge.FirstNode == positionOne && edge.SecondNode == positionTwo)
+                {
+                    return true;
+                }
+                else if (edge.FirstNode == positionTwo && edge.SecondNode == positionOne)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public List<string> FindAdjacentNodes(string node)
+        {
+            var nodePosition = _vertexDictionary[node];
+            var adjacentNodes = new List<string>();
+            foreach (var edge in _edgeList)
+            {
                 if (edge.FirstNode == nodePosition)
                 {
-                    adjacentNodes.Add(edge.SecondNode);
+                    adjacentNodes.Add(_vertexList[edge.SecondNode]);
                 }
                 if (edge.SecondNode == nodePosition)
                 {
-                    adjacentNodes.Add(edge.FirstNode);
+                    adjacentNodes.Add(_vertexList[edge.FirstNode]);
                 }
             }
             return adjacentNodes;
         }
 
-        public int FindNodePosition(string node)
+        private void InitializeDictionary()
         {
-            for (int i = 0; i < _vertexList.Count; i++)
+            for (var i = 0; i < _vertexList.Count; i++)
             {
-                if (_vertexList[i] == node)
-                    return i;
+                _vertexDictionary.Add(_vertexList[i], i);
             }
-            throw new ArgumentException("could not find the node specifid", nameof(node));
         }
     }
 
-    public class Edge
+    public class Edge : IEquatable<Edge>
     {
         public int FirstNode { get; set; }
         public int SecondNode { get; set; }
         public int Weight { get; set; }
+
+        public bool Equals(Edge other)
+        {
+            return this.FirstNode == other.FirstNode && this.SecondNode == other.SecondNode;
+        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using InterviewPrep.Core.Graphs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 
 namespace InterviewPrep.CoreTests
@@ -8,7 +7,7 @@ namespace InterviewPrep.CoreTests
     [TestClass]
     public class GraphTests
     {
-        private IGraph _graph;
+        private readonly IGraph _graph;
         private readonly List<string> _vertexList;
         private readonly List<Edge> _edgeList;
 
@@ -17,7 +16,7 @@ namespace InterviewPrep.CoreTests
             _vertexList = new List<string> { "A", "B", "C", "D", "E", "F", "G", "H" };
             _edgeList = new List<Edge>
             {
-                new Edge { FirstNode = 0, SecondNode = 1, Weight = 5 },
+                new Edge { FirstNode = 1, SecondNode = 0, Weight = 5 },
                 new Edge { FirstNode = 0, SecondNode = 2, Weight = 7 },
                 new Edge { FirstNode = 0, SecondNode = 3, Weight = 3 },
                 new Edge { FirstNode = 1, SecondNode = 4, Weight = 2 },
@@ -38,19 +37,39 @@ namespace InterviewPrep.CoreTests
         public void FindAdjacentNodes()
         {
             var node = _vertexList[0];
+            foreach (var vertex in _vertexList)
+            {
+                var adjacentNodes = _graph.FindAdjacentNodes(vertex);
+                foreach (var adjacentNode in adjacentNodes)
+                {
+                    Assert.IsTrue(_graph.AreNodesAdjacent(vertex, adjacentNode));
+                }
+            }
             var actual = _graph.FindAdjacentNodes(node);
-            Assert.AreEqual(1, actual[0]);
-            Assert.AreEqual(2, actual[1]);
-            Assert.AreEqual(3, actual[2]);
+            Assert.AreEqual(_vertexList[1], actual[0]);
+            Assert.AreEqual(_vertexList[2], actual[1]);
+            Assert.AreEqual(_vertexList[3], actual[2]);
         }
 
         /// <summary>
         /// determine if 2 nodes are connected
         /// </summary>
         [TestMethod]
-        public void AreNodesConnected()
+        public void AreNodesAdjacent()
         {
-            throw new NotImplementedException();
+            var nodeA = _vertexList[0];
+            var nodeB = _vertexList[1];
+            var nodeC = _vertexList[2];
+            var nodeD = _vertexList[3];
+            var nodeE = _vertexList[4];
+            var nodeF = _vertexList[5];
+            Assert.IsTrue(_graph.AreNodesAdjacent(nodeA, nodeB));
+            Assert.IsTrue(_graph.AreNodesAdjacent(nodeA, nodeC));
+            Assert.IsFalse(_graph.AreNodesAdjacent(nodeB, nodeC));
+
+            Assert.IsTrue(_graph.AreNodesAdjacent(nodeB, nodeE));
+            Assert.IsTrue(_graph.AreNodesAdjacent(nodeB, nodeF));
+            Assert.IsFalse(_graph.AreNodesAdjacent(nodeE, nodeF));
         }
     }
 }

@@ -4,7 +4,7 @@ namespace InterviewPrep.Core.Graphs
 {
     public interface IGraph
     {
-        List<int> FindAdjacentNodes(string node);
-        bool AreNodesConnected(string nodeOne, string nodeTwo);
+        bool AreNodesAdjacent(string nodeOne, string nodeTwo);
+        List<string> FindAdjacentNodes(string node);
     }
 }

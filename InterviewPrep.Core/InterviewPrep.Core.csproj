@@ -63,6 +63,8 @@
     <Compile Include="Duplicates.cs" />
     <Compile Include="Fibonacci.cs" />
     <Compile Include="FizzBuzzWoof.cs" />
+    <Compile Include="Graphs\AdjacencyListGraph.cs" />
+    <Compile Include="Graphs\AdjacencyMatrixGraph.cs" />
     <Compile Include="Graphs\IGraph.cs" />
     <Compile Include="Graphs\LinearGraph.cs" />
     <Compile Include="Lists\ILinkedList.cs" />
