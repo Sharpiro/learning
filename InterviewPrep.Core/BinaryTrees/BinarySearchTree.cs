@@ -122,6 +122,27 @@ namespace InterviewPrep.Core.BinaryTrees
             PreOrderTraversal(list, current.Right);
         }
 
+        public IList<int> LevelOrderTraversal()
+        {
+            var list = new List<int>();
+            LevelOrderTraversal(list, Root);
+            return list;
+        }
+
+        public void LevelOrderTraversal(IList<int> list, Node current)
+        {
+            var queue = new Queue<Node>(new[] { current });
+            while (queue.Count > 0)
+            {
+                current = queue.Dequeue();
+                if (current.Left != null)
+                    queue.Enqueue(current.Left);
+                if (current.Right != null)
+                    queue.Enqueue(current.Right);
+                list.Add(current.Data);
+            }
+        }
+
         public List<int> InOrderTraversal()
         {
             var list = new List<int>();

@@ -88,6 +88,27 @@ namespace InterviewPrep.CoreTests
         }
 
         [TestMethod]
+        public void LevelOrderTest()
+        {
+            var tree = new BinarySearchTree();
+            tree.Add(9);
+            tree.Add(3);
+            tree.Add(6);
+            tree.Add(15);
+            tree.Add(11);
+            var list = tree.LevelOrderTraversal();
+            Assert.AreEqual(9, list[0]);
+            Assert.AreEqual(3, list[1]);
+            Assert.AreEqual(15, list[2]);
+            Assert.AreEqual(6, list[3]);
+            Assert.AreEqual(11, list[4]);
+            list = new List<int>();
+            tree.LevelOrderTraversal(list, tree.Find(15));
+            Assert.AreEqual(15, list[0]);
+            Assert.AreEqual(11, list[1]);
+        }
+
+        [TestMethod]
         public void CreateBalancedBSTTest()
         {
             var list = new int[] { 3, 6, 9, 11, 15 };

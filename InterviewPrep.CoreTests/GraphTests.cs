@@ -1,6 +1,7 @@
 ﻿using InterviewPrep.Core.Graphs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace InterviewPrep.CoreTests
 {
@@ -11,6 +12,7 @@ namespace InterviewPrep.CoreTests
         private readonly List<string> _vertexList;
         private readonly List<Edge> _linearEdgeList;
         private readonly int[][] _adjacencyMatrix;
+        private readonly Neighbor[] _adjacencyList;
 
         public GraphTests()
         {
@@ -28,18 +30,38 @@ namespace InterviewPrep.CoreTests
                 new Edge { FirstNode = 5, SecondNode = 7, Weight = 4 },
                 new Edge { FirstNode = 6, SecondNode = 7, Weight = 6 }
             };
-            _adjacencyMatrix = new int[][]
+            _adjacencyMatrix = new[]
             {
-               new int[] { 0, 5,  7, 3,  0, 0,  0, 0  },
-               new int[] { 5, 0,  0, 0,  2, 10, 0, 0  },
-               new int[] { 7, 0,  0, 0,  0, 0,  1, 0  },
-               new int[] { 3, 0,  0, 0,  0, 0,  0, 11 },
-               new int[] { 0, 2,  0, 0,  0, 0,  0, 9  },
-               new int[] { 0, 10, 0, 0,  0, 0,  0, 4  },
-               new int[] { 0, 0,  1, 0,  0, 0,  0, 6  },
-               new int[] { 0, 0,  0, 11, 9, 4,  6, 0  }
+               new[] { 0, 5,  7, 3,  0, 0,  0, 0  },
+               new[] { 5, 0,  0, 0,  2, 10, 0, 0  },
+               new[] { 7, 0,  0, 0,  0, 0,  1, 0  },
+               new[] { 3, 0,  0, 0,  0, 0,  0, 11 },
+               new[] { 0, 2,  0, 0,  0, 0,  0, 9  },
+               new[] { 0, 10, 0, 0,  0, 0,  0, 4  },
+               new[] { 0, 0,  1, 0,  0, 0,  0, 6  },
+               new[] { 0, 0,  0, 11, 9, 4,  6, 0  }
             };
-            _graph = new AdjacencyMatrixGraph(_vertexList, _adjacencyMatrix);
+            const string graphData = @"8
+                A
+                B
+                C
+                D
+                E
+                F
+                G
+                H
+                A B
+                A C
+                A D
+                B E
+                B F
+                C G
+                D H
+                E H
+                F H
+                G H";
+            _graph = AdjacencyListGraph.CreateGraph(graphData);
+            //_graph = new AdjacencyMatrixGraph(_vertexList, _adjacencyMatrix);
             //_graph = new LinearGraph(_vertexList, _linearEdgeList);
         }
 
@@ -47,7 +69,7 @@ namespace InterviewPrep.CoreTests
         public void FindAdjacentNodesSimpleTest()
         {
             var node = _vertexList[0];
-            var actual = _graph.FindAdjacentNodes(node);
+            var actual = _graph.FindAdjacentNodes(node).ToList();
             Assert.AreEqual(_vertexList[1], actual[0]);
             Assert.AreEqual(_vertexList[2], actual[1]);
             Assert.AreEqual(_vertexList[3], actual[2]);

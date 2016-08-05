@@ -5,6 +5,7 @@ namespace InterviewPrep.Core.Graphs
     public interface IGraph
     {
         bool AreNodesAdjacent(string nodeOne, string nodeTwo);
-        List<string> FindAdjacentNodes(string node);
+        IEnumerable<string> FindAdjacentNodes(string node);
+        IList<string> FindBestPath(string nodeOne, string nodeTwo);
     }
 }

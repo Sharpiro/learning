@@ -6,8 +6,8 @@ namespace InterviewPrep.Core.Graphs
     public class LinearGraph : IGraph
     {
         private readonly List<string> _vertexList;
-        private readonly List<Edge> _edgeList;
         private readonly IDictionary<string, int> _vertexDictionary;
+        private readonly List<Edge> _edgeList;
 
 
         public LinearGraph(List<string> vertexList, List<Edge> edgeList)
@@ -36,7 +36,7 @@ namespace InterviewPrep.Core.Graphs
             return false;
         }
 
-        public List<string> FindAdjacentNodes(string node)
+        public IEnumerable<string> FindAdjacentNodes(string node)
         {
             var nodePosition = _vertexDictionary[node];
             var adjacentNodes = new List<string>();
@@ -52,6 +52,11 @@ namespace InterviewPrep.Core.Graphs
                 }
             }
             return adjacentNodes;
+        }
+
+        public IList<string> FindBestPath(string nodeOne, string nodeTwo)
+        {
+            throw new NotImplementedException();
         }
 
         private void InitializeDictionary()

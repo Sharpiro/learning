@@ -25,7 +25,7 @@ namespace InterviewPrep.Core.Graphs
             return temp > 0;
         }
 
-        public List<string> FindAdjacentNodes(string nodeName)
+        public IEnumerable<string> FindAdjacentNodes(string nodeName)
         {
             var nodeIndex = _vertexDictionary[nodeName];
             var adjacentNodes = new List<string>();
@@ -38,6 +38,11 @@ namespace InterviewPrep.Core.Graphs
                 }
             }
             return adjacentNodes;
+        }
+
+        public IList<string> FindBestPath(string nodeOne, string nodeTwo)
+        {
+            throw new System.NotImplementedException();
         }
 
         private void InitializeDictionary()
