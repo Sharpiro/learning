@@ -4,23 +4,48 @@ namespace InterviewPrep.Core.Graphs
 {
     public class AdjacencyMatrixGraph : IGraph
     {
+        private readonly List<string> _vertexList;
         private readonly IDictionary<string, int> _vertexDictionary;
         private int[][] _adjacencyMatrix;
 
-        public AdjacencyMatrixGraph(IDictionary<string, int> vertexDictionary, int[][] adjacencyMatrix)
+        public AdjacencyMatrixGraph(List<string> vertexList, int[][] adjacencyMatrix)
         {
-            _vertexDictionary = vertexDictionary;
+            _vertexList = vertexList;
             _adjacencyMatrix = adjacencyMatrix;
+            _vertexDictionary = new Dictionary<string, int>();
+            InitializeDictionary();
         }
 
-        public bool AreNodesAdjacent(string nodeOne, string nodeTwo)
+        public bool AreNodesAdjacent(string nodeOneName, string nodeTwoName)
         {
-            throw new System.NotImplementedException();
+            var nodeOne = _vertexDictionary[nodeOneName];
+            var nodeTwo = _vertexDictionary[nodeTwoName];
+            var temp = _adjacencyMatrix[nodeOne][nodeTwo];
+            var temp2 = _adjacencyMatrix[nodeTwo][nodeOne];
+            return temp > 0;
         }
 
-        public List<string> FindAdjacentNodes(string node)
+        public List<string> FindAdjacentNodes(string nodeName)
         {
-            throw new System.NotImplementedException();
+            var nodeIndex = _vertexDictionary[nodeName];
+            var adjacentNodes = new List<string>();
+            for (var i = 0; i < _adjacencyMatrix[nodeIndex].Length; i++)
+            {
+                var currentNode = _adjacencyMatrix[nodeIndex][i];
+                if (currentNode > 0)
+                {
+                    adjacentNodes.Add(_vertexList[i]);
+                }
+            }
+            return adjacentNodes;
+        }
+
+        private void InitializeDictionary()
+        {
+            for (var i = 0; i < _vertexList.Count; i++)
+            {
+                _vertexDictionary.Add(_vertexList[i], i);
+            }
         }
     }
 }
