@@ -7,18 +7,15 @@ namespace InterviewPrep.Core.Graphs
 {
     public class AdjacencyListGraph : IGraph
     {
-        private readonly IList<string> _vertexList;
         private readonly IDictionary<string, int> _vertexDictionary;
         private readonly List<Vertex> _adjacencyList;
 
         public int this[string index] => _vertexDictionary[index];
 
-        public AdjacencyListGraph(IList<string> vertexList, List<Vertex> adjacencyList)
+        public AdjacencyListGraph(IDictionary<string, int> vertexDictionary, List<Vertex> adjacencyList)
         {
-            _vertexList = vertexList;
             _adjacencyList = adjacencyList;
-            _vertexDictionary = new Dictionary<string, int>();
-            InitializeDictionary();
+            _vertexDictionary = vertexDictionary;
         }
 
         public IEnumerable<string> FindAdjacentNodes(string node)
@@ -26,7 +23,7 @@ namespace InterviewPrep.Core.Graphs
             var nodeIndex = _vertexDictionary[node];
             var vertex = _adjacencyList[nodeIndex];
             var adjacentNodes = vertex.FindNeighbors();
-            var namedList = adjacentNodes.Select(i => _vertexList[i]);
+            var namedList = adjacentNodes.Select(an => an.Vertex.Name);
             return namedList;
         }
 
@@ -38,53 +35,101 @@ namespace InterviewPrep.Core.Graphs
             return vertex.IsAdjacent(nodeTwoIndex);
         }
 
-        public IList<string> FindBestPath(string nodeOne, string nodeTwo)
+        public IEnumerable<string> FindBestPath(string nodeOne, string nodeTwo)
         {
-            throw new NotImplementedException();
+            var fringe = new List<FringeItem>();
+            var start = _vertexDictionary[nodeOne];
+            var end = _vertexDictionary[nodeTwo];
+            var tracker = new List<FringeItem>();
+            //initial: add all children of start to first and set distance
+            foreach (var neighbor in _adjacencyList[start].FindNeighbors())
+            {
+                //var vertex = _adjacencyList[start];
+                var fringeItem = new FringeItem
+                {
+                    PreviousItem = new FringeItem { Vertex = _adjacencyList[start], Distance = 0 },
+                    Distance = neighbor.Weight,
+                    Vertex = neighbor.Vertex
+                };
+                fringe.Add(fringeItem);
+            }
+            //while fringe is not empty
+            //remove minimum distance vertex from the fringe
+            //once a vertex is removed from the fringe, the shortest path to it has been found
+            while (fringe.Any())
+            {
+                var minimumFringeItem = fringe.Min();
+                tracker.Add(minimumFringeItem);
+                fringe.Remove(minimumFringeItem);
+                foreach (var neighbor in minimumFringeItem.Vertex.FindNeighbors())
+                {
+                    //if (neighbor.Vertex == minimumFringeItem.PreviousItem)
+                    //    continue;
+                    var temp = neighbor.Vertex.Name;
+                    var temp2 = fringe.FirstOrDefault(fi => fi.Vertex.Name == temp);
+                    if (temp2 == null || temp2.Distance < 0)
+                    {
+                        neighbor.Distance = minimumFringeItem.Distance + neighbor.Weight;
+                        var fringeItem = new FringeItem
+                        {
+                            PreviousItem = minimumFringeItem,
+                            Distance = minimumFringeItem.Distance + neighbor.Weight,
+                            Vertex = neighbor.Vertex
+                        };
+                        fringe.Add(fringeItem);
+                    }
+                    else
+                    {
+                        var newDistance = minimumFringeItem.Distance + neighbor.Weight;
+                        var minDistance = Math.Min(temp2.Distance, newDistance);
+                        neighbor.Distance = minDistance;
+                        var fringeItem = fringe.FirstOrDefault(fi => fi.Vertex == neighbor.Vertex);
+                        fringeItem.PreviousItem = minimumFringeItem;
+                        fringeItem.Distance = minDistance;
+                        fringeItem.Vertex = neighbor.Vertex;
+                    }
+                }
+            }
+            var path = tracker.LastOrDefault().GetPrevious().Select(fi => fi.Vertex.Name).Reverse();
+            return path;
+        }
+    }
+
+    public class FringeItem : IComparable<FringeItem>
+    {
+        public Vertex Vertex { get; set; }
+        public FringeItem PreviousItem { get; set; }
+        public int Distance { get; set; } = -1;
+
+        public ICollection<FringeItem> GetPrevious()
+        {
+            var list = new List<FringeItem>();
+            GetPrevious(list, this);
+            return list;
         }
 
-        private void InitializeDictionary()
+        public void GetPrevious(ICollection<FringeItem> list, FringeItem current)
         {
-            for (var i = 0; i < _vertexList.Count; i++)
-            {
-                _vertexDictionary.Add(_vertexList[i], i);
-            }
+            if (current == null)
+                return;
+            list.Add(current);
+            GetPrevious(list, current.PreviousItem);
         }
 
-        public static AdjacencyListGraph CreateGraph(string graphData)
+
+        public int CompareTo(FringeItem other)
         {
-            var reader = new StringReader(graphData);
-            var adjacencyList = new List<Vertex>();
-            int numberOfNodes;
-            var parseResult = int.TryParse(reader.ReadLine()?.Trim(), out numberOfNodes);
-            if (!parseResult)
-                throw new ArgumentException("error parsing number of nodes from graph data", nameof(numberOfNodes));
-            string data;
-            var vertexList = new List<string>();
-            for (var i = 0; i < numberOfNodes; i++)
-            {
-                var line = reader.ReadLine()?.Trim();
-                vertexList.Add(line);
-                adjacencyList.Add(new Vertex { Name = line });
-            }
-            var graph = new AdjacencyListGraph(vertexList, adjacencyList);
-            while ((data = reader.ReadLine()) != null)
-            {
-                var edge = data.Trim().Split(' ');
-                var index1 = graph[edge.FirstOrDefault()];
-                var index2 = graph[edge.LastOrDefault()];
-                adjacencyList[index1].AddNeighbor(new Neighbor { Index = index2 });
-                adjacencyList[index2].AddNeighbor(new Neighbor { Index = index1 });
-            }
-            return graph;
+            return this.Distance.CompareTo(other.Distance);
         }
     }
 
     public class Neighbor
     {
-        public int Index { get; set; }
+        //public int Index { get; set; }
+        public Vertex Vertex { get; set; }
         public int Weight { get; set; }
         public Neighbor Next { get; set; }
+        public int Distance { get; set; } = -1;
     }
 
     public class Vertex
@@ -109,17 +154,17 @@ namespace InterviewPrep.Core.Graphs
             return current;
         }
 
-        public IList<int> FindNeighbors()
+        public IList<Neighbor> FindNeighbors()
         {
-            var list = new List<int>();
+            var list = new List<Neighbor>();
             FindNeighbors(list, Neighbors);
             return list;
         }
-        private void FindNeighbors(ICollection<int> list, Neighbor current)
+        private void FindNeighbors(ICollection<Neighbor> list, Neighbor current)
         {
             if (current == null)
                 return;
-            list.Add(current.Index);
+            list.Add(current);
             FindNeighbors(list, current.Next);
         }
 
@@ -130,11 +175,12 @@ namespace InterviewPrep.Core.Graphs
         }
         private bool IsAdjacent(Neighbor current, int otherNodeIndex)
         {
-            if (current == null)
-                return false;
-            if (current.Index == otherNodeIndex)
-                return true;
-            return IsAdjacent(current.Next, otherNodeIndex);
+            //if (current == null)
+            //    return false;
+            //if (current.Index == otherNodeIndex)
+            //    return true;
+            //return IsAdjacent(current.Next, otherNodeIndex);
+            throw new NotImplementedException();
         }
     }
 }

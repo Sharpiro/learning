@@ -5,12 +5,12 @@ namespace InterviewPrep.Core.Graphs
 {
     public class LinearGraph : IGraph
     {
-        private readonly List<string> _vertexList;
+        private readonly IList<string> _vertexList;
         private readonly IDictionary<string, int> _vertexDictionary;
         private readonly List<Edge> _edgeList;
 
 
-        public LinearGraph(List<string> vertexList, List<Edge> edgeList)
+        public LinearGraph(IList<string> vertexList, List<Edge> edgeList)
         {
             _vertexList = vertexList;
             _edgeList = edgeList;
@@ -54,7 +54,7 @@ namespace InterviewPrep.Core.Graphs
             return adjacentNodes;
         }
 
-        public IList<string> FindBestPath(string nodeOne, string nodeTwo)
+        public IEnumerable<string> FindBestPath(string nodeOne, string nodeTwo)
         {
             throw new NotImplementedException();
         }

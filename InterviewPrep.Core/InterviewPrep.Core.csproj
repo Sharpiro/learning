@@ -65,6 +65,7 @@
     <Compile Include="FizzBuzzWoof.cs" />
     <Compile Include="Graphs\AdjacencyListGraph.cs" />
     <Compile Include="Graphs\AdjacencyMatrixGraph.cs" />
+    <Compile Include="Graphs\GraphHelper.cs" />
     <Compile Include="Graphs\IGraph.cs" />
     <Compile Include="Graphs\LinearGraph.cs" />
     <Compile Include="Lists\ILinkedList.cs" />
@@ -85,6 +86,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Graphs\directed_graph.png" />
     <Content Include="Graphs\graph.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

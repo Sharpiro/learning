@@ -13,35 +13,42 @@ namespace InterviewPrep.CoreTests
         private readonly List<Edge> _linearEdgeList;
         private readonly int[][] _adjacencyMatrix;
         private readonly Neighbor[] _adjacencyList;
+        private readonly GraphHelper _graphHelper;
 
         public GraphTests()
         {
-            _vertexList = new List<string> { "A", "B", "C", "D", "E", "F", "G", "H" };
-            _linearEdgeList = new List<Edge>
-            {
-                new Edge { FirstNode = 0, SecondNode = 1, Weight = 5 },
-                new Edge { FirstNode = 0, SecondNode = 2, Weight = 7 },
-                new Edge { FirstNode = 0, SecondNode = 3, Weight = 3 },
-                new Edge { FirstNode = 1, SecondNode = 4, Weight = 2 },
-                new Edge { FirstNode = 1, SecondNode = 5, Weight = 10 },
-                new Edge { FirstNode = 2, SecondNode = 6, Weight = 1 },
-                new Edge { FirstNode = 3, SecondNode = 7, Weight = 11 },
-                new Edge { FirstNode = 4, SecondNode = 7, Weight = 9 },
-                new Edge { FirstNode = 5, SecondNode = 7, Weight = 4 },
-                new Edge { FirstNode = 6, SecondNode = 7, Weight = 6 }
-            };
-            _adjacencyMatrix = new[]
-            {
-               new[] { 0, 5,  7, 3,  0, 0,  0, 0  },
-               new[] { 5, 0,  0, 0,  2, 10, 0, 0  },
-               new[] { 7, 0,  0, 0,  0, 0,  1, 0  },
-               new[] { 3, 0,  0, 0,  0, 0,  0, 11 },
-               new[] { 0, 2,  0, 0,  0, 0,  0, 9  },
-               new[] { 0, 10, 0, 0,  0, 0,  0, 4  },
-               new[] { 0, 0,  1, 0,  0, 0,  0, 6  },
-               new[] { 0, 0,  0, 11, 9, 4,  6, 0  }
-            };
-            const string graphData = @"8
+            //const string graphData = @"4
+            //    undirected
+            //    A
+            //    B
+            //    C
+            //    D
+            //    A B 5
+            //    A C 4
+            //    B D 6
+            //    C D 8";
+            //const string graphData = @"8
+            //    undirected
+            //    A
+            //    B
+            //    C
+            //    D
+            //    E
+            //    F
+            //    G
+            //    H
+            //    A B 5
+            //    A C 7
+            //    A D 3
+            //    B E 2
+            //    B F 10
+            //    C G 1
+            //    D H 11
+            //    E H 9
+            //    F H 4
+            //    G H 6";
+            const string graphData = @"7
+                directed
                 A
                 B
                 C
@@ -49,30 +56,37 @@ namespace InterviewPrep.CoreTests
                 E
                 F
                 G
-                H
-                A B
-                A C
-                A D
-                B E
-                B F
-                C G
-                D H
-                E H
-                F H
-                G H";
-            _graph = AdjacencyListGraph.CreateGraph(graphData);
-            //_graph = new AdjacencyMatrixGraph(_vertexList, _adjacencyMatrix);
-            //_graph = new LinearGraph(_vertexList, _linearEdgeList);
+                A B 5
+                A C 10
+                B D 6
+                B E 3
+                D F 6
+                E C 2
+                E D 2
+                E G 2
+                G F 6";
+            _graphHelper = new GraphHelper(graphData);
+            //_graph = _graphHelper.CreateEdgeListGraph();
+            //_graph = _graphHelper.CreateAdjacencyMatrixGraph();
+            _graph = _graphHelper.CreateAdjacencyListGraph();
         }
 
         [TestMethod]
         public void FindAdjacentNodesSimpleTest()
         {
-            var node = _vertexList[0];
-            var actual = _graph.FindAdjacentNodes(node).ToList();
-            Assert.AreEqual(_vertexList[1], actual[0]);
-            Assert.AreEqual(_vertexList[2], actual[1]);
-            Assert.AreEqual(_vertexList[3], actual[2]);
+            var actual = _graph.FindAdjacentNodes("A").ToList();
+            Assert.AreEqual("B", actual[0]);
+            Assert.AreEqual("C", actual[1]);
+            Assert.AreEqual("D", actual[2]);
+        }
+
+        [TestMethod]
+        public void FindShortestPathTest()
+        {
+            var actual = _graph.FindBestPath("A", "D").ToList();
+            Assert.AreEqual("A", actual[0]);
+            Assert.AreEqual("B", actual[1]);
+            Assert.AreEqual("D", actual[2]);
         }
 
         /// <summary>
@@ -81,7 +95,7 @@ namespace InterviewPrep.CoreTests
         [TestMethod]
         public void FindAdjacentNodesTest()
         {
-            foreach (var vertex in _vertexList)
+            foreach (var vertex in _graphHelper.VertexList)
             {
                 var adjacentNodes = _graph.FindAdjacentNodes(vertex);
                 foreach (var adjacentNode in adjacentNodes)
@@ -97,19 +111,13 @@ namespace InterviewPrep.CoreTests
         [TestMethod]
         public void AreNodesAdjacent()
         {
-            var nodeA = _vertexList[0];
-            var nodeB = _vertexList[1];
-            var nodeC = _vertexList[2];
-            var nodeD = _vertexList[3];
-            var nodeE = _vertexList[4];
-            var nodeF = _vertexList[5];
-            Assert.IsTrue(_graph.AreNodesAdjacent(nodeA, nodeB));
-            Assert.IsTrue(_graph.AreNodesAdjacent(nodeA, nodeC));
-            Assert.IsFalse(_graph.AreNodesAdjacent(nodeB, nodeC));
+            Assert.IsTrue(_graph.AreNodesAdjacent("A", "B"));
+            Assert.IsTrue(_graph.AreNodesAdjacent("A", "C"));
+            Assert.IsFalse(_graph.AreNodesAdjacent("B", "C"));
 
-            Assert.IsTrue(_graph.AreNodesAdjacent(nodeB, nodeE));
-            Assert.IsTrue(_graph.AreNodesAdjacent(nodeB, nodeF));
-            Assert.IsFalse(_graph.AreNodesAdjacent(nodeE, nodeF));
+            Assert.IsTrue(_graph.AreNodesAdjacent("B", "E"));
+            Assert.IsTrue(_graph.AreNodesAdjacent("B", "F"));
+            Assert.IsFalse(_graph.AreNodesAdjacent("E", "F"));
         }
     }
 }
