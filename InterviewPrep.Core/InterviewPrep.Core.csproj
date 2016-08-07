@@ -86,8 +86,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Graphs\directed_graph.png" />
-    <Content Include="Graphs\graph.png" />
+    <Content Include="Graphs\Pics\directed_graph.png" />
+    <Content Include="Graphs\Pics\graph.png" />
+    <Content Include="Graphs\Pics\simpleGraph.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

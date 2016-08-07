@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.IO;
 
 namespace InterviewPrep.Core.Graphs
 {
@@ -31,23 +30,26 @@ namespace InterviewPrep.Core.Graphs
         {
             var nodeOneIndex = _vertexDictionary[nodeOne];
             var nodeTwoIndex = _vertexDictionary[nodeTwo];
-            var vertex = _adjacencyList[nodeOneIndex];
-            return vertex.IsAdjacent(nodeTwoIndex);
+            var vertexOne = _adjacencyList[nodeOneIndex];
+            var vertexTwo = _adjacencyList[nodeTwoIndex];
+            return vertexOne.IsAdjacent(vertexTwo);
         }
 
         public IEnumerable<string> FindBestPath(string nodeOne, string nodeTwo)
         {
-            var fringe = new List<FringeItem>();
             var start = _vertexDictionary[nodeOne];
-            var end = _vertexDictionary[nodeTwo];
-            var tracker = new List<FringeItem>();
-            //initial: add all children of start to first and set distance
-            foreach (var neighbor in _adjacencyList[start].FindNeighbors())
+            var startVertex = _adjacencyList[start];
+            var fringe = new List<FringeItem>();
+            var tracker = new Dictionary<string, FringeItem>
             {
-                //var vertex = _adjacencyList[start];
+                ["A"] = new FringeItem { Vertex = startVertex, Distance = 0 }
+            };
+            //initial: add all children of start to first and set distance
+            foreach (var neighbor in startVertex.FindNeighbors())
+            {
                 var fringeItem = new FringeItem
                 {
-                    PreviousItem = new FringeItem { Vertex = _adjacencyList[start], Distance = 0 },
+                    PreviousItem = new FringeItem { Vertex = startVertex, Distance = 0 },
                     Distance = neighbor.Weight,
                     Vertex = neighbor.Vertex
                 };
@@ -59,17 +61,17 @@ namespace InterviewPrep.Core.Graphs
             while (fringe.Any())
             {
                 var minimumFringeItem = fringe.Min();
-                tracker.Add(minimumFringeItem);
                 fringe.Remove(minimumFringeItem);
-                foreach (var neighbor in minimumFringeItem.Vertex.FindNeighbors())
+                tracker.Add(minimumFringeItem.Vertex.Name, minimumFringeItem);
+                var neighbors = minimumFringeItem.Vertex.FindNeighbors();
+                foreach (var neighbor in neighbors)
                 {
-                    //if (neighbor.Vertex == minimumFringeItem.PreviousItem)
-                    //    continue;
-                    var temp = neighbor.Vertex.Name;
-                    var temp2 = fringe.FirstOrDefault(fi => fi.Vertex.Name == temp);
-                    if (temp2 == null || temp2.Distance < 0)
+                    var neighborFringeItem = fringe.FirstOrDefault(fi => fi.Vertex == neighbor.Vertex);
+                    //add
+                    if (tracker.ContainsKey(neighbor.Vertex.Name))
+                        continue;
+                    if (neighborFringeItem == null)// || neighborFringeItem.Distance < 0)
                     {
-                        neighbor.Distance = minimumFringeItem.Distance + neighbor.Weight;
                         var fringeItem = new FringeItem
                         {
                             PreviousItem = minimumFringeItem,
@@ -78,19 +80,19 @@ namespace InterviewPrep.Core.Graphs
                         };
                         fringe.Add(fringeItem);
                     }
+                    //update
                     else
                     {
                         var newDistance = minimumFringeItem.Distance + neighbor.Weight;
-                        var minDistance = Math.Min(temp2.Distance, newDistance);
-                        neighbor.Distance = minDistance;
-                        var fringeItem = fringe.FirstOrDefault(fi => fi.Vertex == neighbor.Vertex);
-                        fringeItem.PreviousItem = minimumFringeItem;
-                        fringeItem.Distance = minDistance;
-                        fringeItem.Vertex = neighbor.Vertex;
+                        if (newDistance < neighborFringeItem.Distance)
+                        {
+                            neighborFringeItem.PreviousItem = minimumFringeItem;
+                            neighborFringeItem.Distance = newDistance;
+                        }
                     }
                 }
             }
-            var path = tracker.LastOrDefault().GetPrevious().Select(fi => fi.Vertex.Name).Reverse();
+            var path = tracker[nodeTwo].GetPrevious().Select(fi => fi.Vertex.Name).Reverse();
             return path;
         }
     }
@@ -99,7 +101,7 @@ namespace InterviewPrep.Core.Graphs
     {
         public Vertex Vertex { get; set; }
         public FringeItem PreviousItem { get; set; }
-        public int Distance { get; set; } = -1;
+        public int Distance { get; set; }
 
         public ICollection<FringeItem> GetPrevious()
         {
@@ -125,11 +127,9 @@ namespace InterviewPrep.Core.Graphs
 
     public class Neighbor
     {
-        //public int Index { get; set; }
         public Vertex Vertex { get; set; }
-        public int Weight { get; set; }
         public Neighbor Next { get; set; }
-        public int Distance { get; set; } = -1;
+        public int Weight { get; set; }
     }
 
     public class Vertex
@@ -168,19 +168,18 @@ namespace InterviewPrep.Core.Graphs
             FindNeighbors(list, current.Next);
         }
 
-        public bool IsAdjacent(int otherNodeIndex)
+        public bool IsAdjacent(Vertex other)
         {
-            var isAdjacent = IsAdjacent(Neighbors, otherNodeIndex);
+            var isAdjacent = IsAdjacent(Neighbors, other);
             return isAdjacent;
         }
-        private bool IsAdjacent(Neighbor current, int otherNodeIndex)
+        private bool IsAdjacent(Neighbor current, Vertex other)
         {
-            //if (current == null)
-            //    return false;
-            //if (current.Index == otherNodeIndex)
-            //    return true;
-            //return IsAdjacent(current.Next, otherNodeIndex);
-            throw new NotImplementedException();
+            if (current == null)
+                return false;
+            if (current.Vertex.Name == other.Name)
+                return true;
+            return IsAdjacent(current.Next, other);
         }
     }
 }

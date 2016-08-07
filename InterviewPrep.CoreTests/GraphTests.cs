@@ -48,7 +48,7 @@ namespace InterviewPrep.CoreTests
             //    F H 4
             //    G H 6";
             const string graphData = @"7
-                directed
+                undirected
                 A
                 B
                 C
@@ -57,14 +57,14 @@ namespace InterviewPrep.CoreTests
                 F
                 G
                 A B 5
-                A C 10
+                A C 9
                 B D 6
                 B E 3
                 D F 6
                 E C 2
                 E D 2
                 E G 2
-                G F 6";
+                G F 2";
             _graphHelper = new GraphHelper(graphData);
             //_graph = _graphHelper.CreateEdgeListGraph();
             //_graph = _graphHelper.CreateAdjacencyMatrixGraph();
@@ -77,16 +77,30 @@ namespace InterviewPrep.CoreTests
             var actual = _graph.FindAdjacentNodes("A").ToList();
             Assert.AreEqual("B", actual[0]);
             Assert.AreEqual("C", actual[1]);
+            actual = _graph.FindAdjacentNodes("E").ToList();
+            Assert.AreEqual("B", actual[0]);
+            Assert.AreEqual("C", actual[1]);
             Assert.AreEqual("D", actual[2]);
+            Assert.AreEqual("G", actual[3]);
         }
 
         [TestMethod]
         public void FindShortestPathTest()
         {
-            var actual = _graph.FindBestPath("A", "D").ToList();
+            var actual = _graph.FindBestPath("A", "C").ToList();
+            Assert.AreEqual("A", actual[0]);
+            Assert.AreEqual("C", actual[1]);
+            actual = _graph.FindBestPath("A", "D").ToList();
             Assert.AreEqual("A", actual[0]);
             Assert.AreEqual("B", actual[1]);
-            Assert.AreEqual("D", actual[2]);
+            Assert.AreEqual("E", actual[2]);
+            Assert.AreEqual("D", actual[3]);
+            actual = _graph.FindBestPath("A", "F").ToList();
+            Assert.AreEqual("A", actual[0]);
+            Assert.AreEqual("B", actual[1]);
+            Assert.AreEqual("E", actual[2]);
+            Assert.AreEqual("G", actual[3]);
+            Assert.AreEqual("F", actual[4]);
         }
 
         /// <summary>
@@ -113,11 +127,11 @@ namespace InterviewPrep.CoreTests
         {
             Assert.IsTrue(_graph.AreNodesAdjacent("A", "B"));
             Assert.IsTrue(_graph.AreNodesAdjacent("A", "C"));
-            Assert.IsFalse(_graph.AreNodesAdjacent("B", "C"));
+            //Assert.IsFalse(_graph.AreNodesAdjacent("B", "C"));
 
             Assert.IsTrue(_graph.AreNodesAdjacent("B", "E"));
-            Assert.IsTrue(_graph.AreNodesAdjacent("B", "F"));
-            Assert.IsFalse(_graph.AreNodesAdjacent("E", "F"));
+            //Assert.IsTrue(_graph.AreNodesAdjacent("B", "F"));
+            Assert.IsTrue(_graph.AreNodesAdjacent("E", "G"));
         }
     }
 }
