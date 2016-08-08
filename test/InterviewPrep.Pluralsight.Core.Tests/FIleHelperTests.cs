@@ -1,4 +1,4 @@
-﻿using Interview.LinqFundamentals;
+﻿using InterviewPrep.LinqFundamentals;
 using Xunit;
 using System.Linq;
 

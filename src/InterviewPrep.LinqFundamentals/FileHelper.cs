@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-namespace Interview.LinqFundamentals
+namespace InterviewPrep.LinqFundamentals
 {
     public class FileHelper
     {
@@ -17,10 +17,10 @@ namespace Interview.LinqFundamentals
 
         public IEnumerable<object> GetLargestFileQuerySyntax(string directory)
         {
-            var largestFiles = (from file in new DirectoryInfo(directory).GetFiles()
-                                orderby file.Length descending
-                                select file).Take(5);
-            return largestFiles;
+            var largestFiles = from e in new DirectoryInfo(directory).GetFiles()
+                               orderby e.Length descending
+                               select e;
+            return largestFiles.Take(5);
         }
     }
 
