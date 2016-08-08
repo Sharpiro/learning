@@ -31,7 +31,9 @@ namespace InterviewPrep.Core.Graphs
             var parseResult = int.TryParse(reader.ReadLine()?.Trim(), out numberOfNodes);
             if (!parseResult)
                 throw new ArgumentException("error parsing number of nodes from graph data", nameof(numberOfNodes));
-            _graphType = reader.ReadLine().Trim();
+            _graphType = reader.ReadLine()?.Trim();
+            if (string.IsNullOrEmpty(_graphType))
+                throw new ArgumentException("error parsing graph type from graph data", nameof(_graphType));
             for (var i = 0; i < numberOfNodes; i++)
             {
                 var line = reader.ReadLine()?.Trim();
@@ -42,6 +44,8 @@ namespace InterviewPrep.Core.Graphs
             while ((data = reader.ReadLine()) != null)
             {
                 var edge = data.Trim().Split(' ');
+                if (edge.Length != 3)
+                    throw new ArgumentException($"error edges for line: {data}");
                 var index1 = _vertexDictionary[edge[0]];
                 var index2 = _vertexDictionary[edge[1]];
                 int weight;
@@ -54,7 +58,7 @@ namespace InterviewPrep.Core.Graphs
 
         public IGraph CreateEdgeListGraph()
         {
-            var linearGraph = new LinearGraph(_vertexList, _edgeList);
+            var linearGraph = new LinearGraph(_vertexList, _vertexDictionary, _edgeList);
             return linearGraph;
         }
 
@@ -73,17 +77,21 @@ namespace InterviewPrep.Core.Graphs
 
         public IGraph CreateAdjacencyListGraph()
         {
-            var adjacencyList = _vertexList.Select(v => new Vertex { Name = v }).ToList();
+            var adjacencyList = _vertexList
+                .Select(v => new KeyValuePair<string, Vertex>(v, new Vertex { Name = v }))
+                .ToList();
+
             foreach (var edge in _edgeList)
             {
                 var firstNode = edge.FirstNode;
                 var secondNode = edge.SecondNode;
                 var weight = edge.Weight;
-                adjacencyList[firstNode].AddNeighbor(new Neighbor { Vertex = adjacencyList[secondNode], Weight = weight });
+                adjacencyList[firstNode].Value.AddNeighbor(new Neighbor { Vertex = adjacencyList[secondNode].Value, Weight = weight });
                 if (_graphType.ToLower() == ("undirected"))
-                    adjacencyList[secondNode].AddNeighbor(new Neighbor { Vertex = adjacencyList[firstNode], Weight = weight });
+                    adjacencyList[secondNode].Value.AddNeighbor(new Neighbor { Vertex = adjacencyList[firstNode].Value, Weight = weight });
             }
-            var graph = new AdjacencyListGraph(_vertexDictionary, adjacencyList);
+            var adjacencyDictionary = adjacencyList.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            var graph = new AdjacencyListGraph(adjacencyDictionary);
             return graph;
         }
     }

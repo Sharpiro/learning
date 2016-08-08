@@ -22,7 +22,6 @@ namespace InterviewPrep.Core.Graphs
             var nodeOne = _vertexDictionary[nodeOneName];
             var nodeTwo = _vertexDictionary[nodeTwoName];
             var temp = _adjacencyMatrix[nodeOne, nodeTwo];
-            var temp2 = _adjacencyMatrix[nodeTwo, nodeOne];
             return temp > 0;
         }
 
@@ -44,7 +43,7 @@ namespace InterviewPrep.Core.Graphs
 
         public IEnumerable<string> FindBestPath(string nodeOne, string nodeTwo)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         private void InitializeDictionary()

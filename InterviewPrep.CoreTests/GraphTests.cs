@@ -66,9 +66,9 @@ namespace InterviewPrep.CoreTests
                 E G 2
                 G F 2";
             _graphHelper = new GraphHelper(graphData);
-            //_graph = _graphHelper.CreateEdgeListGraph();
+            _graph = _graphHelper.CreateEdgeListGraph();
             //_graph = _graphHelper.CreateAdjacencyMatrixGraph();
-            _graph = _graphHelper.CreateAdjacencyListGraph();
+            //_graph = _graphHelper.CreateAdjacencyListGraph();
         }
 
         [TestMethod]

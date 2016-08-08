@@ -6,21 +6,18 @@ namespace InterviewPrep.Core.Graphs
 {
     public class AdjacencyListGraph : IGraph
     {
-        private readonly IDictionary<string, int> _vertexDictionary;
-        private readonly List<Vertex> _adjacencyList;
+        private readonly IDictionary<string, Vertex> _adjacencyDictionary;
 
-        public int this[string index] => _vertexDictionary[index];
+        public Vertex this[string index] => _adjacencyDictionary[index];
 
-        public AdjacencyListGraph(IDictionary<string, int> vertexDictionary, List<Vertex> adjacencyList)
+        public AdjacencyListGraph(IDictionary<string, Vertex> adjacencyDictionary)
         {
-            _adjacencyList = adjacencyList;
-            _vertexDictionary = vertexDictionary;
+            _adjacencyDictionary = adjacencyDictionary;
         }
 
         public IEnumerable<string> FindAdjacentNodes(string node)
         {
-            var nodeIndex = _vertexDictionary[node];
-            var vertex = _adjacencyList[nodeIndex];
+            var vertex = _adjacencyDictionary[node];
             var adjacentNodes = vertex.FindNeighbors();
             var namedList = adjacentNodes.Select(an => an.Vertex.Name);
             return namedList;
@@ -28,33 +25,21 @@ namespace InterviewPrep.Core.Graphs
 
         public bool AreNodesAdjacent(string nodeOne, string nodeTwo)
         {
-            var nodeOneIndex = _vertexDictionary[nodeOne];
-            var nodeTwoIndex = _vertexDictionary[nodeTwo];
-            var vertexOne = _adjacencyList[nodeOneIndex];
-            var vertexTwo = _adjacencyList[nodeTwoIndex];
+            var vertexOne = _adjacencyDictionary[nodeOne];
+            var vertexTwo = _adjacencyDictionary[nodeTwo];
             return vertexOne.IsAdjacent(vertexTwo);
         }
 
         public IEnumerable<string> FindBestPath(string nodeOne, string nodeTwo)
         {
-            var start = _vertexDictionary[nodeOne];
-            var startVertex = _adjacencyList[start];
-            var fringe = new List<FringeItem>();
-            var tracker = new Dictionary<string, FringeItem>
+            var startVertex = _adjacencyDictionary[nodeOne];
+            //initial: add start to fringe by default
+            var fringe = new List<FringeItem>
             {
-                ["A"] = new FringeItem { Vertex = startVertex, Distance = 0 }
+                new FringeItem {Distance = 0, Vertex = startVertex}
             };
-            //initial: add all children of start to first and set distance
-            foreach (var neighbor in startVertex.FindNeighbors())
-            {
-                var fringeItem = new FringeItem
-                {
-                    PreviousItem = new FringeItem { Vertex = startVertex, Distance = 0 },
-                    Distance = neighbor.Weight,
-                    Vertex = neighbor.Vertex
-                };
-                fringe.Add(fringeItem);
-            }
+            var tracker = new Dictionary<string, FringeItem>();
+
             //while fringe is not empty
             //remove minimum distance vertex from the fringe
             //once a vertex is removed from the fringe, the shortest path to it has been found
@@ -67,10 +52,9 @@ namespace InterviewPrep.Core.Graphs
                 foreach (var neighbor in neighbors)
                 {
                     var neighborFringeItem = fringe.FirstOrDefault(fi => fi.Vertex == neighbor.Vertex);
+                    if (tracker.ContainsKey(neighbor.Vertex.Name)) continue;
                     //add
-                    if (tracker.ContainsKey(neighbor.Vertex.Name))
-                        continue;
-                    if (neighborFringeItem == null)// || neighborFringeItem.Distance < 0)
+                    if (neighborFringeItem == null)//if a vertex has not been evaluated yet
                     {
                         var fringeItem = new FringeItem
                         {
@@ -84,11 +68,9 @@ namespace InterviewPrep.Core.Graphs
                     else
                     {
                         var newDistance = minimumFringeItem.Distance + neighbor.Weight;
-                        if (newDistance < neighborFringeItem.Distance)
-                        {
-                            neighborFringeItem.PreviousItem = minimumFringeItem;
-                            neighborFringeItem.Distance = newDistance;
-                        }
+                        if (newDistance >= neighborFringeItem.Distance) continue;
+                        neighborFringeItem.PreviousItem = minimumFringeItem;
+                        neighborFringeItem.Distance = newDistance;
                     }
                 }
             }
@@ -118,7 +100,6 @@ namespace InterviewPrep.Core.Graphs
             GetPrevious(list, current.PreviousItem);
         }
 
-
         public int CompareTo(FringeItem other)
         {
             return this.Distance.CompareTo(other.Distance);
@@ -141,6 +122,7 @@ namespace InterviewPrep.Core.Graphs
         {
             AddNeighbor(Neighbors, newNeighbor);
         }
+
         private Neighbor AddNeighbor(Neighbor current, Neighbor newNeighbor)
         {
             if (current == null)
@@ -173,6 +155,7 @@ namespace InterviewPrep.Core.Graphs
             var isAdjacent = IsAdjacent(Neighbors, other);
             return isAdjacent;
         }
+
         private bool IsAdjacent(Neighbor current, Vertex other)
         {
             if (current == null)

@@ -18,6 +18,13 @@ namespace InterviewPrep.Core.Graphs
             InitializeDictionary();
         }
 
+        public LinearGraph(IList<string> vertexList, IDictionary<string, int> vertexDictionary, List<Edge> edgeList)
+        {
+            _vertexList = vertexList;
+            _edgeList = edgeList;
+            _vertexDictionary = vertexDictionary;
+        }
+
         public bool AreNodesAdjacent(string nodeOne, string nodeTwo)
         {
             var positionOne = _vertexDictionary[nodeOne];
