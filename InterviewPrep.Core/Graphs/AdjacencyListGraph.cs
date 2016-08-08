@@ -30,7 +30,7 @@ namespace InterviewPrep.Core.Graphs
             return vertexOne.IsAdjacent(vertexTwo);
         }
 
-        public IEnumerable<string> FindBestPath(string nodeOne, string nodeTwo)
+        public IEnumerable<string> FindShortestPath(string nodeOne, string nodeTwo)
         {
             var startVertex = _adjacencyDictionary[nodeOne];
             //initial: add start to fringe by default

@@ -8,18 +8,16 @@ namespace InterviewPrep.Core.Graphs
     public class GraphHelper
     {
         private readonly string _graphData;
-        private readonly IList<string> _vertexList;
-        private readonly IDictionary<string, int> _vertexDictionary;
+        private readonly IDictionary<string, SimpleVertex> _simpleVertexDictionary;
         private readonly List<Edge> _edgeList;
         private string _graphType;
 
-        public IList<string> VertexList => _vertexList;
+        public IEnumerable<string> VertexList => _simpleVertexDictionary.Select(kvp => kvp.Value.Name);
 
         public GraphHelper(string graphData)
         {
             _graphData = graphData;
-            _vertexList = new List<string>();
-            _vertexDictionary = new Dictionary<string, int>();
+            _simpleVertexDictionary = new Dictionary<string, SimpleVertex>();
             _edgeList = new List<Edge>();
             Parse();
         }
@@ -37,8 +35,7 @@ namespace InterviewPrep.Core.Graphs
             for (var i = 0; i < numberOfNodes; i++)
             {
                 var line = reader.ReadLine()?.Trim();
-                _vertexList.Add(line);
-                _vertexDictionary.Add(line, i);
+                _simpleVertexDictionary.Add(line, new SimpleVertex { Name = line, Index = i });
             }
             string data;
             while ((data = reader.ReadLine()) != null)
@@ -46,51 +43,49 @@ namespace InterviewPrep.Core.Graphs
                 var edge = data.Trim().Split(' ');
                 if (edge.Length != 3)
                     throw new ArgumentException($"error edges for line: {data}");
-                var index1 = _vertexDictionary[edge[0]];
-                var index2 = _vertexDictionary[edge[1]];
                 int weight;
                 parseResult = int.TryParse(edge[2], out weight);
                 if (!parseResult)
                     throw new ArgumentException($"error parsing weight for edges {edge[0]} - {edge[1]}", nameof(numberOfNodes));
-                _edgeList.Add(new Edge { FirstNode = index1, SecondNode = index2, Weight = weight });
+                _edgeList.Add(new Edge { FirstNode = _simpleVertexDictionary[edge[0]], SecondNode = _simpleVertexDictionary[edge[1]], Weight = weight });
             }
         }
 
-        public IGraph CreateEdgeListGraph()
+        public IGraph CreateLinearGraph()
         {
-            var linearGraph = new LinearGraph(_vertexList, _vertexDictionary, _edgeList);
+            var linearGraph = new LinearGraph(_simpleVertexDictionary, _edgeList);
             return linearGraph;
         }
 
         public IGraph CreateAdjacencyMatrixGraph()
         {
-            var length = _vertexList.Count;
-            var adjacencyMatrix = new int[length, length];
+            var listLength = _simpleVertexDictionary.Count;
+            var adjacencyMatrix = new int[listLength, listLength];
             foreach (var edge in _edgeList)
             {
-                adjacencyMatrix[edge.FirstNode, edge.SecondNode] = edge.Weight;
-                adjacencyMatrix[edge.SecondNode, edge.FirstNode] = edge.Weight;
+                var firstIndex = _simpleVertexDictionary[edge.FirstNode.Name].Index;
+                var secondIndex = _simpleVertexDictionary[edge.SecondNode.Name].Index;
+                adjacencyMatrix[firstIndex, secondIndex] = edge.Weight;
+                adjacencyMatrix[secondIndex, firstIndex] = edge.Weight;
             }
-            var graph = new AdjacencyMatrixGraph(_vertexList, adjacencyMatrix);
+            var graph = new AdjacencyMatrixGraph(_simpleVertexDictionary, adjacencyMatrix);
             return graph;
         }
 
         public IGraph CreateAdjacencyListGraph()
         {
-            var adjacencyList = _vertexList
-                .Select(v => new KeyValuePair<string, Vertex>(v, new Vertex { Name = v }))
-                .ToList();
+            var adjacencyDictionary = _simpleVertexDictionary
+                .Select(kvp => new KeyValuePair<string, Vertex>(kvp.Key, new Vertex
+                {
+                    Name = kvp.Value.Name
+                })).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
             foreach (var edge in _edgeList)
             {
-                var firstNode = edge.FirstNode;
-                var secondNode = edge.SecondNode;
-                var weight = edge.Weight;
-                adjacencyList[firstNode].Value.AddNeighbor(new Neighbor { Vertex = adjacencyList[secondNode].Value, Weight = weight });
+                adjacencyDictionary[edge.FirstNode.Name].AddNeighbor(new Neighbor { Vertex = adjacencyDictionary[edge.SecondNode.Name], Weight = edge.Weight });
                 if (_graphType.ToLower() == ("undirected"))
-                    adjacencyList[secondNode].Value.AddNeighbor(new Neighbor { Vertex = adjacencyList[firstNode].Value, Weight = weight });
+                    adjacencyDictionary[edge.SecondNode.Name].AddNeighbor(new Neighbor { Vertex = adjacencyDictionary[edge.FirstNode.Name], Weight = edge.Weight });
             }
-            var adjacencyDictionary = adjacencyList.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             var graph = new AdjacencyListGraph(adjacencyDictionary);
             return graph;
         }

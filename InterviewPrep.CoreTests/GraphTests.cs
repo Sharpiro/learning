@@ -66,9 +66,9 @@ namespace InterviewPrep.CoreTests
                 E G 2
                 G F 2";
             _graphHelper = new GraphHelper(graphData);
-            _graph = _graphHelper.CreateEdgeListGraph();
+            //_graph = _graphHelper.CreateEdgeListGraph();
             //_graph = _graphHelper.CreateAdjacencyMatrixGraph();
-            //_graph = _graphHelper.CreateAdjacencyListGraph();
+            _graph = _graphHelper.CreateAdjacencyListGraph();
         }
 
         [TestMethod]
@@ -87,15 +87,15 @@ namespace InterviewPrep.CoreTests
         [TestMethod]
         public void FindShortestPathTest()
         {
-            var actual = _graph.FindBestPath("A", "C").ToList();
+            var actual = _graph.FindShortestPath("A", "C").ToList();
             Assert.AreEqual("A", actual[0]);
             Assert.AreEqual("C", actual[1]);
-            actual = _graph.FindBestPath("A", "D").ToList();
+            actual = _graph.FindShortestPath("A", "D").ToList();
             Assert.AreEqual("A", actual[0]);
             Assert.AreEqual("B", actual[1]);
             Assert.AreEqual("E", actual[2]);
             Assert.AreEqual("D", actual[3]);
-            actual = _graph.FindBestPath("A", "F").ToList();
+            actual = _graph.FindShortestPath("A", "F").ToList();
             Assert.AreEqual("A", actual[0]);
             Assert.AreEqual("B", actual[1]);
             Assert.AreEqual("E", actual[2]);

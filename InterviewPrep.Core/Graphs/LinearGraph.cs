@@ -5,37 +5,25 @@ namespace InterviewPrep.Core.Graphs
 {
     public class LinearGraph : IGraph
     {
-        private readonly IList<string> _vertexList;
-        private readonly IDictionary<string, int> _vertexDictionary;
+        private readonly IDictionary<string, SimpleVertex> _vertexDictionary;
         private readonly List<Edge> _edgeList;
 
 
-        public LinearGraph(IList<string> vertexList, List<Edge> edgeList)
+        public LinearGraph(IDictionary<string, SimpleVertex> vertexDictionary, List<Edge> edgeList)
         {
-            _vertexList = vertexList;
-            _edgeList = edgeList;
-            _vertexDictionary = new Dictionary<string, int>();
-            InitializeDictionary();
-        }
-
-        public LinearGraph(IList<string> vertexList, IDictionary<string, int> vertexDictionary, List<Edge> edgeList)
-        {
-            _vertexList = vertexList;
             _edgeList = edgeList;
             _vertexDictionary = vertexDictionary;
         }
 
         public bool AreNodesAdjacent(string nodeOne, string nodeTwo)
         {
-            var positionOne = _vertexDictionary[nodeOne];
-            var positionTwo = _vertexDictionary[nodeTwo];
             foreach (var edge in _edgeList)
             {
-                if (edge.FirstNode == positionOne && edge.SecondNode == positionTwo)
+                if (edge.FirstNode == _vertexDictionary[nodeOne] && edge.SecondNode == _vertexDictionary[nodeTwo])
                 {
                     return true;
                 }
-                else if (edge.FirstNode == positionTwo && edge.SecondNode == positionOne)
+                else if (edge.FirstNode == _vertexDictionary[nodeTwo] && edge.SecondNode == _vertexDictionary[nodeOne])
                 {
                     return true;
                 }
@@ -45,45 +33,42 @@ namespace InterviewPrep.Core.Graphs
 
         public IEnumerable<string> FindAdjacentNodes(string node)
         {
-            var nodePosition = _vertexDictionary[node];
             var adjacentNodes = new List<string>();
             foreach (var edge in _edgeList)
             {
-                if (edge.FirstNode == nodePosition)
+                if (edge.FirstNode == _vertexDictionary[node])
                 {
-                    adjacentNodes.Add(_vertexList[edge.SecondNode]);
+                    adjacentNodes.Add(edge.SecondNode.Name);
                 }
-                if (edge.SecondNode == nodePosition)
+                if (edge.SecondNode == _vertexDictionary[node])
                 {
-                    adjacentNodes.Add(_vertexList[edge.FirstNode]);
+                    adjacentNodes.Add(edge.FirstNode.Name);
                 }
             }
             return adjacentNodes;
         }
 
-        public IEnumerable<string> FindBestPath(string nodeOne, string nodeTwo)
+        public IEnumerable<string> FindShortestPath(string nodeOne, string nodeTwo)
         {
             throw new NotImplementedException();
-        }
-
-        private void InitializeDictionary()
-        {
-            for (var i = 0; i < _vertexList.Count; i++)
-            {
-                _vertexDictionary.Add(_vertexList[i], i);
-            }
         }
     }
 
     public class Edge : IEquatable<Edge>
     {
-        public int FirstNode { get; set; }
-        public int SecondNode { get; set; }
+        public SimpleVertex FirstNode { get; set; }
+        public SimpleVertex SecondNode { get; set; }
         public int Weight { get; set; }
 
         public bool Equals(Edge other)
         {
             return this.FirstNode == other.FirstNode && this.SecondNode == other.SecondNode;
         }
+    }
+
+    public class SimpleVertex
+    {
+        public int Index { get; set; }
+        public string Name { get; set; }
     }
 }

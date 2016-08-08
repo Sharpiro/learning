@@ -6,6 +6,6 @@ namespace InterviewPrep.Core.Graphs
     {
         bool AreNodesAdjacent(string nodeOne, string nodeTwo);
         IEnumerable<string> FindAdjacentNodes(string node);
-        IEnumerable<string> FindBestPath(string nodeOne, string nodeTwo);
+        IEnumerable<string> FindShortestPath(string nodeOne, string nodeTwo);
     }
 }
