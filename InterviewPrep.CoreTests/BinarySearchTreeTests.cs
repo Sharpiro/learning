@@ -151,7 +151,7 @@ namespace InterviewPrep.CoreTests
         {
             var tree = CreateTree(10);
             var treeHeight = tree.GetTreeHeight();
-            Assert.AreEqual(treeHeight, 9);
+            Assert.AreEqual(9, treeHeight);
         }
 
         [TestMethod]

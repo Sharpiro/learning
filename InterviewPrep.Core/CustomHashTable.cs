@@ -5,15 +5,16 @@ namespace InterviewPrep.Core
 {
     public class CustomHashTable
     {
-        public int Length { get { return _table.Count(s => s != null); } }
-        public int this[int index]
+        private int _maxSize;
+        private Set[] _table;
+
+        public int this[int key]
         {
-            get { return Get(index); }
-            set { AddOrUpdate(index, value); }
+            get { return Get(key); }
+            set { AddOrUpdate(key, value); }
         }
 
-        private readonly int _maxSize;
-        private Set[] _table;
+        public int Count => _table.Count(s => s != null);
 
         public CustomHashTable(int maxSize = 128)
         {
@@ -25,33 +26,24 @@ namespace InterviewPrep.Core
         {
             var hash = GetHash(key);
             if (_table[hash] != null)
-                throw new ArgumentException("a value with that key already exists");
+                throw new ArgumentException("key already exists", nameof(key));
             _table[hash] = new Set { Key = key, Value = value };
         }
 
         public void AddOrUpdate(int key, int value)
         {
             var hash = GetHash(key);
-            _table[hash] = new Set { Key = key, Value = value };
-        }
-
-        public int GetHash(int key)
-        {
-            if (Length == _maxSize)
-                throw new ArgumentException("The table is full");
-            var hash = key % _maxSize;
-            while (_table[hash] != null && _table[hash].Key != key)
-            {
-                hash = (hash + 1) % _maxSize;
-            }
-            return hash;
+            if (_table[hash] != null)
+                _table[hash].Value = value;
+            else
+                _table[hash] = new Set { Key = key, Value = value };
         }
 
         public int Get(int key)
         {
             var hash = GetHash(key);
             if (_table[hash] == null)
-                throw new ArgumentException("a value with that key does not exist");
+                throw new ArgumentException("no value exists with that key", nameof(key));
             return _table[hash].Value;
         }
 
@@ -59,8 +51,20 @@ namespace InterviewPrep.Core
         {
             var hash = GetHash(key);
             if (_table[hash] == null)
-                throw new ArgumentException("a value with that key does not exist");
+                throw new ArgumentException("no value exists with that key", nameof(key));
             _table[hash] = null;
+        }
+
+        public int GetHash(int key)
+        {
+            if (Count == _maxSize)
+                throw new InvalidOperationException("the table is full");
+            var hash = key % _maxSize;
+            while (_table[hash] != null && _table[hash].Key != key)
+            {
+                hash = (hash + 1) % _maxSize;
+            }
+            return hash;
         }
     }
 

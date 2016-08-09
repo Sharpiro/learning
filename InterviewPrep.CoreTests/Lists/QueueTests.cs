@@ -14,8 +14,10 @@ namespace InterviewPrep.CoreTests.Lists
             var queue = new CustomQueue();
             queue.Enqueue(1);
             queue.Enqueue(2);
+            queue.Enqueue(3);
             var value = queue.Dequeue();
             Assert.AreEqual(value, 1);
+            Assert.AreEqual(queue.Length, 2);
         }
 
         [TestMethod]

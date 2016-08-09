@@ -62,6 +62,24 @@ namespace InterviewPrep.CoreTests.Lists
         }
 
         [TestMethod]
+        public void AddBeforeHeadTest()
+        {
+            var list = new ComplexLinkedList();
+            var node = list.AddLast(1);
+            list.AddLast(2);
+            list.AddLast(3);
+            list.AddBefore(node, 50);
+            var first = list.First;
+            var second = first.Next;
+            var third = second.Next;
+            var fourth = third.Next;
+            Assert.AreEqual(50, first.Data);
+            Assert.AreEqual(1, second.Data);
+            Assert.AreEqual(2, third.Data);
+            Assert.AreEqual(3, fourth.Data);
+        }
+
+        [TestMethod]
         public void AddAfterTest()
         {
             var list = new ComplexLinkedList();
@@ -177,8 +195,7 @@ namespace InterviewPrep.CoreTests.Lists
             list.AddLast(8);
             list.AddLast(2);
             list.RemoveFirst();
-            var first = list.First;
-            Assert.AreEqual(2, first.Data);
+            Assert.AreEqual(2, list.First.Data);
             Assert.AreEqual(4, list.Count);
         }
 
@@ -205,7 +222,6 @@ namespace InterviewPrep.CoreTests.Lists
                 list.AddLast(i);
             }
             var standardList = list.ToList();
-            standardList = list.ToList();
             standardList.Sort();
             Assert.AreEqual(1, standardList[0]);
             Assert.AreEqual(2, standardList[1]);

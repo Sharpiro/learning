@@ -1,51 +1,47 @@
-﻿namespace InterviewPrep.Core.Sorting
+﻿using System;
+
+namespace InterviewPrep.Core.Sorting
 {
-    /// <summary>
-    /// Can be unstable or stable: order is not preserved or preserved respectively if items are equal
-    /// Average case: O(n log n)
-    /// Worst case: O(n^2)
-    /// used by LINQ 2 Objects "OrderBy"
-    /// </summary>
     public class QuickSort : ISorter
     {
         public int[] Sort(int[] list)
         {
-            return QuickSortEasy(list, 0, list.Length - 1);
+            var newList = new int[list.Length];
+            Array.Copy(list, newList, list.Length);
+            Sort(newList, 0, list.Length - 1);
+            return newList;
         }
 
-        private int[] QuickSortEasy(int[] list, int lowIndex, int highIndex)
+        public void Sort(int[] list, int lowIndex, int highIndex)
         {
-            if (lowIndex < highIndex)
-            {
-                var pivotIndex = PartitionEasy(list, lowIndex, highIndex);
-                QuickSortEasy(list, lowIndex, pivotIndex - 1);
-                QuickSortEasy(list, pivotIndex + 1, highIndex);
-            }
-            return list;
+            if (lowIndex >= highIndex)
+                return;
+            var pivot = Partition(list, lowIndex, highIndex);
+            Sort(list, lowIndex, pivot - 1);
+            Sort(list, pivot + 1, highIndex);
         }
 
-        private int PartitionEasy(int[] list, int lowIndex, int highIndex)
+        private int Partition(int[] list, int lowIndex, int highIndex)
         {
-            var pivotValue = list[highIndex];
-            var globalIndex = lowIndex;
+            var newPivotIndex = lowIndex;
+
             for (var i = lowIndex; i < highIndex; i++)
             {
-                var currentValue = list[i];
-                if (currentValue < pivotValue)
+                if (list[i] < list[highIndex])
                 {
-                    Swap(ref list[i], ref list[globalIndex]);
-                    globalIndex++;
+                    Swap(ref list[i], ref list[newPivotIndex]);
+                    newPivotIndex++;
                 }
             }
-            Swap(ref list[highIndex], ref list[globalIndex]);
-            return globalIndex;
+            Swap(ref list[newPivotIndex], ref list[highIndex]);
+            return newPivotIndex;
         }
 
-        private void Swap(ref int number1, ref int number2)
+        private void Swap(ref int x, ref int y)
         {
-            var temp = number1;
-            number1 = number2;
-            number2 = temp;
+            var temp = x;
+            x = y;
+            y = temp;
         }
     }
 }

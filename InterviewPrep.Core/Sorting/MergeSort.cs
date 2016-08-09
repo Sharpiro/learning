@@ -1,72 +1,74 @@
-﻿namespace InterviewPrep.Core.Sorting
+﻿using System;
+
+namespace InterviewPrep.Core.Sorting
 {
-    /// <summary>
-    /// Average & Worst case: O(n log n)
-    /// still usually worse than quick sort though...
-    /// </summary>
     public class MergeSort : ISorter
     {
         public int[] Sort(int[] list)
         {
-            Sort(list, 0, list.Length - 1);
-            return list;
+            var newList = new int[list.Length];
+            Array.Copy(list, newList, list.Length);
+            Sort(newList, 0, list.Length - 1);
+            return newList;
         }
 
-        private void Sort(int[] list, int lowIndex, int highIndex)
+        public void Sort(int[] list, int lowIndex, int highIndex)
         {
-            if (lowIndex < highIndex)
-            {
-                int pivot = (lowIndex + highIndex) / 2;
-                Sort(list, lowIndex, pivot);
-                Sort(list, pivot + 1, highIndex);
-                Merge(list, lowIndex, pivot, highIndex);
-            }
+            if (lowIndex >= highIndex)
+                return;
+            var pivot = (lowIndex + highIndex) / 2;
+            Sort(list, lowIndex, pivot);
+            Sort(list, pivot + 1, highIndex);
+            Merge(list, lowIndex, pivot, highIndex);
         }
 
-        private void Merge(int[] list, int lowIndex, int pivot, int highIndex)
+        private void Merge(int[] list, int lowIndex, int mid, int highIndex)
         {
-            var leftList = list.GetFrom(lowIndex, pivot);
-            var rightList = list.GetFrom(pivot + 1, highIndex);
+            var leftList = list.SubList(lowIndex, mid);
+            var rightList = list.SubList(mid + 1, highIndex);
+
             int i = 0, j = 0, k;
-
             for (k = lowIndex; i < leftList.Length && j < rightList.Length; k++)
             {
-                if (leftList[i] > rightList[j])
+                if (leftList[i] <= rightList[j])
                 {
-                    list[k] = (rightList[j]);
-                    j++;
+                    list[k] = leftList[i];
+                    i++;
                 }
                 else
                 {
-                    list[k] = (leftList[i]);
-                    i++;
+                    list[k] = rightList[j];
+                    j++;
                 }
             }
+
             while (i < leftList.Length)
             {
-                list[k] = (leftList[i]);
+                list[k] = leftList[i];
                 i++;
                 k++;
             }
+
             while (j < rightList.Length)
             {
-                list[k] = (rightList[j]);
+                list[k] = rightList[j];
                 j++;
                 k++;
             }
         }
     }
 
-    public static class Extensions
+    public static class MergeExtensions
     {
-        public static int[] GetFrom(this int[] list, int startIndex, int endIndex)
+        public static int[] SubList(this int[] list, int lowIndex, int highIndex)
         {
-            var newList = new int[endIndex - startIndex + 1];
-            var j = 0;
-            for (var i = startIndex; i <= endIndex; i++)
+            //8, [8, 8, 8]
+            //3 - 1 = 2 
+            var length = highIndex - lowIndex + 1;
+            var newList = new int[length];
+            for (int i = lowIndex, j = 0; i <= highIndex; i++, j++)
             {
-                newList[j] = (list[i]);
-                j++;
+                newList[j] = list[i];
             }
             return newList;
         }

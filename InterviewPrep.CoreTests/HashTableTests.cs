@@ -52,7 +52,16 @@ namespace InterviewPrep.CoreTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        public void LengthTest()
+        {
+            var hasher = new CustomHashTable();
+            Assert.AreEqual(0, hasher.Count);
+            hasher.Add(1, 1);
+            Assert.AreEqual(1, hasher.Count);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void RangeTest()
         {
             var hasher = new CustomHashTable();
@@ -64,12 +73,21 @@ namespace InterviewPrep.CoreTests
         }
 
         [TestMethod]
-        public void LengthTest()
+        public void IndexerTest()
         {
             var hasher = new CustomHashTable();
-            Assert.AreEqual(0, hasher.Length);
             hasher.Add(1, 1);
-            Assert.AreEqual(1, hasher.Length);
+            hasher.Add(127, 3);
+            hasher.Add(1023, 5);
+            hasher[1] = 12;
+            hasher[1023] = 5;
+            hasher[127] = 5;
+            var one = hasher[1];
+            var two = hasher[1023];
+            var three = hasher[127];
+            Assert.AreEqual(12, one);
+            Assert.AreEqual(5, two);
+            Assert.AreEqual(5, three);
         }
 
         [TestMethod]
@@ -80,22 +98,10 @@ namespace InterviewPrep.CoreTests
             hasher.Add(2, 1);
             hasher.Add(3, 1);
             hasher.Remove(2);
-            Assert.AreEqual(2, hasher.Length);
-        }
-
-        [TestMethod]
-        public void IndexerTest()
-        {
-            var hasher = new CustomHashTable();
-            hasher.Add(1, 1);
-            hasher.Add(127, 3);
-            hasher.Add(1023, 5);
-            var one = hasher[1];
-            var two = hasher[1023];
-            var three = hasher[127];
-            Assert.AreEqual(1, one);
-            Assert.AreEqual(5, two);
-            Assert.AreEqual(3, three);
+            hasher[3] = 6;
+            Assert.AreEqual(1, hasher[1]);
+            Assert.AreEqual(6, hasher[3]);
+            Assert.AreEqual(2, hasher.Count);
         }
     }
 }
