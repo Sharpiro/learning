@@ -7,16 +7,16 @@ namespace InterviewPrep.Core.Graphs
 {
     public class GraphHelper
     {
-        private readonly string _graphData;
+        private readonly TextReader _reader;
+        private string _graphType;
         private readonly IDictionary<string, SimpleVertex> _simpleVertexDictionary;
         private readonly List<Edge> _edgeList;
-        private string _graphType;
 
         public IEnumerable<string> VertexList => _simpleVertexDictionary.Select(kvp => kvp.Value.Name);
 
-        public GraphHelper(string graphData)
+        public GraphHelper(TextReader reader)
         {
-            _graphData = graphData;
+            _reader = reader;
             _simpleVertexDictionary = new Dictionary<string, SimpleVertex>();
             _edgeList = new List<Edge>();
             Parse();
@@ -24,21 +24,20 @@ namespace InterviewPrep.Core.Graphs
 
         private void Parse()
         {
-            var reader = new StringReader(_graphData);
             int numberOfNodes;
-            var parseResult = int.TryParse(reader.ReadLine()?.Trim(), out numberOfNodes);
+            var parseResult = int.TryParse(_reader.ReadLine()?.Trim(), out numberOfNodes);
             if (!parseResult)
                 throw new ArgumentException("error parsing number of nodes from graph data", nameof(numberOfNodes));
-            _graphType = reader.ReadLine()?.Trim();
+            _graphType = _reader.ReadLine()?.Trim();
             if (string.IsNullOrEmpty(_graphType))
                 throw new ArgumentException("error parsing graph type from graph data", nameof(_graphType));
             for (var i = 0; i < numberOfNodes; i++)
             {
-                var line = reader.ReadLine()?.Trim();
+                var line = _reader.ReadLine()?.Trim();
                 _simpleVertexDictionary.Add(line, new SimpleVertex { Name = line, Index = i });
             }
             string data;
-            while ((data = reader.ReadLine()) != null)
+            while ((data = _reader.ReadLine()) != null)
             {
                 var edge = data.Trim().Split(' ');
                 if (edge.Length != 3)
@@ -83,7 +82,7 @@ namespace InterviewPrep.Core.Graphs
             foreach (var edge in _edgeList)
             {
                 adjacencyDictionary[edge.FirstNode.Name].AddNeighbor(new Neighbor { Vertex = adjacencyDictionary[edge.SecondNode.Name], Weight = edge.Weight });
-                if (_graphType.ToLower() == ("undirected"))
+                if (_graphType.ToLower() == "undirected")
                     adjacencyDictionary[edge.SecondNode.Name].AddNeighbor(new Neighbor { Vertex = adjacencyDictionary[edge.FirstNode.Name], Weight = edge.Weight });
             }
             var graph = new AdjacencyListGraph(adjacencyDictionary);

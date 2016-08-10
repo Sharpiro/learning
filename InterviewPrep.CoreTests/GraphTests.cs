@@ -1,6 +1,7 @@
 ﻿using InterviewPrep.Core.Graphs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace InterviewPrep.CoreTests
@@ -65,7 +66,8 @@ namespace InterviewPrep.CoreTests
                 E D 2
                 E G 2
                 G F 2";
-            _graphHelper = new GraphHelper(graphData);
+            var reader = new StringReader(graphData);
+            _graphHelper = new GraphHelper(reader);
             //_graph = _graphHelper.CreateEdgeListGraph();
             //_graph = _graphHelper.CreateAdjacencyMatrixGraph();
             _graph = _graphHelper.CreateAdjacencyListGraph();
@@ -82,6 +84,39 @@ namespace InterviewPrep.CoreTests
             Assert.AreEqual("C", actual[1]);
             Assert.AreEqual("D", actual[2]);
             Assert.AreEqual("G", actual[3]);
+        }
+
+        [TestMethod]
+        public void IComparableTest()
+        {
+            var fringe = new List<FringeItem>
+            {
+                new FringeItem {Distance = 50 },
+                new FringeItem {Distance = 0 },
+                new FringeItem {Distance = 10 },
+                new FringeItem {Distance = 20 },
+                new FringeItem {Distance = 70 },
+                new FringeItem {Distance = 27 },
+                new FringeItem {Distance = 45 },
+            };
+            var fringeDictionary = new Dictionary<string, FringeItem>
+            {
+                ["B"] = new FringeItem {Distance = 50 },
+                ["A"] = new FringeItem {Distance = 0 },
+                ["C"] = new FringeItem {Distance = 10 },
+                ["D"] = new FringeItem {Distance = 20 },
+                ["E"] = new FringeItem {Distance = 70 },
+                ["F"] = new FringeItem {Distance = 27 },
+                ["G"] = new FringeItem {Distance = 45 },
+            };
+            var min = fringe.Min();
+            var max = fringe.Max();
+            Assert.AreEqual(0, fringe[1].Distance);
+            Assert.AreEqual(70, fringe[4].Distance);
+            min = fringeDictionary.Min(kvp => kvp.Value);
+            max = fringeDictionary.Max(kvp => kvp.Value);
+            Assert.AreEqual(0, fringe[1].Distance);
+            Assert.AreEqual(70, fringe[4].Distance);
         }
 
         [TestMethod]
