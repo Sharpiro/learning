@@ -17,25 +17,15 @@ namespace InterviewPrep.Generics
         }
     }
 
-    public class CarRepository<T> : IRepository<T> where T : class
+    public class SqlRepository<T> : IRepository<T> where T : class
     {
         private DbContext _ctx;
         private DbSet<T> _set;
 
-        public CarRepository(DbContext context)
+        public SqlRepository(DbContext context)
         {
             _ctx = context;
             _set = _ctx.Set<T>();
-        }
-
-        public void Commit()
-        {
-            _ctx.SaveChanges();
-        }
-
-        public void Dispose()
-        {
-            _ctx.Dispose();
         }
 
         public IQueryable<T> GetAll()
@@ -54,11 +44,11 @@ namespace InterviewPrep.Generics
         }
     }
 
-    public interface IRepository<T>: IDisposable
+    public interface IRepository<T>
     {
         T GetById(int id);
         IQueryable<T> GetAll();
         void Insert(T entity);
-        void Commit();
+        //void Commit();
     }
 }

@@ -15,12 +15,14 @@ namespace InterviewPrep.Pluralsight.Core.Tests
         private readonly LinqHelper _helper;
         private readonly string _movieData;
         private readonly string _testData;
+        private readonly string _fileDirectory;
+
         public LinqHelperTests()
         {
             var directory = Directory.GetCurrentDirectory();
-            var fileDirectory = $"{directory}/Data";
-            _testData = File.ReadAllText($"{fileDirectory}/TestData.json");
-            _movieData = File.ReadAllText($"{fileDirectory}/MovieData.json");
+            _fileDirectory = $"{directory}/Data";
+            _testData = File.ReadAllText($"{_fileDirectory}/TestData.json");
+            _movieData = File.ReadAllText($"{_fileDirectory}/MovieData.json");
             _helper = new LinqHelper();
         }
 
@@ -42,10 +44,29 @@ namespace InterviewPrep.Pluralsight.Core.Tests
         }
 
         [Fact]
-        public void MovieTest()
+        public void MovieLazyFailTest()
         {
-            var movieList = JsonConvert.DeserializeObject<List<Movie>>(_movieData);
-            Assert.Equal(movieList.Count(m => m.Year > 2000), movieList.Filter(m => m.Year > 2000).Count());
+            var movieList = JsonConvert.DeserializeObject<List<Movie>>(_movieData).Select(m => new Movie { Year = m.Year });
+            //Assert.Equal(movieList.Count(m => m.Year > 2000), movieList.Filter(m => m.Year > 2000).Count());
+            foreach (var movie in movieList)
+            {
+                movie.Year = 1;
+            }
+            var firstMovieYear = movieList.FirstOrDefault().Year;
+            Assert.False(firstMovieYear == 1);
+        }
+
+        [Fact]
+        public void IEnumerableLazyFailTest()
+        {
+            TestListAndEnumerable.Test();
+        }
+
+        [Fact]
+        public void ParseCsvTest()
+        {
+            var fuelDataPath = $"{_fileDirectory}/fuel.csv";
+            var data = File.ReadAllLines(fuelDataPath).ParseCsvEcoData();
         }
     }
 }
