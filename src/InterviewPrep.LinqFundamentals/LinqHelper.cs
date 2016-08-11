@@ -10,7 +10,7 @@ namespace InterviewPrep.LinqFundamentals
         {
             //get average price for each item type
             //get average price per item type for item types with count larger than 2
-            var averagePricePerItemType = list.GroupBy(td => td.Type)
+            var averagePricePerItemType = list.GroupBy(td => td.Type).Where(g => g.Count() > 2)
                 .Select(g => new
                 {
                     Type = g.Key,
@@ -18,28 +18,15 @@ namespace InterviewPrep.LinqFundamentals
                 }).ToList();
         }
 
-        public void Swap(IList<SwappableObject> list)
+        public ICollection<int> DoStuff(ICollection<int> list)
         {
-            //for (var i = 0; i < list.Count; i++)
-            //{
-            //    var x = 0;
-            //    var y = 1;
-            //    Swap(ref x, ref y);
-            //}
-            foreach (var item in list)
+            var type = list.GetType();
+            if (list.IsReadOnly)
             {
-                Swap(item);
+                list = list.ToList();
             }
-            //var obj = list.FirstOrDefault();
-            //Swap(ref obj.Value1, ref obj.Value2);
-            //return list.Select(so => new SwappableObject { Value1 = so.Value2, Value2 = so.Value1 });
-        }
-
-        private void Swap(SwappableObject obj)
-        {
-            var temp = obj.Value1;
-            obj.Value1 = obj.Value2;
-            obj.Value2 = temp;
+            list.Add(1);
+            return list;
         }
     }
 }

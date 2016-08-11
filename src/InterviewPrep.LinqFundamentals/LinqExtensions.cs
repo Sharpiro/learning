@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace InterviewPrep.LinqFundamentals
 {
@@ -12,6 +13,20 @@ namespace InterviewPrep.LinqFundamentals
                 counter++;
             }
             return counter;
+        }
+
+        public static IEnumerable<T> Filter<T>(this IEnumerable<T> list, Func<T, bool> func)
+        {
+            var newList = new List<T>();
+            //var temp = new int[list.
+            foreach (var item in list)
+            {
+                if (func(item))
+                {
+                    newList.Add(item);
+                }
+            }
+            return newList;
         }
     }
 }
