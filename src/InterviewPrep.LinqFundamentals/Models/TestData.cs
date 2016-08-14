@@ -1,4 +1,6 @@
-﻿namespace InterviewPrep.LinqFundamentals.Models
+﻿using System.Diagnostics;
+
+namespace InterviewPrep.LinqFundamentals.Models
 {
     public class TestData
     {
@@ -22,9 +24,13 @@
 
     public class EcoEntry
     {
-        //2016, BMW , M4 GTS, 3.0, 6, 16, 23, 19
+        private string _make;
+        public string Make
+        {
+            get { Debug.WriteLine($"{_make} was accessed"); return _make; }
+            set { _make = value; }
+        }
         public int Year { get; set; }
-        public string Make { get; set; }
         public string Model { get; set; }
         public float Liters { get; set; }
         public int Cylinders { get; set; }

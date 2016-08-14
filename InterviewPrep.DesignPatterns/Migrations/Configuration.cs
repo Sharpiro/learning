@@ -1,3 +1,5 @@
+using InterviewPrep.DesignPatterns.DataLayer;
+
 namespace InterviewPrep.DesignPatterns.Migrations
 {
     using Entities;

@@ -1,33 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace InterviewPrep.DesignPatterns
+namespace InterviewPrep.DesignPatterns.DataLayer
 {
-    public class GenericRepository<T> : IRepository<T> where T : class
+    public class EFRepository<T> : IRepository<T> where T : class
     {
         private DbSet<T> _set;
 
-        public GenericRepository(DbContext context)
+        public EFRepository(DbContext context)
         {
             _set = context.Set<T>();
         }
 
         public void Add(T data)
         {
-            throw new NotImplementedException();
+            _set.Add(data);
+        }
+
+        public void Delete(T data)
+        {
+            _set.Remove(data);
         }
 
         public T Get(int id)
         {
-            throw new NotImplementedException();
+            return _set.Find(id);
         }
 
         public T Get(Expression<Func<T, bool>> func)
         {
-            return _set.FirstOrDefault(func);
+            return _set.Single(func);
         }
 
         public IQueryable<T> GetAll()

@@ -2,7 +2,7 @@
 using System.Data.Entity;
 using System.Diagnostics;
 
-namespace InterviewPrep.DesignPatterns
+namespace InterviewPrep.DesignPatterns.DataLayer
 {
     public class SchoolContext : DbContext
     {

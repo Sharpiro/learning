@@ -49,19 +49,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLogic\SchoolBusinessLogic.cs" />
+    <Compile Include="DataLayer\IUnitOfWork.cs" />
     <Compile Include="Entities\Course.cs" />
     <Compile Include="Entities\Student.cs" />
     <Compile Include="Entities\Enrollment.cs" />
-    <Compile Include="GenericRepository.cs" />
-    <Compile Include="IRepository.cs" />
+    <Compile Include="DataLayer\EFRepository.cs" />
+    <Compile Include="DataLayer\IRepository.cs" />
     <Compile Include="Migrations\201608121758456_1.cs" />
     <Compile Include="Migrations\201608121758456_1.Designer.cs">
       <DependentUpon>201608121758456_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="SchoolContext.cs" />
+    <Compile Include="DataLayer\SchoolContext.cs" />
+    <Compile Include="Models\StudentModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SchoolDataLayer.cs" />
+    <Compile Include="DataLayer\SchoolDataLayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -72,6 +75,7 @@
       <DependentUpon>201608121758456_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

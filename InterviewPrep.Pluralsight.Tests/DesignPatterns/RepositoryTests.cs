@@ -1,4 +1,4 @@
-﻿using InterviewPrep.DesignPatterns;
+﻿using InterviewPrep.DesignPatterns.DataLayer;
 using InterviewPrep.DesignPatterns.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -17,8 +17,7 @@ namespace InterviewPrep.Pluralsight.Tests.DesignPatterns
             IList<Student> studentsList;
             using (var dataLayer = new SchoolDataLayer(new SchoolContext()))
             {
-                students = dataLayer.StudentRepository.GetAll() as DbSet<Student>;
-                //studentsList = students.Include(t => t.Courses).ToList();
+                students = dataLayer.StudentRepo.GetAll() as DbSet<Student>;
                 studentsList = students.ToList();
             }
             var studentsTemp = studentsList.Select(s => new
@@ -33,14 +32,13 @@ namespace InterviewPrep.Pluralsight.Tests.DesignPatterns
         [TestMethod]
         public void GetGradesTest()
         {
-            object student;
-            using (var dataLayer = new SchoolDataLayer(new SchoolContext()))
-            {
-                //students = dataLayer.StudentRepository.GetAll() as DbSet<Student>;
-                //studentsList = students.ToList();
-                student = dataLayer.GetHighestGradeStudent();
-            }
-            var x = 2;
+            var unitOfWork = new SchoolDataLayer(new SchoolContext());
+            var businessLogic = new SchoolBusinessLogic(unitOfWork);
+            var spanishClass = businessLogic.DataLayer.CourseRepo.Get(c => c.Name == "Spanish");
+            var student = businessLogic.GetHighestGradeStudent(spanishClass.Id);
+            Assert.AreEqual("Jack", student.Name);
+            Assert.AreEqual(3, student.Id);
+            businessLogic.Dispose();
         }
     }
 }

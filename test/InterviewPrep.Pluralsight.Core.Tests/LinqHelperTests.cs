@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using InterviewPrep.LinqFundamentals.Models;
 using System.Linq;
 using System;
+using System.Diagnostics;
 
 namespace InterviewPrep.Pluralsight.Core.Tests
 {
@@ -66,7 +67,13 @@ namespace InterviewPrep.Pluralsight.Core.Tests
         public void ParseCsvTest()
         {
             var fuelDataPath = $"{_fileDirectory}/fuel.csv";
-            var data = File.ReadAllLines(fuelDataPath).ParseCsvEcoData();
+            var data = File.ReadAllLines(fuelDataPath)
+                .ParseCsv<EcoEntry>().Where(e => e.Make.Contains("Aston"));
+
+            foreach (var item in data)
+            {
+               // Debug.WriteLine(item.Make);
+            }
         }
     }
 }

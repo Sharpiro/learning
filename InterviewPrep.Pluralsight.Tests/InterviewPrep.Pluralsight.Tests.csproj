@@ -65,7 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\InterviewPrep.DesignPatterns\InterviewPrep.DesignPatterns.csproj">
-      <Project>{1040AD00-E2C5-4375-B65A-20932332B8F1}</Project>
+      <Project>{1040ad00-e2c5-4375-b65a-20932332b8f1}</Project>
       <Name>InterviewPrep.DesignPatterns</Name>
     </ProjectReference>
     <ProjectReference Include="..\InterviewPrep.Generics\InterviewPrep.Generics.csproj">
