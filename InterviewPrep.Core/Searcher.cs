@@ -63,15 +63,13 @@ namespace InterviewPrep.Core
         public static int BinarySearchRecursive(IList<int> list, int value, int low, int high)
         {
             if (low > high) return -1;
-            var midPoint = (int)Math.Floor(((double)low + high) / 2);
-            if (list[midPoint] == value)
-                return midPoint;
-            if (list[midPoint] < value)
-                low = midPoint + 1;
-            else if (list[midPoint] > value)
-                high = midPoint - 1;
-            midPoint = BinarySearchRecursive(list, value, low, high);
-            return midPoint;
+            var pivot = (low + high) / 2;
+            if (value == list[pivot])
+                return pivot;
+            if (value < list[pivot])
+                return BinarySearchRecursive(list, value, low, pivot - 1);
+            else
+                return BinarySearchRecursive(list, value, pivot + 1, high);
         }
     }
 }

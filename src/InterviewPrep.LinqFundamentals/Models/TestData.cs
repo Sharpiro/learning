@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Generic;
 
 namespace InterviewPrep.LinqFundamentals.Models
 {
@@ -22,12 +22,13 @@ namespace InterviewPrep.LinqFundamentals.Models
         public int Year { get; set; }
     }
 
-    public class EcoEntry
+    public class Car
     {
         private string _make;
+        private int _combined;
         public string Make
         {
-            get { Debug.WriteLine($"{_make} was accessed"); return _make; }
+            get { /*Debug.WriteLine($"{_make} was accessed");*/ return _make; }
             set { _make = value; }
         }
         public int Year { get; set; }
@@ -36,6 +37,30 @@ namespace InterviewPrep.LinqFundamentals.Models
         public int Cylinders { get; set; }
         public int City { get; set; }
         public int Highway { get; set; }
-        public int Combined { get; set; }
+        public int Combined
+        {
+            get { /*Debug.WriteLine($"{_combined} was accessed");*/ return _combined; }
+            set { _combined = value; }
+        }
+    }
+
+    public class Manufacturer
+    {
+        public string Name { get; set; }
+        public string Location { get; set; }
+        public int Year { get; set; }
+    }
+
+    public class CarHolder
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public IEnumerable<Passenger> Passengers { get; set; }
+    }
+
+    public class Passenger
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }
