@@ -3,14 +3,15 @@ using System.Data.Entity;
 
 namespace InterviewPrep.DesignPatterns.DataLayer
 {
-    public class SchoolDataLayer : ISchoolUnitOfWork
+    public class SchoolUnitOfWork : ISchoolUnitOfWork
     {
         private readonly DbContext _context;
+
         public IRepository<Course> CourseRepo { get; }
         public IRepository<Student> StudentRepo { get; }
         public IRepository<Enrollment> EnrollmentRepo { get; }
 
-        public SchoolDataLayer(DbContext context)
+        public SchoolUnitOfWork(DbContext context)
         {
             _context = context;
             CourseRepo = new EFRepository<Course>(_context);

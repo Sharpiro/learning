@@ -7,16 +7,16 @@ namespace InterviewPrep.DesignPatterns.DataLayer
 {
     public class SchoolBusinessLogic : IDisposable
     {
-        public ISchoolUnitOfWork DataLayer { get; }
+        public ISchoolUnitOfWork SchoolUnitOfWork { get; }
 
-        public SchoolBusinessLogic(ISchoolUnitOfWork dataLayer)
+        public SchoolBusinessLogic(ISchoolUnitOfWork schoolUnitOfWork)
         {
-            DataLayer = dataLayer;
+            SchoolUnitOfWork = schoolUnitOfWork;
         }
 
         public StudentModel GetHighestGradeStudent(int courseId)
         {
-            var model = DataLayer.EnrollmentRepo
+            var model = SchoolUnitOfWork.EnrollmentRepo
                 .GetAll(e => e.CourseId == courseId)
                 .Include(e => e.Student)
                 .OrderByDescending(e => e.Grade)
@@ -30,7 +30,7 @@ namespace InterviewPrep.DesignPatterns.DataLayer
 
         public void Dispose()
         {
-            DataLayer.Dispose();
+            SchoolUnitOfWork.Dispose();
         }
     }
 }
