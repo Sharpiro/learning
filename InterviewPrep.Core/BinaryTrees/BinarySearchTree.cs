@@ -54,6 +54,8 @@ namespace InterviewPrep.Core.BinaryTrees
 
         public Node FindMin(Node current)
         {
+            if (current == null)
+                return null;
             if (current.Left == null)
                 return current;
             return FindMin(current.Left);
@@ -66,6 +68,8 @@ namespace InterviewPrep.Core.BinaryTrees
 
         public Node FindMax(Node current)
         {
+            if (current == null)
+                return null;
             if (current.Right == null)
                 return current;
             return FindMax(current.Right);
@@ -103,6 +107,25 @@ namespace InterviewPrep.Core.BinaryTrees
                     current.Right = Delete(current.Right, minSubtreeNode.Data);
                 }
             }
+            return current;
+        }
+
+        public Node ConvertToOrderedLinkedList()
+        {
+            var head = FindMin(ConvertToOrderedLinkedList(Root));
+            return head;
+        }
+
+        public Node ConvertToOrderedLinkedList(Node current)
+        {
+            if (current == null)
+                return null;
+            current.Left = FindMax(ConvertToOrderedLinkedList(current.Left));
+            if (current.Left != null)
+                current.Left.Right = current;
+            current.Right = FindMin(ConvertToOrderedLinkedList(current.Right));
+            if (current.Right != null)
+                current.Right.Left = current;
             return current;
         }
 
