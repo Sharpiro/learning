@@ -10,41 +10,34 @@ namespace InterviewPrep.Pluralsight.Core.Tests
 {
     public class LinqHelperTests
     {
-        private readonly LinqHelper _helper;
         private readonly string _movieData;
         private readonly string _testData;
         private readonly string _fileDirectory;
+        private readonly List<Car> _carData;
+        private readonly List<Manufacturer> _makeData;
 
         public LinqHelperTests()
         {
-            var directory = Directory.GetCurrentDirectory();
-            _fileDirectory = $"{directory}/Data";
+            _fileDirectory = $"{Directory.GetCurrentDirectory()}/Data";
             _testData = File.ReadAllText($"{_fileDirectory}/TestData.json");
             _movieData = File.ReadAllText($"{_fileDirectory}/MovieData.json");
-            _helper = new LinqHelper();
+            _carData = File.ReadAllLines($"{_fileDirectory}/fuel.csv").ParseCsv<Car>().ToList();
+            _makeData = File.ReadAllLines($"{_fileDirectory}/manufacturers.csv").ParseCsv<Manufacturer>().ToList();
         }
 
         [Fact]
         public void GroupingTest()
         {
 
-            var list = JsonConvert.DeserializeObject<List<TestData>>(_testData);
-            _helper.Grouping(list);
-        }
-
-        [Fact]
-        public void SwapTest()
-        {
-            var list1 = new List<int> { 1, 2, 3 };
-            var list2 = new int[] { 1, 2, 3 };
-            var list3 = _helper.DoStuff(list1);
-            var list4 = _helper.DoStuff(list2);
+            //var list = JsonConvert.DeserializeObject<List<TestData>>(_testData);
+            //list.Grouping();
         }
 
         [Fact]
         public void MovieLazyFailTest()
         {
-            var movieList = JsonConvert.DeserializeObject<List<Movie>>(_movieData).Select(m => new Movie { Year = m.Year });
+            var movieList = JsonConvert.DeserializeObject<List<Movie>>(_movieData)
+                .Select(m => new Movie { Year = m.Year });
             //Assert.Equal(movieList.Count(m => m.Year > 2000), movieList.Filter(m => m.Year > 2000).Count());
             foreach (var movie in movieList)
             {
@@ -55,28 +48,16 @@ namespace InterviewPrep.Pluralsight.Core.Tests
         }
 
         [Fact]
-        public void IEnumerableLazyFailTest()
-        {
-            TestListAndEnumerable.Test();
-        }
-
-        [Fact]
         public void ParseCsvTest()
         {
-            var fuelDataPath = $"{_fileDirectory}/fuel.csv";
-            var makeDataPath = $"{_fileDirectory}/manufacturers.csv";
-            var fuelData = File.ReadAllLines(fuelDataPath).ParseCsv<Car>().ToList();
-            var makeData = File.ReadAllLines(makeDataPath).ParseCsv<Manufacturer>().ToList();
-            Assert.Equal(1205, fuelData.Count);
-            Assert.Equal(43, makeData.Count);
+            Assert.Equal(1205, _carData.Count);
+            Assert.Equal(43, _makeData.Count);
         }
 
         [Fact]
         public void MostCommonCharacterTest()
         {
-            var fuelDataPath = $"{_fileDirectory}/fuel.csv";
-            var data = File.ReadAllLines(fuelDataPath).ParseCsv<Car>();
-            var characters = data.SelectMany(d => d.Model);
+            var characters = _carData.SelectMany(d => d.Model);
             var groupedCharacters = characters.GroupBy(g => g)
                 .Select(g => new { g.Key, Count = g.Count() })
                 .OrderByDescending(o => o.Count);
@@ -89,11 +70,7 @@ namespace InterviewPrep.Pluralsight.Core.Tests
         public void InnerJoinTest()
         {
             //return car name, manufacturer, and location
-            var fuelDataPath = $"{_fileDirectory}/fuel.csv";
-            var makeDataPath = $"{_fileDirectory}/manufacturers.csv";
-            var carData = File.ReadAllLines(fuelDataPath).ParseCsv<Car>().ToList();
-            var makeData = File.ReadAllLines(makeDataPath).ParseCsv<Manufacturer>().ToList();
-            var temp = carData.Join(makeData, c => c.Make, m => m.Name, (c, m) => new
+            var temp = _carData.Join(_makeData, c => c.Make, m => m.Name, (c, m) => new
             {
                 Name = c.Model,
                 Manufacturer = m.Name,
