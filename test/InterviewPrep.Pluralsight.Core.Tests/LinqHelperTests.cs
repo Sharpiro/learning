@@ -26,14 +26,6 @@ namespace InterviewPrep.Pluralsight.Core.Tests
         }
 
         [Fact]
-        public void GroupingTest()
-        {
-
-            //var list = JsonConvert.DeserializeObject<List<TestData>>(_testData);
-            //list.Grouping();
-        }
-
-        [Fact]
         public void MovieLazyFailTest()
         {
             var movieList = JsonConvert.DeserializeObject<List<Movie>>(_movieData)
@@ -69,17 +61,110 @@ namespace InterviewPrep.Pluralsight.Core.Tests
         [Fact]
         public void InnerJoinTest()
         {
-            //return car name, manufacturer, and location
             var temp = _carData.Join(_makeData, c => c.Make, m => m.Name, (c, m) => new
             {
                 Name = c.Model,
                 Manufacturer = m.Name,
-                Location = m.Location
+                Location = m.Location,
+                FuelEconomy = c.Combined
             });
             var firstEntry = temp.FirstOrDefault();
             Assert.Equal("4C", firstEntry.Name);
             Assert.Equal("ALFA ROMEO", firstEntry.Manufacturer);
             Assert.Equal("Italy", firstEntry.Location);
+        }
+
+        [Fact]
+        public void GroupingTest()
+        {
+            var top2ByManufactuer = _carData.GroupBy(c => c.Make.ToLower())
+                .Select(g => new
+                {
+                    Manufacturer = g.Key,
+                    Cars = g.OrderByDescending(c => c.Combined).Take(2).ToList()
+                }).OrderBy(e => e.Manufacturer).ToList();
+            var previousManufacturer = 'A';
+            foreach (var topTwo in top2ByManufactuer)
+            {
+                var firstCombined = topTwo.Cars.FirstOrDefault().Combined;
+                var secondCombined = topTwo.Cars.LastOrDefault().Combined;
+                Assert.True(secondCombined <= firstCombined);
+                var firstLetterOfMake = topTwo.Manufacturer.FirstOrDefault();
+                Assert.True(previousManufacturer <= firstLetterOfMake);
+                previousManufacturer = firstLetterOfMake;
+            }
+        }
+
+        [Fact]
+        public void GroupJoinTest()
+        {
+            var top2ByManufactuer = _makeData.OrderBy(m => m.Name)
+                .Join(_carData, m => m.Name.ToLower(), c => c.Make.ToLower(),
+                (m, c) => new
+                {
+                    Car = c,
+                    Manufacturer = m
+                })
+                .GroupBy(c => c.Manufacturer.Name.ToLower())
+                .Select(g => new
+                {
+                    Manufacturer = g.FirstOrDefault().Manufacturer,
+                    Cars = g.OrderByDescending(obj => obj.Car.Combined).Select(obj => obj.Car).Take(2).ToList()
+                }).ToList();
+
+            var temp = _makeData.OrderBy(m => m.Name)
+                .GroupJoin(_carData, m => m.Name.ToLower(), c => c.Make.ToLower(),
+                (m, cars) => new
+                {
+                    Manufacturer = m,
+                    Cars = cars.OrderByDescending(c => c.Combined)
+                }).ToList();
+            var previousManufacturer = 'A';
+            foreach (var topTwo in top2ByManufactuer)
+            {
+                var firstCombined = topTwo.Cars.FirstOrDefault().Combined;
+                var secondCombined = topTwo.Cars.LastOrDefault().Combined;
+                Assert.True(secondCombined <= firstCombined);
+                var firstLetterOfMake = topTwo.Manufacturer.Name.FirstOrDefault();
+                Assert.True(previousManufacturer <= firstLetterOfMake);
+                previousManufacturer = firstLetterOfMake;
+                Assert.NotNull(topTwo.Manufacturer.Location);
+            }
+            previousManufacturer = 'A';
+            foreach (var topTwo in temp)
+            {
+                var firstCombined = topTwo.Cars.FirstOrDefault().Combined;
+                var secondCombined = topTwo.Cars.LastOrDefault().Combined;
+                Assert.True(secondCombined <= firstCombined);
+                var firstLetterOfMake = topTwo.Manufacturer.Name.FirstOrDefault();
+                Assert.True(previousManufacturer <= firstLetterOfMake);
+                previousManufacturer = firstLetterOfMake;
+                Assert.NotNull(topTwo.Manufacturer.Location);
+            }
+        }
+
+        [Fact]
+        public void Top3FuelEfficientCarsByCountryTest()
+        {
+            var temp = _makeData.Join(_carData, m => m.Name, c => c.Make,
+                (m, c) => new
+                {
+                    Manufacturer = m,
+                    Car = c
+
+                }).GroupBy(obj => obj.Manufacturer.Location)
+                .Select(g => new
+                {
+                    Location = g.Key,
+                    Cars = g.OrderByDescending(c => c.Car.Combined).Select(obj => obj.Car).Take(3).ToList()
+                }).OrderByDescending(r => r.Cars.Max(c => c.Combined)).ToList();
+        }
+
+        [Fact]
+        public void AggregateTest()
+        {
+            var temp = _carData.Aggregate(new CarStatistics(),
+                (acc, c) => acc.Next(c), acc => acc.Compute());
         }
 
         /// <summary>
