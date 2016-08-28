@@ -1,19 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Xunit;
 using InterviewPrep.LinqFundamentals;
-using Newtonsoft.Json;
 using InterviewPrep.LinqFundamentals.Models;
 using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
+using InterviewPrep.LinqFundamentals.DataLayer.Entities;
 
 namespace InterviewPrep.Pluralsight.Core.Tests
 {
+    [TestClass]
     public class LinqHelperTests
     {
         private readonly string _movieData;
         private readonly string _testData;
         private readonly string _fileDirectory;
-        private readonly List<Car> _carData;
+        private readonly List<CarModel> _carData;
         private readonly List<Manufacturer> _makeData;
 
         public LinqHelperTests()
@@ -21,32 +23,32 @@ namespace InterviewPrep.Pluralsight.Core.Tests
             _fileDirectory = $"{Directory.GetCurrentDirectory()}/Data";
             _testData = File.ReadAllText($"{_fileDirectory}/TestData.json");
             _movieData = File.ReadAllText($"{_fileDirectory}/MovieData.json");
-            _carData = File.ReadAllLines($"{_fileDirectory}/fuel.csv").ParseCsv<Car>().ToList();
+            _carData = File.ReadAllLines($"{_fileDirectory}/fuel.csv").ParseCsv<CarModel>().ToList();
             _makeData = File.ReadAllLines($"{_fileDirectory}/manufacturers.csv").ParseCsv<Manufacturer>().ToList();
         }
 
-        [Fact]
+        [TestMethod]
         public void MovieLazyFailTest()
         {
             var movieList = JsonConvert.DeserializeObject<List<Movie>>(_movieData)
                 .Select(m => new Movie { Year = m.Year });
-            //Assert.Equal(movieList.Count(m => m.Year > 2000), movieList.Filter(m => m.Year > 2000).Count());
+            //Assert.AreEqual(movieList.Count(m => m.Year > 2000), movieList.Filter(m => m.Year > 2000).Count());
             foreach (var movie in movieList)
             {
                 movie.Year = 1;
             }
             var firstMovieYear = movieList.FirstOrDefault().Year;
-            Assert.False(firstMovieYear == 1);
+            Assert.IsFalse(firstMovieYear == 1);
         }
 
-        [Fact]
+        [TestMethod]
         public void ParseCsvTest()
         {
-            Assert.Equal(1205, _carData.Count);
-            Assert.Equal(43, _makeData.Count);
+            Assert.AreEqual(1164, _carData.Count);
+            Assert.AreEqual(42, _makeData.Count);
         }
 
-        [Fact]
+        [TestMethod]
         public void MostCommonCharacterTest()
         {
             var characters = _carData.SelectMany(d => d.Model);
@@ -54,11 +56,11 @@ namespace InterviewPrep.Pluralsight.Core.Tests
                 .Select(g => new { g.Key, Count = g.Count() })
                 .OrderByDescending(o => o.Count);
             var mostCommonChar = groupedCharacters.Skip(1).FirstOrDefault();
-            Assert.Equal('D', mostCommonChar.Key);
-            Assert.Equal(618, mostCommonChar.Count);
+            Assert.AreEqual('D', mostCommonChar.Key);
+            Assert.AreEqual(594, mostCommonChar.Count);
         }
 
-        [Fact]
+        [TestMethod]
         public void InnerJoinTest()
         {
             var temp = _carData.Join(_makeData, c => c.Make, m => m.Name, (c, m) => new
@@ -69,14 +71,15 @@ namespace InterviewPrep.Pluralsight.Core.Tests
                 FuelEconomy = c.Combined
             });
             var firstEntry = temp.FirstOrDefault();
-            Assert.Equal("4C", firstEntry.Name);
-            Assert.Equal("ALFA ROMEO", firstEntry.Manufacturer);
-            Assert.Equal("Italy", firstEntry.Location);
+            Assert.AreEqual("4C", firstEntry.Name);
+            Assert.AreEqual("ALFA ROMEO", firstEntry.Manufacturer);
+            Assert.AreEqual("Italy", firstEntry.Location);
         }
 
-        [Fact]
+        [TestMethod]
         public void GroupingTest()
         {
+            var temp = _carData.GroupBy(c => new { c.Make, c.Model }).Where(g => g.Count() > 1);
             var top2ByManufactuer = _carData.GroupBy(c => c.Make.ToLower())
                 .Select(g => new
                 {
@@ -88,14 +91,14 @@ namespace InterviewPrep.Pluralsight.Core.Tests
             {
                 var firstCombined = topTwo.Cars.FirstOrDefault().Combined;
                 var secondCombined = topTwo.Cars.LastOrDefault().Combined;
-                Assert.True(secondCombined <= firstCombined);
+                Assert.IsTrue(secondCombined <= firstCombined);
                 var firstLetterOfMake = topTwo.Manufacturer.FirstOrDefault();
-                Assert.True(previousManufacturer <= firstLetterOfMake);
+                Assert.IsTrue(previousManufacturer <= firstLetterOfMake);
                 previousManufacturer = firstLetterOfMake;
             }
         }
 
-        [Fact]
+        [TestMethod]
         public void GroupJoinTest()
         {
             var top2ByManufactuer = _makeData.OrderBy(m => m.Name)
@@ -124,26 +127,26 @@ namespace InterviewPrep.Pluralsight.Core.Tests
             {
                 var firstCombined = topTwo.Cars.FirstOrDefault().Combined;
                 var secondCombined = topTwo.Cars.LastOrDefault().Combined;
-                Assert.True(secondCombined <= firstCombined);
+                Assert.IsTrue(secondCombined <= firstCombined);
                 var firstLetterOfMake = topTwo.Manufacturer.Name.FirstOrDefault();
-                Assert.True(previousManufacturer <= firstLetterOfMake);
+                Assert.IsTrue(previousManufacturer <= firstLetterOfMake);
                 previousManufacturer = firstLetterOfMake;
-                Assert.NotNull(topTwo.Manufacturer.Location);
+                Assert.IsNotNull(topTwo.Manufacturer.Location);
             }
             previousManufacturer = 'A';
             foreach (var topTwo in temp)
             {
                 var firstCombined = topTwo.Cars.FirstOrDefault().Combined;
                 var secondCombined = topTwo.Cars.LastOrDefault().Combined;
-                Assert.True(secondCombined <= firstCombined);
+                Assert.IsTrue(secondCombined <= firstCombined);
                 var firstLetterOfMake = topTwo.Manufacturer.Name.FirstOrDefault();
-                Assert.True(previousManufacturer <= firstLetterOfMake);
+                Assert.IsTrue(previousManufacturer <= firstLetterOfMake);
                 previousManufacturer = firstLetterOfMake;
-                Assert.NotNull(topTwo.Manufacturer.Location);
+                Assert.IsNotNull(topTwo.Manufacturer.Location);
             }
         }
 
-        [Fact]
+        [TestMethod]
         public void Top3FuelEfficientCarsByCountryTest()
         {
             var temp = _makeData.Join(_carData, m => m.Name, c => c.Make,
@@ -160,7 +163,7 @@ namespace InterviewPrep.Pluralsight.Core.Tests
                 }).OrderByDescending(r => r.Cars.Max(c => c.Combined)).ToList();
         }
 
-        [Fact]
+        [TestMethod]
         public void AggregateTest()
         {
             var temp = _carData.Aggregate(new CarStatistics(),
@@ -170,7 +173,7 @@ namespace InterviewPrep.Pluralsight.Core.Tests
         /// <summary>
         /// Get all of the passengers in all of the cars
         /// </summary>
-        [Fact]
+        [TestMethod]
         public void SelectManyTest()
         {
             var cars = new List<CarHolder>
@@ -209,8 +212,8 @@ namespace InterviewPrep.Pluralsight.Core.Tests
             //list of cars w/ list of passengers
             var carsAndpassengers = cars.Select(c => c.Passengers).ToList();
             var passengers = cars.SelectMany(c => c.Passengers).ToList();
-            Assert.Equal(3, carsAndpassengers.Count);
-            Assert.Equal(5, passengers.Count);
+            Assert.AreEqual(3, carsAndpassengers.Count);
+            Assert.AreEqual(5, passengers.Count);
         }
     }
 }

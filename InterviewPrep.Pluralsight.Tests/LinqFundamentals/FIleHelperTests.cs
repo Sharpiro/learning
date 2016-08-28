@@ -1,28 +1,30 @@
 ﻿using InterviewPrep.LinqFundamentals;
-using Xunit;
 using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace InterviewPrep.Pluralsight.Core.Tests
 {
+    [TestClass]
     public class FileHelperTests
     {
         public FileHelperTests()
         {
 
         }
-        [Fact]
+
+        [TestMethod]
         public void TestThing()
         {
             var directory = "c:/windows";
             var helper = new FileHelper();
             var largestFilesMethod = helper.GetLargestFileMethodSyntax(directory);
             var largestFilesQuery = helper.GetLargestFileQuerySyntax(directory);
-            Assert.Equal(5, largestFilesMethod.Count());
-            Assert.Equal(5, largestFilesQuery.Count());
-            //Assert.Equal(largestFilesMethod, largestFilesQuery);
+            Assert.AreEqual(5, largestFilesMethod.Count());
+            Assert.AreEqual(5, largestFilesQuery.Count());
+            //Assert.AreEqual(largestFilesMethod, largestFilesQuery);
         }
 
-        [Fact]
+        [TestMethod]
         public void CompareToThing()
         {
             var result = (1).CompareTo(1);

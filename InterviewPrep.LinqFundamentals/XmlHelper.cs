@@ -8,9 +8,9 @@ namespace InterviewPrep.LinqFundamentals
 {
     public class XmlHelper
     {
-        private readonly IReadOnlyCollection<Car> _records;
+        private readonly IReadOnlyCollection<CarModel> _records;
 
-        public XmlHelper(IReadOnlyCollection<Car> records)
+        public XmlHelper(IReadOnlyCollection<CarModel> records)
         {
             _records = records;
         }

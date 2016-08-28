@@ -22,7 +22,7 @@ namespace InterviewPrep.LinqFundamentals.Models
         public int Year { get; set; }
     }
 
-    public class Car
+    public class CarModel
     {
         private string _make;
         private int _combined;
@@ -41,6 +41,12 @@ namespace InterviewPrep.LinqFundamentals.Models
         {
             get { /*Debug.WriteLine($"{_combined} was accessed");*/ return _combined; }
             set { _combined = value; }
+        }
+
+        public override string ToString()
+        {
+            var data = $"{Year},{Make},{Model},{Liters},{Cylinders},{City},{Highway},{Combined}";
+            return data;
         }
     }
 

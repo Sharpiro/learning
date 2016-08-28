@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace InterviewPrep.LinqFundamentals
 {
@@ -34,15 +33,19 @@ namespace InterviewPrep.LinqFundamentals
                 .Select((h, i) => new { h, i })
                 .ToDictionary(d => d.h, d => d.i);
             var objectProperties = typeof(T).GetProperties();
-            if (headers.Count() != objectProperties.Count())
-                throw new ArgumentException("the # of headers must match # of properties", nameof(list));
+            //if (headers.Count() != objectProperties.Count())
+            //    throw new ArgumentException("the # of headers must match # of properties", nameof(list));
             foreach (var item in list.Skip(1))
             {
                 var row = item.Split(',');
                 var entry = new T();
                 foreach (var property in objectProperties)
                 {
-                    var columnIndex = headers[property.Name];
+                    //var columnIndex = headers[property.Name];
+                    int columnIndex;
+                    var result = headers.TryGetValue(property.Name, out columnIndex);
+                    if (!result)
+                        continue;
                     var dataEntry = row[columnIndex];
                     if (property.PropertyType == typeof(int))
                     {

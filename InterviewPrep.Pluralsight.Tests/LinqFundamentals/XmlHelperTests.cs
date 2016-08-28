@@ -1,35 +1,36 @@
 ﻿using InterviewPrep.LinqFundamentals;
 using InterviewPrep.LinqFundamentals.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
-using Xunit;
 
 namespace InterviewPrep.Pluralsight.Core.Tests.LinqFundamentals
 {
+    [TestClass]
     public class XmlHelperTests
     {
         private readonly string _fileDirectory;
-        private readonly IReadOnlyList<Car> _carData;
+        private readonly IReadOnlyList<CarModel> _carData;
         private readonly IReadOnlyList<Manufacturer> _makeData;
 
         public XmlHelperTests()
         {
             _fileDirectory = $"{Directory.GetCurrentDirectory()}/LinqFundamentals/Data";
-            _carData = File.ReadAllLines($"{_fileDirectory}/fuel.csv").ParseCsv<Car>().ToList();
+            _carData = File.ReadAllLines($"{_fileDirectory}/fuel.csv").ParseCsv<CarModel>().ToList();
             _makeData = File.ReadAllLines($"{_fileDirectory}/manufacturers.csv").ParseCsv<Manufacturer>().ToList();
         }
 
-        [Fact]
+        [TestMethod]
         public void CreateXDocumentTest()
         {
             var xmlHelper = new XmlHelper(_carData);
             var data = xmlHelper.CreateXDocument();
-            Assert.False(string.IsNullOrEmpty(data.ToString()));
+            Assert.IsFalse(string.IsNullOrEmpty(data.ToString()));
         }
 
-        [Fact]
+        [TestMethod]
         public void QueryXDocumentTest()
         {
             var xmlHelper = new XmlHelper(_carData);

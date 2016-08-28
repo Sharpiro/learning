@@ -17,7 +17,7 @@ namespace InterviewPrep.LinqFundamentals
             Min = int.MaxValue;
         }
 
-        public CarStatistics Next(Car car)
+        public CarStatistics Next(CarModel car)
         {
             Count++;
             Total += car.Combined;
