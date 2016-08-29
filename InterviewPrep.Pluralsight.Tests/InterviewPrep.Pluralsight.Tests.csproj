@@ -74,10 +74,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\InterviewPrep.DesignPatterns\InterviewPrep.DesignPatterns.csproj">
-      <Project>{1040ad00-e2c5-4375-b65a-20932332b8f1}</Project>
-      <Name>InterviewPrep.DesignPatterns</Name>
-    </ProjectReference>
     <ProjectReference Include="..\InterviewPrep.Generics\InterviewPrep.Generics.csproj">
       <Project>{af3c4b7b-7a3b-4c6c-a86c-385a867702f5}</Project>
       <Name>InterviewPrep.Generics</Name>

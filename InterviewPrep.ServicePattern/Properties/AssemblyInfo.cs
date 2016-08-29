@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("InterviewPrep.DesignPatterns")]
+[assembly: AssemblyTitle("InterviewPrep.ServicePattern")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Wells Fargo N.A.")]
-[assembly: AssemblyProduct("InterviewPrep.DesignPatterns")]
+[assembly: AssemblyProduct("InterviewPrep.ServicePattern")]
 [assembly: AssemblyCopyright("Copyright © Wells Fargo N.A. 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("3ff18b80-d0ef-452b-b306-8871cf426b54")]
+[assembly: Guid("e685401c-d057-4250-b568-5793ddef0778")]
 
 // Version information for an assembly consists of the following four values:
 //
