@@ -14,5 +14,10 @@ namespace InterviewPrep.ServicePattern.DataLayer
             Database.SetInitializer<AutoContext>(null);
             Database.Log = l => Debug.WriteLine(l);
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

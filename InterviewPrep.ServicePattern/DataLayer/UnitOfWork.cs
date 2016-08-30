@@ -8,6 +8,8 @@ namespace InterviewPrep.ServicePattern.DataLayer
         private GenericRepository<Car> _cars;
         private GenericRepository<Manufacturer> _manufacturers;
 
+        public AutoContext Context { get { return _context; } }
+
         public GenericRepository<Car> Cars
         {
             get

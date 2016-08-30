@@ -10,6 +10,8 @@ namespace InterviewPrep.ServicePattern.BusinessLogic
         //private readonly ContextFactory _contextFactory;
         private readonly UnitOfWork _unitOfWork;
 
+        public UnitOfWork UnitOfWork { get { return _unitOfWork; } }
+
         public CarService(UnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;

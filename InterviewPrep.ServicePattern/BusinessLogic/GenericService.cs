@@ -11,6 +11,8 @@ namespace InterviewPrep.ServicePattern.BusinessLogic
     {
         private readonly AutoContext _context;
         private readonly DbSet<T> _set;
+
+        public AutoContext Context { get { return _context; } }
         //private readonly ContextFactory _contextFactory;
 
         //public GenericService(ContextFactory contextFactory)
