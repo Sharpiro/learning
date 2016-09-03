@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Collections.Generic;
 
-namespace InterviewPrep.Core.Graphs
+namespace InterviewPrep.Concepts.VisualGraphs
 {
-    public class AdjacencyListGraph : IGraph
+    public class AdjacencyListGraph
     {
         private readonly IDictionary<string, Vertex> _adjacencyDictionary;
 
@@ -29,7 +29,7 @@ namespace InterviewPrep.Core.Graphs
             return vertexOne.IsAdjacent(vertexTwo);
         }
 
-        public IEnumerable<string> FindShortestPath(string nodeOne, string nodeTwo)
+        public IEnumerable<FringeItem> FindShortestPath(string nodeOne, string nodeTwo)
         {
             var tracker = new Dictionary<string, FringeItem>();
             var fringe = new List<FringeItem>
@@ -66,7 +66,7 @@ namespace InterviewPrep.Core.Graphs
                 }
             }
 
-            var temp = tracker[nodeTwo].FindPath().Select(f => f.Vertex.Name);
+            var temp = tracker[nodeTwo].FindPath();
             return temp;
         }
     }

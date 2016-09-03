@@ -86,6 +86,37 @@ namespace InterviewPrep.CoreTests
             Assert.AreEqual("G", actual[3]);
         }
 
+        /// <summary>
+        /// determine if 2 nodes are connected
+        /// </summary>
+        [TestMethod]
+        public void AreNodesAdjacent()
+        {
+            Assert.IsTrue(_graph.AreNodesAdjacent("A", "B"));
+            Assert.IsTrue(_graph.AreNodesAdjacent("A", "C"));
+            //Assert.IsFalse(_graph.AreNodesAdjacent("B", "C"));
+
+            Assert.IsTrue(_graph.AreNodesAdjacent("B", "E"));
+            //Assert.IsTrue(_graph.AreNodesAdjacent("B", "F"));
+            Assert.IsTrue(_graph.AreNodesAdjacent("E", "G"));
+        }
+
+        /// <summary>
+        /// find all nodes adjacent to a node
+        /// </summary>
+        [TestMethod]
+        public void FindAdjacentNodesInDepthTest()
+        {
+            foreach (var vertex in _graphHelper.VertexList)
+            {
+                var adjacentNodes = _graph.FindAdjacentNodes(vertex);
+                foreach (var adjacentNode in adjacentNodes)
+                {
+                    Assert.IsTrue(_graph.AreNodesAdjacent(vertex, adjacentNode));
+                }
+            }
+        }
+
         [TestMethod]
         public void IComparableTest()
         {
@@ -136,37 +167,6 @@ namespace InterviewPrep.CoreTests
             Assert.AreEqual("E", actual[2]);
             Assert.AreEqual("G", actual[3]);
             Assert.AreEqual("F", actual[4]);
-        }
-
-        /// <summary>
-        /// find all nodes adjacent to a node
-        /// </summary>
-        [TestMethod]
-        public void FindAdjacentNodesTest()
-        {
-            foreach (var vertex in _graphHelper.VertexList)
-            {
-                var adjacentNodes = _graph.FindAdjacentNodes(vertex);
-                foreach (var adjacentNode in adjacentNodes)
-                {
-                    Assert.IsTrue(_graph.AreNodesAdjacent(vertex, adjacentNode));
-                }
-            }
-        }
-
-        /// <summary>
-        /// determine if 2 nodes are connected
-        /// </summary>
-        [TestMethod]
-        public void AreNodesAdjacent()
-        {
-            Assert.IsTrue(_graph.AreNodesAdjacent("A", "B"));
-            Assert.IsTrue(_graph.AreNodesAdjacent("A", "C"));
-            //Assert.IsFalse(_graph.AreNodesAdjacent("B", "C"));
-
-            Assert.IsTrue(_graph.AreNodesAdjacent("B", "E"));
-            //Assert.IsTrue(_graph.AreNodesAdjacent("B", "F"));
-            Assert.IsTrue(_graph.AreNodesAdjacent("E", "G"));
         }
     }
 }

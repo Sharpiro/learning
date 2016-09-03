@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{79463CCE-2350-42FE-AA78-DF0644DE52A7}</ProjectGuid>
+    <ProjectGuid>{940A6121-5852-4225-BECA-1B0DCF09D4EE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>InterviewPrep.Core</RootNamespace>
-    <AssemblyName>InterviewPrep.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>InterviewPrep.Concepts.VisualGraphs</RootNamespace>
+    <AssemblyName>InterviewPrep.Concepts.VisualGraphs</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -30,20 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -53,37 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BinaryTrees\BinarySearchTree.cs" />
-    <Compile Include="CsvReader.cs" />
-    <Compile Include="CustomHashTable.cs" />
-    <Compile Include="Data Access\Context.cs" />
-    <Compile Include="Data Access\SqlAccess.cs" />
-    <Compile Include="Data Access\User.cs" />
-    <Compile Include="DelegatesAndEvents.cs" />
-    <Compile Include="Duplicates.cs" />
-    <Compile Include="Fibonacci.cs" />
-    <Compile Include="FizzBuzzWoof.cs" />
     <Compile Include="Graphs\AdjacencyListGraph.cs" />
-    <Compile Include="Graphs\AdjacencyMatrixGraph.cs" />
-    <Compile Include="Graphs\GraphHelper.cs" />
+    <Compile Include="Graphs\GraphParser.cs" />
     <Compile Include="Graphs\IGraph.cs" />
-    <Compile Include="Graphs\LinearGraph.cs" />
-    <Compile Include="Lists\ILinkedList.cs" />
-    <Compile Include="Lists\CustomQueue.cs" />
-    <Compile Include="Lists\ComplexLinkedList.cs" />
-    <Compile Include="Lists\CustomStack.cs" />
-    <Compile Include="LogicGates\AndGate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Searcher.cs" />
-    <Compile Include="Sorting\ISorter.cs" />
-    <Compile Include="Sorting\MergeSort.cs" />
-    <Compile Include="Sorting\Quicksort.cs" />
-    <Compile Include="StringFunctions.cs" />
-    <Compile Include="Time\TimeFunctions.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Graphs\Pics\directed_graph.png" />
