@@ -70,9 +70,7 @@ namespace InterviewPrep.Concepts.Tests
 				Q P 3
 				P Q 3";
 
-            var reader = new StringReader(graphData);
-            var parser = new GraphParser(reader);
-            _graph = parser.CreateAdjacencyListGraph();
+            _graph = new GraphParser(new StringReader(graphData)).CreateAdjacencyListGraph();
         }
 
         [TestMethod]
