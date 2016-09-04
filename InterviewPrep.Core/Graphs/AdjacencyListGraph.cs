@@ -18,7 +18,7 @@ namespace InterviewPrep.Core.Graphs
         public IEnumerable<string> FindAdjacentNodes(string node)
         {
             var vertex = _adjacencyDictionary[node];
-            var adjacentNodes = vertex.FindNeighbors();
+            var adjacentNodes = vertex.Neighbors;
             return adjacentNodes.Select(v => v.Vertex.Name);
         }
 
@@ -43,7 +43,7 @@ namespace InterviewPrep.Core.Graphs
                 fringe.Remove(minFringeItem);
                 tracker.Add(minFringeItem.Vertex.Name, minFringeItem);
 
-                foreach (var neighbor in minFringeItem.Vertex.FindNeighbors())
+                foreach (var neighbor in minFringeItem.Vertex.Neighbors)
                 {
                     if (tracker.ContainsKey(neighbor.Vertex.Name)) continue;
                     var neighborFringeItem = fringe.FirstOrDefault(f => f.Vertex == neighbor.Vertex);
@@ -66,7 +66,7 @@ namespace InterviewPrep.Core.Graphs
                 }
             }
 
-            var temp = tracker[nodeTwo].FindPath().Select(f => f.Vertex.Name);
+            var temp = tracker[nodeTwo].FindPath().Select(f => f.Vertex.Name).Reverse();
             return temp;
         }
     }
@@ -74,58 +74,14 @@ namespace InterviewPrep.Core.Graphs
     public class Vertex
     {
         public string Name { get; set; }
-        public Neighbor Neighbors { get; set; }
+        public List<Neighbor> Neighbors { get; set; } = new List<Neighbor>();
 
-        public IList<Neighbor> FindNeighbors()
-        {
-            var list = new List<Neighbor>();
-            FindNeighbors(Neighbors, list);
-            return list;
-        }
-
-        public void FindNeighbors(Neighbor neighbor, IList<Neighbor> list)
-        {
-            if (neighbor == null)
-                return;
-            list.Add(neighbor);
-            FindNeighbors(neighbor.Next, list);
-        }
-
-        public void AddNeighbor(Neighbor newNeighbor)
-        {
-            Neighbors = AddNeighbor(newNeighbor, Neighbors);
-        }
-
-        public Neighbor AddNeighbor(Neighbor newNeighbor, Neighbor current)
-        {
-            if (current == null)
-                current = newNeighbor;
-            else
-                current.Next = AddNeighbor(newNeighbor, current.Next);
-            return current;
-        }
-
-        public bool IsAdjacent(Vertex other)
-        {
-            if (other == null)
-                return false;
-            return IsAdjacent(Neighbors, other);
-        }
-
-        public bool IsAdjacent(Neighbor current, Vertex other)
-        {
-            if (current == null)
-                return false;
-            if (current.Vertex == other)
-                return true;
-            return IsAdjacent(current.Next, other);
-        }
+        public bool IsAdjacent(Vertex other) => Neighbors.Any(n => n.Vertex == other);
     }
 
     public class Neighbor
     {
         public Vertex Vertex { get; set; }
-        public Neighbor Next { get; set; }
         public int Weight { get; set; }
     }
 
@@ -135,16 +91,12 @@ namespace InterviewPrep.Core.Graphs
         public int Distance { get; set; }
         public FringeItem LastItem { get; set; }
 
-        public int CompareTo(FringeItem other)
-        {
-            return this.Distance.CompareTo(other.Distance);
-        }
+        public int CompareTo(FringeItem other) => Distance.CompareTo(other.Distance);
 
         public IList<FringeItem> FindPath()
         {
             var list = new List<FringeItem>();
             FindPath(this, list);
-            list.Reverse();
             return list;
         }
 

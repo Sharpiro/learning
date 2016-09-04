@@ -81,9 +81,9 @@ namespace InterviewPrep.Core.Graphs
 
             foreach (var edge in _edgeList)
             {
-                adjacencyDictionary[edge.FirstNode.Name].AddNeighbor(new Neighbor { Vertex = adjacencyDictionary[edge.SecondNode.Name], Weight = edge.Weight });
+                adjacencyDictionary[edge.FirstNode.Name].Neighbors.Add(new Neighbor { Vertex = adjacencyDictionary[edge.SecondNode.Name], Weight = edge.Weight });
                 if (_graphType.ToLower() == "undirected")
-                    adjacencyDictionary[edge.SecondNode.Name].AddNeighbor(new Neighbor { Vertex = adjacencyDictionary[edge.FirstNode.Name], Weight = edge.Weight });
+                    adjacencyDictionary[edge.SecondNode.Name].Neighbors.Add(new Neighbor { Vertex = adjacencyDictionary[edge.FirstNode.Name], Weight = edge.Weight });
             }
             var graph = new AdjacencyListGraph(adjacencyDictionary);
             return graph;

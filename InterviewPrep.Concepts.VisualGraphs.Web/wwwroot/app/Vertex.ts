@@ -1,10 +1,10 @@
 ﻿class Vertex
 {
-    public neighbors: Neighbor;
+    public neighbors: Neighbor[];
 
-    constructor(private name: string, private position: Rectangle)
+    constructor(public name: string, public position: Rectangle = null)
     {
-
+        this.neighbors = [];
     }
 
     public draw(context: CanvasRenderingContext2D): void
@@ -14,5 +14,11 @@
         context.font = "30px Consolas"
         context.strokeRect(this.position.x, this.position.y, this.position.width, this.position.height);
         context.fillText(this.name, midX, midY);
+        for (var neighbor of this.neighbors)
+        {
+            context.moveTo(this.position.x, this.position.y);
+            context.lineTo(neighbor.vertex.position.x, neighbor.vertex.position.y);
+            context.stroke();
+        }
     }
 }

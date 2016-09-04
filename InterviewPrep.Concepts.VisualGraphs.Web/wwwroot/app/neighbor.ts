@@ -1,5 +1,7 @@
 ﻿class Neighbor
 {
-    public Vertex: Vertex;
-    public Next: Neighbor;
+    constructor(public vertex: Vertex, public weight: number)
+    {
+
+    }
 }

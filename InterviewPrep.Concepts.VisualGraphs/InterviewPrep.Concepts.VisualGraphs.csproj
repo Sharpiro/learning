@@ -42,7 +42,6 @@
   <ItemGroup>
     <Compile Include="Graphs\AdjacencyListGraph.cs" />
     <Compile Include="Graphs\GraphParser.cs" />
-    <Compile Include="Graphs\IGraph.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
