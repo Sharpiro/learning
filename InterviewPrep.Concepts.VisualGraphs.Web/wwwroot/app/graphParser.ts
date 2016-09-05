@@ -1,28 +1,32 @@
 ﻿class GraphParser
 {
-    private lines: string[];
-    private index: number;
+    private graphDataReader: StringReader;
+    private graphPositionReader: StringReader;
 
-    constructor(private data: string)
+    constructor(graphData: string, positionData: string)
     {
-        this.lines = this.data.split("\r\n");
+        this.graphDataReader = new StringReader(graphData);
+        this.graphPositionReader = new StringReader(positionData);
     }
 
     public parse(): IGraphData
     {
-        this.index = 0;
-        var numberOfNodes = parseInt(this.readLine());
-        var graphType = <GraphType>parseInt(GraphType[<any>this.readLine().toLowerCase()]);
+        var numberOfNodes = parseInt(this.graphDataReader.readLine());
+        var graphType = <GraphType>parseInt(GraphType[<any>this.graphDataReader.readLine().toLowerCase()]);
         var vertices: any = {};
         for (let i = 0; i < numberOfNodes; i++)
         {
-            var name = this.readLine();
+            var name = this.graphDataReader.readLine();
+            var positionData = this.graphPositionReader.readLine().split(" ");
+            if (name != positionData[0])
+                throw new Error("data mismatch between graph data and position data");
             vertices[name] = new Vertex(name);
+            vertices[name].position = new Rectangle(parseInt(positionData[1]), parseInt(positionData[2]), 50, 50);
         }
 
         var edges: IEdge[] = [];
         var line: string;
-        while ((line = this.readLine()) != null)
+        while ((line = this.graphDataReader.readLine()) != null)
         {
             var splitData = line.split(" ");
             edges.push(
@@ -35,12 +39,5 @@
         return { edges: edges, vertices: vertices, type: graphType};
     }
 
-    private readLine(): string
-    {
-        if (this.index >= this.lines.length)
-            return null;
-        var line = this.lines[this.index];
-        this.index++;
-        return line;
-    }
+
 }

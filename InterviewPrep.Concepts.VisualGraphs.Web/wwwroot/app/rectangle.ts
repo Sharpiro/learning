@@ -4,4 +4,16 @@
     {
 
     }
+
+    public contains(x: number, y: number): boolean
+    {
+        if (x > this.x && x < this.x + this.width)
+        {
+            if (y > this.y && y < this.y + this.height)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

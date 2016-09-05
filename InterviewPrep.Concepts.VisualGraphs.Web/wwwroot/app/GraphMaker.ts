@@ -9,8 +9,8 @@
     {
         for (var edge of this.edges)
         {
-            this.vertices[edge.firstNode.name].neighbors.push(new Neighbor(this.vertices[edge.secondNode.name], edge.weight));
-            if (this.graphType = GraphType.undirected)
+            this.vertices[edge.secondNode.name].neighbors.push(new Neighbor(this.vertices[edge.firstNode.name], edge.weight));
+            if (this.graphType == GraphType.undirected)
                 this.vertices[edge.secondNode.name].neighbors.push(new Neighbor(this.vertices[edge.firstNode.name], edge.weight));
         }
         var graph = new AdjacencyListGraph(this.vertices);
