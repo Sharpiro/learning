@@ -1,12 +1,11 @@
 ﻿class GraphParser
 {
     private graphDataReader: StringReader;
-    private graphPositionReader: StringReader;
+    //private graphPositionReader: StringReader;
 
-    constructor(graphData: string, positionData: string)
+    constructor(graphData: string)
     {
         this.graphDataReader = new StringReader(graphData);
-        this.graphPositionReader = new StringReader(positionData);
     }
 
     public parse(): IGraphData
@@ -16,12 +15,12 @@
         var vertices: any = {};
         for (let i = 0; i < numberOfNodes; i++)
         {
-            var name = this.graphDataReader.readLine();
-            var positionData = this.graphPositionReader.readLine().split(" ");
-            if (name != positionData[0])
-                throw new Error("data mismatch between graph data and position data");
+            var currentLine = this.graphDataReader.readLine().split(" ");
+            var name = currentLine[0];
             vertices[name] = new Vertex(name);
-            vertices[name].position = new Rectangle(parseInt(positionData[1]), parseInt(positionData[2]), 50, 50);
+            vertices[name].position = new Rectangle(parseInt(currentLine[1]), parseInt(currentLine[2]), 50, 50);
+            if (currentLine[3])
+                vertices[name].imageUrl = `./content/images/havoc/${currentLine[3]}`;
         }
 
         var edges: IEdge[] = [];
@@ -36,7 +35,7 @@
                     weight: parseInt(splitData[2])
                 });
         }
-        return { edges: edges, vertices: vertices, type: graphType};
+        return { edges: edges, vertices: vertices, type: graphType };
     }
 
 

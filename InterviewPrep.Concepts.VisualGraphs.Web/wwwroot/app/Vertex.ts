@@ -1,12 +1,19 @@
 ﻿class Vertex
 {
     public neighbors: Neighbor[];
-    private isActive: boolean;
-    private progress: number;
-
+    public isActive: boolean;
+    public progress: number;
+    public imageUrl: string;
+    public image: HTMLImageElement;
     constructor(public name: string, public position: Rectangle = null)
     {
         this.neighbors = [];
+        this.progress = 0;
+    }
+
+    public update(): void
+    {
+        this.updateActive();
     }
 
     public updateActive(): void
@@ -21,17 +28,23 @@
         }
     }
 
+    public getWeight(): number
+    {
+        return this.neighbors[0].weight;
+    }
+
     public activate(): void
     {
         if (this.isFull()) return;
-        this.updateActive();
+        //this.updateActive();
+        if (!this.isActive) return;
         this.progress++;
     }
 
     public deactivate(): void
     {
         if (this.isEmpty()) return;
-        this.updateActive();
+        //this.updateActive();
         this.progress--;
     }
 
@@ -49,19 +62,27 @@
     {
         var midX = this.position.x + this.position.width / 3;
         var midY = this.position.y + this.position.height / 1.5;
+        if (!this.image)
+        {
+            this.image = new Image();
+            this.image.src = this.imageUrl;
+        }
         if (this.isActive)
         {
-            context.fillStyle = "yellow";
-            context.fillRect(this.position.x, this.position.y, this.position.width, this.position.height);
+            context.drawImage(this.image, this.position.x, this.position.y, this.position.width, this.position.height);
         }
         else
         {
-            context.strokeRect(this.position.x, this.position.y, this.position.width, this.position.height);
+            context.drawImage(this.image, this.position.x, this.position.y, this.position.width, this.position.height);
+            context.fillStyle = "rgba(0, 0, 0, 0.6)";
+            context.fillRect(this.position.x, this.position.y, this.position.width, this.position.height);
         }
         context.fillStyle = "black";
         context.strokeStyle = "black";
-        context.font = "30px Consolas"
-        context.fillText(this.name, midX, midY);
+        //context.font = "30px Consolas"
+        //context.fillText(this.name, midX, midY);
+        context.font = "15px Consolas"
+        context.fillText(`${this.progress}/${this.getWeight()}`, midX, this.position.y + this.position.height + 15);
         for (var neighbor of this.neighbors)
         {
             context.beginPath();
