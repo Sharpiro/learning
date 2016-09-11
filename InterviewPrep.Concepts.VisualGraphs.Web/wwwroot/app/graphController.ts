@@ -1,15 +1,23 @@
-﻿class GraphController
+﻿/// <reference path="./StringReader" />
+/// <reference path="./AdjacencyListGraph" />
+/// <reference path="./Vertex" />
+/// <reference path="./GraphParser" />
+/// <reference path="./GraphMaker" />
+
+class GraphController
 {
     private graph: AdjacencyListGraph;
     private movingNode: Vertex;
     private frame: number;
     private offSet: number;
     private artifactDataDictionary: any;
+    private comparables: Vertex[];
 
     constructor(private context: CanvasRenderingContext2D)
     {
         this.offSet = 8;
         this.artifactDataDictionary = {};
+        this.comparables = [];
     }
 
     public start()
@@ -48,7 +56,7 @@
     private draw(): void
     {
         this.context.clearRect(0, 0, 1200, 500);
-        this.graph.draw(this.context);
+        this.graph.draw(this.context, this.comparables.length);
         this.drawScreenData();
     }
 
@@ -66,7 +74,7 @@
     private drawScreenData(): void
     {
         var artifactPoints = this.graph.getFullNodes();
-        var artifactPower = this.artifactDataDictionary[artifactPoints + 1]
+        var artifactPower = this.artifactDataDictionary[artifactPoints + 1] || 0;
         var totalPower = 0;
         for (var index in this.artifactDataDictionary)
         {
@@ -86,6 +94,25 @@
         this.context.fillText(totalPower.toString(), xPos + 225, yPos + 100);
     }
 
+    private selectForCompare(vertex: Vertex)
+    {
+        this.graph.deactivateAll();
+        if (this.comparables.length == 0)
+        {
+            this.comparables.push(vertex);
+        }
+        else
+        {
+            this.comparables.push(vertex);
+            var path = this.graph.findShortestPath(this.comparables[0], this.comparables[1]);
+            for (var node of path)
+            {
+                node.activateFull();
+            }
+            //this.comparables.length = 0;
+        }
+    }
+
     private registerEvents(): void
     {
         this.context.canvas.addEventListener("mousedown", (data) =>
@@ -100,7 +127,7 @@
                     if (data.button == 0)
                         node.activate();
                     else if (data.button == 2)
-                        node.deactivate();
+                        this.selectForCompare(node);
                     else if (data.button == 1)
                         this.movingNode = node;
                 }

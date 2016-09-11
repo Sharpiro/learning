@@ -1,4 +1,5 @@
-﻿var canvas = document.createElement('canvas');
+﻿/// <reference path="./GraphController" />
+var canvas = document.createElement('canvas');
 canvas.id = "canvas";
 canvas.width = 1200;
 canvas.height = 500;

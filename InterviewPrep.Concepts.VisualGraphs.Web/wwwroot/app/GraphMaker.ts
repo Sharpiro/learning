@@ -1,4 +1,6 @@
-﻿class GraphMaker
+﻿/// <reference path="./neighbor" />
+
+class GraphMaker
 {
     constructor(private vertices: any, private edges: IEdge[], private graphType: GraphType)
     {

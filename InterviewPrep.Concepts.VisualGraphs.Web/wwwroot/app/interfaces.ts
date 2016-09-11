@@ -17,4 +17,12 @@ interface IGraphData
     type: GraphType;
 }
 
-enum GraphType { none, directed, undirected }
+enum GraphType
+{
+    none, directed, undirected
+}
+
+interface IPathColorSelector
+{
+    selectColor(currentVertex: Vertex, currentNeighbor: Neighbor): string;
+}

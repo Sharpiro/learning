@@ -1,4 +1,7 @@
-﻿class GraphParser
+﻿/// <reference path="./interfaces" />
+/// <reference path="./rectangle" />
+
+class GraphParser
 {
     private graphDataReader: StringReader;
     //private graphPositionReader: StringReader;
