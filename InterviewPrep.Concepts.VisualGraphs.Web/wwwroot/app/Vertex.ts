@@ -1,8 +1,12 @@
-﻿class Vertex
+﻿/// <reference path="./textFormatter" />
+
+class Vertex
 {
     public neighbors: Neighbor[];
     public isActive: boolean;
     public progress: number;
+    public showTooltip: boolean;
+    public tooltip: string;
     public imageUrl: string;
     public image: HTMLImageElement;
     private colorSelectorFactory: PathColorFactory;
@@ -90,6 +94,24 @@
             context.lineTo(neighborX, neighborY);
             context.stroke();
             context.closePath();
+        }
+    }
+
+    public drawTooltips(context: CanvasRenderingContext2D): void
+    {
+        if (!this.showTooltip || !this.tooltip) return;
+        var midX = this.position.x + this.position.width / 3;
+        var midY = this.position.y + this.position.height / 1.5;
+        context.fillStyle = "black"
+        context.strokeStyle = "grey"
+        context.fillRect(midX, midY, 250, 150);
+        context.strokeRect(midX, midY, 250, 150);
+        context.fillStyle = "white";
+        var textFormatter = new TextFormatter();
+        var lines = textFormatter.getFormattedLines(this.tooltip);
+        for (var i = 0; i < lines.length; i++)
+        {
+            context.fillText(lines[i], midX + 5, midY + i * 15 + 15);
         }
     }
 

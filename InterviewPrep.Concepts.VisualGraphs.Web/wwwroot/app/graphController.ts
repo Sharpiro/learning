@@ -135,11 +135,24 @@ class GraphController
         });
         this.context.canvas.addEventListener("mousemove", (data) =>
         {
-            if (!this.movingNode) return;
             var x = data.x - this.offSet;
             var y = data.y - this.offSet;
-            this.movingNode.position.x = x;
-            this.movingNode.position.y = y;
+            if (data.button == 1)
+            {
+                this.movingNode.position.x = x;
+                this.movingNode.position.y = y;
+                return;
+            }
+            for (var nodeName in this.graph.adjacencyDictionary)
+            {
+                var node = <Vertex>this.graph.adjacencyDictionary[nodeName]
+                if (node.position.contains(x, y))
+                    node.showTooltip = true;
+                else
+                    node.showTooltip = false;
+            }
+
+
         });
         this.context.canvas.addEventListener("mouseup", () =>
         {

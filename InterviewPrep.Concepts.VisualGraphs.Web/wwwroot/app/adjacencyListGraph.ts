@@ -82,6 +82,11 @@ class AdjacencyListGraph implements IGraph
             var node = <Vertex>this.adjacencyDictionary[nodeName]
             node.draw(context);
         }
+        for (var nodeName in this.adjacencyDictionary)
+        {
+            var node = <Vertex>this.adjacencyDictionary[nodeName]
+            node.drawTooltips(context);
+        }
     }
 
     public getFullNodes(): number

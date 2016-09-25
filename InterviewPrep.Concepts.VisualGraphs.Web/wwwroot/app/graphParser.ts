@@ -18,19 +18,21 @@ class GraphParser
         var vertices: any = {};
         for (let i = 0; i < numberOfNodes; i++)
         {
-            var currentLine = this.graphDataReader.readLine().split(" ");
+            var currentLine = this.graphDataReader.readLine().split("\t");
             var name = currentLine[0];
             vertices[name] = new Vertex(name);
             vertices[name].position = new Rectangle(parseInt(currentLine[1]), parseInt(currentLine[2]), 50, 50);
             if (currentLine[3])
                 vertices[name].imageUrl = `./content/images/havoc/${currentLine[3]}`;
+            if (currentLine[4])
+                vertices[name].tooltip = currentLine[4];
         }
 
         var edges: IEdge[] = [];
         var line: string;
         while ((line = this.graphDataReader.readLine()) != null)
         {
-            var splitData = line.split(" ");
+            var splitData = line.split("\t");
             edges.push(
                 {
                     firstNode: new Vertex(splitData[0]),
