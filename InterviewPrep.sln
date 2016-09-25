@@ -70,6 +70,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "change tracking", "change t
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterviewPrep.Concepts.ChangeTracking", "InterviewPrep.Concepts.ChangeTracking\InterviewPrep.Concepts.ChangeTracking.csproj", "{04478304-29D2-4FCF-A829-4F3D0085DBAC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterviewPrep.EncapsulatedDL", "InterviewPrep.EncapsulatedDL\InterviewPrep.EncapsulatedDL.csproj", "{8D703E16-EEBF-45DC-A3EF-C22C46834CE8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -162,6 +164,10 @@ Global
 		{04478304-29D2-4FCF-A829-4F3D0085DBAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04478304-29D2-4FCF-A829-4F3D0085DBAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04478304-29D2-4FCF-A829-4F3D0085DBAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D703E16-EEBF-45DC-A3EF-C22C46834CE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D703E16-EEBF-45DC-A3EF-C22C46834CE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D703E16-EEBF-45DC-A3EF-C22C46834CE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D703E16-EEBF-45DC-A3EF-C22C46834CE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -193,5 +199,6 @@ Global
 		{890D5947-044C-4586-8BB4-39FC6FBEAF57} = {8BBE8DA9-FCD6-491D-A0A9-58CF8A6CEE23}
 		{CCB9A76D-9118-4D3B-873A-7DDE0FC49295} = {8BBE8DA9-FCD6-491D-A0A9-58CF8A6CEE23}
 		{04478304-29D2-4FCF-A829-4F3D0085DBAC} = {CCB9A76D-9118-4D3B-873A-7DDE0FC49295}
+		{8D703E16-EEBF-45DC-A3EF-C22C46834CE8} = {48078CD7-5DCD-4549-B701-B55CAF5884C4}
 	EndGlobalSection
 EndGlobal

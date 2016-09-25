@@ -28,7 +28,7 @@ namespace InterviewPrep.Concepts.ChangeTracking
             //        throw new InvalidOperationException("Unknown ProviderInvariantName specified in App.config: " + _providerInvariantName);
             //}
 
-            AddDependencyResolver(MutableResolver.Instance);
+            //AddDependencyResolver(MutableResolver.Instance);
         }
 
         public static bool SuspendExecutionStrategy
