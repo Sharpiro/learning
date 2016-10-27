@@ -80,6 +80,9 @@
     <Compile Include="Sorting\Quicksort.cs" />
     <Compile Include="StringFunctions.cs" />
     <Compile Include="Time\TimeFunctions.cs" />
+    <Compile Include="Values and References\ReferenceTypes.cs" />
+    <Compile Include="Values and References\ValueTypes.cs" />
+    <Compile Include="Variance\Covariance.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -91,6 +94,7 @@
     <Content Include="Graphs\Pics\havoc.png" />
     <Content Include="Graphs\Pics\simpleGraph.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
