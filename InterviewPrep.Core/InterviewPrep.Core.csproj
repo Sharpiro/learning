@@ -63,6 +63,7 @@
     <Compile Include="Duplicates.cs" />
     <Compile Include="Fibonacci.cs" />
     <Compile Include="FizzBuzzWoof.cs" />
+    <Compile Include="Generics\GenericParameters.cs" />
     <Compile Include="Graphs\AdjacencyListGraph.cs" />
     <Compile Include="Graphs\AdjacencyMatrixGraph.cs" />
     <Compile Include="Graphs\GraphHelper.cs" />
@@ -80,8 +81,9 @@
     <Compile Include="Sorting\Quicksort.cs" />
     <Compile Include="StringFunctions.cs" />
     <Compile Include="Time\TimeFunctions.cs" />
-    <Compile Include="Values and References\ReferenceTypes.cs" />
-    <Compile Include="Values and References\ValueTypes.cs" />
+    <Compile Include="Values and References\IType.cs" />
+    <Compile Include="Values and References\ObjectChanger.cs" />
+    <Compile Include="Variance\Contravariance.cs" />
     <Compile Include="Variance\Covariance.cs" />
   </ItemGroup>
   <ItemGroup>

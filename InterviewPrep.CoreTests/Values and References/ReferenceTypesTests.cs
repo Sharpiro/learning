@@ -17,18 +17,18 @@ namespace InterviewPrep.Core.Values_and_References.Tests
             //obj's memory address hold a value
             //obj's value = 0x02 (a different memory address)
             var orignal = "original";
-            var obj = new TestDto { ReferenceProperty = orignal };
+            IType obj = new TestDto { ReferenceProperty = orignal };
 
-            ReferenceTypes.NullifyObject(obj);
+            ReferenceChanger.NullifyObject(obj);
             Assert.IsTrue(obj.ReferenceProperty == orignal);
 
-            ReferenceTypes.ChangeObject(obj);
+            ReferenceChanger.ChangeObject(obj);
             Assert.IsTrue(obj.ReferenceProperty == "changed");
 
-            ReferenceTypes.ChangeObjectByRef(ref obj);
+            ReferenceChanger.ChangeObjectByRef(ref obj);
             Assert.IsTrue(obj.ReferenceProperty == "changedByRef");
 
-            ReferenceTypes.NullifyObjectByRef(ref obj);
+            ReferenceChanger.NullifyObjectByRef(ref obj);
             Assert.IsTrue(obj == null);
         }
 
@@ -38,17 +38,17 @@ namespace InterviewPrep.Core.Values_and_References.Tests
             var orignal = "original";
             var obj = new TestDtoStruct { ReferenceProperty = orignal };
 
-            ValueTypes.NullifyObject(obj);
+            ValueChanger.NullifyObject(obj);
             Assert.IsTrue(obj.ReferenceProperty == orignal);
 
-            ValueTypes.ChangeObject(obj);
+            ValueChanger.ChangeObject(obj);
             Assert.IsTrue(obj.ReferenceProperty == orignal);
 
-            ValueTypes.ChangeObjectByRef(ref obj);
+            ValueChanger.ChangeObjectByRef(ref obj);
             Assert.IsTrue(obj.ReferenceProperty == "changedByRef");
 
-            ValueTypes.NullifyObjectByRef(ref obj);
-            Assert.IsTrue(obj == default(TestDtoStruct));
+            ValueChanger.NullifyObjectByRef(ref obj);
+            Assert.IsTrue(obj.Equals(default(TestDtoStruct)));
         }
     }
 }
