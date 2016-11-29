@@ -1,4 +1,4 @@
-﻿using InterviewPrep.Core;
+﻿using InterviewPrep.Core.Security;
 using System;
 
 namespace InterviewPrep.ConsoleApp
@@ -7,13 +7,9 @@ namespace InterviewPrep.ConsoleApp
     {
         public static void Main()
         {
-            var table = new CustomHashTable();
-            table.Add(127, 1);
-            table.Add(1023, 2);
-            var value1 = table.Get(127);
-            var value2 = table.Get(1023);
-            if (value1 != 1 || value2 != 2)
-                throw new Exception();
+            var saltedKey = AesFacade.GetSaltedKey("password", 16);
+            var isMatch = AesFacade.CheckSaltedKey("password", saltedKey, 16);
+            var isMatch2 = AesFacade.CheckSaltedKey("passwordXXX", saltedKey);
             Console.ReadLine();
         }
     }

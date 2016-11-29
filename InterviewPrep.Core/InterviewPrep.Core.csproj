@@ -44,6 +44,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -76,6 +77,8 @@
     <Compile Include="LogicGates\AndGate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Searcher.cs" />
+    <Compile Include="Security\AesFacade.cs" />
+    <Compile Include="Security\EncryptionConfigReader.cs" />
     <Compile Include="Sorting\ISorter.cs" />
     <Compile Include="Sorting\MergeSort.cs" />
     <Compile Include="Sorting\Quicksort.cs" />
