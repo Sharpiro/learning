@@ -62,6 +62,7 @@
     <Compile Include="Data Access\User.cs" />
     <Compile Include="DelegatesAndEvents.cs" />
     <Compile Include="Duplicates.cs" />
+    <Compile Include="Elevator.cs" />
     <Compile Include="Fibonacci.cs" />
     <Compile Include="FizzBuzzWoof.cs" />
     <Compile Include="Generics\GenericParameters.cs" />
