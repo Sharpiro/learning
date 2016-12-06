@@ -4,7 +4,7 @@ namespace InterviewPrep.Core.Lists
 {
     public interface ISimpleLinkedList
     {
-        int Count { get; set; }
+        int Count { get; }
         Node First { get; }
         Node Last { get; }
         Node AddFirst(int value);
@@ -14,12 +14,11 @@ namespace InterviewPrep.Core.Lists
         void RemoveLast();
     }
 
-    public interface IComplexLinkedList: ISimpleLinkedList
+    public interface IComplexLinkedList: ISimpleLinkedList, IEnumerable<int>
     {
         Node AddAfter(Node node, int value);
         Node AddBefore(Node node, int value);
         int FindPos(Node node);
         void Remove(Node node);
-        IEnumerator<int> GetEnumerator();
     }
 }

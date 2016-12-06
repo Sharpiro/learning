@@ -10,7 +10,7 @@ namespace InterviewPrep.CoreTests.Lists
         [TestMethod]
         public void AddLastTest()
         {
-            var list = new ComplexLinkedList();
+            IComplexLinkedList list = new ComplexLinkedList();
             list.AddLast(1);
             list.AddLast(2);
             list.AddLast(3);
@@ -28,7 +28,7 @@ namespace InterviewPrep.CoreTests.Lists
         [TestMethod]
         public void AddFirstTest()
         {
-            var list = new ComplexLinkedList();
+            IComplexLinkedList list = new ComplexLinkedList();
             list.AddLast(1);
             list.AddLast(2);
             list.AddLast(3);
@@ -46,7 +46,7 @@ namespace InterviewPrep.CoreTests.Lists
         [TestMethod]
         public void AddBeforeTest()
         {
-            var list = new ComplexLinkedList();
+            IComplexLinkedList list = new ComplexLinkedList();
             list.AddLast(1);
             list.AddLast(2);
             var node = list.AddLast(3);
@@ -64,7 +64,7 @@ namespace InterviewPrep.CoreTests.Lists
         [TestMethod]
         public void AddBeforeHeadTest()
         {
-            var list = new ComplexLinkedList();
+            IComplexLinkedList list = new ComplexLinkedList();
             var node = list.AddLast(1);
             list.AddLast(2);
             list.AddLast(3);
@@ -82,7 +82,7 @@ namespace InterviewPrep.CoreTests.Lists
         [TestMethod]
         public void AddAfterTest()
         {
-            var list = new ComplexLinkedList();
+            IComplexLinkedList list = new ComplexLinkedList();
             list.AddLast(1);
             var node = list.AddLast(2);
             list.AddLast(3);
@@ -100,7 +100,7 @@ namespace InterviewPrep.CoreTests.Lists
         [TestMethod]
         public void FindTest()
         {
-            var list = new ComplexLinkedList();
+            IComplexLinkedList list = new ComplexLinkedList();
             list.AddLast(1);
             list.AddLast(2);
             list.AddLast(3);
@@ -112,7 +112,7 @@ namespace InterviewPrep.CoreTests.Lists
         [TestMethod]
         public void FindNothingTest()
         {
-            var list = new ComplexLinkedList();
+            IComplexLinkedList list = new ComplexLinkedList();
             list.AddLast(1);
             list.AddLast(2);
             list.AddLast(3);
@@ -124,7 +124,7 @@ namespace InterviewPrep.CoreTests.Lists
         [TestMethod]
         public void RemoveTest()
         {
-            var list = new ComplexLinkedList();
+            IComplexLinkedList list = new ComplexLinkedList();
             list.AddLast(1);
             var node = list.AddLast(2);
             list.AddLast(3);
@@ -143,7 +143,7 @@ namespace InterviewPrep.CoreTests.Lists
         [TestMethod]
         public void RemoveFirstTest()
         {
-            var list = new ComplexLinkedList();
+            IComplexLinkedList list = new ComplexLinkedList();
             list.AddLast(1);
             var node = list.AddLast(2);
             list.AddLast(3);
@@ -162,7 +162,7 @@ namespace InterviewPrep.CoreTests.Lists
         [TestMethod]
         public void RemoveLastTest()
         {
-            var list = new ComplexLinkedList();
+            IComplexLinkedList list = new ComplexLinkedList();
             list.AddLast(1);
             list.AddLast(2);
             list.AddLast(3);
@@ -178,7 +178,7 @@ namespace InterviewPrep.CoreTests.Lists
         [TestMethod]
         public void RemoveLastItemTest()
         {
-            var list = new ComplexLinkedList();
+            IComplexLinkedList list = new ComplexLinkedList();
             list.AddLast(1);
             list.RemoveLast();
             var first = list.First;
@@ -188,7 +188,7 @@ namespace InterviewPrep.CoreTests.Lists
         [TestMethod]
         public void RemoveHeadTest()
         {
-            var list = new ComplexLinkedList();
+            IComplexLinkedList list = new ComplexLinkedList();
             list.AddLast(1);
             list.AddLast(2);
             list.AddLast(4);
@@ -202,7 +202,7 @@ namespace InterviewPrep.CoreTests.Lists
         [TestMethod]
         public void CountTest()
         {
-            var list = new ComplexLinkedList();
+            IComplexLinkedList list = new ComplexLinkedList();
             list.AddLast(1);
             list.AddLast(2);
             list.AddLast(3);
@@ -216,7 +216,7 @@ namespace InterviewPrep.CoreTests.Lists
         [TestMethod]
         public void ToListTest()
         {
-            var list = new ComplexLinkedList();
+            IComplexLinkedList list = new ComplexLinkedList();
             for (var i = 3; i >= 1; i--)
             {
                 list.AddLast(i);
@@ -232,7 +232,7 @@ namespace InterviewPrep.CoreTests.Lists
         [TestMethod]
         public void FindNodePositionTest()
         {
-            var list = new ComplexLinkedList();
+            IComplexLinkedList list = new ComplexLinkedList();
             for (var i = 0; i < 10; i++)
             {
                 list.AddLast(i);

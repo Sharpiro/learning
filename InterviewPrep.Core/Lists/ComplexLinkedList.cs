@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace InterviewPrep.Core.Lists
 {
-    public class ComplexLinkedList : IEnumerable<int>
+    public class ComplexLinkedList : IComplexLinkedList, IEnumerable<int>
     {
         public int Count { get; set; }
         public Node First { get { return head; } }
