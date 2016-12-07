@@ -12,7 +12,7 @@ namespace InterviewPrep.CoreTests
         [TestMethod]
         public void AddTest()
         {
-            var tree = new BinarySearchTree();
+            IBinarySearchTree tree = new BinarySearchTree();
             tree.Add(5);
             tree.Add(8);
             tree.Add(3);
@@ -28,7 +28,7 @@ namespace InterviewPrep.CoreTests
         [TestMethod]
         public void FindTest()
         {
-            var tree = new BinarySearchTree();
+            IBinarySearchTree tree = new BinarySearchTree();
             tree.Add(5);
             tree.Add(8);
             tree.Add(3);
@@ -215,9 +215,9 @@ namespace InterviewPrep.CoreTests
             Assert.IsNull(fifth.Right);
         }
 
-        private BinarySearchTree CreateTree(int maxSize)
+        private IBinarySearchTree CreateTree(int maxSize)
         {
-            var tree = new BinarySearchTree();
+            IBinarySearchTree tree = new BinarySearchTree();
             for (var i = 0; i < maxSize; i++)
             {
                 tree.Add(i);
@@ -225,9 +225,9 @@ namespace InterviewPrep.CoreTests
             return tree;
         }
 
-        private BinarySearchTree CreateTreeReverse(int minSize, int maxSize)
+        private IBinarySearchTree CreateTreeReverse(int minSize, int maxSize)
         {
-            var tree = new BinarySearchTree();
+            IBinarySearchTree tree = new BinarySearchTree();
             for (var i = maxSize - 1; i >= minSize; i--)
             {
                 tree.Add(i);
@@ -235,9 +235,9 @@ namespace InterviewPrep.CoreTests
             return tree;
         }
 
-        private BinarySearchTree CreateTreeFromList(List<int> list)
+        private IBinarySearchTree CreateTreeFromList(List<int> list)
         {
-            var tree = new BinarySearchTree();
+            IBinarySearchTree tree = new BinarySearchTree();
             foreach (var number in list)
             {
                 tree.Add(number);

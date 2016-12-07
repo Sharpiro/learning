@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace InterviewPrep.Core.BinaryTrees
 {
-    public class BinarySearchTree
+    public class BinarySearchTree : IBinarySearchTree
     {
         public Node Root { get; set; }
 
@@ -112,18 +112,18 @@ namespace InterviewPrep.Core.BinaryTrees
 
         public Node ConvertToOrderedLinkedList()
         {
-            var head = FindMin(ConvertToOrderedLinkedList(Root));
+            var head = FindMin(ConvertToLinkedList(Root));
             return head;
         }
 
-        public Node ConvertToOrderedLinkedList(Node current)
+        public Node ConvertToLinkedList(Node current)
         {
             if (current == null)
                 return null;
-            current.Left = FindMax(ConvertToOrderedLinkedList(current.Left));
+            current.Left = FindMax(ConvertToLinkedList(current.Left));
             if (current.Left != null)
                 current.Left.Right = current;
-            current.Right = FindMin(ConvertToOrderedLinkedList(current.Right));
+            current.Right = FindMin(ConvertToLinkedList(current.Right));
             if (current.Right != null)
                 current.Right.Left = current;
             return current;
