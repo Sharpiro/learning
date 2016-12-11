@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace InterviewPrep.Core.Sorting
 {
@@ -24,8 +26,8 @@ namespace InterviewPrep.Core.Sorting
 
         private void Merge(int[] list, int lowIndex, int mid, int highIndex)
         {
-            var leftList = list.SubList(lowIndex, mid);
-            var rightList = list.SubList(mid + 1, highIndex);
+            var leftList = list.SubList(lowIndex, mid).ToArray();
+            var rightList = list.SubList(mid + 1, highIndex).ToArray();
 
             int i = 0, j = 0, k;
             for (k = lowIndex; i < leftList.Length && j < rightList.Length; k++)
@@ -60,17 +62,12 @@ namespace InterviewPrep.Core.Sorting
 
     public static class MergeExtensions
     {
-        public static int[] SubList(this int[] list, int lowIndex, int highIndex)
+        public static IEnumerable<int> SubList(this int[] list, int lowIndex, int highIndex)
         {
-            //8, [8, 8, 8]
-            //3 - 1 = 2 
-            var length = highIndex - lowIndex + 1;
-            var newList = new int[length];
             for (int i = lowIndex, j = 0; i <= highIndex; i++, j++)
             {
-                newList[j] = list[i];
+                yield return list[i];
             }
-            return newList;
         }
     }
 }

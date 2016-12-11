@@ -8,15 +8,16 @@ namespace InterviewPrep.Core.Sorting
         {
             var newList = new int[list.Length];
             Array.Copy(list, newList, list.Length);
-            Sort(newList, 0, list.Length - 1);
+            Sort(newList, 0, newList.Length - 1);
             return newList;
         }
 
         public void Sort(int[] list, int lowIndex, int highIndex)
         {
-            if (lowIndex >= highIndex)
-                return;
+            if (lowIndex >= highIndex) return;
+
             var pivot = Partition(list, lowIndex, highIndex);
+
             Sort(list, lowIndex, pivot - 1);
             Sort(list, pivot + 1, highIndex);
         }
@@ -34,6 +35,7 @@ namespace InterviewPrep.Core.Sorting
                 }
             }
             Swap(ref list[newPivotIndex], ref list[highIndex]);
+
             return newPivotIndex;
         }
 
