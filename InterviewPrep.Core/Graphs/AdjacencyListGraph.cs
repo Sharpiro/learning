@@ -34,25 +34,23 @@ namespace InterviewPrep.Core.Graphs
             var tracker = new Dictionary<string, FringeItem>();
             var fringe = new List<FringeItem>
             {
-                new FringeItem {Vertex = _adjacencyDictionary[nodeOne] }
+                new FringeItem(_adjacencyDictionary[nodeOne])
             };
 
             while (fringe.Any())
             {
-                var minFringeItem = fringe.Min();
-                fringe.Remove(minFringeItem);
-                tracker.Add(minFringeItem.Vertex.Name, minFringeItem);
+                var minFringeItem = fringe.RemoveMin();
+                tracker.Add(minFringeItem.Name, minFringeItem);
 
-                foreach (var neighbor in minFringeItem.Vertex.Neighbors)
+                foreach (var neighbor in minFringeItem.Neighbors)
                 {
                     if (tracker.ContainsKey(neighbor.Vertex.Name)) continue;
                     var neighborFringeItem = fringe.FirstOrDefault(f => f.Vertex == neighbor.Vertex);
                     var newDistance = minFringeItem.Distance + neighbor.Weight;
                     if (neighborFringeItem == null)
                     {
-                        fringe.Add(new FringeItem
+                        fringe.Add(new FringeItem(neighbor.Vertex)
                         {
-                            Vertex = neighbor.Vertex,
                             LastItem = minFringeItem,
                             Distance = newDistance
                         });
@@ -87,9 +85,18 @@ namespace InterviewPrep.Core.Graphs
 
     public class FringeItem : IComparable<FringeItem>
     {
-        public Vertex Vertex { get; set; }
+        public Vertex Vertex { get; }
         public int Distance { get; set; }
         public FringeItem LastItem { get; set; }
+        public List<Neighbor> Neighbors => Vertex.Neighbors;
+        public string Name => Vertex.Name;
+
+        public FringeItem(Vertex vertex)
+        {
+            if (vertex == null) throw new ArgumentNullException(nameof(vertex));
+
+            Vertex = vertex;
+        }
 
         public int CompareTo(FringeItem other) => Distance.CompareTo(other.Distance);
 

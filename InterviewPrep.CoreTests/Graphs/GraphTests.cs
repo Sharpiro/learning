@@ -120,25 +120,26 @@ namespace InterviewPrep.CoreTests
         [TestMethod]
         public void IComparableTest()
         {
+            var fakeVertex = new Vertex();
             var fringe = new List<FringeItem>
             {
-                new FringeItem {Distance = 50 },
-                new FringeItem {Distance = 0 },
-                new FringeItem {Distance = 10 },
-                new FringeItem {Distance = 20 },
-                new FringeItem {Distance = 70 },
-                new FringeItem {Distance = 27 },
-                new FringeItem {Distance = 45 },
+                new FringeItem(fakeVertex) {Distance = 50 },
+                new FringeItem(fakeVertex) {Distance = 0 },
+                new FringeItem(fakeVertex) {Distance = 10 },
+                new FringeItem(fakeVertex) {Distance = 20 },
+                new FringeItem(fakeVertex) {Distance = 70 },
+                new FringeItem(fakeVertex) {Distance = 27 },
+                new FringeItem(fakeVertex) {Distance = 45 },
             };
             var fringeDictionary = new Dictionary<string, FringeItem>
             {
-                ["B"] = new FringeItem {Distance = 50 },
-                ["A"] = new FringeItem {Distance = 0 },
-                ["C"] = new FringeItem {Distance = 10 },
-                ["D"] = new FringeItem {Distance = 20 },
-                ["E"] = new FringeItem {Distance = 70 },
-                ["F"] = new FringeItem {Distance = 27 },
-                ["G"] = new FringeItem {Distance = 45 },
+                ["B"] = new FringeItem(fakeVertex) {Distance = 50 },
+                ["A"] = new FringeItem(fakeVertex) {Distance = 0 },
+                ["C"] = new FringeItem(fakeVertex) {Distance = 10 },
+                ["D"] = new FringeItem(fakeVertex) {Distance = 20 },
+                ["E"] = new FringeItem(fakeVertex) {Distance = 70 },
+                ["F"] = new FringeItem(fakeVertex) {Distance = 27 },
+                ["G"] = new FringeItem(fakeVertex) {Distance = 45 },
             };
             var min = fringe.Min();
             var max = fringe.Max();

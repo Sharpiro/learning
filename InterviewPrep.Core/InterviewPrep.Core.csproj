@@ -69,6 +69,7 @@
     <Compile Include="Generics\GenericParameters.cs" />
     <Compile Include="Graphs\AdjacencyListGraph.cs" />
     <Compile Include="Graphs\AdjacencyMatrixGraph.cs" />
+    <Compile Include="Graphs\GraphExtensions.cs" />
     <Compile Include="Graphs\GraphHelper.cs" />
     <Compile Include="Graphs\IGraph.cs" />
     <Compile Include="Graphs\LinearGraph.cs" />

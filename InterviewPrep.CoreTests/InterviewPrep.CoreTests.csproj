@@ -53,7 +53,8 @@
     <Compile Include="BinarySearchTreeTests.cs" />
     <Compile Include="DuplicatesTests.cs" />
     <Compile Include="FibonacciTests.cs" />
-    <Compile Include="GraphTests.cs" />
+    <Compile Include="Graphs\GraphExtensionsTest.cs" />
+    <Compile Include="Graphs\GraphTests.cs" />
     <Compile Include="HashTableTests.cs" />
     <Compile Include="Lists\LinkedListTests.cs" />
     <Compile Include="Lists\StackTests.cs" />

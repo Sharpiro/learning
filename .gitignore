@@ -219,3 +219,4 @@ ModelManifest.xml
 
 #nots
 !*systemjs.config.js
+/InterviewPrep.SqlServer/InterviewPrep.SqlServer.jfm
