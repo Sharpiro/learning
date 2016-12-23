@@ -73,6 +73,7 @@
     <Compile Include="Graphs\GraphHelper.cs" />
     <Compile Include="Graphs\IGraph.cs" />
     <Compile Include="Graphs\LinearGraph.cs" />
+    <Compile Include="Inheritance\Inheritance.cs" />
     <Compile Include="Lists\ILinkedList.cs" />
     <Compile Include="Lists\CustomQueue.cs" />
     <Compile Include="Lists\ComplexLinkedList.cs" />
