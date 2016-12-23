@@ -27,5 +27,22 @@ namespace InterviewPrep.CoreTests
             Assert.AreEqual(0, childXNewResult);
             Assert.AreEqual(1, childYNewResult);
         }
+
+        [TestMethod]
+        public void CallParentFromBaseTest()
+        {
+            Parent parent = new Parent();
+            Child child = new Child();
+
+            var a = parent.Get();
+            var b = parent.Get<int>();
+            var c = child.Get();
+            var d = child.Get<int>();
+
+            Assert.AreEqual(1, a);
+            Assert.AreEqual(1, b);
+            Assert.AreEqual(3, c);
+            Assert.AreEqual(3, d);
+        }
     }
 }
