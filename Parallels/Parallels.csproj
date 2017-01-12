@@ -43,6 +43,7 @@
     <Compile Include="CustomTask\CustomAwaiters.cs" />
     <Compile Include="DelayedService.cs" />
     <Compile Include="Getter.cs" />
+    <Compile Include="ParallelExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

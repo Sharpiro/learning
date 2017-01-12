@@ -8,10 +8,10 @@ namespace Parallels
     {
         private readonly Random _randomizer = new Random();
 
-        public async Task<int> GetData(string name)
+        public async Task<int> GetData(int delay)
         {
             //Debug.WriteLine(name);
-            var delay = _randomizer.Next(2, 10);
+            //var delay = _randomizer.Next(2, 10);
             await Task.Delay(TimeSpan.FromSeconds(delay));
             return delay;
         }
