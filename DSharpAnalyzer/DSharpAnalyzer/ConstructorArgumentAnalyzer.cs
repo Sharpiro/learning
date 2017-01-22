@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 using DSharpAnalyzer;
 
-namespace RoslynAnalyzer
+namespace DSharpAnalyzer
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class ConstructorArgumentAnalyzer : DiagnosticAnalyzer

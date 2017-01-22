@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using TestHelper;
 using RoslynAnalyzer;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace RoslynAnalyzer.Test
 {
@@ -19,6 +20,7 @@ namespace RoslynAnalyzer.Test
             var test = @"";
 
             VerifyCSharpDiagnostic(test);
+            MethodDeclarationSyntax x;
         }
 
         //Diagnostic and CodeFix both triggered and checked for

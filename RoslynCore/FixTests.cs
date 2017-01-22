@@ -10,7 +10,6 @@ namespace RoslynCore
     {
         public FixTests(string parameterName)
         {
-        
         }
     }
 }
