@@ -41,23 +41,23 @@ namespace DSharpAnalyzer
             context.RegisterCodeFix(
                CodeAction.Create(
                    title: title,
-                   createChangedDocument: c => ConstructorParameterFix(context.Document, declaration, c),
+                   createChangedDocument: c => Whatever.ConstructorParameterFix(context.Document, declaration, c),
                    equivalenceKey: title),
                diagnostic);
         }
 
-        private async Task<Document> ConstructorParameterFix(Document document, ParameterSyntax parameter, CancellationToken cancellationToken)
-        {
-            var root = (CompilationUnitSyntax)await document.GetSyntaxRootAsync(cancellationToken);
+        //private async Task<Document> ConstructorParameterFix(Document document, ParameterSyntax parameter, CancellationToken cancellationToken)
+        //{
+        //    var root = (CompilationUnitSyntax)await document.GetSyntaxRootAsync(cancellationToken);
 
-            //if (block == null) throw new ArgumentNullException(nameof(block));
+        //    //if (block == null) throw new ArgumentNullException(nameof(block));
 
-            //root = AddSystemUsing(root);
-            //root = AddField(root, parameter);
-            //root = await AddNullCheck(root, document, parameter);
+        //    //root = AddSystemUsing(root);
+        //    //root = AddField(root, parameter);
+        //    //root = await AddNullCheck(root, document, parameter);
 
-            return document.WithSyntaxRoot(root);
-        }
+        //    return document.WithSyntaxRoot(root);
+        //}
 
         //private BlockSyntax FindBlock(ParameterSyntax parameter)
         //{
@@ -79,7 +79,8 @@ namespace DSharpAnalyzer
 
         //private CompilationUnitSyntax AddField(CompilationUnitSyntax compilationUnit, ParameterSyntax parameter)
         //{
-        //    var block = FindBlock(parameter);
+        //    //var block = FindBlock(parameter);
+        //    BlockSyntax block = null;
         //    var constructor = block?.Parent as ConstructorDeclarationSyntax;
         //    var @class = constructor?.Parent as ClassDeclarationSyntax;
         //    if (@class == null) throw new ArgumentNullException(nameof(@class));

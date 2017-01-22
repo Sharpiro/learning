@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="DSharpAnalyzer..224ab481-abf3-4435-8f67-5705dc72c860" Version="1.0" Language="en-US" Publisher="sharpiro"/>
+    <Identity Id="DSharpAnalyzer..224ab481-abf3-4435-8f67-5705dc72c860" Version="1.06" Language="en-US" Publisher="sharpiro"/>
     <DisplayName>DSharpAnalyzer</DisplayName>
     <Description xml:space="preserve">This is a sample diagnostic extension for the .NET Compiler Platform ("Roslyn").</Description>
   </Metadata>
