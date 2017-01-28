@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RoslynCore;
+using System;
 
 namespace RoslynTests
 {
@@ -21,9 +22,13 @@ namespace RoslynTests
 
     public class Temp
     {
-        public Temp(string dependency)
-        {
+        private readonly object _dependency;
 
+        public Temp(object dependency)
+        {
+            if (dependency == null) throw new ArgumentNullException(nameof(dependency));
+
+            _dependency = dependency;
         }
     }
 }

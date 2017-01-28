@@ -34,13 +34,14 @@
   <ItemGroup>
     <Compile Include="ConstructorParameterProvider.cs" />
     <Compile Include="ConstructorArgumentAnalyzer.cs" />
+    <Compile Include="NodeExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Whatever.cs" />
+    <Compile Include="ConstructorParameterFix.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">

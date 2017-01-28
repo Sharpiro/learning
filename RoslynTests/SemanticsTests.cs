@@ -67,6 +67,5 @@ class ProtectedClass
 
     class Test
     {
-        private int _x;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.Immutable;
 
 namespace RoslynCore
 {
@@ -10,6 +11,7 @@ namespace RoslynCore
     {
         public FixTests(string parameterName)
         {
+            var list = ImmutableList.Create(1);
         }
     }
 }

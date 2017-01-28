@@ -181,14 +181,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\packages\DSharpAnalyzer.1.0.6216.24724\analyzers\dotnet\cs\DSharpAnalyzer.dll" />
+    <Analyzer Include="..\packages\DSharpAnalyzer.1.0.6237.22230\analyzers\dotnet\cs\DSharpAnalyzer.dll" />
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
-    <Analyzer Include="..\RoslynCore\bin\Debug\RoslynCore.dll" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RoslynCore\RoslynCore.csproj">
-      <Project>{73B7DCAB-A6B6-4232-93A1-7B7DAD0FF980}</Project>
+      <Project>{73b7dcab-a6b6-4232-93a1-7b7dad0ff980}</Project>
       <Name>RoslynCore</Name>
     </ProjectReference>
   </ItemGroup>
