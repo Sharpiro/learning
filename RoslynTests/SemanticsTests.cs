@@ -45,27 +45,5 @@ class ProtectedClass
             //var descendants = compilationUnit.DescendantNodesAndTokens().ToList();
         }
 
-        [TestMethod]
-        public void TestTest()
-        {
-            var i = 0;
-            var a = 1 + i++;
-
-            Assert.AreEqual(1, a);
-
-            i = 0;
-            a = Add(1, i);
-
-            Assert.AreEqual(1, a);
-        }
-
-        private int Add(int x, int y)
-        {
-            return x + y;
-        }
-    }
-
-    class Test
-    {
     }
 }

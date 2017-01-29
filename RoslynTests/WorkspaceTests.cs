@@ -13,10 +13,17 @@ namespace RoslynTests
     public class WorkspaceTests
     {
         [TestMethod]
-        public void TestOne()
+        public void FormatTests()
         {
             var workspace = Workspace.Create();
             workspace.Format();
+        }
+
+        [TestMethod]
+        public void FindSymbolsTests()
+        {
+            var workspace = Workspace.Create();
+            workspace.FindSymbols();
         }
     }
 

@@ -5,6 +5,7 @@ using Microsoft.CodeAnalysis.Formatting;
 using Microsoft.CodeAnalysis.MSBuild;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace RoslynCore
@@ -95,10 +96,19 @@ namespace RoslynCore
 
         public void FindSymbols()
         {
-            //var symbol = ;
-            var compilation = Project.GetCompilationAsync().Result;
-            var type = compilation.GetTypeByMetadataName(typeof(ReferencesClass).FullName);
-            SymbolFinder.FindReferencesAsync(null, Solution);
+            var projectPath = Path.GetFullPath("../../../RoslynCore/RoslynCore.csproj");
+            var workspace = MSBuildWorkspace.Create();
+            var project = workspace.OpenProjectAsync(projectPath).Result;
+
+            var compilation = project.GetCompilationAsync().Result;
+            var type = compilation.GetTypeByMetadataName("RoslynCore.ReferencesClass");
+            var method = type.GetMembers().Single(m => m.Name == "DoStuff");
+            var property = type.GetMembers().Single(m => m.Name == "Property");
+
+            //find "callers" for the "DoStuff" method
+            var callers = SymbolFinder.FindCallersAsync(method, Solution).Result;
+
+            //SymbolFinder.FindReferencesAsync(null, Solution);
         }
     }
 }
