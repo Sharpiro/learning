@@ -4,46 +4,47 @@ using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using TestHelper;
-using RoslynAnalyzer;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using DSharpAnalyzer;
 
 namespace RoslynAnalyzer.Test
 {
     [TestClass]
     public class UnitTest : CodeFixVerifier
     {
-
-        //No diagnostics expected to show up
         [TestMethod]
-        public void TestMethod1()
+        public void AnalyzerTest()
         {
-            var test = @"";
+//            var test =
+//@"using System;
 
-            VerifyCSharpDiagnostic(test);
-            MethodDeclarationSyntax x;
-        }
+//namespace RoslynTests
+//{
+//    public class DummyClass
+//    {
+//        private readonly object _dep1;
 
-        //Diagnostic and CodeFix both triggered and checked for
-        [TestMethod]
-        public void TestMethod2()
-        {
-            var test = @"
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Diagnostics;
+//        public DummyClass(object dep2, object dep1)
+//        {
+//            _dep1 = dep1 ?? throw new ArgumentNullException(nameof(dep1));
+//        }
+//    }
+//}";
 
-    namespace ConsoleApplication1
+            var test =
+@"using System;
+
+namespace RoslynTests
+{
+    public class DummyClass
     {
-        class TypeName
-        {   
+        public DummyClass(object dep2, object dep1)
+        {
         }
-    }";
+    }
+}";
             var expected = new DiagnosticResult
             {
-                Id = "RoslynAnalyzer",
+                Id = "DS01",
                 Message = String.Format("Type name '{0}' contains lowercase letters", "TypeName"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
@@ -52,33 +53,59 @@ namespace RoslynAnalyzer.Test
                         }
             };
 
-            VerifyCSharpDiagnostic(test, expected);
-
-            var fixtest = @"
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Diagnostics;
-
-    namespace ConsoleApplication1
-    {
-        class TYPENAME
-        {   
+            VerifyCSharpDiagnostic(test);
         }
-    }";
+        //Diagnostic and CodeFix both triggered and checked for
+        [TestMethod]
+        public void CodeFixTest()
+        {
+            var test = @"
+namespace RoslynTests
+{
+    public class DummyClass
+    {
+        private readonly string _x;
+        private readonly string _y;
+
+        public DummyClass(object x, object y)
+        {
+
+        }
+    }
+}";
+            var fixtest =
+@"using System;
+
+namespace RoslynTests
+{
+    public class DummyClass
+    {
+        private readonly string _x;
+        private readonly string _y;
+
+        public DummyClass(string x, string y)
+        {
+            if (string.IsNullOrEmpty(x))
+                throw new ArgumentNullException(nameof(x));
+            if (string.IsNullOrEmpty(y))
+                throw new ArgumentNullException(nameof(y));
+
+            _x = x;
+            _y = y;
+        }
+    }
+}";
             VerifyCSharpFix(test, fixtest);
         }
 
         protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
-            return new ConstructorParameterProvider();
+            return new ConstructorProvider();
         }
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
-            return new ConstructorArgumentAnalyzer();
+            return new ConstructorAnalyzer();
         }
     }
 }

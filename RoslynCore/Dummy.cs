@@ -9,12 +9,14 @@ namespace RoslynCore
     }
     public class ReferencesClass
     {
+        private readonly string _dependency;
+
         public int Property { get; set; }
 
-        public ReferencesClass(int dependency)
+        public ReferencesClass(string dependency)
         {
             DoStuff();
-
+            _dependency = dependency ?? throw new ArgumentNullException(nameof(dependency));
         }
 
         public void DoStuff()
