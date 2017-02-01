@@ -49,9 +49,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DSharpAnalyzer\DSharpAnalyzer.csproj">
-      <Project>{A40B4CB8-3459-4FBD-9CCE-412319F84E5C}</Project>
-      <Name>DSharpAnalyzer</Name>
+    <ProjectReference Include="..\..\DSharpAnalyzer.New\DSharpAnalyzer.New.csproj">
+      <Project>{5DF457E0-F685-4C86-9D96-2CE56B78BEEE}</Project>
+      <Name>DSharpAnalyzer.New</Name>
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>

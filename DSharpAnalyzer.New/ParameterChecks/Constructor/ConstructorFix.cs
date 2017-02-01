@@ -30,10 +30,16 @@ namespace DSharpAnalyzer
 
         private async Task<Document> CreateFix()
         {
+            var isVS2015 = MiscExtensions.IsVS2017;
             AddSystemUsing();
             await AddField();
-            await AddNullCheck();
-            AddAssignmentStatement();
+            if (MiscExtensions.IsVS2017)
+                await AddBinaryThrowExpression();
+            else
+            {
+                await AddIfThrowStatement();
+                AddAssignmentStatement();
+            }
             return _document.WithSyntaxRoot(_compilationUnit);
         }
 
@@ -91,7 +97,12 @@ namespace DSharpAnalyzer
             }
         }
 
-        private async Task AddNullCheck()
+        private async Task AddBinaryThrowExpression()
+        {
+
+        }
+
+        private async Task AddIfThrowStatement()
         {
             _document = _document.WithSyntaxRoot(_compilationUnit);
             var semanticModel = await _document.GetSemanticModelAsync(_token);
@@ -122,7 +133,6 @@ namespace DSharpAnalyzer
                 var blockStatements = block.Statements.ToImmutableList().Insert(0, ifThrowStatement);
 
                 _compilationUnit = _compilationUnit.ReplaceNode(block, block.WithStatements(List(blockStatements)));
-                //var x = _compilationUnit.ToString();
             }
         }
 

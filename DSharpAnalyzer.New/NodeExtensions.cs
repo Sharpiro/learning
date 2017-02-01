@@ -1,4 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
+using System;
 using System.Linq;
 
 namespace DSharpAnalyzer
@@ -14,5 +15,10 @@ namespace DSharpAnalyzer
         {
             return (T)syntaxNode.Ancestors().SingleOrDefault(n => n.HasAnnotation(annotation));
         }
+    }
+
+    public static class MiscExtensions
+    {
+        public static bool IsVS2017 => AppDomain.CurrentDomain.BaseDirectory.Contains("2017");
     }
 }
