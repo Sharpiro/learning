@@ -5,6 +5,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Text;
+using System;
 
 namespace DSharpAnalyzer
 {
@@ -33,13 +34,22 @@ namespace DSharpAnalyzer
             var parameterList = constructor.ParameterList;
             var parameters = parameterList.Parameters;
 
-            if (constructor == null) return;
+            if (constructor == null || !parameters.Any()) return;
 
             var hasNullCheck = false;
             foreach (var parameter in parameters)
             {
                 var symbolInfo = context.SemanticModel.GetSymbolInfo(parameter.Type).Symbol as INamedTypeSymbol;
                 if (symbolInfo == null || symbolInfo.IsValueType) return;
+
+                var statements = constructor.Body.Statements.ToList();
+                //ThrowExpressionSyntax
+                var x = statements.SelectMany(s => s.DescendantNodesAndSelf()).Select(s => s.GetType().FullName).Distinct();
+                var y = string.Join(Environment.NewLine, x);
+                var z = typeof(Microsoft.CodeAnalysis.CSharp.Syntax.ThrowStatementSyntax);
+                //var x = constructor.Body.Statements.SelectMany(s => s.DescendantNodesAndSelf().OfType<ThrowStatementSyntax>()).ToList();
+                //var y = x.SelectMany(s => s.DescendantNodes().OfType<IdentifierNameSyntax>()).ToList();
+                //var z = y.Where(n => n.Identifier.ValueText == parameter.Identifier.ValueText).ToList();
 
                 hasNullCheck = constructor.Body.Statements.Any(s => s.DescendantNodesAndSelf().OfType<ThrowStatementSyntax>()
                     .Any(ts => ts.DescendantNodes().OfType<IdentifierNameSyntax>()
