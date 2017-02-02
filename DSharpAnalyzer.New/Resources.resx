@@ -117,16 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AnalyzerDescription" xml:space="preserve">
+  <data name="DS01Description" xml:space="preserve">
     <value>Parameters should have null checks.</value>
     <comment>An optional longer localizable description of the diagnostic.</comment>
   </data>
-  <data name="AnalyzerMessageFormat" xml:space="preserve">
+  <data name="DS01MessageFormat" xml:space="preserve">
     <value>'{0}' needs to be checked for nulls</value>
     <comment>The format-able message the diagnostic displays.</comment>
   </data>
-  <data name="AnalyzerTitle" xml:space="preserve">
+  <data name="DS01Title" xml:space="preserve">
     <value>Initialize and add null checks</value>
     <comment>The title of the diagnostic.</comment>
+  </data>
+  <data name="DS02Description" xml:space="preserve">
+    <value>Check</value>
+    <comment>Check</comment>
+  </data>
+  <data name="DS02MessageFormat" xml:space="preserve">
+    <value>Check</value>
+    <comment>Check</comment>
+  </data>
+  <data name="DS02Title" xml:space="preserve">
+    <value>Check</value>
+    <comment>Check</comment>
   </data>
 </root>

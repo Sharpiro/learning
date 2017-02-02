@@ -10,7 +10,7 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace DSharpAnalyzer
 {
-    public class ConstructorFix
+    public class MethodFix
     {
         private Document _document;
         private readonly SyntaxAnnotation _parameterListAnnotation;
@@ -18,7 +18,7 @@ namespace DSharpAnalyzer
         private CancellationToken _token;
         private CompilationUnitSyntax _compilationUnit;
 
-        private ConstructorFix(Document document, CompilationUnitSyntax compilationUnit, SyntaxAnnotation parameterListAnnotation,
+        private MethodFix(Document document, CompilationUnitSyntax compilationUnit, SyntaxAnnotation parameterListAnnotation,
             SyntaxAnnotation blockAnnotation, CancellationToken cancellationToken)
         {
             _document = document;
@@ -40,7 +40,7 @@ namespace DSharpAnalyzer
             root = root.ReplaceNode(constructor?.Body, constructor?.Body.WithAdditionalAnnotations(blockAnnotation));
             document = document.WithSyntaxRoot(root);
 
-            var instance = new ConstructorFix(document, root, parameterListAnnotation, blockAnnotation, cancellationToken);
+            var instance = new MethodFix(document, root, parameterListAnnotation, blockAnnotation, cancellationToken);
             return await instance.CreateFix();
         }
 

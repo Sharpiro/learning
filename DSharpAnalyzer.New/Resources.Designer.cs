@@ -8,9 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DSharpAnalyzer {
+namespace DSharpAnalyzer.New {
     using System;
-    using System.Reflection;
     
     
     /// <summary>
@@ -40,7 +39,7 @@ namespace DSharpAnalyzer {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DSharpAnalyzer.Resources", typeof(Resources).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DSharpAnalyzer.New.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -64,27 +63,54 @@ namespace DSharpAnalyzer {
         /// <summary>
         ///   Looks up a localized string similar to Parameters should have null checks..
         /// </summary>
-        internal static string AnalyzerDescription {
+        internal static string DS01Description {
             get {
-                return ResourceManager.GetString("AnalyzerDescription", resourceCulture);
+                return ResourceManager.GetString("DS01Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos; needs to be checked for nulls.
         /// </summary>
-        internal static string AnalyzerMessageFormat {
+        internal static string DS01MessageFormat {
             get {
-                return ResourceManager.GetString("AnalyzerMessageFormat", resourceCulture);
+                return ResourceManager.GetString("DS01MessageFormat", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Initialize and add null checks.
         /// </summary>
-        internal static string AnalyzerTitle {
+        internal static string DS01Title {
             get {
-                return ResourceManager.GetString("AnalyzerTitle", resourceCulture);
+                return ResourceManager.GetString("DS01Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check.
+        /// </summary>
+        internal static string DS02Description {
+            get {
+                return ResourceManager.GetString("DS02Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check.
+        /// </summary>
+        internal static string DS02MessageFormat {
+            get {
+                return ResourceManager.GetString("DS02MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check.
+        /// </summary>
+        internal static string DS02Title {
+            get {
+                return ResourceManager.GetString("DS02Title", resourceCulture);
             }
         }
     }

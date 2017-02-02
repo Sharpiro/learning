@@ -11,7 +11,7 @@ using System;
 namespace DSharpAnalyzer
 {
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(ConstructorProvider)), Shared]
-    public class ConstructorProvider : CodeFixProvider
+    public class MethodProvider : CodeFixProvider
     {
         private const string title = "Initialize field and null checks";
 
