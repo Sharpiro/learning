@@ -13,28 +13,26 @@ namespace DSharpAnalyzer
     public class MethodAnalyzer : DiagnosticAnalyzer
     {
         public const string DiagnosticId = "DS02";
+        private const string Category = "Initialization";
 
         private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.DS02Title), Resources.ResourceManager, typeof(Resources));
         private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.DS02MessageFormat), Resources.ResourceManager, typeof(Resources));
         private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.DS02Description), Resources.ResourceManager, typeof(Resources));
-        private const string Category = "Initialization";
-
         private static DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, isEnabledByDefault: true, description: Description);
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get { return ImmutableArray.Create(Rule); } }
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
         public override void Initialize(AnalysisContext context)
         {
-            context.RegisterSyntaxNodeAction(AnalyzeSyntaxNode, SyntaxKind.ConstructorDeclaration);
+            context.RegisterSyntaxNodeAction(AnalyzeSyntaxNode, SyntaxKind.MethodDeclaration);
         }
 
         private void AnalyzeSyntaxNode(SyntaxNodeAnalysisContext context)
         {
-            var constructor = context.Node as ConstructorDeclarationSyntax;
-            var parameterList = constructor.ParameterList;
-            var parameters = parameterList.Parameters.ToList();
+            var method = context.Node as MethodDeclarationSyntax;
+            var parameters = method.ParameterList.Parameters.ToList();
 
-            if (constructor == null || !parameters.Any()) return;
+            if (method == null || !parameters.Any()) return;
 
             var valueTypeParameters = 0;
             var nullChecks = 0;
@@ -48,18 +46,13 @@ namespace DSharpAnalyzer
                     continue;
                 }
 
-                var statementNodes = constructor.Body.Statements.SelectMany(s => s.DescendantNodesAndSelf()).ToList();
+                var statementNodes = method.Body.Statements.SelectMany(s => s.DescendantNodesAndSelf()).ToList();
                 var hasThrowStatement = statementNodes.OfType<ThrowStatementSyntax>()
                     .Any(ts => ts.DescendantNodes().OfType<IdentifierNameSyntax>()
                     .Any(idn => idn.Identifier.ValueText == parameter.Identifier.ValueText
                 ));
 
-                var hasThrowExpression = statementNodes.OfType<ThrowExpressionSyntax>()
-                    .Any(ts => ts.DescendantNodes().OfType<IdentifierNameSyntax>()
-                    .Any(idn => idn.Identifier.ValueText == parameter.Identifier.ValueText
-                ));
-
-                if (hasThrowStatement || hasThrowExpression)
+                if (hasThrowStatement)
                 {
                     nullChecks++;
                     continue;
@@ -69,8 +62,8 @@ namespace DSharpAnalyzer
             if (valueTypeParameters == parameters.Count) return;
             if (nullChecks == parameters.Count - valueTypeParameters) return;
 
-            var diagnosticLocation = Location.Create(context.Node.SyntaxTree, TextSpan.FromBounds(constructor.Span.Start, parameterList.FullSpan.End));
-            context.ReportDiagnostic(Diagnostic.Create(Rule, diagnosticLocation, constructor.Identifier));
+            var diagnosticLocation = Location.Create(context.Node.SyntaxTree, TextSpan.FromBounds(method.Span.Start, method.ParameterList.FullSpan.End));
+            context.ReportDiagnostic(Diagnostic.Create(Rule, diagnosticLocation, method.Identifier));
         }
     }
 }

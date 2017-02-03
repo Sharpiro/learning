@@ -13,24 +13,23 @@ namespace DSharpAnalyzer
     public class ConstructorAnalyzer : DiagnosticAnalyzer
     {
         public const string DiagnosticId = "DS01";
+        private const string Category = "Initialization";
 
         private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.DS01Title), Resources.ResourceManager, typeof(Resources));
         private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.DS01MessageFormat), Resources.ResourceManager, typeof(Resources));
         private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.DS01Description), Resources.ResourceManager, typeof(Resources));
-        private const string Category = "Initialization";
-
         private static DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, isEnabledByDefault: true, description: Description);
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get { return ImmutableArray.Create(Rule); } }
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
 
         public override void Initialize(AnalysisContext context)
         {
-            context.RegisterSyntaxNodeAction(AnalyzeSyntaxNode, SyntaxKind.MethodDeclaration);
+            context.RegisterSyntaxNodeAction(AnalyzeSyntaxNode, SyntaxKind.ConstructorDeclaration);
         }
 
         private void AnalyzeSyntaxNode(SyntaxNodeAnalysisContext context)
         {
-            var method = context.Node as MethodDeclarationSyntax;
+            var method = context.Node as ConstructorDeclarationSyntax;
             var parameterList = method.ParameterList;
             var parameters = parameterList.Parameters.ToList();
 
@@ -54,12 +53,12 @@ namespace DSharpAnalyzer
                     .Any(idn => idn.Identifier.ValueText == parameter.Identifier.ValueText
                 ));
 
-                //var hasThrowExpression = statementNodes.OfType<ThrowExpressionSyntax>()
-                //    .Any(ts => ts.DescendantNodes().OfType<IdentifierNameSyntax>()
-                //    .Any(idn => idn.Identifier.ValueText == parameter.Identifier.ValueText
-                //));
+                var hasThrowExpression = statementNodes.OfType<ThrowExpressionSyntax>()
+                    .Any(ts => ts.DescendantNodes().OfType<IdentifierNameSyntax>()
+                    .Any(idn => idn.Identifier.ValueText == parameter.Identifier.ValueText
+                ));
 
-                if (hasThrowStatement)
+                if (hasThrowStatement || hasThrowExpression)
                 {
                     nullChecks++;
                     continue;

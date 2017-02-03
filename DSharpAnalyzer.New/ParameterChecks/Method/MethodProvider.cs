@@ -4,21 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
-using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
+using Microsoft.CodeAnalysis.CodeActions;
 
 namespace DSharpAnalyzer
 {
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(ConstructorProvider)), Shared]
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(MethodProvider)), Shared]
     public class MethodProvider : CodeFixProvider
     {
-        private const string title = "Initialize field and null checks";
+        private const string title = "Do parameter checks";
 
-        public sealed override ImmutableArray<string> FixableDiagnosticIds
-        {
-            get { return ImmutableArray.Create(ConstructorAnalyzer.DiagnosticId); }
-        }
+        public sealed override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(MethodAnalyzer.DiagnosticId);
 
         public sealed override FixAllProvider GetFixAllProvider()
         {
@@ -39,7 +36,7 @@ namespace DSharpAnalyzer
                 context.RegisterCodeFix(
                    CodeAction.Create(
                        title: title,
-                       createChangedDocument: c => ConstructorFix.RunConstructorParameterFix(context.Document, declaration, c),
+                       createChangedDocument: c => MethodFix.RunMethodParameterFix(context.Document, declaration, c),
                        equivalenceKey: title),
                    diagnostic);
             }

@@ -153,6 +153,7 @@
     <Compile Include="ParameterChecks\Method\MethodAnalyzer.cs" />
     <Compile Include="ParameterChecks\Method\MethodFix.cs" />
     <Compile Include="ParameterChecks\Method\MethodProvider.cs" />
+    <Compile Include="ParameterChecks\ParameterListFix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
       <DependentUpon>Resources.resx</DependentUpon>

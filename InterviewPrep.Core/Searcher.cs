@@ -11,21 +11,17 @@ namespace InterviewPrep.Core
         /// <typeparam name="T"></typeparam>
         /// <param name="list"></param>
         /// <param name="value"></param>
-        /// <param name="index"></param>
         /// <returns></returns>
-        public static T LinearSearch<T>(IList<T> list, T value, out int index)
+        public static (T Item, int Index) LinearSearch<T>(IList<T> list, T value) where T : IComparable<T>
         {
-            index = -1;
             for (var i = 0; i < list.Count; i++)
             {
                 if (list[i].Equals(value))
                 {
-                    index = i;
-                    break;
+                    return (list[i], i);
                 }
             }
-            var output = index == -1 ? list[0] : list[index];
-            return output;
+            return (default(T), -1);
         }
 
         /// <summary>
@@ -38,16 +34,16 @@ namespace InterviewPrep.Core
         {
             var low = 0;
             var high = list.Count - 1;
-            var midPoint = (int)Math.Floor(((double)low + high) / 2);
+            var pivot = (low + high) / 2;
+
             while (low <= high)
             {
-                if (list[midPoint] == value)
-                    return midPoint;
-                if (list[midPoint] < value)
-                    low = midPoint + 1;
-                else if (list[midPoint] > value)
-                    high = midPoint - 1;
-                midPoint = (int)Math.Floor(((double)low + high) / 2);
+                if (value == list[pivot]) return list[pivot];
+                if (value < list[pivot])
+                    high = pivot - 1;
+                else if (value > list[pivot])
+                    low = pivot + 1;
+                pivot = (low + high) / 2;
             }
             return -1;
         }
@@ -64,12 +60,10 @@ namespace InterviewPrep.Core
         {
             if (low > high) return -1;
             var pivot = (low + high) / 2;
-            if (value == list[pivot])
-                return pivot;
+            if (value == list[pivot]) return list[pivot];
             if (value < list[pivot])
                 return BinarySearchRecursive(list, value, low, pivot - 1);
-            else
-                return BinarySearchRecursive(list, value, pivot + 1, high);
+            return BinarySearchRecursive(list, value, pivot + 1, high);
         }
     }
 }

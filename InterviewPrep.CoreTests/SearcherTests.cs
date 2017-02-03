@@ -11,19 +11,18 @@ namespace InterviewPrep.CoreTests
         public void LinearSearchTest()
         {
             var list = new List<int> { 1, 3, 5, 8, 2, 4, 7, 6, 4, 3 };
-            int index;
-            var result1 = Searcher.LinearSearch(list, 8, out index);
-            Assert.AreEqual(index, 3);
-            var result2 = Searcher.LinearSearch(list, 3, out index);
-            Assert.AreEqual(index, 1);
-            var result3 = Searcher.LinearSearch(list, 4, out index);
-            Assert.AreEqual(index, 5);
-            var result4 = Searcher.LinearSearch(list, 12, out index);
-            Assert.AreEqual(index, -1);
-            Assert.AreEqual(result1, 8);
-            Assert.AreEqual(result2, 3);
-            Assert.AreEqual(result3, 4);
-            Assert.AreEqual(result4, 1);
+            var result1 = Searcher.LinearSearch(list, 8);
+            Assert.AreEqual(result1.Index, 3);
+            var result2 = Searcher.LinearSearch(list, 3);
+            Assert.AreEqual(result2.Index, 1);
+            var result3 = Searcher.LinearSearch(list, 4);
+            Assert.AreEqual(result3.Index, 5);
+            var result4 = Searcher.LinearSearch(list, 12);
+            Assert.AreEqual(result4.Index, -1);
+            Assert.AreEqual(result1.Item, 8);
+            Assert.AreEqual(result2.Item, 3);
+            Assert.AreEqual(result3.Item, 4);
+            Assert.AreEqual(result4.Item, 0);
         }
 
         [TestMethod]
