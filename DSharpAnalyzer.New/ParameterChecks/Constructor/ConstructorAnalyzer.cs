@@ -6,6 +6,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Text;
 using DSharpAnalyzer.New;
+using System;
 
 namespace DSharpAnalyzer
 {
@@ -29,47 +30,54 @@ namespace DSharpAnalyzer
 
         private void AnalyzeSyntaxNode(SyntaxNodeAnalysisContext context)
         {
-            var method = context.Node as ConstructorDeclarationSyntax;
-            var parameterList = method.ParameterList;
-            var parameters = parameterList.Parameters.ToList();
-
-            if (method == null || !parameters.Any()) return;
-
-            var valueTypeParameters = 0;
-            var nullChecks = 0;
-            foreach (var parameter in parameters)
+            try
             {
-                var symbolInfo = context.SemanticModel.GetSymbolInfo(parameter.Type).Symbol as INamedTypeSymbol;
-                if (symbolInfo == null) return;
-                if (symbolInfo.IsValueType)
+                var constructor = context.Node as ConstructorDeclarationSyntax;
+                var parameterList = constructor.ParameterList;
+                var parameters = parameterList.Parameters.ToList();
+
+                if (constructor == null || !parameters.Any()) return;
+
+                var valueTypeParameters = 0;
+                var nullChecks = 0;
+                foreach (var parameter in parameters)
                 {
-                    valueTypeParameters++;
-                    continue;
+                    var symbolInfo = context.SemanticModel.GetSymbolInfo(parameter.Type).Symbol as INamedTypeSymbol;
+                    if (symbolInfo == null) return;
+                    if (symbolInfo.IsValueType)
+                    {
+                        valueTypeParameters++;
+                        continue;
+                    }
+
+                    var statementNodes = constructor.Body.Statements.SelectMany(s => s.DescendantNodesAndSelf()).ToList();
+                    var hasThrowStatement = statementNodes.OfType<ThrowStatementSyntax>()
+                        .Any(ts => ts.DescendantNodes().OfType<IdentifierNameSyntax>()
+                        .Any(idn => idn.Identifier.ValueText == parameter.Identifier.ValueText
+                    ));
+
+                    var hasThrowExpression = statementNodes.OfType<ThrowExpressionSyntax>()
+                        .Any(ts => ts.DescendantNodes().OfType<IdentifierNameSyntax>()
+                        .Any(idn => idn.Identifier.ValueText == parameter.Identifier.ValueText
+                    ));
+
+                    if (hasThrowStatement || hasThrowExpression)
+                    {
+                        nullChecks++;
+                        continue;
+                    }
                 }
 
-                var statementNodes = method.Body.Statements.SelectMany(s => s.DescendantNodesAndSelf()).ToList();
-                var hasThrowStatement = statementNodes.OfType<ThrowStatementSyntax>()
-                    .Any(ts => ts.DescendantNodes().OfType<IdentifierNameSyntax>()
-                    .Any(idn => idn.Identifier.ValueText == parameter.Identifier.ValueText
-                ));
+                if (valueTypeParameters == parameters.Count) return;
+                if (nullChecks == parameters.Count - valueTypeParameters) return;
 
-                var hasThrowExpression = statementNodes.OfType<ThrowExpressionSyntax>()
-                    .Any(ts => ts.DescendantNodes().OfType<IdentifierNameSyntax>()
-                    .Any(idn => idn.Identifier.ValueText == parameter.Identifier.ValueText
-                ));
-
-                if (hasThrowStatement || hasThrowExpression)
-                {
-                    nullChecks++;
-                    continue;
-                }
+                var diagnosticLocation = Location.Create(context.Node.SyntaxTree, TextSpan.FromBounds(parameterList.Span.Start, parameterList.FullSpan.End));
+                context.ReportDiagnostic(Diagnostic.Create(Rule, diagnosticLocation, constructor.Identifier));
             }
-
-            if (valueTypeParameters == parameters.Count) return;
-            if (nullChecks == parameters.Count - valueTypeParameters) return;
-
-            var diagnosticLocation = Location.Create(context.Node.SyntaxTree, TextSpan.FromBounds(method.Span.Start, parameterList.FullSpan.End));
-            context.ReportDiagnostic(Diagnostic.Create(Rule, diagnosticLocation, method.Identifier));
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred in the constructor analyzer", ex);
+            }
         }
     }
 }

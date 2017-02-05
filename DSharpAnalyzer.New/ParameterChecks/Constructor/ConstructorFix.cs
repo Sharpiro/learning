@@ -18,52 +18,36 @@ namespace DSharpAnalyzer
 
         public static async Task<Document> RunConstructorParameterFix(Document document, ParameterListSyntax parameterList, CancellationToken cancellationToken)
         {
-            var root = (CompilationUnitSyntax)await document.GetSyntaxRootAsync(cancellationToken);
-            var parameterListAnnotation = new SyntaxAnnotation("ParameterListTrackerKind");
+            try
+            {
+                var root = (CompilationUnitSyntax)await document.GetSyntaxRootAsync(cancellationToken);
+                var parameterListAnnotation = new SyntaxAnnotation("ParameterListTrackerKind");
 
-            root = root.ReplaceNode(parameterList, parameterList.WithAdditionalAnnotations(parameterListAnnotation));
-            parameterList = root.FindDescendantByAnnotation<ParameterListSyntax>(parameterListAnnotation);
-            var constructor = parameterList.Parent as ConstructorDeclarationSyntax;
-            var blockAnnotation = new SyntaxAnnotation("BlockTrackerKind");
-            root = root.ReplaceNode(constructor?.Body, constructor?.Body.WithAdditionalAnnotations(blockAnnotation));
-            document = document.WithSyntaxRoot(root);
+                root = root.ReplaceNode(parameterList, parameterList.WithAdditionalAnnotations(parameterListAnnotation));
+                parameterList = root.FindDescendantByAnnotation<ParameterListSyntax>(parameterListAnnotation);
+                var constructor = parameterList.Parent as ConstructorDeclarationSyntax;
+                var blockAnnotation = new SyntaxAnnotation("BlockTrackerKind");
+                root = root.ReplaceNode(constructor?.Body, constructor?.Body.WithAdditionalAnnotations(blockAnnotation));
+                document = document.WithSyntaxRoot(root);
 
-            var instance = new ConstructorFix(document, root, parameterListAnnotation, blockAnnotation, cancellationToken);
-            return await instance.CreateFix();
+                var instance = new ConstructorFix(document, root, parameterListAnnotation, blockAnnotation, cancellationToken);
+                return await instance.CreateFix();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while performing the constructor code fix", ex);
+            }
         }
 
         protected override async Task<Document> CreateFix()
         {
-            try
-            {
-                AddSystemUsing();
-                await AddField();
-                await AddParameterChecks(CheckParameter);
-                return Document.WithSyntaxRoot(CompilationUnit);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
+            AddSystemUsing();
+            await AddField();
+            await AddBinaryThrowExpressions();
+            await AddNullChecks();
+            await AddFieldAssignments();
 
-        private void CheckParameter(INamedTypeSymbol parameterSymbol, ParameterSyntax parameter)
-        {
-            if (parameterSymbol.Name == "String")
-            {
-                AddStringNullCheck(parameter);
-                AddAssignmentStatement(parameter);
-            }
-            else
-            {
-                AddReferenceNullCheck(parameter);
-                AddAssignmentStatement(parameter);
-            }
-            //if (!MiscExtensions.IsVS2017)
-            //{
-            //}
-            //else
-            //    AddBinaryThrowExpression(parameter);
+            return Document.WithSyntaxRoot(CompilationUnit);
         }
     }
 }

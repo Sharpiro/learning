@@ -77,47 +77,69 @@ namespace DSharpAnalyzer.New.ParameterChecks
             }
         }
 
-        protected async Task AddParameterChecks(Action<INamedTypeSymbol, ParameterSyntax> parameterAction)
+        protected async Task AddNullChecks()
         {
-
             var parameterList = CompilationUnit.FindDescendantByAnnotation<ParameterListSyntax>(ParameterListAnnotation);
             for (var i = 0; i < parameterList.Parameters.Count; i++)
             {
-                var parameter = parameterList.Parameters[i];
-
                 Document = Document.WithSyntaxRoot(CompilationUnit);
                 CompilationUnit = (CompilationUnitSyntax)await Document.GetSyntaxRootAsync(Token);
+                parameterList = CompilationUnit.FindDescendantByAnnotation<ParameterListSyntax>(ParameterListAnnotation);
+                var parameter = parameterList.Parameters[i];
                 var semanticModel = await Document.GetSemanticModelAsync(Token);
                 var parameterSymbol = semanticModel.GetSymbolInfo(parameter.Type).Symbol as INamedTypeSymbol;
                 if (parameterSymbol.IsValueType) continue;
 
-                parameterAction(parameterSymbol, parameter);
-                if (i + 1 != parameterList.Parameters.Count)
-                    parameterList = CompilationUnit.FindDescendantByAnnotation<ParameterListSyntax>(ParameterListAnnotation);
+                if (parameterSymbol.Name == "String")
+                    AddStringNullCheck(parameter);
+                else if (!MiscExtensions.IsVS2017)
+                    AddReferenceNullCheck(parameter);
             }
+        }
 
-            //foreach (var parameter in parameterList.Parameters.Reverse())
-            //{
-            //    var parameterSymbol = semanticModel.GetSymbolInfo(parameter.Type).Symbol as INamedTypeSymbol;
-            //    if (parameterSymbol.IsValueType) continue;
+        protected async Task AddFieldAssignments()
+        {
+            var parameterList = CompilationUnit.FindDescendantByAnnotation<ParameterListSyntax>(ParameterListAnnotation);
+            for (var i = 0; i < parameterList.Parameters.Count; i++)
+            {
+                Document = Document.WithSyntaxRoot(CompilationUnit);
+                CompilationUnit = (CompilationUnitSyntax)await Document.GetSyntaxRootAsync(Token);
+                parameterList = CompilationUnit.FindDescendantByAnnotation<ParameterListSyntax>(ParameterListAnnotation);
+                var parameter = parameterList.Parameters[i];
+                var semanticModel = await Document.GetSemanticModelAsync(Token);
+                var parameterSymbol = semanticModel.GetSymbolInfo(parameter.Type).Symbol as INamedTypeSymbol;
+                if (parameterSymbol.IsValueType) continue;
+                if (MiscExtensions.IsVS2017 && parameterSymbol.Name != "String") continue;
 
-            //    parameterAction(parameterSymbol, parameter);
-            //}
+                AddAssignmentStatement(parameter);
+            }
+        }
+
+        protected async Task AddBinaryThrowExpressions()
+        {
+            var parameterList = CompilationUnit.FindDescendantByAnnotation<ParameterListSyntax>(ParameterListAnnotation);
+            for (var i = 0; i < parameterList.Parameters.Count; i++)
+            {
+                Document = Document.WithSyntaxRoot(CompilationUnit);
+                CompilationUnit = (CompilationUnitSyntax)await Document.GetSyntaxRootAsync(Token);
+                parameterList = CompilationUnit.FindDescendantByAnnotation<ParameterListSyntax>(ParameterListAnnotation);
+                var parameter = parameterList.Parameters[i];
+                var semanticModel = await Document.GetSemanticModelAsync(Token);
+                var parameterSymbol = semanticModel.GetSymbolInfo(parameter.Type).Symbol as INamedTypeSymbol;
+                if (parameterSymbol.IsValueType) continue;
+                if (!MiscExtensions.IsVS2017 || parameterSymbol.Name == "String") continue;
+
+                AddBinaryThrowExpression(parameter);
+            }
         }
 
         protected void AddBinaryThrowExpression(ParameterSyntax parameter)
         {
-            if (ThrowExists(parameter)) return;
+            if (ThrowExistsForParameter(parameter)) return;
             var binaryThrowStatement = getBinaryThrowStatement();
             var block = CompilationUnit.FindDescendantByAnnotation<BlockSyntax>(BlockAnnotation);
-            var blockStatements = block.Statements.ToImmutableList().Insert(0, binaryThrowStatement);
+            var blockStatements = block.Statements.ToImmutableList().Add(binaryThrowStatement);
             CompilationUnit = CompilationUnit.ReplaceNode(block, block.WithStatements(List(blockStatements)));
-
-            //bool binaryThrowExists()
-            //{
-            //    return CompilationUnit.DescendantNodes().OfType<ThrowExpressionSyntax>().Any(n => (n.Expression.DescendantNodes()
-            //    .OfType<IdentifierNameSyntax>().Any(idn => idn.Identifier.ValueText == parameter.Identifier.ValueText)));
-            //}
 
             ExpressionStatementSyntax getBinaryThrowStatement()
             {
@@ -131,11 +153,11 @@ namespace DSharpAnalyzer.New.ParameterChecks
 
         protected void AddStringNullCheck(ParameterSyntax parameter)
         {
-            if (ThrowExists(parameter)) return;
+            if (ThrowExistsForParameter(parameter)) return;
             var expression = createStringInvocationExpression();
             var ifThrowStatement = GetIfThrowStatement(expression, parameter);
             var block = CompilationUnit.FindDescendantByAnnotation<BlockSyntax>(BlockAnnotation);
-            var blockStatements = block.Statements.ToImmutableList().Insert(0, ifThrowStatement);
+            var blockStatements = block.Statements.ToImmutableList().Add(ifThrowStatement);
             CompilationUnit = CompilationUnit.ReplaceNode(block, block.WithStatements(List(blockStatements)));
 
             InvocationExpressionSyntax createStringInvocationExpression()
@@ -148,11 +170,11 @@ namespace DSharpAnalyzer.New.ParameterChecks
 
         protected void AddReferenceNullCheck(ParameterSyntax parameter)
         {
-            if (ThrowExists(parameter)) return;
+            if (ThrowExistsForParameter(parameter)) return;
             var expression = createNullCheckExpression();
             var ifThrowStatement = GetIfThrowStatement(expression, parameter);
             var block = CompilationUnit.FindDescendantByAnnotation<BlockSyntax>(BlockAnnotation);
-            var blockStatements = block.Statements.ToImmutableList().Insert(0, ifThrowStatement);
+            var blockStatements = block.Statements.ToImmutableList().Add(ifThrowStatement);
             CompilationUnit = CompilationUnit.ReplaceNode(block, block.WithStatements(List(blockStatements)));
 
             BinaryExpressionSyntax createNullCheckExpression()
@@ -180,14 +202,11 @@ namespace DSharpAnalyzer.New.ParameterChecks
             CompilationUnit = CompilationUnit.ReplaceNode(block, block.WithStatements(List(blockStatements)));
         }
 
-        private bool ThrowExists(ParameterSyntax parameter)
+        private bool ThrowExistsForParameter(ParameterSyntax parameter)
         {
-            //var parameterList = parameter?.Parent as ParameterListSyntax;
-            //var constructor = parameterList?.Parent as ConstructorDeclarationSyntax;
-            //var method = parameterList?.Parent as MethodDeclarationSyntax;
-            //var block = constructor?.Body ?? method?.Body as BlockSyntax;
             var block = CompilationUnit.FindDescendantByAnnotation<BlockSyntax>(BlockAnnotation);
-            if (block == null) throw new ArgumentNullException(nameof(block), "The block could not be attained through a constructor or method");
+            if (block == null)
+                throw new ArgumentNullException(nameof(block), "The block could not be attained through a constructor or method");
 
             var hasThrowStatement = block.DescendantNodes().OfType<ThrowStatementSyntax>().Any(n => (n.Expression.DescendantNodes()
            .OfType<IdentifierNameSyntax>().Any(idn => idn.Identifier.ValueText == parameter.Identifier.ValueText)));

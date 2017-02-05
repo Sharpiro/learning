@@ -27,18 +27,22 @@ namespace DSharpAnalyzer
                 var diagnostic = context.Diagnostics.First();
                 var diagnosticSpan = diagnostic.Location.SourceSpan;
 
-                var declaration = root.FindToken(diagnosticSpan.Start).Parent.DescendantNodes().OfType<ParameterListSyntax>().First();
+                var findToken = root.FindToken(diagnosticSpan.Start);
+                var descendantNodes = findToken.Parent.AncestorsAndSelf().OfType<ParameterListSyntax>();
+                var firstDeclaration = descendantNodes.FirstOrDefault();
+                if (firstDeclaration == null)
+                    throw new ArgumentNullException(nameof(firstDeclaration), "error finding a declaration when registering code fixes");
 
                 context.RegisterCodeFix(
                    CodeAction.Create(
                        title: title,
-                       createChangedDocument: c => ConstructorFix.RunConstructorParameterFix(context.Document, declaration, c),
+                       createChangedDocument: c => ConstructorFix.RunConstructorParameterFix(context.Document, firstDeclaration, c),
                        equivalenceKey: title),
                    diagnostic);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw new Exception("Error occurred in the constructor provider", ex);
             }
         }
     }

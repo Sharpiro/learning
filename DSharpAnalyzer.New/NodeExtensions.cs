@@ -19,6 +19,17 @@ namespace DSharpAnalyzer
 
     public static class MiscExtensions
     {
-        public static bool IsVS2017 => AppDomain.CurrentDomain.BaseDirectory.Contains("2017");
+        private static bool? _isVS2017;
+        public static bool IsVS2017
+        {
+            get
+            {
+                if (_isVS2017 == null)
+                {
+                    _isVS2017 = AppDomain.CurrentDomain.BaseDirectory.Contains("2017");
+                }
+                return _isVS2017.Value;
+            }
+        }
     }
 }
