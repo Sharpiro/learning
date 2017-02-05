@@ -38,5 +38,10 @@ namespace InterviewPrep.Core.Values_and_References
         {
             return !left.Equals(right);
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

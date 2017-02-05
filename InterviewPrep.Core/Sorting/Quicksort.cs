@@ -9,6 +9,7 @@ namespace InterviewPrep.Core.Sorting
             var newList = new int[list.Length];
             Array.Copy(list, newList, list.Length);
             Sort(newList, 0, newList.Length - 1);
+
             return newList;
         }
 
@@ -17,7 +18,6 @@ namespace InterviewPrep.Core.Sorting
             if (lowIndex >= highIndex) return;
 
             var pivot = Partition(list, lowIndex, highIndex);
-
             Sort(list, lowIndex, pivot - 1);
             Sort(list, pivot + 1, highIndex);
         }
@@ -41,9 +41,9 @@ namespace InterviewPrep.Core.Sorting
 
         private void Swap(ref int x, ref int y)
         {
-            var temp = x;
+            var oldX = x;
             x = y;
-            y = temp;
+            y = oldX;
         }
     }
 }

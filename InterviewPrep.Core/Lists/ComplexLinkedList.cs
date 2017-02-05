@@ -143,8 +143,7 @@ namespace InterviewPrep.Core.Lists
 
         private void Validate(Node node)
         {
-            if (node == null)
-                throw new ArgumentException("node cannot be null", nameof(node));
+            if (node == null) throw new ArgumentException("node cannot be null", nameof(node));
         }
 
         private void Invalidate(Node node)

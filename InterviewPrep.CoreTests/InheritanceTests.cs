@@ -11,7 +11,7 @@ namespace InterviewPrep.CoreTests
         {
             Base @base = new Base();
             Base childX = new ChildOne();
-            var childY = new ChildOne();
+            ChildOne childY = new ChildOne();
 
             var baseOverrideResult = @base.GetOverride();
             var childXOverrideResult = childX.GetOverride();
@@ -26,6 +26,19 @@ namespace InterviewPrep.CoreTests
             Assert.AreEqual(0, baseNewResult);
             Assert.AreEqual(0, childXNewResult);
             Assert.AreEqual(1, childYNewResult);
+        }
+
+        [TestMethod]
+        public void NoNewTest()
+        {
+            Base childA = new ChildTwo();
+            ChildTwo childB = new ChildTwo();
+
+            var childANoNewResult = childA.GetNew();
+            var childBNoNewResult = childB.GetNew();
+
+            Assert.AreEqual(0, childANoNewResult);
+            Assert.AreEqual(1, childBNoNewResult);
         }
 
         [TestMethod]

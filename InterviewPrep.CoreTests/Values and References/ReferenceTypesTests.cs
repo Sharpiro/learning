@@ -11,7 +11,7 @@ namespace InterviewPrep.Core.Values_and_References.Tests
             //x is an alias for a memory address
             //x's memory address hold a value
             //x's value = 5
-            var x = 5;
+            //var x = 5;
 
             //obj is an alias for 0x01 (a memory address)
             //obj's memory address hold a value

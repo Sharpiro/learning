@@ -8,7 +8,7 @@ namespace InterviewPrep.Core
     public class DelegatesAndEvents
     {
         public event Getter MyEvent;
-        public event Action Event2;
+        //public event Action Event2;
 
         private void OnMyEvent()
         {

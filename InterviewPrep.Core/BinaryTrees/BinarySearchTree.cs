@@ -116,6 +116,12 @@ namespace InterviewPrep.Core.BinaryTrees
             return head;
         }
 
+        public Node ConvertToLinkedList()
+        {
+            var head = ConvertToLinkedList(Root);
+            return head;
+        }
+
         public Node ConvertToLinkedList(Node current)
         {
             if (current == null)

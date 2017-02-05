@@ -10,10 +10,10 @@ namespace InterviewPrep.CoreTests
     public class GraphTests
     {
         private readonly IGraph _graph;
-        private readonly List<string> _vertexList;
-        private readonly List<Edge> _linearEdgeList;
-        private readonly int[][] _adjacencyMatrix;
-        private readonly Neighbor[] _adjacencyList;
+        //private readonly List<string> _vertexList;
+        //private readonly List<Edge> _linearEdgeList;
+        //private readonly int[][] _adjacencyMatrix;
+        //private readonly Neighbor[] _adjacencyList;
         private readonly GraphHelper _graphHelper;
 
         public GraphTests()

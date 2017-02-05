@@ -11,7 +11,7 @@ namespace InterviewPrep.CoreTests
 
         public SortingTests()
         {
-            _sorter = new MergeSort();
+            _sorter = new QuickSort();
         }
 
         [TestMethod]

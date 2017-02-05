@@ -57,12 +57,19 @@ namespace InterviewPrep.Core
 
         public int GetHash(int key)
         {
-            if (Count == _maxSize)
-                throw new InvalidOperationException("the table is full");
-            var hash = key % _maxSize;
-            while (_table[hash] != null && _table[hash].Key != key)
+            if (Count == _maxSize) throw new InvalidOperationException("the table is full");
+
+            //var hash = key % _maxSize;
+            //while (_table[hash] != null && _table[hash].Key != key)
+            //{
+            //    hash = (hash + 1) % _maxSize;
+            //}
+            var hash = key;
+            for (int i = 0; i < _maxSize; i++)
             {
-                hash = (hash + 1) % _maxSize;
+                hash = (hash + i) % _maxSize;
+                if (_table[hash] == null || _table[hash].Key == key)
+                    break;
             }
             return hash;
         }

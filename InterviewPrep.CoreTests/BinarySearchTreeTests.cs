@@ -189,6 +189,33 @@ namespace InterviewPrep.CoreTests
         }
 
         [TestMethod]
+        public void ConvertToLinkedListTest()
+        {
+            var tree = new BinarySearchTree();
+            tree.Add(9);
+            tree.Add(3);
+            tree.Add(6);
+            tree.Add(15);
+            tree.Add(11);
+            var current = tree.ConvertToLinkedList();
+            var second = current.Right;
+            var third = second.Right;
+            var fourth = third.Right;
+            var fifth = fourth.Right;
+            Assert.IsNull(current.Left);
+            Assert.AreEqual(3, current.Data);
+            Assert.AreEqual(3, second.Left.Data);
+            Assert.AreEqual(6, second.Data);
+            Assert.AreEqual(6, third.Left.Data);
+            Assert.AreEqual(9, third.Data);
+            Assert.AreEqual(9, fourth.Left.Data);
+            Assert.AreEqual(11, fourth.Data);
+            Assert.AreEqual(11, fifth.Left.Data);
+            Assert.AreEqual(15, fifth.Data);
+            Assert.IsNull(fifth.Right);
+        }
+
+        [TestMethod]
         public void ConvertToOrderedLinkedListTest()
         {
             var tree = new BinarySearchTree();

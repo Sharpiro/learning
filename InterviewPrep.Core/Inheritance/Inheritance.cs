@@ -25,4 +25,19 @@
             return 1;
         }
     }
+
+    public class ChildTwo : Base
+    {
+        public override int GetOverride()
+        {
+            return 1;
+        }
+
+#pragma warning disable CS0114 // Member hides inherited member; missing override keyword
+        public int GetNew()
+#pragma warning restore CS0114 // Member hides inherited member; missing override keyword
+        {
+            return 1;
+        }
+    }
 }

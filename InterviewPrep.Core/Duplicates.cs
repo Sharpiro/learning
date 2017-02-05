@@ -9,11 +9,11 @@ namespace InterviewPrep.Core
         public static bool HasDupesIndex(List<int> list)
         {
             var index = new BitArray(int.MaxValue);
-            foreach (var i in list)
+            foreach (var item in list)
             {
-                if (index[i])
+                if (index[item])
                     return true;
-                index[i] = true;
+                index[item] = true;
             }
             return false;
         }
@@ -21,12 +21,13 @@ namespace InterviewPrep.Core
         public static bool HasDupesHashSet(List<int> list)
         {
             var hashSet = new HashSet<int>();
-            for (var i = 0; i < list.Count; i++)
+            foreach (var item in list)
             {
-                if (hashSet.Contains(list[i]))
+                if (hashSet.Contains(item))
                     return true;
-                hashSet.Add(list[i]);
+                hashSet.Add(item);
             }
+
             return false;
         }
 
