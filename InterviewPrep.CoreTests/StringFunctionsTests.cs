@@ -23,10 +23,18 @@ namespace InterviewPrep.CoreTests
         }
 
         [TestMethod]
+        public void ReverseWordInSringManyTimesTest()
+        {
+            var forward = "man hello man";
+            var reverse = forward.ReverseWordInStringMany("man");
+            Assert.AreEqual("nam hello nam", reverse);
+        }
+
+        [TestMethod]
         public void ReverseStringManualTest()
         {
             var forward = "hello david";
-            var reverse = forward.ReverseManual();
+            var reverse = forward.ReverseStringBuilder();
             Assert.AreEqual("divad olleh", reverse);
         }
 

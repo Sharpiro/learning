@@ -8,34 +8,41 @@ namespace InterviewPrep.Core
     {
         public static string ReverseLinq(this string inputString)
         {
-            var reversedCharacters = inputString.Reverse().ToArray();
-            var reversedString = new string(reversedCharacters);
-            return reversedString;
+            var chars = inputString.Reverse();
+            return new string(chars.ToArray());
         }
 
-        public static string ReverseManual(this string inputString)
+        public static string ReverseStringBuilder(this string inputString)
         {
-            var reversedStringX = new StringBuilder();
+            var builder = new StringBuilder();
             for (var i = inputString.Length - 1; i >= 0; i--)
             {
-                reversedStringX.Append(inputString[i]);
+                builder.Append(inputString[i]);
             }
-            return reversedStringX.ToString();
+            return builder.ToString();
         }
 
         public static string ReverseWordInString(this string inputString, string word)
         {
-            var charArray = inputString.ToCharArray();
-            int wordIndex;
-            while ((wordIndex = inputString.IndexOf(word, StringComparison.Ordinal)) != -1)
+            var index = inputString.IndexOf(word);
+            var charArray = inputString.ToArray();
+            for (int i = word.Length + index - 1, j = 0; i >= index; i--, j++)
             {
-                for (int i = wordIndex, j = word.Length - 1; i < wordIndex + word.Length; i++, j--)
-                {
-                    charArray[i] = word[j];
-                }
-                inputString = new string(charArray);
+                charArray[i] = word[j];
             }
-            return inputString;
+
+            return new string(charArray);
+        }
+
+        public static string ReverseWordInStringMany(this string inputString, string word)
+        {
+            var index = 0;
+            var currentString = inputString;
+            while ((index = currentString.IndexOf(word)) != -1)
+            {
+                currentString = ReverseWordInString(currentString, word);
+            }
+            return currentString;
         }
 
         public static string ReverseWordInStringBetter(this string inputString, string word)

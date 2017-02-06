@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace RoslynTests
 {
@@ -9,7 +10,6 @@ namespace RoslynTests
         [TestMethod]
         public void DocumentTest()
         {
-
         }
     }
 }

@@ -6,29 +6,23 @@
         {
             if (n < 2)
                 return n;
-            return FibRecursive(n - 1) + FibRecursive(n - 2);
-        }
 
+            return FibRecursive(n - 2) + FibRecursive(n - 1);
+        }
 
         public static int FibIterative(int n)
         {
-            var nMinus2 = 0;
-            var nMinus1 = 0;
-            var currentValue = 0;
+            var fibI = 0;
+            var fibIMinusOne = 0;
+            var fibIMinusTwo = 0;
+
             for (var i = 0; i <= n; i++)
             {
-                if (i < 2)
-                {
-                    currentValue = i;
-                }
-                else
-                {
-                    currentValue = nMinus1 + nMinus2;
-                }
-                nMinus2 = nMinus1;
-                nMinus1 = currentValue;
+                fibI = i < 2 ? i : fibIMinusOne + fibIMinusTwo;
+                fibIMinusTwo = fibIMinusOne;
+                fibIMinusOne = fibI;
             }
-            return currentValue;
+            return fibI;
         }
     }
 }
