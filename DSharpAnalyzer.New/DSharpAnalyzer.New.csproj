@@ -144,9 +144,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NodeExtensions.cs" />
-    <Compile Include="ParameterChecks\ConstructorArgumentAnalyzer.cs" />
-    <Compile Include="ParameterChecks\ConstructorParameterFix.cs" />
-    <Compile Include="ParameterChecks\ConstructorParameterProvider.cs" />
     <Compile Include="ParameterChecks\Constructor\ConstructorAnalyzer.cs" />
     <Compile Include="ParameterChecks\Constructor\ConstructorFix.cs" />
     <Compile Include="ParameterChecks\Constructor\ConstructorProvider.cs" />

@@ -1,54 +1,40 @@
-﻿using System;
-using System.Linq;
+﻿using System.Text;
 
 namespace InterviewPrep.Core
 {
     public class FizzBuzzWoof
     {
-        private readonly string _data;
-        private readonly string[] _stringNumbers;
+        private readonly int _maxNumber;
+        private readonly StringBuilder _builder = new StringBuilder();
 
-        public FizzBuzzWoof(string data)
+        public FizzBuzzWoof(int maxNumber)
         {
-            _data = data;
-            _stringNumbers = _data.Split(new[] { ", " }, StringSplitOptions.None);
-
+            _maxNumber = maxNumber;
         }
 
         public string Play()
         {
-
-            var numbers = _stringNumbers.Select(n => Convert.ToInt32(n)).ToArray();
-            for (var i = 0; i < numbers.Length; i++)
+            for (var i = 1; i <= _maxNumber; i++)
             {
-                Fizz(numbers[i], i);
-                Buzz(numbers[i], i);
-                Woof(numbers[i], i);
+                var number = i;
+                var isFizz = number % 3 == 0;
+                var isBuzz = number % 5 == 0;
+                var isWoof = number % 7 == 0;
+
+                if (isFizz)
+                    _builder.Append($"Fizz({number}), ");
+
+                if (isBuzz)
+                    _builder.Append($"Buzz({number}), ");
+
+                if (isWoof)
+                    _builder.Append($"Woof({number}), ");
+
+                if (!isFizz && !isBuzz && !isWoof)
+                    _builder.Append($"{number}, ");
             }
-
-            var resultData = string.Join(", ", numbers);
-            return resultData;
-        }
-
-        private void Fizz(int number, int index)
-        {
-            var isFizz = number % 3 == 0;
-            if (isFizz)
-                _stringNumbers[index] = "Fizz";
-        }
-
-        private void Buzz(int number, int index)
-        {
-            var isFizz = number % 5 == 0;
-            if (isFizz)
-                _stringNumbers[index] = "Buzz";
-        }
-
-        private void Woof(int number, int index)
-        {
-            var isFizz = number % 7 == 0;
-            if (isFizz)
-                _stringNumbers[index] = "Woof";
+            _builder.Remove(_builder.Length - 2, 2);
+            return _builder.ToString();
         }
     }
 }

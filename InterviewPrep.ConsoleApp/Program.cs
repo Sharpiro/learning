@@ -1,15 +1,25 @@
-﻿using InterviewPrep.Core.Security;
+﻿using InterviewPrep.Core;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace InterviewPrep.ConsoleApp
 {
     public static class Program
     {
+        private static ElevatorSystem _elevatorSystem = new ElevatorSystem();
+        private static int _x;
+
         public static void Main()
         {
-            var saltedKey = AesFacade.GetSaltedKey("password", 16);
-            var isMatch = AesFacade.CheckSaltedKey("password", saltedKey, 16);
-            var isMatch2 = AesFacade.CheckSaltedKey("passwordXXX", saltedKey);
+            var floors = new List<int> { 5, 4, 9, 2, 7, 11, 22, 5 };
+            var task = _elevatorSystem.Run(floors);
+            //var task = _elevatorSystem.Run();
+            //while (true)
+            //{
+            //    var floor = Convert.ToInt32(Console.ReadLine());
+            //    _elevatorSystem.QueueFloor(floor);
+            //}
             Console.ReadLine();
         }
     }

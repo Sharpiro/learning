@@ -10,6 +10,12 @@ namespace RoslynTests
         [TestMethod]
         public void DocumentTest()
         {
+            TypeSyntax type = SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.StringKeyword));
+            var predefinedType = type as PredefinedTypeSyntax;
+
+            var isString1 = predefinedType?.Keyword.Kind() == SyntaxKind.StringKeyword;
+            //var typeKind = type.Kind();
+            //var x = type.Keyword.Kind();
         }
     }
 }
