@@ -6,109 +6,101 @@ namespace InterviewPrep.Core.Lists
 {
     public class ComplexLinkedList : IComplexLinkedList, IEnumerable<int>
     {
-        public int Count { get; set; }
-        public Node First { get { return head; } }
-        public Node Last { get { return head.previous; } }
-
         internal Node head;
 
-        public Node AddFirst(int data)
-        {
-            var newNode = new Node(data, this);
-            if (head == null)
-                PrivateAddEmpty(newNode);
-            else
-                PrivateAddBefore(head, newNode);
-            head = newNode;
-            return newNode;
-        }
+        public int Count { get; set; }
+        public Node First => head;
+        public Node Last => head.previous;
 
-        public Node AddLast(int data)
+        public Node AddAfter(Node node, int value)
         {
-            var newNode = new Node(data, this);
-            if (head == null)
-                PrivateAddEmpty(newNode);
-            else
-                PrivateAddBefore(head, newNode);
-            return newNode;
-        }
-
-        public Node AddAfter(Node node, int data)
-        {
-            var newNode = new Node(data, this);
+            var newNode = new Node(this) { Data = value };
             PrivateAddBefore(node.next, newNode);
             return newNode;
         }
 
-        public Node AddBefore(Node node, int data)
+        public Node AddBefore(Node node, int value)
         {
-            var newNode = new Node(data, this);
+            var newNode = new Node(this) { Data = value };
             PrivateAddBefore(node, newNode);
+
             if (node == head)
                 head = newNode;
             return newNode;
         }
 
-        public Node Find(int data)
+        public Node AddFirst(int value)
         {
-            //return PrivateFind(head, data);
-            return FindIterative(head, data);
+            var newNode = new Node(this) { Data = value };
+            if (head == null)
+                AddEmpty(newNode);
+            else
+                PrivateAddBefore(head, newNode);
+            head = newNode;
+
+            return newNode;
         }
 
-        private Node PrivateFind(Node current, int data)
+        public Node AddLast(int value)
         {
-            if (current == null)
-                return null;
-            if (current.Data == data)
-                return current;
-            return PrivateFind(current.Next, data);
+            var newNode = new Node(this) { Data = value };
+            if (head == null)
+                AddEmpty(newNode);
+            else
+                PrivateAddBefore(head, newNode);
+            return newNode;
         }
 
-        private Node FindIterative(Node current, int data)
+        public Node Find(int value)
         {
-            Validate(current);
-            Node node = null;
+            var current = head;
             do
             {
-                if (current.Data == data)
+                if (current.Data == value)
                     return current;
                 current = current.next;
             }
             while (current != head);
-            return node;
+
+            return null;
         }
 
         public int FindPos(Node findNode)
         {
-            return PrivateFindPos(head, findNode, 0);
+            var currentNode = head;
+            var index = 0;
+            do
+            {
+                if (currentNode == findNode)
+                    return index;
+
+                currentNode = currentNode.next;
+                index++;
+            }
+            while (currentNode != head);
+
+            return -1;
         }
 
-        public int PrivateFindPos(Node currentNode, Node findNode, int position)
+        public IEnumerator<int> GetEnumerator()
         {
-            if (currentNode == null)
-                return -1;
-            if (currentNode == findNode)
-                return position;
-            return PrivateFindPos(currentNode.Next, findNode, position + 1);
+            return new LinkedListEnumerator(this);
         }
 
-        private void PrivateAddEmpty(Node newNode)
+        public void Remove(Node node)
         {
-            Validate(newNode);
-            newNode.next = newNode;
-            newNode.previous = newNode;
-            head = newNode;
-            Count++;
-        }
+            node.previous.next = node.next;
+            node.next.previous = node.previous;
 
-        private void PrivateAddBefore(Node node, Node newNode)
-        {
-            Validate(newNode);
-            newNode.previous = node.previous;
-            newNode.next = node;
-            node.previous.next = newNode;
-            node.previous = newNode;
-            Count++;
+            if (node == head)
+                head = node.next;
+
+            node.next = null;
+            node.previous = null;
+            Count--;
+
+            if (Count == 0)
+                head = null;
         }
 
         public void RemoveFirst()
@@ -118,108 +110,75 @@ namespace InterviewPrep.Core.Lists
 
         public void RemoveLast()
         {
-            if (head == null)
-                throw new ArgumentNullException(nameof(head));
             Remove(head.previous);
         }
 
-        public void Remove(Node node)
+        private void PrivateAddBefore(Node node, Node newNode)
         {
-            Validate(node);
-            if (node == node.next)
-            {
-                head = null;
-            }
-            else
-            {
-                node.previous.next = node.next;
-                node.next.previous = node.previous;
-                if (node == head)
-                    head = head.next;
-            }
-            Invalidate(node);
-            Count--;
+            newNode.previous = node.previous;
+            newNode.next = node;
+
+            node.previous.next = newNode;
+            node.previous = newNode;
+            Count++;
         }
 
-        private void Validate(Node node)
+        private void AddEmpty(Node newNode)
         {
-            if (node == null) throw new ArgumentException("node cannot be null", nameof(node));
-        }
+            if (Count != 0) throw new InvalidOperationException("The list is not empty");
 
-        private void Invalidate(Node node)
-        {
-            node.next = null;
-            node.previous = null;
-        }
-
-        public IEnumerator<int> GetEnumerator()
-        {
-            return new CustomEnumerator(this);
+            newNode.next = newNode;
+            newNode.previous = newNode;
+            head = newNode;
+            Count++;
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return new CustomEnumerator(this);
+            throw new NotImplementedException();
         }
     }
 
     public class Node
     {
-        internal Node next;
-        internal Node previous;
-        private ComplexLinkedList _list;
+        private readonly ComplexLinkedList _list;
 
-        public Node(int data, ComplexLinkedList list)
+        internal Node previous;
+        internal Node next;
+
+        public Node(ComplexLinkedList list)
         {
-            Data = data;
             _list = list;
         }
 
+        public Node Previous => previous == null || this == _list.head ? null : previous;
+        public Node Next => next == null || next == _list.head ? null : next;
         public int Data { get; set; }
-        public Node Next
-        {
-            get { return next == null || next == _list.head ? null : next; }
-        }
-        public Node Previous
-        {
-            get { return previous == null || this == _list.head ? null : previous; }
-        }
     }
 
-    public class CustomEnumerator : IEnumerator<int>
+    public class LinkedListEnumerator : IEnumerator<int>
     {
-        private int _currentValue;
-        private Node _currentNode;
         private ComplexLinkedList _list;
+        private Node _currentNode;
 
-        public CustomEnumerator(ComplexLinkedList list)
+        public int Current { get; set; }
+
+        object IEnumerator.Current => throw new NotImplementedException();
+
+        public LinkedListEnumerator(ComplexLinkedList list)
         {
             _list = list;
             _currentNode = _list.head;
         }
 
-        public int Current
-        {
-            get
-            {
-                return _currentValue;
-            }
-        }
-
-        object IEnumerator.Current
-        {
-            get
-            {
-                return _currentValue;
-            }
-        }
-
+        //worth looking into a .next version?
         public bool MoveNext()
         {
             if (_currentNode == null)
                 return false;
-            _currentValue = _currentNode.Data;
-            _currentNode = _currentNode.next == _list.head ? null : _currentNode.next;
+
+            Current = _currentNode.Data;
+            _currentNode = _currentNode.Next;
             return true;
         }
 
