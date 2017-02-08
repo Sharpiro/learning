@@ -43,7 +43,7 @@ namespace InterviewPrep.CoreTests
         }
 
         [TestMethod]
-        public void GetMinTest()
+        public void FindMinTest()
         {
             for (var i = 0; i < 50; i++)
             {
@@ -57,7 +57,7 @@ namespace InterviewPrep.CoreTests
         }
 
         [TestMethod]
-        public void GetMaxTest()
+        public void FindMaxTest()
         {
             for (var i = 0; i < 50; i++)
             {
@@ -198,12 +198,13 @@ namespace InterviewPrep.CoreTests
             tree.Add(15);
             tree.Add(11);
             var current = tree.ConvertToLinkedList();
-            var second = current.Right;
+            var first = current.Left.Left;
+            var second = first.Right;
             var third = second.Right;
             var fourth = third.Right;
             var fifth = fourth.Right;
-            Assert.IsNull(current.Left);
-            Assert.AreEqual(3, current.Data);
+            Assert.IsNull(first.Left);
+            Assert.AreEqual(3, first.Data);
             Assert.AreEqual(3, second.Left.Data);
             Assert.AreEqual(6, second.Data);
             Assert.AreEqual(6, third.Left.Data);
@@ -224,13 +225,13 @@ namespace InterviewPrep.CoreTests
             tree.Add(6);
             tree.Add(15);
             tree.Add(11);
-            var current = tree.ConvertToOrderedLinkedList();
-            var second = current.Right;
+            var first = tree.ConvertToOrderedLinkedList();
+            var second = first.Right;
             var third = second.Right;
             var fourth = third.Right;
             var fifth = fourth.Right;
-            Assert.IsNull(current.Left);
-            Assert.AreEqual(3, current.Data);
+            Assert.IsNull(first.Left);
+            Assert.AreEqual(3, first.Data);
             Assert.AreEqual(3, second.Left.Data);
             Assert.AreEqual(6, second.Data);
             Assert.AreEqual(6, third.Left.Data);

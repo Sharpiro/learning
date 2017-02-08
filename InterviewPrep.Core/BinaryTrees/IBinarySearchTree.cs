@@ -8,6 +8,7 @@ namespace InterviewPrep.Core.BinaryTrees
 
         Node Add(int data);
         Node Add(Node current, int data);
+        Node ConvertToLinkedList();
         Node ConvertToOrderedLinkedList();
         Node ConvertToLinkedList(Node current);
         Node Delete(int data);
