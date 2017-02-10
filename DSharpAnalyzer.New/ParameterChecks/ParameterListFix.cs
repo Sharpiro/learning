@@ -77,7 +77,7 @@ namespace DSharpAnalyzer.New.ParameterChecks
             }
         }
 
-        protected async Task AddNullChecks()
+        protected async Task ModifyParameters(Action<ParameterSyntax, INamedTypeSymbol> parameterAction)
         {
             var parameterList = CompilationUnit.FindDescendantByAnnotation<ParameterListSyntax>(ParameterListAnnotation);
             for (var i = 0; i < parameterList.Parameters.Count; i++)
@@ -90,46 +90,7 @@ namespace DSharpAnalyzer.New.ParameterChecks
                 var parameterSymbol = semanticModel.GetSymbolInfo(parameter.Type).Symbol as INamedTypeSymbol;
                 if (parameterSymbol.IsValueType) continue;
 
-                if (parameterSymbol.Name == "String")
-                    AddStringNullCheck(parameter);
-                else if (!MiscExtensions.IsVS2017)
-                    AddReferenceNullCheck(parameter);
-            }
-        }
-
-        protected async Task AddFieldAssignments()
-        {
-            var parameterList = CompilationUnit.FindDescendantByAnnotation<ParameterListSyntax>(ParameterListAnnotation);
-            for (var i = 0; i < parameterList.Parameters.Count; i++)
-            {
-                Document = Document.WithSyntaxRoot(CompilationUnit);
-                CompilationUnit = (CompilationUnitSyntax)await Document.GetSyntaxRootAsync(Token);
-                parameterList = CompilationUnit.FindDescendantByAnnotation<ParameterListSyntax>(ParameterListAnnotation);
-                var parameter = parameterList.Parameters[i];
-                var semanticModel = await Document.GetSemanticModelAsync(Token);
-                var parameterSymbol = semanticModel.GetSymbolInfo(parameter.Type).Symbol as INamedTypeSymbol;
-                if (parameterSymbol.IsValueType) continue;
-                if (MiscExtensions.IsVS2017 && parameterSymbol.Name != "String") continue;
-
-                AddAssignmentStatement(parameter);
-            }
-        }
-
-        protected async Task AddBinaryThrowExpressions()
-        {
-            var parameterList = CompilationUnit.FindDescendantByAnnotation<ParameterListSyntax>(ParameterListAnnotation);
-            for (var i = 0; i < parameterList.Parameters.Count; i++)
-            {
-                Document = Document.WithSyntaxRoot(CompilationUnit);
-                CompilationUnit = (CompilationUnitSyntax)await Document.GetSyntaxRootAsync(Token);
-                parameterList = CompilationUnit.FindDescendantByAnnotation<ParameterListSyntax>(ParameterListAnnotation);
-                var parameter = parameterList.Parameters[i];
-                var semanticModel = await Document.GetSemanticModelAsync(Token);
-                var parameterSymbol = semanticModel.GetSymbolInfo(parameter.Type).Symbol as INamedTypeSymbol;
-                if (parameterSymbol.IsValueType) continue;
-                if (!MiscExtensions.IsVS2017 || parameterSymbol.Name == "String") continue;
-
-                AddBinaryThrowExpression(parameter);
+                parameterAction(parameter, parameterSymbol);
             }
         }
 
@@ -184,7 +145,7 @@ namespace DSharpAnalyzer.New.ParameterChecks
             }
         }
 
-        protected void AddAssignmentStatement(ParameterSyntax parameter)
+        protected void AddFieldAssignment(ParameterSyntax parameter)
         {
             var block = CompilationUnit.FindDescendantByAnnotation<BlockSyntax>(BlockAnnotation);
 

@@ -1,7 +1,9 @@
 ﻿using DSharpAnalyzer.New.ParameterChecks;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -43,11 +45,45 @@ namespace DSharpAnalyzer
         {
             AddSystemUsing();
             await AddField();
-            await AddBinaryThrowExpressions();
-            await AddNullChecks();
-            await AddFieldAssignments();
+            await ModifyParameters(ModifyParameters);
+            ReOrderStatements();
 
             return Document.WithSyntaxRoot(CompilationUnit);
+        }
+
+        private void ModifyParameters(ParameterSyntax parameterSyntax, INamedTypeSymbol parameterSymbol)
+        {
+            if (false/*MiscExtensions.IsVS2017*/)
+            {
+                if (parameterSymbol.Name == "String")
+                    AddStringNullCheck(parameterSyntax);
+                else
+                    AddBinaryThrowExpression(parameterSyntax);
+            }
+            else
+            {
+                if (parameterSymbol.Name == "String")
+                    AddStringNullCheck(parameterSyntax);
+                else
+                    AddReferenceNullCheck(parameterSyntax);
+                AddFieldAssignment(parameterSyntax);
+            }
+        }
+
+        private void ReOrderStatements()
+        {
+            var block = CompilationUnit.FindDescendantByAnnotation<BlockSyntax>(BlockAnnotation);
+            var statements = block.Statements.ToList();
+
+            var throwStatements = statements.OfType<IfStatementSyntax>()
+                .Where(ifSt => ifSt.DescendantNodes().Any(dn => dn.Kind() == SyntaxKind.ThrowStatement)).Cast<StatementSyntax>();
+            var assignmentStatements = statements.OfType<ExpressionStatementSyntax>().Cast<StatementSyntax>();
+
+            if (!throwStatements.Any() || !assignmentStatements.Any())
+                throw new ArgumentException("Error occurred when reordering statements");
+
+            var reorderedStatements = throwStatements.Concat(assignmentStatements);
+            CompilationUnit = CompilationUnit.ReplaceNode(block, block.WithStatements(SyntaxFactory.List(reorderedStatements)));
         }
     }
 }
