@@ -45,6 +45,7 @@ namespace InterviewPrep.Core
                     low = pivot + 1;
                 pivot = (low + high) / 2;
             }
+
             return -1;
         }
 
@@ -59,8 +60,10 @@ namespace InterviewPrep.Core
         public static int BinarySearchRecursive(IList<int> list, int value, int low, int high)
         {
             if (low > high) return -1;
+
             var pivot = (low + high) / 2;
-            if (value == list[pivot]) return list[pivot];
+            if (value == list[pivot])
+                return value;
             if (value < list[pivot])
                 return BinarySearchRecursive(list, value, low, pivot - 1);
             return BinarySearchRecursive(list, value, pivot + 1, high);

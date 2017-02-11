@@ -49,7 +49,22 @@ namespace InterviewPrep.Core
 
         public static bool HasDupesGroupBy(List<int> list)
         {
-            return list.GroupBy(i => i).Any(g => g.Count() > 1);
+            //return list.GroupBy(i => i).Any(g => g.Count() > 1);
+            return list.GroupBy(i => i).Count() != list.Count;
+        }
+
+        public static bool HasDuplesBad(List<int> list)
+        {
+            for (var i = 0; i < list.Count; i++)
+            {
+                for (var j = i + 1; j < list.Count; j++)
+                {
+                    if (list[i] == list[j])
+                        return true;
+                }
+            }
+
+            return false;
         }
 
         public static List<int> CreateLargeList(int listSize)

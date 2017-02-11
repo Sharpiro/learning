@@ -85,5 +85,22 @@ namespace InterviewPrep.Core
             }
             return newString.ToString();
         }
+
+        public static bool IsAnagram(this string x, string y)
+        {
+            if (x.Length != y.Length)
+                return false;
+
+            var sortedX = x.OrderBy(s => s).ToList();
+            var sortedY = y.OrderBy(s => s).ToList();
+
+            for (var i = 0; i < sortedX.Count(); i++)
+            {
+                if (sortedX[i] != sortedY[i])
+                    return false;
+            }
+
+            return true;
+        }
     }
 }

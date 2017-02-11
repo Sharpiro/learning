@@ -26,11 +26,13 @@ namespace InterviewPrep.CoreTests
             var HasDupesSort = Duplicates.HasDupesSortFirst(list);
             var HasDupesDistinct = Duplicates.HasDupesDistinct(list);
             var HasDupesGroup = Duplicates.HasDupesGroupBy(list);
+            var HasDupesBad = Duplicates.HasDupesGroupBy(list);
             Assert.IsTrue(HasDupesIndex);
             Assert.IsTrue(HasDupesHash);
             Assert.IsTrue(HasDupesSort);
             Assert.IsTrue(HasDupesDistinct);
             Assert.IsTrue(HasDupesGroup);
+            Assert.IsTrue(HasDupesBad);
         }
 
         [TestMethod]
@@ -74,6 +76,15 @@ namespace InterviewPrep.CoreTests
         {
             var hasDupes = Duplicates.HasDupesGroupBy(_simpleDupes);
             var noDupes = Duplicates.HasDupesGroupBy(_simpleNoDupes);
+            Assert.IsTrue(hasDupes);
+            Assert.IsFalse(noDupes);
+        }
+
+        [TestMethod]
+        public void HasDupesBadTest()
+        {
+            var hasDupes = Duplicates.HasDuplesBad(_simpleDupes);
+            var noDupes = Duplicates.HasDuplesBad(_simpleNoDupes);
             Assert.IsTrue(hasDupes);
             Assert.IsFalse(noDupes);
         }
