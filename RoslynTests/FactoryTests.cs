@@ -1,4 +1,7 @@
-﻿using Microsoft.CodeAnalysis.CSharp;
+﻿using DSharpAnalyzer;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
@@ -16,6 +19,26 @@ namespace RoslynTests
                 (InvocationExpression(IdentifierName("nameof")).WithArgumentList(ArgumentList(SingletonSeparatedList(
                 Argument(IdentifierName("param1")))))))))))));
             var expressionSource = statement.ToString();
+        }
+
+        [TestMethod]
+        public void SpaceTest()
+        {
+            var assignmentAnnotation = new SyntaxAnnotation();
+            var block = Block(ExpressionStatement(AssignmentExpression(SyntaxKind.SimpleAssignmentExpression,
+                IdentifierName("x"), IdentifierName("y")).WithAdditionalAnnotations(assignmentAnnotation)).NormalizeWhitespace());
+
+            var expression = block.FindDescendantByAnnotation<AssignmentExpressionSyntax>(assignmentAnnotation);
+            var newExpression = expression.WithLeadingTrivia(TriviaList(CarriageReturnLineFeed,
+                CarriageReturnLineFeed, Whitespace("    ")));
+            //.WithTrailingTrivia(TriviaList(CarriageReturnLineFeed));
+
+
+            var token = Identifier("Test");
+            //token.trivia
+
+            block = block.ReplaceNode(expression, newExpression);
+            var toString = block.ToString();
         }
     }
 }

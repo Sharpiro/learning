@@ -46,12 +46,12 @@ namespace DSharpAnalyzer
             }
         }
 
-        private void ModifyParameters(ParameterSyntax parameterSyntax, INamedTypeSymbol parameterSymbol)
+        private void ModifyParameters(ParameterSyntax parameterSyntax, INamedTypeSymbol parameterSymbol, int parameterIndex)
         {
             if (parameterSymbol.Name == "String")
-                AddStringNullCheck(parameterSyntax);
+                AddStringNullCheck(parameterSyntax, parameterIndex);
             else
-                AddReferenceNullCheck(parameterSyntax);
+                AddReferenceNullCheck(parameterSyntax, parameterIndex);
         }
     }
 }

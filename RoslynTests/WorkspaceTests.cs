@@ -33,9 +33,7 @@ namespace RoslynTests
 
         public Temp(object dependency)
         {
-            if (dependency == null) throw new ArgumentNullException(nameof(dependency));
-
-            _dependency = dependency;
+            _dependency = dependency ?? throw new ArgumentNullException(nameof(dependency));
         }
     }
 }

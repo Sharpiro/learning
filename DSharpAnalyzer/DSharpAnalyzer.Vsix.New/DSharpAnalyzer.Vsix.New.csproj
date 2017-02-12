@@ -83,9 +83,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\DSharpAnalyzer.New\DSharpAnalyzer.New.csproj">
-      <Project>{5df457e0-f685-4c86-9d96-2ce56b78beee}</Project>
-      <Name>DSharpAnalyzer.New</Name>
+    <ProjectReference Include="..\..\DSharpAnalyzer.New\DSharpAnalyzer.csproj">
+      <Project>{5DF457E0-F685-4C86-9D96-2CE56B78BEEE}</Project>
+      <Name>DSharpAnalyzer</Name>
       <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
       <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>

@@ -1,19 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="VSIXProject1.Microsoft.6b1945ad-fd63-48fc-80af-a687f89996f8" Version="1.0" Language="en-US" Publisher="Microsoft" />
-    <DisplayName>VSIXProject1</DisplayName>
-    <Description>Empty VSIX Project.</Description>
+    <Identity Id="Analyzer3..4231b205-2e7f-47d3-8bd0-021624d738f8" Version="1.0" Language="en-US" Publisher="sharpiro"/>
+    <DisplayName>Analyzer3</DisplayName>
+    <Description xml:space="preserve">This is a sample diagnostic extension for the .NET Compiler Platform ("Roslyn").</Description>
   </Metadata>
   <Installation>
-    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0]" />
+    <InstallationTarget Version="[14.0,]" Id="Microsoft.VisualStudio.Pro" />
   </Installation>
   <Dependencies>
     <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
   </Dependencies>
   <Assets>
-    <Asset d:Source="Project" Type="Microsoft.VisualStudio.MefComponent" d:ProjectName="DSharpAnalyzer.New" Path="|DSharpAnalyzer.New|" />
-    <Asset d:Source="Project" Type="Microsoft.VisualStudio.Analyzer" d:ProjectName="DSharpAnalyzer.New" Path="|DSharpAnalyzer.New|" />
+    <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" Path="|DSharpAnalyzer|" d:ProjectName="DSharpAnalyzer" />
+    <Asset Type="Microsoft.VisualStudio.Analyzer" d:Source="Project" Path="|DSharpAnalyzer|" d:ProjectName="DSharpAnalyzer" />
   </Assets>
   <Prerequisites>
     <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,16.0)" DisplayName="Visual Studio core editor" />

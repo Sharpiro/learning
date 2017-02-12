@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DSharpAnalyzer.New {
+namespace DSharpAnalyzer {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace DSharpAnalyzer.New {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DSharpAnalyzer.New.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DSharpAnalyzer.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,7 @@ namespace DSharpAnalyzer.New {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameters should have null checks..
+        ///   Looks up a localized string similar to Parameters should be checked for null references.
         /// </summary>
         internal static string DS01Description {
             get {
@@ -70,7 +70,7 @@ namespace DSharpAnalyzer.New {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;{0}&apos; needs to be checked for nulls.
+        ///   Looks up a localized string similar to &apos;{0}&apos;s&apos; parameters needs to be checked for nulls.
         /// </summary>
         internal static string DS01MessageFormat {
             get {
@@ -79,7 +79,7 @@ namespace DSharpAnalyzer.New {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Initialize and add null checks.
+        ///   Looks up a localized string similar to Constructor Null Checks.
         /// </summary>
         internal static string DS01Title {
             get {
@@ -88,7 +88,7 @@ namespace DSharpAnalyzer.New {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check.
+        ///   Looks up a localized string similar to Parameters should be checked for null references.
         /// </summary>
         internal static string DS02Description {
             get {
@@ -97,7 +97,7 @@ namespace DSharpAnalyzer.New {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check.
+        ///   Looks up a localized string similar to &apos;{0}&apos;s&apos; parameters needs to be checked for nulls.
         /// </summary>
         internal static string DS02MessageFormat {
             get {
@@ -106,7 +106,7 @@ namespace DSharpAnalyzer.New {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check.
+        ///   Looks up a localized string similar to Method Null Checks.
         /// </summary>
         internal static string DS02Title {
             get {

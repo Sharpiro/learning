@@ -73,7 +73,9 @@ namespace Parallels.Tests
 
     public static class ThreadGetter
     {
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public static async Task<int> GetThreadIdInstant() => Thread.CurrentThread.ManagedThreadId;
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 
         public static async Task<int> GetThreadIdDelayed()
         {

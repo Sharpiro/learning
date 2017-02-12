@@ -118,27 +118,21 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DS01Description" xml:space="preserve">
-    <value>Parameters should have null checks.</value>
-    <comment>An optional longer localizable description of the diagnostic.</comment>
+    <value>Parameters should be checked for null references</value>
   </data>
   <data name="DS01MessageFormat" xml:space="preserve">
-    <value>'{0}' needs to be checked for nulls</value>
-    <comment>The format-able message the diagnostic displays.</comment>
+    <value>'{0}'s' parameters needs to be checked for nulls</value>
   </data>
   <data name="DS01Title" xml:space="preserve">
-    <value>Initialize and add null checks</value>
-    <comment>The title of the diagnostic.</comment>
+    <value>Constructor Null Checks</value>
   </data>
   <data name="DS02Description" xml:space="preserve">
-    <value>Check</value>
-    <comment>Check</comment>
+    <value>Parameters should be checked for null references</value>
   </data>
   <data name="DS02MessageFormat" xml:space="preserve">
-    <value>Check</value>
-    <comment>Check</comment>
+    <value>'{0}'s' parameters needs to be checked for nulls</value>
   </data>
   <data name="DS02Title" xml:space="preserve">
-    <value>Check</value>
-    <comment>Check</comment>
+    <value>Method Null Checks</value>
   </data>
 </root>

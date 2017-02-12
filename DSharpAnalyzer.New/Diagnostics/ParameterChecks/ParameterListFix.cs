@@ -77,7 +77,7 @@ namespace DSharpAnalyzer.New.ParameterChecks
             }
         }
 
-        protected async Task ModifyParameters(Action<ParameterSyntax, INamedTypeSymbol> parameterAction)
+        protected async Task ModifyParameters(Action<ParameterSyntax, INamedTypeSymbol, int> parameterAction)
         {
             var parameterList = CompilationUnit.FindDescendantByAnnotation<ParameterListSyntax>(ParameterListAnnotation);
             for (var i = 0; i < parameterList.Parameters.Count; i++)
@@ -90,16 +90,16 @@ namespace DSharpAnalyzer.New.ParameterChecks
                 var parameterSymbol = semanticModel.GetSymbolInfo(parameter.Type).Symbol as INamedTypeSymbol;
                 if (parameterSymbol.IsValueType) continue;
 
-                parameterAction(parameter, parameterSymbol);
+                parameterAction(parameter, parameterSymbol, i);
             }
         }
 
-        protected void AddBinaryThrowExpression(ParameterSyntax parameter)
+        protected void AddBinaryThrowExpression(ParameterSyntax parameter, int index)
         {
             if (ThrowExistsForParameter(parameter)) return;
             var binaryThrowStatement = getBinaryThrowStatement();
             var block = CompilationUnit.FindDescendantByAnnotation<BlockSyntax>(BlockAnnotation);
-            var blockStatements = block.Statements.ToImmutableList().Add(binaryThrowStatement);
+            var blockStatements = block.Statements.ToImmutableList().Insert(index, binaryThrowStatement);
             CompilationUnit = CompilationUnit.ReplaceNode(block, block.WithStatements(List(blockStatements)));
 
             ExpressionStatementSyntax getBinaryThrowStatement()
@@ -112,13 +112,13 @@ namespace DSharpAnalyzer.New.ParameterChecks
             }
         }
 
-        protected void AddStringNullCheck(ParameterSyntax parameter)
+        protected void AddStringNullCheck(ParameterSyntax parameter, int index)
         {
             if (ThrowExistsForParameter(parameter)) return;
             var expression = createStringInvocationExpression();
             var ifThrowStatement = GetIfThrowStatement(expression, parameter);
             var block = CompilationUnit.FindDescendantByAnnotation<BlockSyntax>(BlockAnnotation);
-            var blockStatements = block.Statements.ToImmutableList().Add(ifThrowStatement);
+            var blockStatements = block.Statements.ToImmutableList().Insert(index, ifThrowStatement);
             CompilationUnit = CompilationUnit.ReplaceNode(block, block.WithStatements(List(blockStatements)));
 
             InvocationExpressionSyntax createStringInvocationExpression()
@@ -129,13 +129,13 @@ namespace DSharpAnalyzer.New.ParameterChecks
             }
         }
 
-        protected void AddReferenceNullCheck(ParameterSyntax parameter)
+        protected void AddReferenceNullCheck(ParameterSyntax parameter, int index)
         {
             if (ThrowExistsForParameter(parameter)) return;
             var expression = createNullCheckExpression();
             var ifThrowStatement = GetIfThrowStatement(expression, parameter);
             var block = CompilationUnit.FindDescendantByAnnotation<BlockSyntax>(BlockAnnotation);
-            var blockStatements = block.Statements.ToImmutableList().Add(ifThrowStatement);
+            var blockStatements = block.Statements.ToImmutableList().Insert(index, ifThrowStatement);
             CompilationUnit = CompilationUnit.ReplaceNode(block, block.WithStatements(List(blockStatements)));
 
             BinaryExpressionSyntax createNullCheckExpression()
@@ -159,6 +159,7 @@ namespace DSharpAnalyzer.New.ParameterChecks
             var equalStatement = ExpressionStatement(AssignmentExpression(SyntaxKind.SimpleAssignmentExpression, IdentifierName(fieldName), IdentifierName(parameter.Identifier)))
                 .WithLeadingTrivia(CarriageReturnLineFeed);
 
+            var parameterCount = CompilationUnit.FindDescendantByAnnotation<ParameterListSyntax>(ParameterListAnnotation).Parameters.Count;
             var blockStatements = block.Statements.ToImmutableList().Add(equalStatement);
             CompilationUnit = CompilationUnit.ReplaceNode(block, block.WithStatements(List(blockStatements)));
         }

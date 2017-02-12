@@ -8,7 +8,6 @@ namespace InterviewPrep.ConsoleApp
     public static class Program
     {
         private static ElevatorSystem _elevatorSystem = new ElevatorSystem();
-        private static int _x;
 
         public static void Main()
         {

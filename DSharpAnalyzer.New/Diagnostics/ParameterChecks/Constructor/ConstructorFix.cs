@@ -2,10 +2,12 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Immutable;
 
 namespace DSharpAnalyzer
 {
@@ -45,27 +47,30 @@ namespace DSharpAnalyzer
         {
             AddSystemUsing();
             await AddField();
-            await ModifyParameters(ModifyParameters);
+            await ModifyParameters(ModifyParameter);
             ReOrderStatements();
 
             return Document.WithSyntaxRoot(CompilationUnit);
         }
 
-        private void ModifyParameters(ParameterSyntax parameterSyntax, INamedTypeSymbol parameterSymbol)
+        private void ModifyParameter(ParameterSyntax parameterSyntax, INamedTypeSymbol parameterSymbol, int parameterIndex)
         {
-            if (false/*MiscExtensions.IsVS2017*/)
+            if (MiscExtensions.IsVS2017)
             {
                 if (parameterSymbol.Name == "String")
-                    AddStringNullCheck(parameterSyntax);
+                {
+                    AddStringNullCheck(parameterSyntax, parameterIndex);
+                    AddFieldAssignment(parameterSyntax);
+                }
                 else
-                    AddBinaryThrowExpression(parameterSyntax);
+                    AddBinaryThrowExpression(parameterSyntax, parameterIndex);
             }
             else
             {
                 if (parameterSymbol.Name == "String")
-                    AddStringNullCheck(parameterSyntax);
+                    AddStringNullCheck(parameterSyntax, parameterIndex);
                 else
-                    AddReferenceNullCheck(parameterSyntax);
+                    AddReferenceNullCheck(parameterSyntax, parameterIndex);
                 AddFieldAssignment(parameterSyntax);
             }
         }
@@ -77,13 +82,18 @@ namespace DSharpAnalyzer
 
             var throwStatements = statements.OfType<IfStatementSyntax>()
                 .Where(ifSt => ifSt.DescendantNodes().Any(dn => dn.Kind() == SyntaxKind.ThrowStatement)).Cast<StatementSyntax>();
-            var assignmentStatements = statements.OfType<ExpressionStatementSyntax>().Cast<StatementSyntax>();
+            var fieldAssignments = statements.OfType<ExpressionStatementSyntax>().Where(exp => exp.DescendantNodes()
+            .Any(dn => dn.Kind() == SyntaxKind.SimpleAssignmentExpression)).Cast<StatementSyntax>();
 
-            if (!throwStatements.Any() || !assignmentStatements.Any())
-                throw new ArgumentException("Error occurred when reordering statements");
+            var otherStatements = statements.Where(s => !throwStatements.Contains(s) && !fieldAssignments.Contains(s)).ToImmutableList();
+            var firstOtherStatement = otherStatements.FirstOrDefault();
+            if (firstOtherStatement != null)
+                otherStatements = otherStatements.Replace(firstOtherStatement, firstOtherStatement.WithLeadingTrivia(TriviaList(CarriageReturnLineFeed, CarriageReturnLineFeed)));
 
-            var reorderedStatements = throwStatements.Concat(assignmentStatements);
-            CompilationUnit = CompilationUnit.ReplaceNode(block, block.WithStatements(SyntaxFactory.List(reorderedStatements)));
+            var reorderedStatements = throwStatements.Concat(fieldAssignments).Concat(otherStatements);
+
+            CompilationUnit = CompilationUnit.ReplaceNode(block, block.WithStatements(List(reorderedStatements)));
+            var cString = CompilationUnit.NormalizeWhitespace().ToString();
         }
     }
 }

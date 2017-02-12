@@ -181,6 +181,10 @@
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DSharpAnalyzer.New\DSharpAnalyzer.csproj">
+      <Project>{5df457e0-f685-4c86-9d96-2ce56b78beee}</Project>
+      <Name>DSharpAnalyzer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RoslynCore\RoslynCore.csproj">
       <Project>{73b7dcab-a6b6-4232-93a1-7b7dad0ff980}</Project>
       <Name>RoslynCore</Name>

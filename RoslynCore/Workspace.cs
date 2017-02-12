@@ -68,8 +68,7 @@ namespace RoslynCore
             var color = ConsoleColor.Gray;
             foreach (var character in text)
             {
-                ClassifiedSpan span;
-                if (spanDictionary.TryGetValue(i, out span))
+                if (spanDictionary.TryGetValue(i, out ClassifiedSpan span))
                 {
                     switch (span.ClassificationType)
                     {
