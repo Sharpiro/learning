@@ -36,8 +36,8 @@
     <ProjectGuid>{C9679F50-3F33-4B3A-850A-8118F36808A1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Analyzer3.Vsix</RootNamespace>
-    <AssemblyName>Analyzer3.Vsix</AssemblyName>
+    <RootNamespace>DSharpAnalyzer</RootNamespace>
+    <AssemblyName>DSharpAnalyzer</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <GeneratePkgDefFile>false</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>
