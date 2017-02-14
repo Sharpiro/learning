@@ -168,6 +168,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dummy.cs" />
+    <Compile Include="LinqExtensions.cs" />
+    <Compile Include="NodeExtensions.cs" />
     <Compile Include="ImmutableTree.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Workspace.cs" />
