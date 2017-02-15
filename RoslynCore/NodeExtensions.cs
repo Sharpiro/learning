@@ -33,11 +33,14 @@ namespace RoslynCore
             return (T)newParentNode;
         }
 
-        internal static T WithParent<T>(this T node, Node parent) where T : Node
+        public static T WithAnnotation<T>(this T node, Annotation annotation) where T : Node
         {
-            node.Parent = parent ?? throw new ArgumentNullException(nameof(parent));
-            return node;
+            var newNode = node.CloneInternal<T>();
+            newNode.Annotation = annotation ?? throw new ArgumentNullException(nameof(annotation));
+            return newNode;
         }
+
+        public static T Clone<T>(this T node) where T : Node => node.CloneInternal<T>();
 
         internal static T BaseClone<T>(this T node) where T : Node
         {
@@ -47,6 +50,10 @@ namespace RoslynCore
             return newNode;
         }
 
-        internal static T Clone<T>(this T node) where T : Node => node.CloneInternal<T>();
+        internal static T WithParent<T>(this T node, Node parent) where T : Node
+        {
+            node.Parent = parent ?? throw new ArgumentNullException(nameof(parent));
+            return node;
+        }
     }
 }

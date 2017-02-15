@@ -14,13 +14,6 @@ namespace RoslynCore
 
         internal Node() { }
 
-        public T WithAnnotation<T>(Annotation annotation) where T : Node
-        {
-            var newNode = CloneInternal<T>();
-            newNode.Annotation = annotation ?? throw new ArgumentNullException(nameof(annotation));
-            return newNode;
-        }
-
         public Node GetRootNode()
         {
             Node getRootNode(Node node)
@@ -34,9 +27,9 @@ namespace RoslynCore
             return getRootNode(this);
         }
 
-        public T FindDescendantByAnnotation<T>(Annotation annotation) where T : Node
+        public Node FindDescendantByAnnotation(Annotation annotation)
         {
-            return (T)GetDescendantNodes().SingleOrDefault(n => n.Annotation == annotation);
+            return GetDescendantNodes().SingleOrDefault(n => n.Annotation == annotation);
         }
 
         public IEnumerable<Node> GetDescendantNodes()
@@ -72,7 +65,7 @@ namespace RoslynCore
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
 
-            var newNode = CloneInternal<ChildOne>();
+            var newNode = this.Clone();
             type = type.Clone().WithParent(newNode);
             newNode.Type = type;
             return newNode;
@@ -129,13 +122,15 @@ namespace RoslynCore
             var newClass = new ChildOne();
             return newClass;
         }
+
+        public static Annotation Annotation(string text = null) => new Annotation(text);
     }
 
     public class Annotation : IEquatable<Annotation>
     {
         public string Text { get; }
 
-        public Annotation(string text = null) => Text = text;
+        internal Annotation(string text = null) => Text = text;
 
         public bool Equals(Annotation other) => this == other;
     }

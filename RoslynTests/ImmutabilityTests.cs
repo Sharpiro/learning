@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 using Microsoft.CodeAnalysis;
 using System.Collections.Generic;
+using static RoslynCore.NodeFactory;
 
 namespace RoslynTests
 {
@@ -15,10 +16,10 @@ namespace RoslynTests
         [TestMethod]
         public void ReplaceNodeTest()
         {
-            var parent = NodeFactory.ParentOne(NodeFactory.ChildOne());
-            parent = parent.WithAnnotation<ParentOne>(new Annotation("parent"));
+            var parent = ParentOne(ChildOne());
+            parent = parent.WithAnnotation(Annotation("parent"));
             var oldNodes = parent.GetDescendantNodesAndSelf().ToList();
-            var child = parent.Identifier.WithAnnotation<ChildOne>(new Annotation("child"));
+            var child = parent.Identifier.WithAnnotation(Annotation("child"));
 
             parent = parent.ReplaceNode(parent.Identifier, child);
             var newNodes = parent.GetDescendantNodesAndSelf().ToList();
@@ -30,7 +31,7 @@ namespace RoslynTests
         [TestMethod]
         public void GetRootTest()
         {
-            var parent = NodeFactory.ParentOne(NodeFactory.ChildOne().Cast<ChildOne>().WithType(NodeFactory.ChildOne()));
+            var parent = ParentOne(ChildOne().Cast<ChildOne>().WithType(ChildOne()));
             var node = parent.Identifier.Cast<ChildOne>().Type;
 
             var root = node.GetRootNode();
@@ -41,7 +42,7 @@ namespace RoslynTests
         [TestMethod]
         public void DescendantNodesTest()
         {
-            var parent = NodeFactory.ParentOne(NodeFactory.ChildOne().Cast<ChildOne>().WithType(NodeFactory.ChildOne()));
+            var parent = ParentOne(ChildOne().Cast<ChildOne>().WithType(ChildOne()));
 
             var children = parent.GetDescendantNodes().ToList();
             var allNodes = parent.GetDescendantNodesAndSelf().ToList();
@@ -53,22 +54,57 @@ namespace RoslynTests
         [TestMethod]
         public void FindAnnotationTest()
         {
-            var childAnntoation = new Annotation("child");
-            var subChildAnntoation = new Annotation("subChild");
-            var parent = NodeFactory.ParentOne(NodeFactory.ChildOne());
-            parent = parent.WithAnnotation<ParentOne>(new Annotation("parent"));
+            var childAnntoation = Annotation("child");
+            var subChildAnntoation = Annotation("subChild");
+            var parent = ParentOne(ChildOne());
+            parent = parent.WithAnnotation(Annotation("parent"));
             var oldNodes = parent.GetDescendantNodesAndSelf().ToList();
-            var child = parent.Identifier.WithAnnotation<ChildOne>(childAnntoation).WithType(NodeFactory.ChildOne().WithAnnotation<ChildOne>(subChildAnntoation));
+            var child = parent.Identifier.WithAnnotation(childAnntoation).Cast<ChildOne>().WithType(ChildOne().WithAnnotation(subChildAnntoation));
             parent = parent.ReplaceNode(parent.Identifier, child);
             var newNodes = parent.GetDescendantNodesAndSelf().ToList();
 
-            var findChild = parent.FindDescendantByAnnotation<ChildOne>(childAnntoation);
-            var findSubChild = parent.FindDescendantByAnnotation<ChildOne>(subChildAnntoation);
+            var findChild = parent.FindDescendantByAnnotation(childAnntoation);
+            var findSubChild = parent.FindDescendantByAnnotation(subChildAnntoation);
 
             Assert.IsNotNull(findChild?.Annotation?.Text);
             Assert.IsNotNull(findSubChild?.Annotation?.Text);
             Assert.AreEqual(childAnntoation.Text, findChild.Annotation.Text);
             Assert.IsNotNull(subChildAnntoation.Text, findSubChild.Annotation.Text);
+        }
+
+        [TestMethod]
+        public void IndexOfTest()
+        {
+            var list = new List<int> { 1, 3, 5, 7, 3 }.AsEnumerable();
+            var indexOne = list.IndexOf(1);
+            var indexTwo = list.IndexOf(3);
+            var indexThree = list.IndexOf(9);
+
+            Assert.AreEqual(0, indexOne);
+            Assert.AreEqual(1, indexTwo);
+            Assert.AreEqual(-1, indexThree);
+        }
+
+        [TestMethod]
+        public void CloneTest()
+        {
+            var parentAnnotation = Annotation("parent");
+            var childAnnotation = Annotation("child");
+            var parent = ParentOne(ChildOne().WithAnnotation(childAnnotation)).WithAnnotation(parentAnnotation);
+
+            var clone = parent.Clone();
+
+            Assert.IsNotNull(clone?.Annotation);
+            Assert.IsNotNull(clone.Identifier?.Annotation);
+            Assert.AreEqual(parentAnnotation, clone.Annotation);
+            Assert.AreEqual(childAnnotation, clone.Identifier.Annotation);
+            Assert.AreEqual(parentAnnotation.Text, clone.Annotation.Text);
+            Assert.AreEqual(childAnnotation.Text, clone.Identifier.Annotation.Text);
+            Assert.AreEqual(parent, parent.Identifier.Parent);
+            Assert.AreEqual(clone, clone.Identifier.Parent);
+            Assert.AreNotEqual(parent, clone);
+            Assert.AreNotEqual(parent.Identifier, clone.Identifier);
+            Assert.AreNotEqual(parent.Identifier.Parent, clone);
         }
     }
 }
