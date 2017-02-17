@@ -9,7 +9,7 @@ namespace RoslynTests
         [TestMethod]
         public void DebugTest()
         {
-            const string source = "Console.WriteLine(\"Hello, World!\");";
+            const string source = "System.Console.WriteLine(\"Hello, World!\");";
             var debugger = new ScriptDebugger(source);
             debugger.Create();
         }
