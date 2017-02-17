@@ -166,6 +166,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="DebuggerTests.cs" />
     <Compile Include="ImmutabilityTests.cs" />
     <Compile Include="FactoryTests.cs" />
     <Compile Include="SemanticsTests.cs" />

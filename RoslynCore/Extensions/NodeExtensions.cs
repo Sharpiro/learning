@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Immutable;
 using System.Linq;
 
 namespace RoslynCore
@@ -35,20 +36,13 @@ namespace RoslynCore
 
         public static T WithAnnotation<T>(this T node, Annotation annotation) where T : Node
         {
-            var newNode = node.CloneInternal<T>();
+            var newNode = node.Clone<T>();
             newNode.Annotation = annotation ?? throw new ArgumentNullException(nameof(annotation));
             return newNode;
         }
 
-        public static T Clone<T>(this T node) where T : Node => node.CloneInternal<T>();
-
-        internal static T BaseClone<T>(this T node) where T : Node
-        {
-            var currentType = typeof(T);
-            var newNode = (T)Activator.CreateInstance(currentType, true);
-            newNode.Annotation = node.Annotation;
-            return newNode;
-        }
+        public static ImmutableList<Node> NodeList(params Node[] parameters) => parameters.Where(p => p != null).ToImmutableList();
+        public static T Clone<T>(this T node) where T : Node => node.Clone<T>();
 
         internal static T WithParent<T>(this T node, Node parent) where T : Node
         {

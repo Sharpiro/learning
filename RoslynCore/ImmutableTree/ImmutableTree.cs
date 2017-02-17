@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using static System.Linq.LinqExtensions;
+using static RoslynCore.NodeExtensions;
 
 namespace RoslynCore
 {
@@ -18,10 +19,8 @@ namespace RoslynCore
         {
             Node getRootNode(Node node)
             {
-                if (node == null)
-                    return null;
-                if (node.Parent == null)
-                    return node;
+                if (node == null) return null;
+                if (node.Parent == null) return node;
                 return getRootNode(node.Parent);
             }
             return getRootNode(this);
@@ -29,7 +28,9 @@ namespace RoslynCore
 
         public Node FindDescendantByAnnotation(Annotation annotation)
         {
-            return GetDescendantNodes().SingleOrDefault(n => n.Annotation == annotation);
+            if (annotation == null) throw new ArgumentNullException(nameof(annotation));
+
+            return GetDescendantNodes().SingleOrDefault(n => n.Annotation.Equals(annotation));
         }
 
         public IEnumerable<Node> GetDescendantNodes()
@@ -39,25 +40,28 @@ namespace RoslynCore
                 if (child == null) continue;
                 yield return child;
                 foreach (var subchild in child.GetDescendantNodes())
-                {
                     yield return subchild;
-                }
             }
         }
 
-        public IEnumerable<Node> GetDescendantNodesAndSelf() => SingleList.Select(i => this).Concat(GetDescendantNodes());
-
-        public bool Equals(Node other) => this == other;
+        public IEnumerable<Node> GetDescendantNodesAndSelf() => SingleList(this).Concat(GetDescendantNodes());
 
         public T Cast<T>() where T : Node => (T)this;
+        public bool Equals(Node other) => this == other;
 
-        internal abstract T CloneInternal<T>() where T : Node;
+        internal virtual T Clone<T>() where T : Node
+        {
+            var currentType = typeof(T);
+            var newNode = (T)Activator.CreateInstance(currentType, true);
+            newNode.Annotation = Annotation;
+            return newNode;
+        }
     }
 
     public class ChildOne : Node
     {
         public Node Type { get; private set; }
-        public override ImmutableList<Node> Children => NotNullList(Type);
+        public override ImmutableList<Node> Children => NodeList(Type);
 
         internal ChildOne() { }
 
@@ -71,9 +75,9 @@ namespace RoslynCore
             return newNode;
         }
 
-        internal override T CloneInternal<T>()
+        internal override T Clone<T>()
         {
-            var newClass = this.BaseClone();
+            var newClass = base.Clone<ChildOne>();
             newClass.Type = Type?.Clone().WithParent(newClass);
             return newClass.Cast<T>();
         }
@@ -81,12 +85,12 @@ namespace RoslynCore
 
     public class ParentOne : Node
     {
-        public Node Identifier { get; private set; }
-        public override ImmutableList<Node> Children => NotNullList(Identifier);
+        public ChildOne Identifier { get; private set; }
+        public override ImmutableList<Node> Children => NodeList(Identifier);
 
         internal ParentOne() { }
 
-        public ParentOne WithIdentifier(Node identifier)
+        public ParentOne WithIdentifier(ChildOne identifier)
         {
             if (identifier == null) throw new ArgumentNullException(nameof(identifier));
 
@@ -96,9 +100,9 @@ namespace RoslynCore
             return newNode;
         }
 
-        internal override T CloneInternal<T>()
+        internal override T Clone<T>()
         {
-            var newClass = this.BaseClone();
+            var newClass = base.Clone<ParentOne>();
             newClass.Identifier = Identifier?.Clone().WithParent(newClass);
             return newClass.Cast<T>();
         }
@@ -106,32 +110,35 @@ namespace RoslynCore
 
     public static class NodeFactory
     {
-        public static ParentOne ParentOne(Node identifier = null)
+        public static Annotation Annotation(string text = null) => new Annotation(text);
+
+        public static ParentOne ParentOne(ChildOne identifier = null)
         {
-            var newClass = new ParentOne();
+            var newNode = new ParentOne();
             if (identifier != null)
             {
-                identifier = identifier.Clone().WithParent(newClass);
-                newClass = newClass.WithIdentifier(identifier);
+                identifier = identifier.Clone().WithParent(newNode);
+                newNode = newNode.WithIdentifier(identifier);
             }
-            return newClass;
+            return newNode;
         }
 
-        public static ChildOne ChildOne()
+        public static ChildOne ChildOne(Node type = null)
         {
-            var newClass = new ChildOne();
-            return newClass;
+            var newNode = new ChildOne();
+            if (type != null)
+            {
+                type = type.WithParent(newNode);
+                newNode = newNode.WithType(type);
+            }
+            return newNode;
         }
-
-        public static Annotation Annotation(string text = null) => new Annotation(text);
     }
 
     public class Annotation : IEquatable<Annotation>
     {
         public string Text { get; }
-
         internal Annotation(string text = null) => Text = text;
-
         public bool Equals(Annotation other) => this == other;
     }
 }
