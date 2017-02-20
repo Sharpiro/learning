@@ -143,6 +143,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Diagnostics\Scripts\ScriptAnalyzer.cs" />
     <Compile Include="NodeExtensions.cs" />
     <Compile Include="Diagnostics\ParameterChecks\Constructor\ConstructorAnalyzer.cs" />
     <Compile Include="Diagnostics\ParameterChecks\Constructor\ConstructorFix.cs" />

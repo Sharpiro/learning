@@ -113,5 +113,32 @@ namespace DSharpAnalyzer {
                 return ResourceManager.GetString("DS02Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to X.
+        /// </summary>
+        internal static string DS03Description {
+            get {
+                return ResourceManager.GetString("DS03Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to X.
+        /// </summary>
+        internal static string DS03MessageFormat {
+            get {
+                return ResourceManager.GetString("DS03MessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to X.
+        /// </summary>
+        internal static string DS03Title {
+            get {
+                return ResourceManager.GetString("DS03Title", resourceCulture);
+            }
+        }
     }
 }
