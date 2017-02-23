@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "NetStandard.Library": "1.6.0"
+  },
+
+  "frameworks": {
+    "netcoreapp1.0": {
+    }
+  },
+  "tools": {
+    "Dotnet.Script": {
+      "version": "0.9.0-beta",
+      "imports": [
+        "portable-net45+win8",
+        "dnxcore50"
+      ]
+    }
+  }
+}
