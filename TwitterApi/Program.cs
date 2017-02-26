@@ -12,7 +12,7 @@ namespace TwitterApi
             const string bearerTokenSecret = "rlpq483Qk4R9sXJ9IpOti0PdMuPKsFjqna9cRSwk6B9RY";
             var authItems = new AuthItems(consumerKey, consumerSecret, bearerToken, bearerTokenSecret);
             var apiHelper = TwitterApiService.CreateSingleUserService(authItems);
-            var data = apiHelper.GetTimeLine();
+            var data = apiHelper.GetTimeLine().Result;
         }
     }
 }

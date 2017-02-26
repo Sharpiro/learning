@@ -18,7 +18,7 @@ namespace TwitterApi.Core
         public AuthItem BearerToken { get; set; }
         public AuthItem BearerTokenSecret { get; }
 
-        public AuthItems(string consumerKey, string consumerSecret, string bearerToken, string bearerTokenSecret)
+        public AuthItems(string consumerKey, string consumerSecret, string bearerToken = null, string bearerTokenSecret = null)
         {
             if (string.IsNullOrEmpty(consumerKey)) throw new ArgumentNullException(nameof(consumerKey));
             if (string.IsNullOrEmpty(consumerSecret)) throw new ArgumentNullException(nameof(consumerSecret));
@@ -77,15 +77,14 @@ namespace TwitterApi.Core
             if (method == null) throw new ArgumentNullException(nameof(method));
             if (string.IsNullOrEmpty(url)) throw new ArgumentNullException(nameof(url));
 
-            var oAuthRequest = GetOAuthRequest();
-            var oAuthSecretKey = GetOAuthSecretKey();
+            var oAuthRequest = getOAuthRequest();
+            var oAuthSecretKey = getOAuthSecretKey();
             return UrlEncode(Convert.ToBase64String(new HMACSHA1Generator().ComputeHash(oAuthRequest, oAuthSecretKey, Encoding.UTF8)));
 
-            string GetOAuthRequest()
+            string getOAuthRequest()
             {
                 var urlParametersFormatted = new StringBuilder();
-                var signatureItems = oauthHeaders.ToList();
-                foreach (var param in signatureItems)
+                foreach (var param in oauthHeaders)
                 {
                     if (urlParametersFormatted.Length > 0)
                     {
@@ -97,7 +96,7 @@ namespace TwitterApi.Core
                 return $"{method}&{UrlEncode(url)}&{UrlEncode(urlParametersFormatted.ToString())}";
             }
 
-            string GetOAuthSecretKey()
+            string getOAuthSecretKey()
             {
                 string oAuthSecretkey = "";
                 var oAuthSecretKeyHeaders = this.Where(i => i.IsRequiredForSecretKey).ToImmutableList();

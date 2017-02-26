@@ -24,9 +24,9 @@ namespace TwitterApi.Core
         {
             var url = $"{_baseUrl}{endpoint}";
             var requestMessage = new HttpRequestMessage(method, url);
-
             var oAuthHeaderString = _authItems.GetOAuthHeadersString(method, url);
             requestMessage.Headers.Add("Authorization", $"OAuth {oAuthHeaderString}");
+            requestMessage.Headers.Add("Accept-Encoding", "gzip");
             return requestMessage;
         }
     }
@@ -44,10 +44,9 @@ namespace TwitterApi.Core
         {
             _authItems.BearerToken = _authItems.BearerToken == null ? new AuthItem(GetBearerToken()) : _authItems.BearerToken;
             var requestMessage = new HttpRequestMessage(method, url);
-
             requestMessage.Headers.Add("Authorization", $"Bearer {_authItems.BearerToken.Value}");
-
-            throw new NotImplementedException();
+            requestMessage.Headers.Add("Accept-Encoding", "gzip");
+            return requestMessage;
         }
 
 
