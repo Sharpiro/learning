@@ -34,7 +34,7 @@ namespace SharpiroTweeter
                     Hashtags = i.SelectToken("entities.hashtags").Select(t => (string)t["text"]),
                     UserMentions = i.SelectToken("entities.user_mentions").Select(t => new User
                     {
-                        Id = (int)t["id"],
+                        Id = (long)t["id"],
                         Name = (string)t["name"],
                         ScreenName = (string)t["screen_name"]
                     }),
