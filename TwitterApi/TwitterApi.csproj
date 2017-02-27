@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>TwitterApi</RootNamespace>
     <AssemblyName>TwitterApi</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -112,9 +112,9 @@
     <Analyzer Include="..\packages\DSharpAnalyzer.1.1.0\analyzers\dotnet\cs\System.Xml.XPath.XDocument.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TwitterApi.Core\TwitterApi.Core.csproj">
+    <ProjectReference Include="..\TwitterApi.Core\SharpiroTweeter.csproj">
       <Project>{aa73c582-e916-47aa-8ce5-b0c40f331524}</Project>
-      <Name>TwitterApi.Core</Name>
+      <Name>SharpiroTweeter</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

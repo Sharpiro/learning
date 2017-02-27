@@ -6,9 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using TwitterApi.Core.Models;
+using SharpiroTweeter.Models;
 
-namespace TwitterApi.Core
+namespace SharpiroTweeter
 {
     public class TwitterApiService
     {

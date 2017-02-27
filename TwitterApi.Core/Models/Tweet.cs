@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TwitterApi.Core.Models
+namespace SharpiroTweeter.Models
 {
     public class Tweet
     {

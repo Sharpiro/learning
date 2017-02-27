@@ -1,4 +1,4 @@
-﻿namespace TwitterApi.Core.Models
+﻿namespace SharpiroTweeter.Models
 {
     public class User
     {

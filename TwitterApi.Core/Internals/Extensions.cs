@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TwitterApi.Core.Internals
+namespace SharpiroTweeter.Internals
 {
     internal static class Extensions
     {

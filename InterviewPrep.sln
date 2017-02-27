@@ -110,7 +110,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterApi", "TwitterApi\Tw
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "twitter", "twitter", "{894DB3A9-9CB9-4EE5-AA6F-C849063F5502}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterApi.Core", "TwitterApi.Core\TwitterApi.Core.csproj", "{AA73C582-E916-47AA-8CE5-B0C40F331524}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpiroTweeter", "TwitterApi.Core\SharpiroTweeter.csproj", "{AA73C582-E916-47AA-8CE5-B0C40F331524}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

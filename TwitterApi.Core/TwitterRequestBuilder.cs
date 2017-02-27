@@ -3,7 +3,7 @@ using System;
 using System.Net.Http;
 using System.Text;
 
-namespace TwitterApi.Core
+namespace SharpiroTweeter
 {
     public interface ITwitterRequestBuilder
     {

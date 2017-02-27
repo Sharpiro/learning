@@ -7,9 +7,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using Tweetinvi.Security.System.Security.Cryptography;
-using static TwitterApi.Core.Internals.Extensions;
+using static SharpiroTweeter.Internals.Extensions;
 
-namespace TwitterApi.Core
+namespace SharpiroTweeter
 {
     public class AuthItems : IEnumerable<AuthItem>
     {

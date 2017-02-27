@@ -7,9 +7,9 @@
     <ProjectGuid>{AA73C582-E916-47AA-8CE5-B0C40F331524}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TwitterApi.Core</RootNamespace>
-    <AssemblyName>TwitterApi.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <RootNamespace>SharpiroTweeter</RootNamespace>
+    <AssemblyName>SharpiroTweeter</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>

@@ -1,4 +1,4 @@
-﻿using TwitterApi.Core;
+﻿using SharpiroTweeter;
 
 namespace TwitterApi
 {
