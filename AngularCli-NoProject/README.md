@@ -3,8 +3,10 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
 
 ## Shortcuts
-* `ng g c`
-* `ng build -prod`
+* `-h` option for help
+* `ng generate component` `ng g c`
+* `ng build -prod` `ng b -prod`
+* `ng test --code-coverage` `ng t -cc`
 
 ## Development server
 
@@ -20,12 +22,17 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+* `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+* `-cc` show code coverage
+* `-sr` single run without watching
 
 ## Running end-to-end tests
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 Before running the tests make sure you are serving the app via `ng serve`.
+* `ng e2e -ee` open with protractor's element explorer for debugging
+* `list(by.css('h1'))` can be executed while in EE
+
 
 ## Further help
 
