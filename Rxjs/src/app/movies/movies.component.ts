@@ -10,8 +10,19 @@ import { MoviesService, MyObserver } from './movies.service'
 export class MoviesComponent implements OnInit {
 
   constructor(private moviesService: MoviesService) { }
+  private movies: Array<any> = [];
+
 
   ngOnInit() {
-    this.moviesService.observableFrom().subscribe(new MyObserver());
+    this.getMovies();
+  }
+
+  private getMovies() {
+    // this.moviesService.getMovies().subscribe(() => )
+    this.moviesService.getMovies().subscribe(
+      value => this.movies.push(value),
+      (e: any) => console.log(`error: ${e}`),
+      () => console.log("completed")
+    );
   }
 }
