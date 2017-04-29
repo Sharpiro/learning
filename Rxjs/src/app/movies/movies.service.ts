@@ -54,8 +54,15 @@ export class MoviesService {
   }
 
   public getMovies() {
-    return Observable.from(this.movies)
-      .retryWhen(this.retryStrategy).doNothing();
+    return this.http.get("assets/movies.json")
+      .map(r => {
+        var jObject = r.json();
+        var x = [];
+        x.push(jObject[0]);
+        x.push(jObject[1]);
+        x.push(jObject[2]);
+        return x;
+      });
     // return [{ name: "Star Wars" }];
   }
 
