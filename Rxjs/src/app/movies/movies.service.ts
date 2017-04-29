@@ -5,12 +5,13 @@ import { Observer } from "rxjs/Rx";
 // import "rxjs/add/operator/map"
 // import "rxjs/add/operator/filter"
 import "rxjs/Rx"
+import { UtilitiesService } from "app/shared/utilities.service";
 
 @Injectable()
 export class MoviesService {
   private movies = ["Star Wars", "Fight Club", "Guardians of the Galaxy"];
 
-  constructor(private http: Http) { }
+  constructor(private http: Http, private utilitiesService: UtilitiesService) { }
 
   public observableFrom(): Observable<string> {
     let source = Observable.from(this.movies);
@@ -29,19 +30,16 @@ export class MoviesService {
   }
 
   public observableCreateAsync(): Observable<string> {
-    let source: Observable<string> = Observable.create((observer: Observer<string>) => {
-      let index = 0;
-      let produceValue = () => {
-        observer.next(this.movies[index++]);
-        if (index < this.movies.length) {
-          setTimeout(produceValue, 2000);
-        }
-        else
-          observer.complete();
-      };
-      produceValue();
-    });
-    source.map(s => s).filter(s => true);
+    let source: Observable<string> = Observable.create(async (observer: Observer<string>) => {
+      for (let movie of this.movies) {
+        observer.error("whoops");
+        console.log("getting movie...");
+        observer.next(movie);
+        await this.utilitiesService.delay(1000);
+      }
+      observer.complete();
+    }).retryWhen(this.retryStrategy);
+    // source = source.map(s => s).filter(s => true).retryWhen(this.retryStrategy);
     return source;
   }
 
@@ -57,7 +55,19 @@ export class MoviesService {
 
   public getMovies() {
     return Observable.from(this.movies)
+      .retryWhen(this.retryStrategy).doNothing();
     // return [{ name: "Star Wars" }];
+  }
+
+  private retryStrategy = (errors: Observable<any>): Observable<any> => {
+    return errors
+      .scan(e => (accumulator, value) => {
+        console.log("scan");
+        console.log(accumulator, value);
+        return accumulator + 1;
+      }, 0)
+      // .takeWhile(acc => acc < 4)
+      .delay(2000);
   }
 }
 
@@ -72,5 +82,13 @@ export class MyObserver implements Observer<string>{
 
   public complete() {
     console.log("complete");
+  }
+}
+
+export declare function doNothing<T>(this: Observable<T>): Observable<T>;
+
+declare module 'rxjs/Observable' {
+  interface Observable<T> {
+    doNothing: typeof doNothing;
   }
 }

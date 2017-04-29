@@ -19,7 +19,7 @@ export class MoviesComponent implements OnInit {
 
   private getMovies() {
     // this.moviesService.getMovies().subscribe(() => )
-    this.moviesService.getMovies().subscribe(
+    this.moviesService.observableCreateAsync().subscribe(
       value => this.movies.push(value),
       (e: any) => console.log(`error: ${e}`),
       () => console.log("completed")
