@@ -33,14 +33,65 @@ export class MoviesService {
   public observableCreateAsync(): Observable<string> {
     let source: Observable<string> = Observable.create(async (observer: Observer<string>) => {
       for (let movie of this.movies) {
-        observer.error("whoops");
-        console.log("getting movie...");
+        // observer.error("whoops");
+        console.log("try get movie...");
         observer.next(movie);
         await this.utilitiesService.delay(1000);
       }
       observer.complete();
-    }).retryWhen(this.retryStrategy);
+    });
+    // .retryWhen(this.retryStrategy);
     // source = source.map(s => s).filter(s => true).retryWhen(this.retryStrategy);
+    return source;
+  }
+
+  public unsubscribeObservable() {
+    let source: Observable<string> = Observable.create(async (observer: Observer<string>) => {
+      for (let movie of this.movies) {
+        observer.next(movie);
+        observer.error("whoops");
+        await this.utilitiesService.delay(1000);
+      }
+      observer.complete();
+
+      return () => {
+        //doesn't work but should?
+        console.log("unsubbed");
+      };
+    });
+    return source;
+  }
+
+  public observableError() {
+    let source = Observable.create(observer => {
+      observer.next(1);
+      observer.next(2);
+
+      //will immediately throw error when building the expression
+      //   throw new Error("bad error");
+
+      //handle an error that occurs during async execution and will cancel the "observing" process
+      observer.error("bad");
+      observer.next(3);
+      observer.complete();
+    });
+    return source;
+  }
+
+  public observableMerge() {
+    //ignores errors
+    // Observable.onErrorResumeNext()
+    let source = Observable.merge(
+      Observable.of(1),
+      Observable.from([2, 3, 4]),
+      //have rxjs handle the error and stop execution here
+      Observable.throw(new Error("stop!")),
+      Observable.of(5)
+    )
+      .catch(e => {
+        console.error(`caught: ${e}`);
+        return Observable.of(10);
+      });
     return source;
   }
 
