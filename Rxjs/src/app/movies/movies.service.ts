@@ -4,8 +4,9 @@ import { Observable } from "rxjs/Observable"
 import { Observer } from "rxjs/Rx";
 // import "rxjs/add/operator/map"
 // import "rxjs/add/operator/filter"
-import "rxjs/Rx"
+import "rxjs"
 import { UtilitiesService } from "app/shared/utilities.service";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable()
 export class MoviesService {
@@ -55,15 +56,21 @@ export class MoviesService {
 
   public getMovies() {
     return this.http.get("assets/movies.json")
-      .map(r => {
-        var jObject = r.json();
-        var x = [];
-        x.push(jObject[0]);
-        x.push(jObject[1]);
-        x.push(jObject[2]);
-        return x;
-      });
-    // return [{ name: "Star Wars" }];
+      .map(r => r.json());
+  }
+
+  public getFromFetch(): Observable<any> {
+    let promise = fetch("assets/movies.json").then(r => r.json());
+    let source = Observable.fromPromise(promise);
+    return source;
+  }
+
+  public getFromFetchLazy(): Observable<any> {
+    return Observable.defer(() => {
+      let promise = fetch("assets/movies.json").then(r => r.json());
+      let source = Observable.fromPromise(promise);
+      return source;
+    });
   }
 
   private retryStrategy = (errors: Observable<any>): Observable<any> => {

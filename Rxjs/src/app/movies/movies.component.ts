@@ -10,6 +10,7 @@ import { MoviesService, MyObserver } from './movies.service'
 export class MoviesComponent implements OnInit {
 
   constructor(private moviesService: MoviesService) { }
+  
   private movies: Array<any> = [];
 
 
@@ -18,9 +19,8 @@ export class MoviesComponent implements OnInit {
   }
 
   private getMovies() {
-    // this.moviesService.getMovies().subscribe(() => )
-    this.moviesService.observableCreateAsync().subscribe(
-      value => this.movies.push(value),
+    this.moviesService.getMovies().subscribe(
+      value => this.movies = (value),
       (e: any) => console.log(`error: ${e}`),
       () => console.log("completed")
     );
