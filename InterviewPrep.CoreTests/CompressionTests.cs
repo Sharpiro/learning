@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using InterviewPrep.Core.Compression.Huffman;
@@ -49,10 +51,29 @@ namespace InterviewPrep.CoreTests
             var uncompressedBits = new BitArray(Encoding.UTF8.GetBytes(input));
 
             var compressedBits = tree.Encode();
-            var decodedText = tree.Decode(compressedBits);
+            var bytesLength = (int)Math.Ceiling((double)compressedBits.Count / 8);
+            var compressedBytes = new byte[bytesLength];
+            compressedBits.CopyTo(compressedBytes, 0);
+            var newBits = new BitArray(compressedBytes);
+            var decodedText = tree.Decode(newBits);
 
             Assert.AreEqual(input, decodedText);
             Assert.IsTrue(uncompressedBits.Length > compressedBits.Length);
+        }
+
+        [TestMethod]
+        public void BitsToBytesAndBackTest()
+        {
+            const string input = "this is an example of a huffman tree";
+
+            var bytes = Encoding.UTF8.GetBytes(input);
+            var bits = new BitArray(bytes);
+            var bytesLength = (int)Math.Ceiling((double)bits.Count / 8);
+            var newBytes = new byte[bytesLength];
+            bits.CopyTo(newBytes, 0);
+            var output = Encoding.UTF8.GetString(newBytes);
+
+            Assert.AreEqual(input, output);
         }
     }
 }

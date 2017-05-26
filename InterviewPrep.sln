@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterviewPrep.Core", "InterviewPrep.Core\InterviewPrep.Core.csproj", "{79463CCE-2350-42FE-AA78-DF0644DE52A7}"
 EndProject
@@ -113,6 +113,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpiroTweeter", "TwitterApi.Core\SharpiroTweeter.csproj", "{AA73C582-E916-47AA-8CE5-B0C40F331524}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularCLI", "AngularCLI\AngularCLI.csproj", "{7788CC5B-1782-4911-9D4A-4C7DB1DE526F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterviewPrep.Encryption", "InterviewPrep.Encryption\InterviewPrep.Encryption.csproj", "{05501140-BC7B-4010-A256-D1B5A0F9A1FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterviewPrep.Encryption.Tests", "InterviewPrep.Encryption.Tests\InterviewPrep.Encryption.Tests.csproj", "{5201DB46-6F8E-40B5-9698-F92F450DA7F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -558,6 +562,30 @@ Global
 		{7788CC5B-1782-4911-9D4A-4C7DB1DE526F}.Release|x64.Build.0 = Release|Any CPU
 		{7788CC5B-1782-4911-9D4A-4C7DB1DE526F}.Release|x86.ActiveCfg = Release|Any CPU
 		{7788CC5B-1782-4911-9D4A-4C7DB1DE526F}.Release|x86.Build.0 = Release|Any CPU
+		{05501140-BC7B-4010-A256-D1B5A0F9A1FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05501140-BC7B-4010-A256-D1B5A0F9A1FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05501140-BC7B-4010-A256-D1B5A0F9A1FE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{05501140-BC7B-4010-A256-D1B5A0F9A1FE}.Debug|x64.Build.0 = Debug|Any CPU
+		{05501140-BC7B-4010-A256-D1B5A0F9A1FE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{05501140-BC7B-4010-A256-D1B5A0F9A1FE}.Debug|x86.Build.0 = Debug|Any CPU
+		{05501140-BC7B-4010-A256-D1B5A0F9A1FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05501140-BC7B-4010-A256-D1B5A0F9A1FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05501140-BC7B-4010-A256-D1B5A0F9A1FE}.Release|x64.ActiveCfg = Release|Any CPU
+		{05501140-BC7B-4010-A256-D1B5A0F9A1FE}.Release|x64.Build.0 = Release|Any CPU
+		{05501140-BC7B-4010-A256-D1B5A0F9A1FE}.Release|x86.ActiveCfg = Release|Any CPU
+		{05501140-BC7B-4010-A256-D1B5A0F9A1FE}.Release|x86.Build.0 = Release|Any CPU
+		{5201DB46-6F8E-40B5-9698-F92F450DA7F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5201DB46-6F8E-40B5-9698-F92F450DA7F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5201DB46-6F8E-40B5-9698-F92F450DA7F4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5201DB46-6F8E-40B5-9698-F92F450DA7F4}.Debug|x64.Build.0 = Debug|Any CPU
+		{5201DB46-6F8E-40B5-9698-F92F450DA7F4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5201DB46-6F8E-40B5-9698-F92F450DA7F4}.Debug|x86.Build.0 = Debug|Any CPU
+		{5201DB46-6F8E-40B5-9698-F92F450DA7F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5201DB46-6F8E-40B5-9698-F92F450DA7F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5201DB46-6F8E-40B5-9698-F92F450DA7F4}.Release|x64.ActiveCfg = Release|Any CPU
+		{5201DB46-6F8E-40B5-9698-F92F450DA7F4}.Release|x64.Build.0 = Release|Any CPU
+		{5201DB46-6F8E-40B5-9698-F92F450DA7F4}.Release|x86.ActiveCfg = Release|Any CPU
+		{5201DB46-6F8E-40B5-9698-F92F450DA7F4}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -611,5 +639,7 @@ Global
 		{894DB3A9-9CB9-4EE5-AA6F-C849063F5502} = {8BBE8DA9-FCD6-491D-A0A9-58CF8A6CEE23}
 		{AA73C582-E916-47AA-8CE5-B0C40F331524} = {894DB3A9-9CB9-4EE5-AA6F-C849063F5502}
 		{7788CC5B-1782-4911-9D4A-4C7DB1DE526F} = {957C4CE1-0A48-4781-BE5B-B9FA33D94BA9}
+		{05501140-BC7B-4010-A256-D1B5A0F9A1FE} = {3FC39F1B-35FE-442F-B1B4-AE64FBA99983}
+		{5201DB46-6F8E-40B5-9698-F92F450DA7F4} = {1191E0E9-DCFF-4CBD-9995-6BD1AEF3F4DE}
 	EndGlobalSection
 EndGlobal
