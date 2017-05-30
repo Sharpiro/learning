@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace InterviewPrep.Core.Compression.Huffman
 {
-    public class HuffmanTree
+    public class HuffmanTree : IEnumerable<HuffmanNode>
     {
         private readonly string _input;
 
@@ -44,28 +44,12 @@ namespace InterviewPrep.Core.Compression.Huffman
             Root = frequencyList.Single();
         }
 
-        public List<HuffmanNode> ToList()
-        {
-            var list = new List<HuffmanNode>();
-            ToList(Root);
-            return list;
-
-            void ToList(HuffmanNode node)
-            {
-                if (node == null) return;
-                ToList(node.Left);
-                list.Add(node);
-                ToList(node.Right);
-            }
-        }
-
         public BitArray Encode()
         {
             var encodedSource = new List<bool>();
-            foreach (var t in _input)
+            foreach (var character in _input)
             {
-                var encodedSymbol = Traverse(Root, t);
-                //var encodedSymbol = Root.Traverse(t, new List<bool>());
+                var encodedSymbol = Traverse(Root, character);
                 encodedSource.AddRange(encodedSymbol);
             }
             var bits = new BitArray(encodedSource.ToArray());
@@ -86,16 +70,14 @@ namespace InterviewPrep.Core.Compression.Huffman
                 else if (current.Left != null)
                     current = current.Left;
 
-                if (!IsLeaf(current)) continue;
+                if (!IsLeafNode(current)) continue;
                 decoded += current.Character;
                 current = Root;
             }
             return decoded;
-
-            bool IsLeaf(HuffmanNode node) => node.Left == null && node.Right == null;
         }
 
-        private List<bool> Traverse(HuffmanNode currentNodeX, char? charcterY)
+        private static IEnumerable<bool> Traverse(HuffmanNode currentNodeX, char? charcterY)
         {
             var list = new List<bool>();
 
@@ -103,14 +85,13 @@ namespace InterviewPrep.Core.Compression.Huffman
 
             List<bool> Traverse(HuffmanNode currentNode, char? compareChar, List<bool> data)
             {
-                if (currentNode.Right == null && currentNode.Left == null) return compareChar.Equals(currentNode.Character) ? data : null;
+                if (IsLeafNode(currentNode)) return compareChar.Equals(currentNode.Character) ? data : null;
 
                 if (currentNode.Left != null)
                 {
                     var leftPath = new List<bool>();
                     leftPath.AddRange(data);
                     leftPath.Add(false);
-                    //var left = currentNode.Left.Traverse(compareChar, leftPath);
                     var left = Traverse(currentNode.Left, compareChar, leftPath);
                     if (left != null) return left;
                 }
@@ -119,11 +100,16 @@ namespace InterviewPrep.Core.Compression.Huffman
                 var rightPath = new List<bool>();
                 rightPath.AddRange(data);
                 rightPath.Add(true);
-                //var right = currentNode.Right.Traverse(compareChar, rightPath);
                 var right = Traverse(currentNode.Right, compareChar, rightPath);
                 return right;
             }
         }
+
+        public IEnumerator<HuffmanNode> GetEnumerator() => Root.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        private static bool IsLeafNode(HuffmanNode node) => node.Left == null && node.Right == null;
 
         public static HuffmanTree Create(string input)
         {
@@ -135,32 +121,35 @@ namespace InterviewPrep.Core.Compression.Huffman
         }
     }
 
-    public class HuffmanNode
+    public class HuffmanNode : IEnumerable<HuffmanNode>
     {
         public char? Character { get; set; }
         public int Frequency { get; set; }
         public HuffmanNode Left { get; set; }
         public HuffmanNode Right { get; set; }
 
-        public List<bool> Traverse(char symbol, List<bool> data)
+        public IEnumerator<HuffmanNode> GetEnumerator()
         {
-            if (Right == null && Left == null) return symbol.Equals(Character) ? data : null;
-
             if (Left != null)
             {
-                var leftPath = new List<bool>();
-                leftPath.AddRange(data);
-                leftPath.Add(false);
-                var left = Left.Traverse(symbol, leftPath);
-                if (left != null) return left;
+                foreach (var v in Left)
+                {
+                    yield return v;
+                }
             }
 
-            if (Right == null) return null;
-            var rightPath = new List<bool>();
-            rightPath.AddRange(data);
-            rightPath.Add(true);
-            var right = Right.Traverse(symbol, rightPath);
-            return right;
+            yield return this;
+
+            if (Right == null) yield break;
+            foreach (var v in Right)
+            {
+                yield return v;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

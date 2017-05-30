@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using InterviewPrep.Core.Compression.Huffman;
@@ -74,6 +73,18 @@ namespace InterviewPrep.CoreTests
             var output = Encoding.UTF8.GetString(newBytes);
 
             Assert.AreEqual(input, output);
+        }
+
+        [TestMethod]
+        public void EnumerableTest()
+        {
+            const string input = "input";
+            var tree = HuffmanTree.Create(input);
+
+            var listFromTree = tree.ToList();
+            var listFromRoot = tree.Root.ToList();
+
+            Assert.IsTrue(listFromRoot.SequenceEqual(listFromTree));
         }
     }
 }
