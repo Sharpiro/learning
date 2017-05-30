@@ -1,30 +1,30 @@
 interface IEmployee {
-    name: string
-    title: string
+    name: string;
+    title: string;
 }
 
 interface IPerson {
-    name: string
-    age?: number
+    name: string;
+    age?: number;
 }
 
-doPeronStuff({ name: "test" })
+doPeronStuff({ name: "test" });
 
 function doPeronStuff(person: IPerson) {
 
 }
 
-doStuff({ name: "dave", title: "sharp" })
+doStuff({ name: "dave", title: "sharp" });
 
 function doStuff(employee: IEmployee): void {
-    console.log(employee)
+    console.log(employee);
 }
 
 let doStufflet = (employee: IEmployee) => {
-    console.log(employee)
-}
+    console.log(employee);
+};
 
-doStufflet({ name: "dave", title: "sharp" })
+doStufflet({ name: "dave", title: "sharp" });
 
 class Test {
     public doMethod(): void {
@@ -36,4 +36,4 @@ class Test {
     }
 }
 
-let testClass = new Test()
+let testClass = new Test();

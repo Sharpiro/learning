@@ -1,7 +1,13 @@
-export interface Person {
-    name: string
+interface Person {
+    name: string;
 }
 
-export default class Employee {
-    name = "dave"
+class Employee implements Person {
+    name = "dave";
 }
+
+export default class DefaultExport {
+    defaultExportProperty = true;
+}
+
+export { Person, Employee as Emp };
