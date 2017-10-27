@@ -1,30 +1,31 @@
-#include <Bounce2.h>
 #include <Arduino.h>
 
+const int interruptPin = 2;
 const int pinFive = 5;
 int ledValue = LOW;
-Bounce bouncer = Bounce();
 
 extern HardwareSerial Serial;
+
+void beEratic()
+{
+    Serial.println("changed everything");
+}
 
 void setup()
 {
     Serial.begin(9600);
     Serial.println("starting");
     // pinMode(pinFive, INPUT);
-    pinMode(pinFive, INPUT_PULLUP);
+    pinMode(interruptPin, INPUT_PULLUP);
     pinMode(LED_BUILTIN, OUTPUT);
-    bouncer.attach(pinFive);
+    auto analogReading = analogRead(0);
+    randomSeed(analogReading);
+    attachInterrupt(0, beEratic, CHANGE);
 }
 
 void loop()
 {
-    if (bouncer.update()) 
-    {
-        if (bouncer.read() == LOW)
-        {
-            ledValue = !ledValue;
-            digitalWrite(LED_BUILTIN, ledValue);
-        }
-    }
+    auto number = random(1, 10);
+    Serial.println(number);
+    delay(1000);
 }
