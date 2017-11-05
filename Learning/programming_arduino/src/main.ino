@@ -1,15 +1,20 @@
 #include <Arduino.h>
 #include <LiquidCrystal.h>
+#include "LcdKeys.h"
 
-// const int pinFive = 5;
 extern HardwareSerial Serial;
 LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
-int numRows = 2;
-int numColumns = 16;
-// int count = 0;
-const char message[] = "sup witches";
-int messageLength = 11;
-int index = messageLength - 1;
+
+const int numRows = 2;
+const int numColumns = 16;
+
+int lastTime;
+int lastButton;
+int lcd_key = 0;
+int adc_key_in = 0;
+
+int selectIndex;
+const char data[3][4] = {"NOR", "FIR", "WAT"};
 
 void setup()
 {
@@ -17,28 +22,64 @@ void setup()
     Serial.println("starting");
     lcd.begin(numRows, numColumns);
     lcd.clear();
-    // lcd.setCursor(0, 0);
-    // lcd.print("sup");
-    // lcd.setCursor(0, 1);
-    // lcd.print("witches");
-    // pinMode(LED_BUILTIN, OUTPUT);
-    // digitalWrite(LED_BUILTIN, LOW);
+    lcd.setCursor(0, 0);
+    lcd.print("Push the buttons");
 }
 
 void loop()
 {
-    if (index < 0)
+    int upTime = millis() / 1000;
+    if (upTime > lastTime)
     {
-        lcd.clear();
-        index = messageLength - 1;
-        delay(1000);
+        lcd.setCursor(9, 1);
+        lastTime = upTime;
+        lcd.print(upTime);
+        // Serial.print("new time: ");
+        // Serial.println(upTime);
     }
-    lcd.setCursor(index, 0);
-    lcd.print(message[index]);
-    index--;
-    //time
-    // lcd.setCursor(0, 1);
-    // lcd.print(++count);
-    if (message[index] != ' ')
-        delay(500);
+
+    adc_key_in = analogRead(0);
+    lcd_key = lcdKeys::read_LCD_buttons(adc_key_in);
+
+    if (lcd_key == lastButton)
+        return;
+
+    lcd.setCursor(0, 1);
+    Serial.print("new input: ");
+    Serial.println(adc_key_in);
+    Serial.println(lcd_key);
+    switch (lcd_key)
+    {
+    case btnRight:
+    {
+        lcd.print("RIGHT ");
+        break;
+    }
+    case btnLeft:
+    {
+        lcd.print("LEFT   ");
+        break;
+    }
+    case btnUp:
+    {
+        lcd.print("UP    ");
+        break;
+    }
+    case btnDown:
+    {
+        lcd.print("DOWN  ");
+        break;
+    }
+    case btnSelect:
+    {
+        lcd.print("SELECT");
+        break;
+    }
+    case btnNone:
+    {
+        lcd.print("NONE  ");
+        break;
+    }
+    }
+    lastButton = lcd_key;
 }
