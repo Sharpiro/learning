@@ -15,14 +15,16 @@
                 "C:/Program Files (x86)/Arduino/hardware/arduino/avr/variants/standard",
                 "C:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/VC/Tools/MSVC/14.11.25503/include",
                 "C:/Program Files (x86)/Windows Kits/10/Include/10.0.16299.0/ucrt",
-                "C:\\Users\\sharpiro\\Documents\\Arduino\\libraries\\Bounce2"
+                "C:\\Users\\sharpiro\\Documents\\Arduino\\libraries\\Bounce2",
+                "C:\\Users\\sharpiro\\Documents\\Arduino\\libraries\\LiquidCrystal\\src"
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": false,
                 "path": [
                     "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino",
                     "${workspaceRoot}",
-                    "C:\\Users\\sharpiro\\Documents\\Arduino\\libraries\\Bounce2"
+                    "C:\\Users\\sharpiro\\Documents\\Arduino\\libraries\\Bounce2",
+                    "C:\\Users\\sharpiro\\Documents\\Arduino\\libraries\\LiquidCrystal\\src"
                 ]
             },
             "intelliSenseMode": "msvc-x64"
