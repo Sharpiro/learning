@@ -1,5 +1,5 @@
-// import JSONEditor from "jsoneditor";
-// import { JSONEditorMode, JSONEditorOptions } from "jsoneditor";
+import JSONEditor from "jsoneditor";
+import { JSONEditorMode, JSONEditorOptions } from "jsoneditor";
 
 var codeContainer = document.getElementById("jsonEditorCode");
 var viewContainer = document.getElementById("jsonEditorView");
