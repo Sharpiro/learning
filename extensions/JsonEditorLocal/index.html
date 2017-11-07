@@ -3,16 +3,27 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <link href="node_modules/jsoneditor/dist/jsoneditor-custom.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        .editorOne {
+            width: 700px;
+            height: 90%;
+            padding-bottom: 15px;
+        }
+
+        .editorTwo {
+            position: absolute;
+            left: 715px;
+            top: 8px;
+            width: 700px;
+            height: 89%;
+        }
+    </style>
 </head>
 
 <body>
-    <!-- <div id="jsonEditorCode" style="width: 500px; height: 400px;"></div>
-    <div id="jsonEditorView" style="width: 500px; height: 400px;"></div> -->
-    <div style="">
-
-        <div id="jsonEditorCode" style="width: 500px; height: 400px;"></div>
-        <div id="jsonEditorView" style="width: 500px; height: 400px;"></div>
-    </div>
+    <div class="editorOne" id="jsonEditorCode"></div>
+    <div class="editorTwo" id="jsonEditorView"></div>
+    <button class="btn" id="updateButton">Update</button>
     <button id="updateButton">Update</button>
 
     <script src="node_modules/jsoneditor/dist/jsoneditor.min.js"></script>
