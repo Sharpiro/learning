@@ -4,31 +4,32 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <link href="node_modules/jsoneditor/dist/jsoneditor.css" rel="stylesheet" type="text/css">
     <style type="text/css">
-        .editorOne {
-            width: 700px;
-            height: 90%;
-            padding-bottom: 15px;
-        }
-
-        .editorTwo {
-            position: absolute;
-            left: 715px;
-            top: 8px;
-            width: 700px;
-            height: 89%;
+        .editor {
+            width: 49%;
+            height: 92%;
+            display: inline-block;
         }
     </style>
 </head>
 
 <body>
-    <div class="editorOne" id="leftEditorContainer"></div>
-    <div class="editorTwo" id="rightEditorContainer"></div>
-    <button id="updateButton">Update Left</button>
-    <button id="updateTreeButton">Update Right</button>
-    <button id="swapToFormButton">Swap To Form</button>
-    <button id="swapToTreeButton">Swap To Tree</button>
-
-    <script src="node_modules/jsoneditor/dist/jsoneditor.min.js"></script>
+    <div style="margin: auto;width: 95%;">
+        <div class="editor" id="leftEditorContainer">
+            <select id="leftEditorMode">
+                <option value="code">Code</option>
+                <option value="text">Text</option>
+            </select>
+        </div>
+        <div class="editor" id="rightEditorContainer">
+            <select id="rightEditorMode">
+                <option value="form">Form</option>
+                <option value="tree">Tree</option>
+            </select>
+        </div>
+    </div>
+    <ul>
+        <li>ctrl + s: update data from active editor</li>
+    </ul>
     <script src="dist/bundle.js"></script>
 </body>
 
