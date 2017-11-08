@@ -1,0 +1,21 @@
+{
+  "name": "jsoneditorlocal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "./node_modules/.bin/webpack --config webpack.prod.js",
+    "serve": "./node_modules/.bin/webpack-dev-server --progress --colors --config webpack.dev.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jsoneditor": "^5.9.6"
+  },
+  "devDependencies": {
+    "uglifyjs-webpack-plugin": "^1.0.0-beta.3",
+    "webpack": "^3.7.1",
+    "webpack-dev-server": "^2.9.2",
+    "webpack-merge": "^4.1.0"
+  }
+}

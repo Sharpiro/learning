@@ -1,0 +1,38 @@
+<html>
+
+<head>
+    <meta version="1.0.0">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <link href="node_modules/jsoneditor/dist/jsoneditor.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        .editor {
+            width: 49%;
+            height: 92%;
+            display: inline-block;
+            padding-bottom: 15px
+        }
+    </style>
+</head>
+
+<body>
+    <div style="margin: auto;width: 95%;">
+        <div class="editor" id="leftEditorContainer" style="padding-right:5px">
+            <select id="leftEditorMode">
+                <option value="code">Code</option>
+                <option value="text">Text</option>
+            </select>
+        </div>
+        <div class="editor" id="rightEditorContainer">
+            <select id="rightEditorMode">
+                <option value="form">Form</option>
+                <option value="tree">Tree</option>
+            </select>
+        </div>
+    </div>
+    <ul>
+        <li>ctrl + s: update data from active editor</li>
+    </ul>
+    <script src="dist/bundle.js"></script>
+</body>
+
+</html>
