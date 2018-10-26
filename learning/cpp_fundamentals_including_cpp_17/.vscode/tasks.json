@@ -1,0 +1,9 @@
+{
+    "tasks": [
+        {
+            "label": "run",
+            "command":"bash -c 'g++ -Wall main.cpp && ./a.out'",
+            "type": "shell"
+        }
+    ]
+}
