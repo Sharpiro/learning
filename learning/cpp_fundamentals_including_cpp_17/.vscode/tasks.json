@@ -2,7 +2,7 @@
     "tasks": [
         {
             "label": "run",
-            "command":"bash -c 'g++ -Wall main.cpp && ./a.out'",
+            "command":"bash -c 'g++ -Wall sections/2_user_defined_types/main.cpp && ./a.out'",
             "type": "shell"
         }
     ]
