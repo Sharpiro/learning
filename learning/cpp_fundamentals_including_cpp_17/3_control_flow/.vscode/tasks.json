@@ -1,0 +1,9 @@
+{
+    "tasks": [
+        {
+            "label": "run",
+            "command":"cl /EHsc /std:c++17 main.cpp",
+            "type": "shell",
+        }
+    ]
+}
