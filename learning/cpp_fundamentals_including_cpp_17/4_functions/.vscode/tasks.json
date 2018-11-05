@@ -1,0 +1,14 @@
+{
+    "tasks": [
+        {
+            "label": "run",
+            "command":"${workspaceFolder}/run.cmd",
+            "type": "shell",
+        },
+        {
+            "label": "run2",
+            "command":"${workspaceFolder}/rungcc.cmd",
+            "type": "shell",
+        }
+    ]
+}
