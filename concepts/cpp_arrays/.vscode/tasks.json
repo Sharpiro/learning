@@ -1,0 +1,52 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            // "command": "cl",
+            // "args": [
+            //     "main.cpp",
+            //     "/Zi",
+            // ],
+            "command": "bash",
+            "args": [
+                "-c",
+                "g++ -std=c++17 main.cpp"
+            ],
+            "group": "build",
+            "presentation": {
+                // Reveal the output only if unrecognized errors occur.
+                "reveal": "never"
+            },
+            // Use the standard MS compiler pattern to detect errors, warnings and infos
+            // "problemMatcher": "$msCompile"
+            "problemMatcher": {
+                "owner": "cpp",
+                "fileLocation": [
+                    "relative",
+                    "${workspaceFolder}"
+                ],
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
+        {
+            "label": "run",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "./a.out"
+            ]
+        }
+    ]
+}
