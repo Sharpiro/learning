@@ -12,7 +12,6 @@ package-lock.json
 *.userosscache
 *.sln.docstates
 lib/
-*.js
 *.js.map
 */typings
 .vscode/**/*
