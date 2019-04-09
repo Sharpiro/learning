@@ -4,7 +4,7 @@ const fs = require("fs")
 var uglify = require("uglify-es");
 
 const vData = fs.readFileSync(`${__dirname}/boom.js`).toString()
-const minifyOptions = { mangle: { toplevel: true, reserved: ["execute"] }, compress: {} }
+const minifyOptions = { mangle: { toplevel: true, reserved: [""] }, compress: {} }
 const vDataMin = uglify.minify(vData, minifyOptions).code
 const outFileName = path.resolve(__dirname, "dist", "boom-dist.js")
 const minFileName = path.resolve(__dirname, "dist", "temp-min.txt")
