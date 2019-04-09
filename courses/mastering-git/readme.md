@@ -113,3 +113,40 @@ See the last author to change a line
 bc79665b (sharpiro 2019-04-05 13:53:45 -0400 2) master_add
 bc79665b (sharpiro 2019-04-05 13:53:45 -0400 3) test_add
 ```
+
+## Fixing Mistakes
+
+### Git Reflog
+
+`git reflog` is a log of the movements of `head`
+
+## Workflows
+
+### Distribution Models
+
+* peer to peer model
+* centralized model
+* pull request model
+* dictator and lieutenants model
+
+### Branching Models
+
+* unstable branch
+  * head may or may not work
+* stable branch
+  * head is stable
+
+#### How to share a commit
+
+* cherry-pick
+  * only copies changes, doesn't share commits
+* create a third "merge branch"
+  * ex:
+    * 2 branches, `release`, and `integration` that have branched off `master` in the past
+    * we have a new code change that we need to get into both branches
+    * create a 3rd "merge branch" called `hotfix` off of `master`
+    * commit the new changes to `hotfix`
+    * merge `hotfix` into `release`
+    * merge `hotfix` into `integration`
+
+### Constraints
