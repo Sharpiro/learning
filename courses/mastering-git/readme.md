@@ -5,9 +5,20 @@
 ### The Four Areas
 
 * working area
-* index (staging)
+  * your own private area where you interact with your data
+* index (staging area)
+  * decouples the working area and repository, letting you decide when and how to move data to the repository
 * repository
+  * safe and versioned area for your data
 * stash
+  * like a clipboard for your changes temporarily
+
+### Git Commands
+
+Most commands in git can be understood by asking 2 questions:
+
+1. How does this command move information across the Four Areas?
+1. How does this command change the Repository?
 
 ### Terms
 
@@ -122,6 +133,8 @@ bc79665b (sharpiro 2019-04-05 13:53:45 -0400 3) test_add
 
 ## Workflows
 
+Don't just adopt a workflow from the internet.  Start with a simple workflow, and then add complexity only as-needed
+
 ### Distribution Models
 
 * peer to peer model
@@ -148,5 +161,3 @@ bc79665b (sharpiro 2019-04-05 13:53:45 -0400 3) test_add
     * commit the new changes to `hotfix`
     * merge `hotfix` into `release`
     * merge `hotfix` into `integration`
-
-### Constraints
