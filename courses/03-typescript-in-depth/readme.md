@@ -124,3 +124,120 @@ console.log(getName("99"))
 console.log(getName(12))
 console.log(getName(true)) // compile error
 ```
+
+## Function Type Interfaces
+
+```ts
+interface FunctionInterface {
+  (a: number, b: string): string
+}
+
+interface NormalInterface {
+  temp: FunctionInterface
+  temp2(a: boolean): boolean
+}
+
+const y: FunctionInterface = (x, y) => x + y
+const x: NormalInterface = { temp: y, temp2: x => !x }
+const z: (a: number, b: string) => string = y
+```
+
+## Class Expressions
+
+```ts
+abstract class Item { abstract doNothing(): void }
+const temp = class extends Item { doNothing = () => console.log }
+new temp().doNothing()
+```
+
+## Modules and Namespaces
+
+In typescript 1.5 `internal modules` became `namespaces`, and `external modules` became just `modules`.  ES2015 modules were adopted by typescript and makes modules between typescript and javascript more similar.
+
+| Modules                               | bNamespaces                         |   |   |   |
+|---------------------------------------|-------------------------------------|---|---|---|
+| tool for organizing code              | tool for organizing code            |   |   |   |
+| native support in node                | no special loader required          |   |   |   |
+| browsers supported with module loader | prevents global namespace pollution |   |   |   |
+| supports es2015 module syntax         | work natively with the browser      |   |   |   |
+
+### Module code generation types
+
+* commonjs
+  * used by nodejs
+* amd (asynchronous module definition)
+  * used for browsers w/ requirejs module loader
+* umd (universal module definition)
+  * combined commonjs and amd formats
+  * can be used by node and loaders that support amd
+* system
+  * supports commonjs, amd, and has its own custom format
+* es2015
+  * new hotness, used in typescript source
+
+### es2015 modules in browser
+
+All referenced modules must be servable and available via their `.js` extension, despite it being a typescript file.  [open issue](https://github.com/Microsoft/TypeScript/issues/16577)
+
+`main.ts`
+
+```ts
+import { doNothing } from "./other.js";
+```
+
+`index.html`
+
+```html
+<script type="module" src="dist/main.js"></script>
+```
+
+### Syntax
+
+```ts
+import * as test from "./test"
+import { Test } from "./test"
+```
+
+### Module Usage
+
+#### Standard
+
+```ts
+// other.ts
+export class Test { }
+
+// main.ts
+import { Test } from "./other"
+new Test()
+```
+
+#### Aliases
+
+```ts
+// other.ts
+class Test { }
+export { Test as AliasOutTest }
+
+// main.ts
+import { AliasOutTest as AliasInTest } from "./other.js";
+new AliasInTest()
+```
+
+#### Default Exports
+
+```ts
+// other.ts
+export default function defaultFunc() { }
+
+// main.ts
+import defaultFuncAlias from "./other.js";
+defaultFuncAlias()
+```
+
+#### Behavior Import (not recommended)
+
+Will import nothing, but will cause script to run possibly changing environmental behavior for other modules.  (not recommended)
+
+```ts
+import "./other.js";
+```
