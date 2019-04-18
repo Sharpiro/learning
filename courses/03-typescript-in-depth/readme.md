@@ -1,22 +1,5 @@
 # Typescript In-Depth
 
-## Compiler
-
-### Running Code
-
-* `node`
-  * `node dist/main.js`
-    * will run javascript but not reference back to typescript source files
-    * requires `tsc -w` in background
-* `ts-node`
-  * `ts-node dist/main.js`
-    * will run javascript and reference back to typescript source files w/ source-mappings
-    * skips typescript compilation (can be useful for testing)
-    * requires `tsc -w` in background
-    * my favorite
-  * `ts-node main.ts`
-    * will run typescript, but will fail on compile time errors (tsc) and link to typescript source files
-
 ## Tuples
 
 ```ts
@@ -105,6 +88,22 @@ let tuple: [number, string, boolean] = [123, "hello", true]
 const [tuple1, ...tuple2] = tuple
 ```
 
+#### Array Spread Initialization
+
+```ts
+// create array of length 10 and initialize all to zero
+new Array(10).fill(0)
+Array.from({length: 10}, () => 0)
+Array.from(new Uint32Array(10))
+[...new Array(10)].map(x => 0)
+
+// create array of length 10 and initialize to a sequence
+new Array(10).fill(0).map((x, i) => i + 1)
+Array.from(new Uint32Array(10).map((x, y) => y + 1))
+Array.from({length: 10}, (_, i) => i + 1)
+[...new Array(10)].map((x, i) => i + 1)
+```
+
 ## Function Overloads
 
 ```ts
@@ -143,6 +142,8 @@ const z: (a: number, b: string) => string = y
 ```
 
 ## Class Expressions
+
+Allows for a "scoped" class
 
 ```ts
 abstract class Item { abstract doNothing(): void }
@@ -241,3 +242,48 @@ Will import nothing, but will cause script to run possibly changing environmenta
 ```ts
 import "./other.js";
 ```
+
+## Generics
+
+### Generic Constraints
+
+```ts
+interface IBox {
+  length: number
+}
+
+function logLength<T extends IBox>(box: T) {
+  console.log(box.length)
+}
+
+function logWidth<T extends { width: number }>(box: T) {
+  console.log(box.width)
+}
+```
+
+## Compiler
+
+### tsconfig.json
+
+* this file is ignored when a file is passed to the compiler
+* when no file is passed to the compiler, it will look for a `tsconfig.json` in the current directory, and iterate through parent directories until it finds one.
+* any options passed directly to the compiler will override the `tsconfig.json`
+
+### Running Code
+
+* `node`
+  * `node dist/main.js`
+    * will run javascript but not reference back to typescript source files
+    * requires `tsc -w` in background
+* `ts-node`
+  * `ts-node dist/main.js`
+    * will run javascript and reference back to typescript source files w/ source-mappings
+    * skips typescript compilation (can be useful for testing)
+    * requires `tsc -w` in background
+    * my favorite
+  * `ts-node main.ts`
+    * will run typescript, but will fail on compile time errors (tsc) and link to typescript source files
+
+## Type Definitions
+
+### Ambient Modules
