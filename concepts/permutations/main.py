@@ -102,52 +102,6 @@ def temp():
         actual.append(text2)
 
 
-def shift_easy(data):
-    carry = 0
-    data[len(data)-1] += 1
-    for i in range(len(data)-1, -1, -1):
-        data[i] += carry
-        carry = 0
-        if data[i] == len(data):
-            data[i] = 0
-            carry = 1
-
-
-def has_dupes(data):
-    sorted = data.copy()
-    sorted.sort()
-    for i in range(len(sorted)-1):
-        if sorted[i] == sorted[i+1]:
-            return True
-
-    return False
-
-
-def easy():
-    actual = []
-    temp = "abcd"
-    data = list(i for i in range(len(temp)))
-    uniques = 0
-    ops = 0
-    for _ in range(len(temp)**len(temp)):
-        ops += 1
-        if (has_dupes(data)):
-            shift_easy(data)
-            continue
-        uniques += 1
-        print("".join(temp[uniques] for uniques in data))
-        actual.append("".join(temp[uniques] for uniques in data))
-        # if len(actual) == 720:
-        #     break
-        shift_easy(data)
-    print(data)
-    print(uniques, "uniques")
-    print((ops), "total operations")
-    return actual
-
-
-# print(has_dupes([3, 0, 0, 0]))
-actual = easy()
 # temp()
 # temp3(parent_zero, 3, 2, 1, 0)
 # temp3(parent_zero, 0)
