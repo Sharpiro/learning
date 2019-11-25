@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<style>
+    body {
+        font-family: arial, sans-serif;
+        margin-top: 50px;
+        text-align: center;
+        font-size: xx-large;
+    }
+
+    button {
+        width: 100px;
+    }
+
+    #list {
+        line-height: 75px;
+        padding-bottom: 15px;
+    }
+
+    .slice {
+        /* background-color: greenyellow; */
+        border-style: solid;
+
+        display: inline-block;
+        padding: 0 5px 0 5px;
+        margin: 0 5px 0 5px;
+    }
+
+    .pivotIndex {
+        border-bottom-style: solid;
+        /* text-decoration: underline; */
+    }
+
+    .swapIndex {
+        border-left-style: solid;
+        border-right-style: solid;
+    }
+
+    .sliceIndex {
+        /* text-decoration: overline; */
+        border-top-style: solid;
+    }
+
+    .pivotIndex.sliceIndex {
+        border-top-style: solid;
+        border-bottom-style: solid;
+        /* text-decoration: underline overline; */
+    }
+
+    h4 {
+        margin-bottom: 0;
+    }
+
+    .notation {
+        display: inline-block;
+        margin: 15px 0 15px 0;
+    }
+</style>
+
+<body>
+    <h1>Quicksort</h1>
+    <div id="list"></div>
+    <div id="status"></div>
+    <button id="previousButton">Previous</button>
+    <button id="nextButton">Next</button>
+    <div>
+        <h4>Notation</h4>
+        <div>
+            <span>Pivot:</span>
+            <span class="pivotIndex notation">X</span>
+        </div>
+        <hr>
+        <div>
+            <span>Loop Index:</span>
+            <span class="sliceIndex notation">X</span>
+        </div>
+        <hr>
+
+        <div>
+            <span>Swap:</span>
+            <span class="swapIndex notation">X</span>
+        </div>
+        <hr>
+
+    </div>
+    <script type="module" src="build/index.js"></script>
+</body>
+
+</html>
