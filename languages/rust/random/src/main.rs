@@ -31,8 +31,7 @@ fn _random_number() {
 fn _shuffle() {
     println!("random shuffle");
     let mut nums: Vec<i32> = (1..100).collect();
-    let mut rng = rand::thread_rng();
-    nums.shuffle(&mut rng);
+    nums.shuffle(&mut rand::thread_rng());
     println!("{:?}", nums);
 }
 
