@@ -1,6 +1,7 @@
 import { QuickSorter, State } from "./quickSorter.js"
 
 const list = [3, 7, 8, 5, 2, 1, 9, 5, 4]
+// const list = [3, 1, 8, 5, 2, 1, 9, 5, 4]
 const listEl = document.getElementById("list") as HTMLElement
 const quickSorter = new QuickSorter(list)
 quickSorter.build()
@@ -8,8 +9,10 @@ const states = quickSorter.states
 let stateIndex = 0
 writeListToDocument(states[stateIndex])
 console.log(states);
+console.log(`Step ${stateIndex + 1}`, states[stateIndex])
 
 const statusEl = document.getElementById("status") as HTMLElement
+const lastStepEl = document.getElementById("lastStep") as HTMLElement
 writeStatusToDocument()
 
 const previousButtonEl = document.getElementById("previousButton") as HTMLButtonElement
@@ -35,7 +38,7 @@ function previous() {
     stateIndex--
     writeListToDocument(states[stateIndex])
     writeStatusToDocument()
-    console.log(states[stateIndex].type)
+    console.log(`Step ${stateIndex + 1}`, states[stateIndex])
 }
 
 function next() {
@@ -44,11 +47,40 @@ function next() {
     stateIndex++
     writeListToDocument(states[stateIndex])
     writeStatusToDocument()
-    console.log(states[stateIndex].type)
+    console.log(`Step ${stateIndex + 1}`, states[stateIndex])
 }
 
 function writeStatusToDocument() {
     statusEl.innerHTML = `Step: ${stateIndex + 1}/${states.length}`
+
+    const state = states[stateIndex + 1]
+    const stateType = state ? state.type : "done"
+    let message = ""
+    switch (stateType) {
+        case "startPartition":
+            message = "Start Partition"
+            break;
+        case "sliceIndexIncrement":
+            message = "Increment loop index"
+            break;
+        case "swapIndexIncrement":
+            message = "Increment swap index"
+            break;
+        case "loopSwap":
+            message = "Swap loop index and swap index"
+            break;
+        case "pivotSwap":
+            message = "Swap pivot index and swap index"
+            break;
+        case "completePartition":
+            message = "Complete Partition"
+            break;
+        case "done":
+            message = "Done"
+            break;
+        default: throw new Error(`add state type message: '${states[stateIndex + 1].type}'`)
+    }
+    lastStepEl.innerHTML = `Next Step: ${message}`
 }
 
 function writeListToDocument(state: State) {
@@ -88,17 +120,14 @@ function writeListToDocument(state: State) {
         if (isSwapIndex) {
             numberEl.classList.add("swapIndex")
         }
-
-
-
-        // if (i + 1 !== state.list.length) {
-        //     const spaceEl = document.createElement("span")
-        //     spaceEl.innerHTML = ", ".toString()
-        //     if (isInSlice) {
-        //         spaceEl.classList.add("slice")
-        //     }
-        //     listEl.appendChild(spaceEl)
-        // }
+        if (state.type === "loopSwap"
+            && (i === state.sliceIndex || i === state.swapIndex)) {
+            numberEl.classList.add("switched")
+            numberEl.classList.add("switched")
+        } else if (state.type === "pivotSwap"
+            && (i === state.highIndex || i === state.swapIndex)) {
+            numberEl.classList.add("switched")
+            numberEl.classList.add("switched")
+        }
     }
-    // listEl.appendChild(sliceEl)
 }

@@ -11,7 +11,6 @@
 <style>
     body {
         font-family: arial, sans-serif;
-        margin-top: 50px;
         text-align: center;
         font-size: xx-large;
     }
@@ -59,9 +58,29 @@
         margin-bottom: 0;
     }
 
+    h1 {
+        margin-top: 5px;
+        margin-bottom: 20px;
+    }
+
     .notation {
         display: inline-block;
         margin: 15px 0 15px 0;
+        font-size: x-large;
+    }
+
+    .switched {
+        background-color: deepskyblue;
+    }
+
+    hr {
+        margin: 0;
+    }
+
+    .code {
+        text-align: left;
+        width: 600px;
+        margin: auto;
     }
 </style>
 
@@ -69,27 +88,58 @@
     <h1>Quicksort</h1>
     <div id="list"></div>
     <div id="status"></div>
+    <div id="currentStep"></div>
+    <div id="lastStep"></div>
     <button id="previousButton">Previous</button>
     <button id="nextButton">Next</button>
     <div>
         <h4>Notation</h4>
         <div>
-            <span>Pivot:</span>
+            <span class="notation">Current Slice:</span>
+            <span class="slice notation">1, 2, 3</span>
+        </div>
+        <hr>
+        <div>
+            <span class="notation">Pivot Index:</span>
             <span class="pivotIndex notation">X</span>
         </div>
         <hr>
         <div>
-            <span>Loop Index:</span>
+            <span class="notation">Loop Index:</span>
             <span class="sliceIndex notation">X</span>
         </div>
         <hr>
 
         <div>
-            <span>Swap:</span>
+            <span class="notation">Swap Index:</span>
             <span class="swapIndex notation">X</span>
         </div>
         <hr>
+        <div>
+            <span class="notation">Swapped:</span>
+            <span class="switched notation">X</span>
+        </div>
+        <hr>
+    </div>
 
+    <div class="code">
+        <h4>Psuedocode</h4>
+        <pre><code>algorithm quicksort(A, lo, hi) is
+    if lo &lt; hi then
+        p := partition(A, lo, hi)
+        quicksort(A, lo, p - 1)
+        quicksort(A, p + 1, hi)
+
+algorithm partition(A, lo, hi) is
+    pivot := A[hi]
+    i := lo
+    for j := lo to hi do
+        if A[j] &lt; pivot then
+            swap A[i] with A[j]
+            i := i + 1
+    swap A[i] with A[hi]
+    return i
+</code></pre>
     </div>
     <script type="module" src="build/index.js"></script>
 </body>
