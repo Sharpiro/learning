@@ -1,9 +1,0 @@
-{
-  "profiles": {
-    "newProfile1": {
-      "executablePath": "C:\\Program Files\\dotnet\\dotnet.exe",
-      "commandLineArgs": "exec --additionalprobingpath \"C:\\\\Users\\\\zkjzaef\\\\.nuget\\\\packages\" --depsfile C:\\\\Users\\\\zkjzaef\\\\.nuget\\\\packages\\\\.tools\\\\Dotnet.Script\\\\0.9.0-beta\\\\netcoreapp1.0\\\\project.assets.json \"C:\\\\Users\\\\zkjzaef\\\\.nuget\\\\packages\\\\Dotnet.Script\\\\0.9.0-beta\\\\lib\\\\netcoreapp1.0\\\\dotnet-script.dll\" \"C:\\GitBase\\InterviewPrep\\scripts\\main.csx\" -d",
-      "workingDirectory": "C:\\GitBase\\InterviewPrep\\scripts"
-    }
-  }
-}
