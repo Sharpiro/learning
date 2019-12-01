@@ -1,26 +1,25 @@
-import { QuickSorter, State } from "./quickSorter.js"
+import { QuickSorter } from "./quicksorter.js"
+import { getElementById } from "./shared.js"
 
 const list = [3, 7, 8, 5, 2, 1, 9, 5, 4]
 // const list = [3, 1, 8, 5, 2, 1, 9, 5, 4]
-const listEl = document.getElementById("list") as HTMLElement
-const quickSorter = new QuickSorter(list)
-quickSorter.build()
-const states = quickSorter.states
+const listEl = getElementById("list")
+const states = QuickSorter.sort(list)
 let stateIndex = 0
 writeListToDocument(states[stateIndex])
 console.log(states);
 console.log(`Step ${stateIndex + 1}`, states[stateIndex])
 
-const statusEl = document.getElementById("status") as HTMLElement
-const lastStepEl = document.getElementById("lastStep") as HTMLElement
+const statusEl = getElementById("status")
+const lastStepEl = getElementById("lastStep")
 writeStatusToDocument()
 
-const previousButtonEl = document.getElementById("previousButton") as HTMLButtonElement
-previousButtonEl.onmousedown = () => previous()
+getElementById("previousButton").onmousedown = () => previous()
+getElementById("nextButton").onmousedown = () => next()
 
-const nextButtonEl = document.getElementById("nextButton") as HTMLButtonElement
-nextButtonEl.onmousedown = () => next()
-
+/**
+ * @param {KeyboardEvent} event
+ */
 document.body.onkeydown = (event) => {
     switch (event.key) {
         case "ArrowLeft":
@@ -83,7 +82,10 @@ function writeStatusToDocument() {
     lastStepEl.innerHTML = `Next Step: ${message}`
 }
 
-function writeListToDocument(state: State) {
+/**
+ * @param {import("./types.js").State} state
+ */
+function writeListToDocument(state) {
     listEl.innerHTML = ""
     const sliceEl = document.createElement("span")
     sliceEl.classList.add("slice")

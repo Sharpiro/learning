@@ -1,0 +1,70 @@
+body {
+    font-family: arial, sans-serif;
+    text-align: center;
+    font-size: xx-large;
+}
+
+button {
+    width: 100px;
+}
+
+#list {
+    line-height: 75px;
+    padding-bottom: 15px;
+}
+
+.slice {
+    border-style: solid;
+
+    display: inline-block;
+    padding: 0 5px 0 5px;
+    margin: 0 5px 0 5px;
+}
+
+.pivotIndex {
+    border-bottom-style: solid;
+}
+
+.swapIndex {
+    border-left-style: solid;
+    border-right-style: solid;
+}
+
+.sliceIndex {
+    border-top-style: solid;
+}
+
+.pivotIndex.sliceIndex {
+    border-top-style: solid;
+    border-bottom-style: solid;
+}
+
+h4 {
+    margin-bottom: 0;
+}
+
+h1 {
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.notation {
+    display: inline-block;
+    margin: 15px 0 15px 0;
+    font-size: x-large;
+}
+
+.switched {
+    background-color: deepskyblue;
+}
+
+hr {
+    margin: 0;
+}
+
+.code {
+    text-align: left;
+    width: 700px;
+    margin: auto;
+    font-size: 14px;
+}

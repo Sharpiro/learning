@@ -6,83 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="index.css">
 </head>
-
-<style>
-    body {
-        font-family: arial, sans-serif;
-        text-align: center;
-        font-size: xx-large;
-    }
-
-    button {
-        width: 100px;
-    }
-
-    #list {
-        line-height: 75px;
-        padding-bottom: 15px;
-    }
-
-    .slice {
-        /* background-color: greenyellow; */
-        border-style: solid;
-
-        display: inline-block;
-        padding: 0 5px 0 5px;
-        margin: 0 5px 0 5px;
-    }
-
-    .pivotIndex {
-        border-bottom-style: solid;
-        /* text-decoration: underline; */
-    }
-
-    .swapIndex {
-        border-left-style: solid;
-        border-right-style: solid;
-    }
-
-    .sliceIndex {
-        /* text-decoration: overline; */
-        border-top-style: solid;
-    }
-
-    .pivotIndex.sliceIndex {
-        border-top-style: solid;
-        border-bottom-style: solid;
-        /* text-decoration: underline overline; */
-    }
-
-    h4 {
-        margin-bottom: 0;
-    }
-
-    h1 {
-        margin-top: 5px;
-        margin-bottom: 20px;
-    }
-
-    .notation {
-        display: inline-block;
-        margin: 15px 0 15px 0;
-        font-size: x-large;
-    }
-
-    .switched {
-        background-color: deepskyblue;
-    }
-
-    hr {
-        margin: 0;
-    }
-
-    .code {
-        text-align: left;
-        width: 600px;
-        margin: auto;
-    }
-</style>
 
 <body>
     <h1>Quicksort</h1>
@@ -123,25 +48,31 @@
     </div>
 
     <div class="code">
-        <h4>Psuedocode</h4>
-        <pre><code>algorithm quicksort(A, lo, hi) is
-    if lo &lt; hi then
-        p := partition(A, lo, hi)
-        quicksort(A, lo, p - 1)
-        quicksort(A, p + 1, hi)
+        <h4>Code</h4>
+        <pre><code>
+function quickSort(list: number[], lowIndex: number, highIndex: number) {
+    if (lowIndex >= highIndex) return;
 
-algorithm partition(A, lo, hi) is
-    pivot := A[hi]
-    i := lo
-    for j := lo to hi do
-        if A[j] &lt; pivot then
-            swap A[i] with A[j]
-            i := i + 1
-    swap A[i] with A[hi]
-    return i
+    const pivotIndex = partition(list, lowIndex, highIndex)
+    quickSort(list, lowIndex, pivotIndex - 1)
+    quickSort(list, pivotIndex + 1, highIndex)
+}
+
+function partition(list: number[], lowIndex: number, highIndex: number): number {
+    const currentPivot = list[highIndex]
+    let swapIndex = lowIndex
+    for (let i = lowIndex; i < highIndex; i++) {
+        if (list[i] < currentPivot) {
+            swap(list, i, swapIndex)
+            swapIndex++
+        }
+    }
+    swap(list, swapIndex, highIndex)
+    return swapIndex
+}
 </code></pre>
     </div>
-    <script type="module" src="build/index.js"></script>
+    <script type="module" src="index.js"></script>
 </body>
 
 </html>
