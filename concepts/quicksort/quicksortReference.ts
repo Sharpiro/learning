@@ -1,4 +1,4 @@
-import { swap } from "./shared.js";
+import { swap } from "./functions.js";
 
 function quickSort(list: number[], lowIndex: number, highIndex: number) {
     if (lowIndex >= highIndex) return;

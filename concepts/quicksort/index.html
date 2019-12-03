@@ -14,10 +14,18 @@
     <h1>Quicksort</h1>
     <div id="list"></div>
     <div id="status"></div>
-    <div id="currentStep"></div>
-    <div id="lastStep"></div>
-    <button id="previousButton">Previous</button>
-    <button id="nextButton">Next</button>
+    <div style="display: flex; justify-content: center;">
+        <div class="navigation-area">
+            <div>Previous Step:</div>
+            <div id="currentStep"></div>
+            <button id="previousButton">Previous</button>
+        </div>
+        <div class="navigation-area">
+            <div>Next Step:</div>
+            <div id="nextStep"></div>
+            <button id="nextButton">Next</button>
+        </div>
+    </div>
     <div>
         <h4>Notation</h4>
         <div>
@@ -42,7 +50,7 @@
         </div>
         <hr>
         <div>
-            <span class="notation">Swapped:</span>
+            <span class="notation">Recent Swap:</span>
             <span class="switched notation">X</span>
         </div>
         <hr>
@@ -50,7 +58,7 @@
 
     <div class="code">
         <h4>Code</h4>
-        <pre><code>
+        <pre><code id="referenceCode">
 function quickSort(list: number[], lowIndex: number, highIndex: number) {
     if (lowIndex >= highIndex) return;
 

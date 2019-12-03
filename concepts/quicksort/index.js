@@ -1,17 +1,24 @@
-import { QuickSorter } from "./quicksorter.js"
-import { getElementById } from "./shared.js"
+import { quicksort } from "./quicksort.js"
+import { getElementById } from "./functions.js"
+import { State } from "./state.js"
+
+/**
+ * @typedef { import("./state.js").StateType } StateType
+ */
 
 const list = [3, 7, 8, 5, 2, 1, 9, 5, 4]
 // const list = [3, 1, 8, 5, 2, 1, 9, 5, 4]
 const listEl = getElementById("list")
-const states = QuickSorter.sort(list)
+const states = quicksort(list)
 let stateIndex = 0
 writeListToDocument(states[stateIndex])
+highlightSyntax()
 console.log(states);
 console.log(`Step ${stateIndex + 1}`, states[stateIndex])
 
 const statusEl = getElementById("status")
-const lastStepEl = getElementById("lastStep")
+const currentStepEl = getElementById("currentStep")
+const nextStepEl = getElementById("nextStep")
 writeStatusToDocument()
 
 getElementById("previousButton").onmousedown = () => previous()
@@ -29,6 +36,22 @@ document.body.onkeydown = (event) => {
             next()
             break;
     }
+}
+
+function highlightSyntax() {
+    const referenceCodeElement = document.getElementById("referenceCode")
+    if (!referenceCodeElement) throw new Error("Couldn't find reference code element")
+    referenceCodeElement.innerHTML = referenceCodeElement.innerHTML
+        .addSyntaxStyle("function", "keyword-highlight")
+        .addSyntaxStyle("const", "keyword-highlight")
+        .addSyntaxStyle("let", "keyword-highlight")
+        .addSyntaxStyle("for", "keyword-highlight")
+        .addSyntaxStyle("return", "keyword-highlight")
+        .addSyntaxStyle("number", "type-highlight")
+        .addSyntaxStyle("quickSort", "func-identifier-highlight")
+        .addSyntaxStyle("partition", "func-identifier-highlight")
+        .addSyntaxStyle("swap", "func-identifier-highlight")
+        .addSyntaxStyle("1", "func-identifier-highlight")
 }
 
 function previous() {
@@ -52,38 +75,17 @@ function next() {
 function writeStatusToDocument() {
     statusEl.innerHTML = `Step: ${stateIndex + 1}/${states.length}`
 
-    const state = states[stateIndex + 1]
-    const stateType = state ? state.type : "done"
-    let message = ""
-    switch (stateType) {
-        case "startPartition":
-            message = "Start Partition"
-            break;
-        case "sliceIndexIncrement":
-            message = "Increment loop index"
-            break;
-        case "swapIndexIncrement":
-            message = "Increment swap index"
-            break;
-        case "loopSwap":
-            message = "Swap loop index and swap index"
-            break;
-        case "pivotSwap":
-            message = "Swap pivot index and swap index"
-            break;
-        case "completePartition":
-            message = "Complete Partition"
-            break;
-        case "done":
-            message = "Done"
-            break;
-        default: throw new Error(`add state type message: '${states[stateIndex + 1].type}'`)
-    }
-    lastStepEl.innerHTML = `Next Step: ${message}`
+    const currentState = states[stateIndex]
+    const currentStateMessage = currentState ? currentState.getStateMessage() : "None"
+    currentStepEl.innerHTML = `${currentStateMessage}`
+
+    const nextState = states[stateIndex + 1]
+    const nextStateMessage = nextState ? nextState.getStateMessage() : "None"
+    nextStepEl.innerHTML = `${nextStateMessage}`
 }
 
 /**
- * @param {import("./types.js").State} state
+ * @param {State} state
  */
 function writeListToDocument(state) {
     listEl.innerHTML = ""

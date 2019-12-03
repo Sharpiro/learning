@@ -68,3 +68,21 @@ hr {
     margin: auto;
     font-size: 14px;
 }
+
+.navigation-area{
+    width: 40%;
+    border-style: dotted;
+    margin: 0 25px 0 25px;
+}
+
+.keyword-highlight{
+    color: blue
+}
+
+.type-highlight{
+    color: green
+}
+
+.func-identifier-highlight{
+    color: rgb(255, 72, 0)
+}
