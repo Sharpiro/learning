@@ -1,3 +1,3 @@
 interface String {
-    addSyntaxStyle(word: string, className:string): string
+    addSyntaxStyle(word: string, className: string): string
 }

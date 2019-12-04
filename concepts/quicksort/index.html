@@ -13,6 +13,7 @@
 <body>
     <h1>Quicksort</h1>
     <div id="list"></div>
+    <button id="updateListButton">Update List</button>
     <div id="status"></div>
     <div style="display: flex; justify-content: center;">
         <div class="navigation-area">
@@ -29,7 +30,7 @@
     <div>
         <h4>Notation</h4>
         <div>
-            <span class="notation">Current Slice:</span>
+            <span class="notation">Current Partition:</span>
             <span class="slice notation">1, 2, 3</span>
         </div>
         <hr>
@@ -57,7 +58,7 @@
     </div>
 
     <div class="code">
-        <h4>Code</h4>
+        <h4>Reference Code</h4>
         <pre><code id="referenceCode">
 function quickSort(list: number[], lowIndex: number, highIndex: number) {
     if (lowIndex >= highIndex) return;

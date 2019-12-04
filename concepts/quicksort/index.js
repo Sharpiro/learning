@@ -6,23 +6,60 @@ import { State } from "./state.js"
  * @typedef { import("./state.js").StateType } StateType
  */
 
-const list = [3, 7, 8, 5, 2, 1, 9, 5, 4]
-// const list = [3, 1, 8, 5, 2, 1, 9, 5, 4]
-const listEl = getElementById("list")
-const states = quicksort(list)
+const initialList = [3, 7, 8, 5, 2, 1, 9, 5, 4]
+/** @type {State[]} */
+let states = []
 let stateIndex = 0
-writeListToDocument(states[stateIndex])
-highlightSyntax()
-console.log(states);
-console.log(`Step ${stateIndex + 1}`, states[stateIndex])
 
+const listEl = getElementById("list")
 const statusEl = getElementById("status")
 const currentStepEl = getElementById("currentStep")
 const nextStepEl = getElementById("nextStep")
-writeStatusToDocument()
-
 getElementById("previousButton").onmousedown = () => previous()
 getElementById("nextButton").onmousedown = () => next()
+getElementById("updateListButton").onmousedown = () => updateList()
+
+updateSortStates(initialList)
+writeStatusToDocument()
+
+function updateList() {
+    const promptResult = prompt("Enter valid json list of numbers.  Ex: [1,2]")
+    if (!promptResult) return
+
+    try {
+        /** @type {number[]} */
+        const numberList = JSON.parse(promptResult)
+        if (!Array.isArray(numberList)) {
+            throw new Error("Could not parse array")
+        }
+        if (numberList.length < 2) {
+            throw new Error("Array length must be at least 2")
+        }
+        if (numberList.length > 620){
+            alert("enjoy DDOS-ing yourself")
+        }
+        console.log(numberList)
+        updateSortStates(numberList)
+        writeStatusToDocument()
+    }
+    catch (err) {
+        console.error(err)
+        alert(err)
+    }
+}
+
+/**
+ * 
+ * @param {number[]} list 
+ */
+function updateSortStates(list) {
+    states = quicksort(list)
+    stateIndex = 0
+    writeListToDocument(states[stateIndex])
+    highlightSyntax()
+    console.log(states);
+    console.log(`Step ${stateIndex + 1}`, states[stateIndex])
+}
 
 /**
  * @param {KeyboardEvent} event
