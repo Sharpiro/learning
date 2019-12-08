@@ -1,5 +1,3 @@
-import WabtModule from "./wabt.js";
-
 const wabt = WabtModule();
 const memory = new WebAssembly.Memory({ initial: 1 });
 const memoryView = new Uint8Array(memory.buffer)
