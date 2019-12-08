@@ -1,8 +1,18 @@
 (module
   (import "js" "memory" (memory 1))
 
-  (func (export "ifStatementTest") (result i32)
-    i32.const 99
+  (func (export "isLessThan") (param i32) (param i32) (result i32)
+    local.get 0
+    local.get 1
+    i32.lt_s
+    (if (result i32)
+      (then
+        (i32.const 1)
+      )
+      (else
+        (i32.const 0)
+      )
+    )
   )
 
   (func (export "swapAtIndex") (param $x i32) (param $y i32) (local $x_temp i32)

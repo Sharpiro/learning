@@ -8,14 +8,15 @@ memoryView[3] = 44
 memoryView[4] = 55
 const watFileName = "quicksort.wat"
 
-/** @typedef {
-  { 
-    swapAtIndex(x: number, y: number): void
-    swapInPlace(x: number, y: number): void
-    ifStatementTest(temp: number): number
-  }
-} WasmFunctions
-*/
+/**
+  * @typedef { { 
+        swapAtIndex(x: number, y: number): void
+        swapInPlace(x: number, y: number): void
+        isLessThan(first: number, second: number): boolean
+        isLessThanLabeled(first: number, second: number): boolean
+      }
+    } WasmFunctions
+ */
 
 fetchWat(watFileName).then(wasmText => {
   const importObject = { js: { memory: memory } }
@@ -28,7 +29,8 @@ fetchWat(watFileName).then(wasmText => {
     // console.log(new Uint8Array(memory.buffer, 0, 5))
     // wasmFunctions.swapAtIndex(1, 3)
     // wasmFunctions.swapInPlace(0, 4)
-    console.log(wasmFunctions.ifStatementTest(0))
+    console.log(wasmFunctions.isLessThan(1, 2))
+
     // console.log(new Uint8Array(memory.buffer, 0, 5))
   })
 })
