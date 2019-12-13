@@ -1,0 +1,38 @@
+{
+    "cSpell.words": [
+        "CMKs",
+        "HSDIR",
+        "HSDIRS",
+        "Luks",
+        "MITM",
+        "VPCs",
+        "atempo",
+        "chmod",
+        "cloudwatch",
+        "fdisk",
+        "inputrc",
+        "libsecret",
+        "lsblk",
+        "normie",
+        "postgre",
+        "redshift",
+        "sbin",
+        "setxkbmap",
+        "stty",
+        "subcredential",
+        "subnet",
+        "subnets",
+        "sudoers",
+        "tempfs",
+        "torrc",
+        "woeusb"
+    ],
+    "markdownlint.config": {
+        "MD024": {
+            "siblings_only": true
+        }
+    },
+    "cSpell.ignoreRegExpList": [
+        "`[\\w\\W]*?`"
+    ]
+}
