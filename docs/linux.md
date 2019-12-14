@@ -371,4 +371,18 @@ vim ~/.config/user-dirs.dirs
 vim ~/.config/gtk-3.0/bookmarks
 ```
 
-> Don't know how to remove "Starred" yet...
+## Network
+
+### Auto connect VPN
+
+```sh
+alias network='nm-connection-editor'
+```
+
+### Network Scan
+
+```sh
+sudo nmap -sn 192.168.1.0/24
+```
+
+> todo: Don't know how to remove "Starred" yet...
