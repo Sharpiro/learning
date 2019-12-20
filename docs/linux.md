@@ -386,3 +386,14 @@ sudo nmap -sn 192.168.1.0/24
 ```
 
 > todo: Don't know how to remove "Starred" yet...
+
+### Gnome Extensions
+
+* Gnome Tweaks
+  * tweaks for gnome
+* Hide Top Bar
+  * hides the top bar when windows are maximized
+* Dash to Dock
+  * moves dash to bottom of screen for a more windows like experience
+* TopIcons Plus
+  * Adds tray icons for running applications to top bar
