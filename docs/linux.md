@@ -398,3 +398,11 @@ sudo nmap -sn 192.168.1.0/24
   * 24 px
 * TopIcons Plus
   * Adds tray icons for running applications to top bar
+
+### Dropbox
+
+#### fedora 31 dependency
+
+```sh
+sudo dnf install libatomic
+```
