@@ -389,6 +389,8 @@ sudo nmap -sn 192.168.1.0/24
 
 ### Gnome Extensions
 
+If a duplicate package exists in Software, try to use the one directly from your distro as opposed to from GNOME
+
 * Gnome Tweaks
   * tweaks for gnome
 * Hide Top Bar
