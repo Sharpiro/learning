@@ -199,51 +199,6 @@ sudo woeusb \
     --device Win10_1809Oct_English_x64.iso /dev/sdc
 ```
 
-## ffmpeg
-
-### basic
-
-```bash
-ffmpeg -i input.mp4 output.avi
-```
-
-### iTunes mp3
-
-```bash
-ffmpeg -i input.mp3 -aq 0 -vn output.mp3
-ffmpeg -i input.mp3 -b:a 128 -vn output.mp3 -b:a 128=audio bitrate
-```
-
-### playback speed
-
-```bash
-ffmpeg -i videoplayback.m4a -af "atempo=1.5" -vn videoplayback-fast.mp3
-```
-
-### clip
-
-```bash
-# clip a 10 minute video starting at the 30 minute mark
-# timestamp format: HH:MM:SS.xxx
-ffmpeg -i "input.mp4" -ss 00:30:00.0 -t 00:10:00.0 "output.mp4"
-```
-
-### fade in/out
-
-```bash
-# clip w/ fade in/out
-ffmpeg -i input.mp4 -ss 00:00:00.0 -t 00:00:10.0 -y -vf fade=in:0:60,fade=out:240:30 -af afade=in:st=0:d=1,afade=out:st=5:d=5 slide_fade_in.mp4
-```
-
-### flags
-
-| flag          | usage             | description
-| ------------- |------------------ |-------------
-| -aq           | -aq               | audio quality(lower better, fixes common iTunes length bug)
-| -vn           | -vn               | disable video(fixes 'invalid pixel' bug even on some audio files in rare cases)
-| -s            | -s 640x480        | resolution
-| -af           | -af "atempo=1.5"  | audio format for changing playback speed
-
 ## Luks
 
 ### dump master key
@@ -401,10 +356,33 @@ If a duplicate package exists in Software, try to use the one directly from your
 * TopIcons Plus
   * Adds tray icons for running applications to top bar
 
-### Dropbox
+## Dropbox
 
-#### fedora 31 dependency
+### fedora 31 dependency
 
 ```sh
 sudo dnf install libatomic
+```
+
+## youtube-dl
+
+### a/v sync test video
+
+[ucZl6vQ_8Uo](https://youtu.be/ucZl6vQ_8Uo)
+
+### qualities
+
+* 18 = 360p medium
+* 22 = hd720 best
+
+### socks 5 proxy
+
+```sh
+youtube-dl --proxy socks5://127.0.0.1:9050 https://youtu.be/url
+```
+
+### get direct video url
+
+```sh
+youtube-dl -f 22 -g  https://youtu.be/url
 ```

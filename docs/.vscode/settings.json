@@ -9,6 +9,7 @@
         "atempo",
         "chmod",
         "cloudwatch",
+        "distro",
         "fdisk",
         "inputrc",
         "libsecret",
