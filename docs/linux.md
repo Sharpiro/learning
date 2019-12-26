@@ -389,10 +389,17 @@ youtube-dl -f 22 -g  https://youtu.be/url
 
 ### download entire channel
 
-It will force continue a partially downloaded video, ignore errors, not overwrite files, and not re-download previously downloaded files (even if they are subsequently deleted)
+* select video and audio format
+* select output merge format
+* force continue a partially downloaded video
+* use template to create file relevant file name
+* ignore errors
+* do not overwrite files
+* do not re-download previously downloaded files (even if they are subsequently deleted)
+* be verbose
 
 ```sh
-youtube-dl -ciw --download-archive downloaded.txt \
--o "%(title)s.%(ext)s" \
--v https://www.youtube.com/channel/channel_id
+youtube-dl -f 136+140 --merge-output-format mp4 -ciw \
+--download-archive downloaded.txt -o "%(upload_date)s-%(id)s-%(title)s.%(ext)s" -v \
+https://www.youtube.com/channel/channel_id
 ```

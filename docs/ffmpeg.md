@@ -73,7 +73,7 @@ ffmpeg -ss 10 -i $(youtube-dl -f 22 -g  https://youtu.be/url) -t 5 test_out.mp4
 * `-f ismv`
   * similar to `mp4` but is optimized for streaming to stdout rather than a file
 
-**warning**: ismv causes audio sync/corruption issues
+**warning**: `ismv` causes audio sync/corruption issues
 
 ```sh
 ffmpeg -i input.mp4 -f ismv - > test_out_stream.mp4
@@ -83,6 +83,13 @@ ffmpeg -i input.mp4 -f ismv - > test_out_stream.mp4
 
 ```sh
 -movflags frag_keyframe+empty_moov
+```
+
+## combine audio and video
+
+```sh
+ffmpeg -loglevel repeat+info -i file:video.mp4 \
+-i file:audio.m4a -c copy -map 0:v:0 -map 1:a:0 file:test_out.mp4
 ```
 
 ## flags
