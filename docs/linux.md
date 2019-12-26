@@ -386,3 +386,13 @@ youtube-dl --proxy socks5://127.0.0.1:9050 https://youtu.be/url
 ```sh
 youtube-dl -f 22 -g  https://youtu.be/url
 ```
+
+### download entire channel
+
+It will force continue a partially downloaded video, ignore errors, not overwrite files, and not re-download previously downloaded files (even if they are subsequently deleted)
+
+```sh
+youtube-dl -ciw --download-archive downloaded.txt \
+-o "%(title)s.%(ext)s" \
+-v https://www.youtube.com/channel/channel_id
+```
