@@ -92,6 +92,16 @@ ffmpeg -loglevel repeat+info -i file:video.mp4 \
 -i file:audio.m4a -c copy -map 0:v:0 -map 1:a:0 file:test_out.mp4
 ```
 
+## increase video and audio speed
+
+```sh
+# 1.5 increase
+ffmpeg -i input.mp4 -filter_complex "[0:v]setpts=0.6666666666666666*PTS[v];[0:a]atempo=1.5[a]" -map "[v]" -map "[a]" output.mp4
+
+# 1.25 increase
+ffmpeg -i input.mp4 -filter_complex "[0:v]setpts=0.8*PTS[v];[0:a]atempo=1.25[a]" -map "[v]" -map "[a]" output.mp4
+```
+
 ## flags
 
 | flag          | usage             | description
