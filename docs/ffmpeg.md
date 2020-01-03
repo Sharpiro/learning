@@ -102,6 +102,22 @@ ffmpeg -i input.mp4 -filter_complex "[0:v]setpts=0.6666666666666666*PTS[v];[0:a]
 ffmpeg -i input.mp4 -filter_complex "[0:v]setpts=0.8*PTS[v];[0:a]atempo=1.25[a]" -map "[v]" -map "[a]" output.mp4
 ```
 
+## modify video to use h.264 codec
+
+Allows for video to be converted to a format acceptable to twitter.
+
+Twitter requirements:
+
+* `mp4` container
+* `H264` video codec
+* `AAC` audio codec
+* `512MB` size limit
+* `00:02:20` duration limit
+
+```sh
+ffmpeg -i input.mp4 -vc 264 out-264.mp4
+```
+
 ## flags
 
 | flag          | usage             | description
