@@ -366,14 +366,12 @@ sudo dnf install libatomic
 
 ## youtube-dl
 
-### a/v sync test video
+### good test videos
 
-[ucZl6vQ_8Uo](https://youtu.be/ucZl6vQ_8Uo)
-
-### qualities
-
-* 18 = 360p medium
-* 22 = hd720 best
+<!-- cspell:disable -->
+* [Audio Video Sync Test---ucZl6vQ_8Uo](https://youtu.be/ucZl6vQ_8Uo)
+* [costa_rica_4k_60fps_hdr---LXb3EKWsInQ](https://youtu.be/LXb3EKWsInQ)
+<!-- cspell:enable -->
 
 ### socks 5 proxy
 
@@ -383,23 +381,53 @@ youtube-dl --proxy socks5://127.0.0.1:9050 https://youtu.be/url
 
 ### get direct video url
 
+Gets the temporary, direct, downloadable, link for a video to be consumed by other clients
+
 ```sh
 youtube-dl -f 22 -g  https://youtu.be/url
 ```
 
-### download entire channel
+### download entire channel (all videos playlist?)
 
-* select video and audio format
-* select output merge format
-* force continue a partially downloaded video
-* use template to create file relevant file name
-* ignore errors
+* select best video and best mp4 compatible audio format (m4a)
+* select output merge format (mp4 for web)
+* force continue a partially downloaded video (?)
+* use template to create video-related file name
+* ignore errors (?)
 * do not overwrite files
-* do not re-download previously downloaded files (even if they are subsequently deleted)
-* be verbose
+* do not re-download previously downloaded files (even if they are subsequently deleted or renamed)
+* show verbose details
 
 ```sh
-youtube-dl -f 136+140 --merge-output-format mp4 -ciw \
+youtube-dl -f bestvideo+m4a --merge-output-format mp4 -ciw \
 --download-archive downloaded.txt -o "%(upload_date)s-%(id)s-%(title)s.%(ext)s" -v \
 https://www.youtube.com/channel/channel_id
 ```
+
+### download highest quality browser compatible video
+
+```sh
+youtube-dl -f bestvideo+m4a --merge-output-format mp4 video_id
+```
+
+### formats
+
+* best audio/video pre-packaged video (max 720p?)
+  * `-f best`
+* best video only (no audio)
+  * `-f bestvideo`
+* best video and audio and then combine them (default)
+  * `-f bestvideo+bestaudio`
+* best video and best audio that can be combined in an mp4 (see prev section)
+  * `f bestvideo+m4a`
+* 360p audio/video pre-packaged
+  * `-f 18`
+* 720p (best audio/video pre-packaged?)
+  * `-f 22`
+
+### misc
+
+* video format query parameter in direct url
+  * `itag=${format}`
+* force output format to be merged into `mp4` instead of probably `mkv`
+  * `--merge-output-format mp4`
