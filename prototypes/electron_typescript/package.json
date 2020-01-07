@@ -3,13 +3,12 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "build": "echo building literally nothing right now",
+    "build": "webpack --config ./webpack.config.js",
     "start": "export isDev=true && npm run build && electron ./main.js",
     "run": "electron ./app/main-bundle.js",
     "package": "electron-packager . electron-typescript --asar --overwrite --platform=linux --arch=x64 --prune=true --out=release-builds",
     "tempDir": "electron-builder --dir",
-    "temp": "electron-builder --linux",
-    "webpack": "webpack --config ./webpack.config.js"
+    "temp": "electron-builder --linux"
   },
   "author": "sharpiro",
   "devDependencies": {
@@ -23,6 +22,5 @@
     "webpack": "^4.41.4",
     "webpack-cli": "^3.3.10"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
