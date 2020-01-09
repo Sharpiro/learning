@@ -1,7 +1,11 @@
 //@ts-check
 
 const { app, BrowserWindow } = require('electron')
-const path = require('path')
+
+const isDev = process.env["isDev"]
+if (isDev) {
+  process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
+}
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -17,7 +21,7 @@ function createWindow() {
     webPreferences: {
       // e z but insecure
       //https://electronjs.org/docs/tutorial/security#2-do-not-enable-nodejs-integration-for-remote-content
-      nodeIntegration: true,
+      nodeIntegration: true
       // preload: path.join(app.getAppPath(), 'preload-bundle.js')
       // todo: allows inline css like in browsers
       // allowRunningInsecureContent: true

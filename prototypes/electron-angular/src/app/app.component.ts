@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { fs } from "../electron-node"
+import { remote } from "../electron-node"
 
 @Component({
   selector: 'app-root',
@@ -11,12 +11,6 @@ export class AppComponent implements OnInit {
   test?: string
 
   ngOnInit(): void {
-    let x: Buffer
-    console.log("hi")
-    console.log("hi")
-    console.log("hi")
-
-    console.log(fs)
-    console.log(fs.readFileSync)
+    console.log(remote.app.getAppPath())
   }
 }
