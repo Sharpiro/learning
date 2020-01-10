@@ -14,5 +14,6 @@ export class AppComponent implements OnInit {
     console.log(remote.app.getAppPath())
     const testFilePath = path.join(remote.app.getAppPath(), 'icon.png')
     console.log("test file exists:", fs.existsSync(testFilePath))
+    console.log("route?:", window.location.href)
   }
 }

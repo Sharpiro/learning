@@ -5,13 +5,12 @@
   "description": "POC for electron angular",
   "author": "sharpiro",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "electron-builder --linux",
+    "build": "ng build --prod && electron-builder --linux",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "electron": "export isDev=true && electron electron.js"
+    "serve": "ng serve",
+    "start": "export isDev=true && electron electron.js"
   },
   "private": true,
   "dependencies": {
@@ -52,7 +51,11 @@
   },
   "build": {
     "appId": "electron-angular-poc",
-    "files": [],
+    "files": [
+      "electron.js",
+      "icon.png",
+      "build/**/*"
+    ],
     "asar": {
       "smartUnpack": false
     },

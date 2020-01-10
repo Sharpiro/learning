@@ -2,6 +2,7 @@
 
 const { app, BrowserWindow } = require('electron')
 const path = require("path")
+const url = require("url")
 
 const isDev = process.env["isDev"]
 if (isDev) {
@@ -30,9 +31,15 @@ function createWindow() {
     icon: path.join(app.getAppPath(), 'icon.png'),
   })
 
-  // and load the index.html of the app.
-  // mainWindow.loadFile('app/index.html')
-  mainWindow.loadURL("http://localhost:4200")
+  if (isDev) {
+    mainWindow.loadURL("http://localhost:4200")
+  } else {
+    mainWindow.loadURL(url.format({
+      pathname: path.join(__dirname, 'build/index.html'),
+      protocol: 'file:',
+      slashes: true
+    }))
+  }
   mainWindow.webContents.openDevTools()
 
   // Open the DevTools.
