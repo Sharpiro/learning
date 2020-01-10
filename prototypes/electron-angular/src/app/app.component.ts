@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { remote, fs } from "../electron-node"
+import { remote, fs, path } from "../electron-node"
 
 @Component({
   selector: 'app-root',
@@ -12,6 +12,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(remote.app.getAppPath())
-    console.log(fs.readFileSync(".editorconfig", "utf8"))
+    const testFilePath = path.join(remote.app.getAppPath(), 'icon.png')
+    console.log("test file exists:", fs.existsSync(testFilePath))
   }
 }
