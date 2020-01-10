@@ -2,14 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": [
-      "node"
-    ],
-    "paths": {
-      // "fs": [
-      //   "./shims/noop.js"
-      // ]
-    }
+    "types": []
   },
   "files": [
     "src/main.ts",

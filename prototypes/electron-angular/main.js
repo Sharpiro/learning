@@ -26,6 +26,7 @@ function createWindow() {
       // todo: allows inline css like in browsers
       // allowRunningInsecureContent: true
     },
+    icon: "src/favicon.ico"
   })
 
   // and load the index.html of the app.

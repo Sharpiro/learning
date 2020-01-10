@@ -26,7 +26,9 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/menu.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -120,6 +122,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "electron-angular"
 }
