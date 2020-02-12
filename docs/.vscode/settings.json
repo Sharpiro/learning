@@ -15,6 +15,7 @@
         "libsecret",
         "lsblk",
         "normie",
+        "openvpn",
         "postgre",
         "redshift",
         "sbin",

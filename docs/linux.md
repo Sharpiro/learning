@@ -328,7 +328,7 @@ vim ~/.config/gtk-3.0/bookmarks
 
 ## Network
 
-### Auto connect VPN
+### VPN settings
 
 ```sh
 alias network='nm-connection-editor'
@@ -338,6 +338,12 @@ alias network='nm-connection-editor'
 
 ```sh
 sudo nmap -sn 192.168.1.0/24
+```
+
+### openvpn connection
+
+```sh
+sudo openvpn --config /etc/openvpn/ovpn_udp/us4111.nordvpn.com.udp.ovpn --auth-user-pass /home/pi/.openvpn/cred
 ```
 
 > todo: Don't know how to remove "Starred" yet...
