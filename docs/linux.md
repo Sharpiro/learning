@@ -216,6 +216,12 @@ ssh-add /home/user/path-to-your-key/key_name
 sftp://funky@ip.to.your.server:7000
 ```
 
+### SCP folder contents from remote to local
+
+```sh
+scp -r pi@192.168.1.2:/home/pi/gitbase/downloader/web_server/.cache .
+```
+
 ## 7 Zip
 
 * Installation
@@ -234,6 +240,31 @@ sftp://funky@ip.to.your.server:7000
 # ln -s source target
 sudo ln -s /usr/lib64/libssl.so.1.1.1 /usr/lib64/libssl.so.1.0.0
 ```
+
+### add to applications menu
+
+`~/.local/share/applications/test.desktop`
+
+```sh
+[Desktop Entry]
+Name=Downloader
+GenericName=File Synchronizer
+Comment=Sync your files across computers and to the web
+Exec=/home/user/src/app/test-0.0.0.AppImage
+Icon=/home/user/src/app/icon.png
+Terminal=false
+Type=Application
+StartupNotify=true
+Encoding=UTF-8
+```
+
+> **note:** `StartupNotify` is likely only for taskbar notifications
+
+### add application to startup
+
+add `.desktop` file to `~/.config/autostart/`
+
+### add to startup
 
 ## Ignore case in terminal
 
