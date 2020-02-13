@@ -264,8 +264,6 @@ Encoding=UTF-8
 
 add `.desktop` file to `~/.config/autostart/`
 
-### add to startup
-
 ## Ignore case in terminal
 
 Add the following to ```~/.inputrc``` for current user or ```/etc/inputrc``` for all users:
