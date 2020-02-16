@@ -355,6 +355,35 @@ vim ~/.config/user-dirs.dirs
 vim ~/.config/gtk-3.0/bookmarks
 ```
 
+### verify a password against the stored hash
+
+* `/etc/shadow` hash entry
+  * `:` - delimiter
+  * order
+    * user
+    * password hash
+    * last changed?
+    * ...
+
+```sh
+sudo cat /etc/shadow | grep test_user
+
+# test_user:$6$rXT52XGHPU0MpT9f$n8jVgWOh.0jJiZrdAYATX.jD02Va.oNHSph05OxymFJI83w84l2X75iLsFqS2Wa/XKce3re7EaTlT8a2Zfkyo0:18246:0:99999:7:::
+```
+
+verifying the hash
+
+* `$` - start of hash segment
+* order
+  * hash type
+  * salt
+  * hash
+
+```sh
+openssl passwd -6 -salt rXT52XGHPU0MpT9f
+# $6$rXT52XGHPU0MpT9f$n8jVgWOh.0jJiZrdAYATX.jD02Va.oNHSph05OxymFJI83w84l2X75iLsFqS2Wa/XKce3re7EaTlT8a2Zfkyo0
+```
+
 ## Network
 
 ### VPN settings
