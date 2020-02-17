@@ -126,3 +126,10 @@ ffmpeg -i input.mp4 -vc 264 out-264.mp4
 | -vn           | -vn               | disable video(fixes 'invalid pixel' bug even on some audio files in rare cases)
 | -s            | -s 640x480        | resolution
 | -af           | -af "atempo=1.5"  | audio format for changing playback speed
+
+## get file info
+
+```sh
+# print file format and streams in json format to stdout
+ffprobe -v quiet -print_format json -show_format -show_streams big_test_vid.mp4
+```
