@@ -1,5 +1,6 @@
 (module
   (import "js" "memory" (memory 1))
+  (import "js" "log" (func $log (param i32)))
 
   (func (export "isLessThan") (param i32) (param i32) (result i32)
     local.get 0
@@ -30,23 +31,66 @@
     i32.store8
   )
 
-  (func (export "loopTest") (param $x i32) (param $y i32)
-      ;; i32.const 5
-      ;; local.set $x
-      ;; i32.const 5
-      ;; local.set $x
+  (func (export "forLoop") (param $start i32) (param $end i32)
+      ;; loop is basically a do while
       loop $myLoop
-        local.get $x
-        local.get $y
-        i32.lt_s
-        local.get $x
+        ;; do work
+        local.get $start
+        local.get $start
+        i32.store
+
+        ;; increment
+        local.get $start
         i32.const 1
         i32.add
-        local.set $x
+        local.set $start
 
-        ;; i32.const 0
-        br 0
+        ;; compare is less than
+        local.get $start
+        local.get $end
+        i32.lt_s
+  
+        br_if $myLoop
       end
+  )
+
+  (func (export "reverse") (param $start i32) (param $end i32)  (local $endIndex i32)
+      local.get $end
+      i32.const 1
+      i32.sub
+      local.set $endIndex
+    loop $myLoop
+      ;; calc store index
+      local.get $end
+      local.get $start
+      i32.add
+
+      ;; calc j
+      local.get $endIndex
+      local.get $start
+      i32.sub
+
+      ;; load data @ j
+      i32.load8_u
+
+      ;; store data @ new index
+      i32.store8
+
+      ;; call $log
+      
+      ;; increment
+      local.get $start
+      i32.const 1
+      i32.add
+      local.set $start
+
+      ;; compare is less than
+      local.get $start
+      local.get $end
+      i32.lt_s
+
+      br_if $myLoop
+    end
   )
 
   (func (export "swapInPlace") (param $x i32) (param $y i32)

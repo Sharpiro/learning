@@ -1,3 +1,5 @@
+const wabt = /** @type { import("wabt") } */ ((/** @type { any } */ (globalThis)).WabtModule())
+
 /**
  * @param {string} fileName
  */
@@ -25,18 +27,20 @@ export async function fetchWasm(fileName) {
 /**
  * @param {string} filename
  * @param {string} watData
- * @returns {Uint8Array}
+ * @returns {ArrayBuffer}
  */
 export function build(filename, watData) {
-    const wabt = (/** @type {any} */ (globalThis)).WabtModule()
+    console.log("building")
     const wasmModule = wabt.parseWat(filename, watData)
+    wasmModule.resolveNames()
+
     const { buffer: wasmBinary } = wasmModule.toBinary({})
     return wasmBinary
 }
 
 /**
  * @param { string } watFileName
- * @returns { Promise<Uint8Array> }
+ * @returns { Promise<ArrayBuffer> }
  */
 export async function fetchAndBuild(watFileName) {
     const fetchAndBuildPromise = new Promise((res, rej) => {
