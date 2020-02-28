@@ -27,14 +27,9 @@ function reverse(data) {
     for (let i = 0; i < ticks; i++) {
         const j = endIndex - i
 
-
-
         const temp = data[i]
         data[i] = data[j]
         data[j] = temp
-
-        // console.log(i, j)
-        // console.log(data)
     }
     return data
 }

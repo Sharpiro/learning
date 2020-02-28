@@ -26,23 +26,34 @@ export async function test(name, expression) {
 
 /**
  * @param {any} condition
- * @param {string=} msg
  * @returns {asserts condition}
  */
-export function assertTrue(condition, msg) {
+export function assertTrue(condition) {
   if (!condition) {
-    throw new Error(msg)
+    throw new Error()
   }
 }
 
 /**
  * @param {any} condition
- * @param {string=} msg
  * @returns {asserts condition}
  */
-export function assertFalse(condition, msg) {
+export function assertFalse(condition) {
   if (condition) {
-    throw new Error(msg)
+    throw new Error()
+  }
+}
+
+/**
+ * @param {ArrayLike<any>} x
+ * @param {ArrayLike<any>} y
+ */
+export function assertEqual(x, y) {
+  if (x === y) return
+  if (x.length !== y.length) throw new Error("array length mismatch")
+
+  for (let i = 0; i < x.length; i++) {
+    if (x[i] !== y[i]) throw new Error(`array mismatch @ index '${i}'`)
   }
 }
 

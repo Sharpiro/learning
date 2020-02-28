@@ -1,4 +1,4 @@
-import { test, assertTrue, assertFalse } from "./test_lib.js"
+import { test, assertTrue, assertFalse, assertEqual } from "./test_lib.js"
 // import "./reverse.js"
 
 test("isLessThan", funcs => {
@@ -53,13 +53,10 @@ test("loopTest", (funcs, memory) => {
 
 test("reverseTest", (funcs, memory) => {
   const memoryView = new Uint8Array(memory.buffer)
-  memoryView[0] = 1
-  memoryView[1] = 2
-  memoryView[2] = 3
-  memoryView[3] = 4
-  memoryView[4] = 5
-  funcs.reverse(0, 5)
-  // console.log(memoryView.slice(0, 5))
-  // console.log(memoryView.slice(5, 10))
-  console.log(memoryView.slice(0, 15))
+  const initial = [1, 2, 3, 4, 5, 6, 7]
+  memoryView.set(initial)
+
+  funcs.reverse(0, initial.length)
+
+  assertEqual(initial.reverse(), memoryView.slice(0, initial.length))
 })
