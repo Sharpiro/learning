@@ -60,3 +60,5 @@ test("reverseTest", (funcs, memory) => {
 
   assertEqual(initial.reverse(), memoryView.slice(0, initial.length))
 })
+
+// const defaultList = [3,1,4,2]
