@@ -199,12 +199,52 @@ sudo woeusb \
     --device Win10_1809Oct_English_x64.iso /dev/sdc
 ```
 
-## Luks
+## Encryption
 
-### dump master key
+### Luks
+
+#### dump master key
 
 ```bash
 sudo cryptsetup luksDump --dump-master-key /dev/nvme0n1p2
+```
+
+#### mount encrypted partition
+
+```sh
+# decrypt (encrypted_partition, decrypted_partition_name)
+sudo cryptsetup open /dev/sda1 decrypted_partition
+# decrypted partition symblinks are found @ /dev/mapper
+# mount (decrypted_partition_symlink, mountdir)
+sudo mount /dev/mapper/decrypted_partition ~/temp/temp_mount_dir
+```
+
+#### un-mount encrypted partition
+
+```sh
+#un-mount (mountdir)
+sudo umount ~/temp/temp_mount_dir
+# decrypt (decrypted_partition_name)
+sudo cryptsetup close decrypted_partition
+```
+
+### `gocryptfs`
+
+#### mount encrypted folder
+
+```sh
+gocryptfs cipher_dir mount_dir
+```
+
+#### mount encrypted folder with gnome secrets script
+
+```sh
+cipher_dir=$(dirname "$0")/gcfs_cipher
+mount_dir=~/run/media/gcfs_mount
+gnome_key_path="gocryptfs sub"
+
+mkdir -p $mount_dir
+gocryptfs --extpass="secret-tool lookup $gnome_key_path" $cipher_dir $mount_dir
 ```
 
 ## SSH
