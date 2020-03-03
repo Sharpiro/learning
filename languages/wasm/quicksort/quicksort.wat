@@ -76,21 +76,20 @@
     local.get $swapIndex
   )
 
-  (func $swapAtIndex (export "swapAtIndex") (param $x i32) (param $y i32) (local $x_temp i32)
-    ;; move x to temp
-    local.get $x
-    i32.load8_u
-    local.set $x_temp
-
-    ;; move y to x
+  (func $swapAtIndex (export "swapAtIndex") (param $x i32) (param $y i32)
+    ;; prepare y value to be stored at x index
     local.get $x
     local.get $y
     i32.load8_u
+
+    ;; prepare x value to be stored at y index
+    local.get $y
+    local.get $x
+    i32.load8_u
+
+    ;; store x value at y index
     i32.store8
-
-    ;; move temp to y
-    local.get $y
-    local.get $x_temp
+    ;; store y value at x index
     i32.store8
   )
 )

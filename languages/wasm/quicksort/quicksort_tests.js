@@ -33,7 +33,7 @@ import { test, assertTrue, assertFalse, assertEqual } from "./test_lib.js"
 //   assertEqual(initial.reverse(), memoryView.slice(0, initial.length))
 // })
 
-test("swapAtIndex", (funcs, memory) => {
+test("swapAtIndexTest", (funcs, memory) => {
   const memoryView = new Uint8Array(memory.buffer)
   memoryView[0] = 1
   memoryView[1] = 2
@@ -42,7 +42,7 @@ test("swapAtIndex", (funcs, memory) => {
   assertTrue(memoryView[1] === 1)
 })
 
-test("swapAtIndex", (funcs, memory) => {
+test("swapAtIndexTest", (funcs, memory) => {
   const memoryView = new Uint8Array(memory.buffer)
   memoryView[0] = 124
   memoryView[1] = 86
@@ -51,7 +51,7 @@ test("swapAtIndex", (funcs, memory) => {
   assertTrue(memoryView[1] === 124)
 })
 
-test("swapAtIndex", (funcs, memory) => {
+test("swapAtIndexTest", (funcs, memory) => {
   const memoryView = new Uint8Array(memory.buffer)
   memoryView[0] = 255
   memoryView[1] = 5
