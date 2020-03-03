@@ -1,15 +1,61 @@
 (module
   (import "js" "memory" (memory 1))
   (import "js" "log" (func $log (param i32)))
-  (import "js" "log" (func $logFloat (param f32)))
 
-  (func (export "partition") (param $start i32) (param $end i32) (result i32) (local $swapIndex i32)
-    loop $myLoop
-      ;; do work
-      local.get $start
-      local.get $start
-      i32.store
+  (func $quicksort (export "quicksort") (param $start i32) (param $end i32) (local $pivotIndex i32)
+    local.get $start
+    local.get $end
+    i32.const 1
+    i32.sub
+    i32.lt_u
 
+    if
+      local.get $start
+      local.get $end
+      call $partition
+      local.set $pivotIndex
+
+      local.get $start
+      local.get $pivotIndex
+      call $quicksort
+
+      local.get $pivotIndex
+      i32.const 1
+      i32.add
+      local.get $end
+      call $quicksort
+    end
+  )
+
+  (func $partition (export "partition") (param $start i32) (param $end i32) (result i32) (local $swapIndex i32) (local $highIndex i32)
+    local.get $start
+    local.set $swapIndex
+
+    local.get $end
+    i32.const 1
+    i32.sub
+    local.set $highIndex
+
+    loop $partitionLoop
+      local.get $start
+      i32.load8_s
+
+      local.get $highIndex
+      i32.load8_s
+
+      i32.lt_s
+      ;; todo: try returning swap index?
+      if
+        local.get $start
+        local.get $swapIndex
+        call $swapAtIndex
+        local.get $swapIndex
+        i32.const 1
+        i32.add
+        local.set $swapIndex
+      end
+
+      ;; todo abstract away looping?
       ;; increment
       local.get $start
       i32.const 1
@@ -18,23 +64,16 @@
 
       ;; compare is less than
       local.get $start
-      local.get $end
-      i32.lt_s
-
-      br_if $myLoop
+      local.get $highIndex
+      i32.lt_u
+      br_if $partitionLoop
     end
-    i32.const 0
-  )
 
-  (func (export "isLessThan") (param i32) (param i32) (result i32)
-    local.get 0
-    local.get 1
-    i32.lt_s
-    if (result i32)
-      i32.const 1
-    else
-      i32.const 0
-    end
+    local.get $swapIndex
+    local.get $highIndex
+    call $swapAtIndex
+
+    local.get $swapIndex
   )
 
   (func $swapAtIndex (export "swapAtIndex") (param $x i32) (param $y i32) (local $x_temp i32)
@@ -54,93 +93,4 @@
     local.get $x_temp
     i32.store8
   )
-
-  (func (export "forLoop") (param $start i32) (param $end i32)
-      ;; loop is basically a do while
-    loop $myLoop
-      ;; do work
-      local.get $start
-      local.get $start
-      i32.store
-
-      ;; increment
-      local.get $start
-      i32.const 1
-      i32.add
-      local.set $start
-
-      ;; compare is less than
-      local.get $start
-      local.get $end
-      i32.lt_s
-
-      br_if $myLoop
-    end
-  )
-
-  (func (export "reverse") (param $start i32) (param $end i32)  (local $endIndex i32) (local $ticks i32)
-    local.get $end
-    i32.const 1
-    i32.sub
-    local.set $endIndex
-
-    local.get $end
-    i32.const 2
-    i32.div_u
-    local.set $ticks
-
-    loop $myLoop
-      ;; ;; calc index
-      local.get $start
-
-      ;; ;; calc j
-      local.get $endIndex
-      local.get $start
-      i32.sub
-
-      call $swapAtIndex
-
-      ;; increment
-      local.get $start
-      i32.const 1
-      i32.add
-      local.set $start
-
-      ;; compare is less than
-      local.get $start
-      local.get $ticks
-      i32.lt_s
-
-      br_if $myLoop
-    end
-  )
-
-  ;; (func (export "swapInPlace") (param $x i32) (param $y i32)
-  ;;   ;; x = x ^ y
-  ;;   local.get $x
-  ;;   local.get $x
-  ;;   i32.load8_u
-  ;;   local.get $y
-  ;;   i32.load8_u
-  ;;   i32.xor
-  ;;   i32.store8
-
-  ;;   ;; y = x ^ y
-  ;;   local.get $y
-  ;;   local.get $x
-  ;;   i32.load8_u
-  ;;   local.get $y
-  ;;   i32.load8_u
-  ;;   i32.xor
-  ;;   i32.store8
-
-  ;;   ;; x = x ^ y
-  ;;   local.get $x
-  ;;   local.get $x
-  ;;   i32.load8_u
-  ;;   local.get $y
-  ;;   i32.load8_u
-  ;;   i32.xor
-  ;;   i32.store8
-  ;; )
 )
