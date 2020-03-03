@@ -125,6 +125,8 @@ function highlightSyntax() {
         .addSyntaxStyle("partition", "func-identifier-highlight")
         .addSyntaxStyle("swap", "func-identifier-highlight")
         .addSyntaxStyle("1", "func-identifier-highlight")
+        .addSyntaxStyle("inclusive start index", "comment-highlight")
+        .addSyntaxStyle("exclusive end index", "comment-highlight")
 }
 
 function previous() {

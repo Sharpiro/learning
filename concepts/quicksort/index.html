@@ -60,24 +60,27 @@
     <div class="code">
         <h4>Reference Code</h4>
         <pre><code id="referenceCode">
-function quickSort(list: number[], lowIndex: number, highIndex: number) {
-    if (lowIndex >= highIndex) return;
+/**
+* @param start inclusive start index
+* @param end exclusive end index
+*/
+function quickSort(list: number[], start: number, end: number) {
+    if (start >= end - 1) return;
 
-    const pivotIndex = partition(list, lowIndex, highIndex)
-    quickSort(list, lowIndex, pivotIndex - 1)
-    quickSort(list, pivotIndex + 1, highIndex)
+    const pivotIndex = partition(list, start, end)
+    quickSort(list, start, pivotIndex)
+    quickSort(list, pivotIndex + 1, end)
 }
 
-function partition(list: number[], lowIndex: number, highIndex: number): number {
-    const currentPivot = list[highIndex]
-    let swapIndex = lowIndex
-    for (let i = lowIndex; i < highIndex; i++) {
-        if (list[i] < currentPivot) {
+function partition(list: number[], start: number, end: number): number {
+    let swapIndex = start
+    for (let i = start; i < end - 1; i++) {
+        if (list[i] < list[end - 1]) {
             swap(list, i, swapIndex)
             swapIndex++
         }
     }
-    swap(list, swapIndex, highIndex)
+    swap(list, swapIndex, end - 1)
     return swapIndex
 }
 </code></pre>

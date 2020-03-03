@@ -85,3 +85,7 @@ hr {
 .func-identifier-highlight{
     color: rgb(255, 166, 0)
 }
+
+.comment-highlight{
+    color: rgb(5, 141, 5)
+}
