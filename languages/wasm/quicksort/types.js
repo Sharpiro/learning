@@ -5,6 +5,7 @@
     isLessThan(first: number, second: number): boolean;
     forLoop(start: number, end: number): void;
     reverse(start: number, end: number): void;
+    partition(start: number, end: number): number;
 }} WasmFunctions
 */
 

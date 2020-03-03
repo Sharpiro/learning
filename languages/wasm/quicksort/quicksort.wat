@@ -3,6 +3,29 @@
   (import "js" "log" (func $log (param i32)))
   (import "js" "log" (func $logFloat (param f32)))
 
+  (func (export "partition") (param $start i32) (param $end i32) (result i32) (local $swapIndex i32)
+    loop $myLoop
+      ;; do work
+      local.get $start
+      local.get $start
+      i32.store
+
+      ;; increment
+      local.get $start
+      i32.const 1
+      i32.add
+      local.set $start
+
+      ;; compare is less than
+      local.get $start
+      local.get $end
+      i32.lt_s
+
+      br_if $myLoop
+    end
+    i32.const 0
+  )
+
   (func (export "isLessThan") (param i32) (param i32) (result i32)
     local.get 0
     local.get 1
