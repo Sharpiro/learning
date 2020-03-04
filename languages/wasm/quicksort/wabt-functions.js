@@ -1,4 +1,5 @@
-const wabt = /** @type { import("wabt") } */ ((/** @type { any } */ (globalThis)).WabtModule())
+//@ts-ignore
+import { WabtModule } from "https://cdn.jsdelivr.net/gh/sharpiro/wabt.js@9ea629b1c31f80c70efdf9d01b489274beb0ddb1/index.js"
 
 /**
  * @param {string} fileName
@@ -8,8 +9,21 @@ export async function fetchWat(fileName) {
         throw new Error("invalid file type")
     }
     const response = await fetch(fileName)
-    const bytes = await response.text()
-    return bytes
+    const text = await response.text()
+    return text
+}
+
+/**
+ * @param {string} fileName
+ */
+export async function fetchWatDeno(fileName) {
+    if (fileName.slice(-4) !== ".wat") {
+        throw new Error("invalid file type")
+    }
+    const response = await window.Deno.readFile(fileName)
+    const decoder = new TextDecoder()
+    const text = decoder.decode(response)
+    return text
 }
 
 /**
@@ -31,7 +45,7 @@ export async function fetchWasm(fileName) {
  */
 export function build(filename, watData) {
     console.log("building")
-    const wasmModule = wabt.parseWat(filename, watData)
+    const wasmModule = WabtModule().parseWat(filename, watData)
     wasmModule.resolveNames()
 
     const { buffer: wasmBinary } = wasmModule.toBinary({})
@@ -43,8 +57,9 @@ export function build(filename, watData) {
  * @returns { Promise<ArrayBuffer> }
  */
 export async function fetchAndBuild(watFileName) {
+    const fetchFunc = window.Deno ? fetchWatDeno : fetchWat
     const fetchAndBuildPromise = new Promise((res, rej) => {
-        fetchWat(watFileName)
+        fetchFunc(watFileName)
             .then(watData => {
                 const wasmBinary = build(watFileName, watData)
                 res(wasmBinary)
