@@ -4,13 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watch",
+    "test": "deno --allow-read quicksort_tests.js",
     "serve": "browser-sync start --port 8080 --server --no-open --files . --ignore node_modules"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "browser-sync": "^2.26.7",
-    "wabt": "^1.0.12-nightly.20191212"
+    "browser-sync": "^2.26.7"
   }
 }

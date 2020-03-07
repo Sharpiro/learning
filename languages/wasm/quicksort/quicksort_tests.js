@@ -40,6 +40,19 @@ test("partitionOnceTest", (funcs, memory) => {
   assertEqual(expected, actual)
 })
 
+test("partitionOnceTest", (funcs, memory) => {
+  const memoryView = new Uint8Array(memory.buffer)
+  const initial = [3, 7, 8, 5, 2, 1, 9, 5, 4]
+  const expected = [3, 2, 1, 4, 7, 8, 9, 5, 5]
+  memoryView.set(initial)
+
+  const nextPivot = funcs.partition(0, initial.length)
+
+  const actual = memoryView.slice(0, initial.length)
+  assertTrue(3 === nextPivot)
+  assertEqual(expected, actual)
+})
+
 test("quicksortTest", (funcs, memory) => {
   const memoryView = new Uint8Array(memory.buffer)
   const expected = [1, 2, 3, 4]
@@ -49,6 +62,17 @@ test("quicksortTest", (funcs, memory) => {
   funcs.quicksort(0, initial.length)
 
   const actual = memoryView.slice(0, initial.length)
-  console.log(actual)
+  assertEqual(expected, actual)
+})
+
+test("quicksortTest", (funcs, memory) => {
+  const memoryView = new Uint8Array(memory.buffer)
+  const expected = [1, 2, 3, 4, 5, 5, 7, 8, 9]
+  const initial = [3, 7, 8, 5, 2, 1, 9, 5, 4]
+  memoryView.set(initial)
+
+  funcs.quicksort(0, initial.length)
+
+  const actual = memoryView.slice(0, initial.length)
   assertEqual(expected, actual)
 })

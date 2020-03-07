@@ -7,8 +7,7 @@
     local.get $end
     i32.const 1
     i32.sub
-    i32.lt_u
-
+    i32.lt_s
     if
       local.get $start
       local.get $end

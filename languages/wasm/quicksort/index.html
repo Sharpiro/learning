@@ -2,15 +2,50 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>WASM Quicksort</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>WASM Quicksort</title>
 </head>
 
+<style>
+  body {
+    padding: 0px 25px 0px 25px;
+    max-width: 800px;
+    margin: auto;
+  }
+
+  #sourceCode {
+    margin-top: 25px;
+    white-space: pre-wrap;
+  }
+
+</style>
+
 <body>
-    See console...
-    <script type="module" src="quicksort_tests.js"></script>
+  <h3>WASM Quicksort</h3>
+  <div style="margin-bottom: 15px;">
+    Open dev tools for logging and debugging.  See <a target="_blank" href="https://sharpiro.github.io/learning/concepts/quicksort/">quicksort visualized</a> to better understand the algorithm.
+  </div>
+  <!-- <div>
+    <h2>Command Count history:</h2>
+    <ul>
+      <li>60</li>
+      <li>58
+        <ul>
+          <li>refactored swap function to use stack instead of temp variable</li>
+        </ul>
+      </li>
+    </ul>
+  </div> -->
+
+  <div>
+    <label for="commandCountId">Current Command Count:</label>
+    <span id="commandCountId"></span>
+  </div>
+  <div id="sourceCode"></div>
+  <script src="index.js"></script>
+  <script type="module" src="quicksort_tests.js"></script>
 </body>
 
 </html>
