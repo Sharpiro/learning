@@ -315,6 +315,7 @@ set completion-ignore-case On
 ## Git Credential libsecret
 
 ```sh
+sudo dnf install git-credential-libsecret
 git config --global credential.helper /usr/libexec/git-core/git-credential-libsecret
 ```
 
