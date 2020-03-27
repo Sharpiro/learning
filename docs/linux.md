@@ -302,7 +302,10 @@ Encoding=UTF-8
 
 ### add application to startup
 
-add `.desktop` file to `~/.config/autostart/`
+* add command or script to `~/.bash_profile` //todo: verify
+* add line to crontab
+  * `@reboot ~/scripts/run.sh`
+* add `.desktop` file to `~/.config/autostart/`
 
 ## Ignore case in terminal
 
