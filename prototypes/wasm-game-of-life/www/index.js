@@ -1,5 +1,5 @@
 import { memory } from "wasm-game-of-life/wasm_game_of_life_bg";
-import { Counter } from "wasm-game-of-life";
+import { ProgramIterator } from "wasm-game-of-life";
 
 function delay() {
   return new Promise((res) => {
@@ -10,14 +10,30 @@ function delay() {
 }
 
 async function main() {
-  const iterator = Counter.new("hello, world");;
+  const iterator = ProgramIterator.new("hello, world");;
+  console.log(iterator.get_list());
+  console.log(iterator.get_list());
+  console.log(iterator.get_list());
+  console.log(iterator.get_list());
+  console.log(iterator.get_list());
+  console.log(iterator.get_list());
+  console.log(iterator.get_list());
+  console.log(iterator.get_list());
+  console.log(iterator.bump_output());
+  console.log(new Uint32Array(memory.buffer).length);
+  console.log(new Uint32Array(memory.buffer).byteLength);
+  console.log("9000000", Array.from(new Uint32Array(memory.buffer)).map((v, i) => { return { v, i }; }).filter(({ v }) => v === 9000000));
+  console.log("9000001", Array.from(new Uint32Array(memory.buffer)).map((v, i) => { return { v, i }; }).filter(({ v }) => v === 9000001));
+  console.log(iterator);
+  console.log(new Uint8Array(memory.buffer, 1114232));
+  console.log(new Uint8Array(memory.buffer, 278552 * 4));
 
-  for (let v; v = iterator.next();) {
-    if (v === "o") {
-      await delay();
-    }
-    console.log("js_log-", v);
-  }
+  // for (let v; v = iterator.next();) {
+  //   if (v === "o") {
+  //     await delay();
+  //   }
+  //   console.log("js_log-", v);
+  // }
 }
 
 main();
