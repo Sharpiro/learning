@@ -1,39 +1,29 @@
 import { memory as wasmMemory } from "wasm-game-of-life/wasm_game_of_life_bg";
 import { ProgramIterator } from "wasm-game-of-life";
 
-function delay() {
-  return new Promise((res) => {
-    setTimeout(() => {
-      res();
-    }, 3000);
-  });
-}
-
 async function main() {
-  const iterator = ProgramIterator.new("hello, world");;
+  const memorySize = 10;
+  const iterator = ProgramIterator.new("hello, world", memorySize);
   // for (let v; v = iterator.next();) {
-  //   // if (v === "o") {
-  //   //   await delay();
-  //   // }
   //   console.log("js_log-", v);
   // }
 
   const memoryPtr = iterator.get_memory_ptr();
-  const memory = new Uint8Array(wasmMemory.buffer, memoryPtr, 9);
-  console.log(iterator.get_output());
+  const memorySlice = new Uint8Array(wasmMemory.buffer, memoryPtr, memorySize);
   console.log(memoryPtr);
-  console.log(memory);
   iterator.bump_memory();
-  console.log(memory);
+  console.log(memoryPtr);
+  iterator.bump_memory();
+  console.log(memoryPtr);
+  // outputPtr = iterator.get_memory_ptr();
+  // console.log(outputPtr);
+  // console.log(new Uint8Array(wasmMemory.buffer, outputPtr));
+  // const outputSlice = new Uint8Array(wasmMemory.buffer, outputPtr, 900);
+  // console.log(outputSlice);
+  // iterator.bump_output();
+  // console.log(outputSlice);
+  // outputPtr = iterator.get_output_ptr();
+  // console.log(outputPtr)
 }
 
 main();
-
-
-// console.log("counter", counter);
-// console.log(new Uint32Array(memory.buffer));
-// console.log(new Uint8Array(memory.buffer, 1114120));
-// // 1114120
-
-// console.log(new Uint8Array(memory.buffer).some(i => i === 34));
-// console.log(new Uint32Array(memory.buffer).some(i => i === 13));
