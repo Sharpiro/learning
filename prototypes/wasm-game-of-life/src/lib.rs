@@ -24,6 +24,19 @@ pub struct ProgramIterator {
 
 #[wasm_bindgen]
 impl ProgramIterator {
+  pub fn next(&mut self) -> Option<char> {
+    let result = if self.index < self.commands.len() {
+      self.commands.get(self.index).copied()
+    } else {
+      None
+    };
+    self.index += 1;
+    result
+  }
+}
+
+#[wasm_bindgen]
+impl ProgramIterator {
   pub fn new(program: String, memory_size: usize) -> ProgramIterator {
     ProgramIterator {
       index: 0,
@@ -31,18 +44,6 @@ impl ProgramIterator {
       output: Vec::with_capacity(1),
       memory: vec![0; memory_size],
     }
-  }
-
-  pub fn next(&mut self) -> Option<char> {
-    let result = if self.index < self.commands.len() {
-      log!("rust_log-{}", self.index);
-      self.output.push(0);
-      self.commands.get(self.index).copied()
-    } else {
-      None
-    };
-    self.index += 1;
-    result
   }
 
   pub fn get_output(&self) -> Vec<u8> {
