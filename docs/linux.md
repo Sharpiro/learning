@@ -549,3 +549,27 @@ youtube-dl -f bestvideo+m4a --merge-output-format mp4 video_id
   * `itag=${format}`
 * force output format to be merged into `mp4` instead of probably `mkv`
   * `--merge-output-format mp4`
+
+## PGP/GPG
+
+### sign a doc (detached)
+
+```sh
+gpg --detach-sign -armour file
+```
+
+### verify a signature
+
+```sh
+gpg --verify file.asc
+```
+
+### view signature info
+
+```sh
+pgpdump file.asc
+```
+
+```sh
+gpg --list-packets < file.asc
+```
