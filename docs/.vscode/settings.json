@@ -16,6 +16,7 @@
         "lsblk",
         "normie",
         "openvpn",
+        "pkcs",
         "postgre",
         "redshift",
         "sbin",

@@ -324,22 +324,54 @@ git config --global credential.helper /usr/libexec/git-core/git-credential-libse
 
 ## OpenSSL
 
-* gen private key only
+### gen private key only
+
+#### gen pkcs1 private key (?)
 
 ```sh
-openssl genpkey -algorithm RSA -out key.pem
+openssl genpkey -algorithm RSA -out key.pem -pkeyopt rsa_keygen_bits:2048
 ```
 
-* gen private/public key .pem files
+#### gen pkcs8 private key (?)
+
+```sh
+openssl genrsa -out key.pem 2048
+```
+
+### gen private/public key .pem files
 
 ```sh
 openssl req -x509 -newkey rsa:4096 -keyout test-private-key.pem -out test-public-key.pem -nodes -subj '/CN=localhost'
 ```
 
-* gen `pkcs12` .pfx file
+### gen `pkcs12` .pfx file
 
 ```sh
 openssl pkcs12 -export -out test-pkcs12.pfx -inkey test-private-key.pem -in test-public-key.pem -passout pass:
+```
+
+### convert from pkcs1 to pkcs8
+
+```sh
+openssl pkcs8 -topk8 -in private_key.pem -nocrypt -out private_key_pkcs8.pem
+```
+
+### create rsa public key from private key
+
+```sh
+openssl rsa -in private_key_pkcs8.pem -pubout -out public_key.pem
+```
+
+### view rsa private key info
+
+```sh
+openssl rsa -text -noout -in key.pem
+```
+
+### view x509 cert info
+
+```sh
+openssl x509 -text -noout -in cert.cer
 ```
 
 ## Misc
