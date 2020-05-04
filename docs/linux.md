@@ -324,15 +324,19 @@ git config --global credential.helper /usr/libexec/git-core/git-credential-libse
 
 ## OpenSSL
 
+### Links
+
+* [What data is saved in RSA private key?](https://crypto.stackexchange.com/a/7964)
+
 ### gen private key only
 
-#### gen pkcs1 private key (?)
+#### gen pkcs1 private key (?) `BEGIN PRIVATE KEY`
 
 ```sh
 openssl genpkey -algorithm RSA -out key.pem -pkeyopt rsa_keygen_bits:2048
 ```
 
-#### gen pkcs8 private key (?)
+#### gen pkcs8 private key (?) `BEGIN RSA PRIVATE KEY`
 
 ```sh
 openssl genrsa -out key.pem 2048
@@ -368,10 +372,23 @@ openssl rsa -in private_key_pkcs8.pem -pubout -out public_key.pem
 openssl rsa -text -noout -in key.pem
 ```
 
+### view rsa public key info
+
+```sh
+# replace 'rsa' with 'pkey' for other key types
+openssl rsa -pubin -text -in pub.pem
+```
+
 ### view x509 cert info
 
 ```sh
 openssl x509 -text -noout -in cert.cer
+```
+
+### extract public key from x509
+
+```sh
+openssl x509 -pubkey -noout -in cert.pem  
 ```
 
 ## Misc
