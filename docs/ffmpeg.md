@@ -31,19 +31,19 @@ ffmpeg -i "input.mp4" -ss 00:30:00.0 -t 00:10:00.0 "output.mp4"
 
 ```sh
 # clip w/ fade in/out
-ffmpeg -i input.mp4 -ss 00:00:00.0 -t 00:00:10.0 -y -vf fade=in:0:60,fade=out:240:30 -af afade=in:st=0:d=1,afade=out:st=5:d=5 slide_fade_in.mp4
+ffmpeg -i input.mp4 -ss 00:00:00.0 -t 00:00:10.0 -vf fade=in:0:60,fade=out:240:30 -af afade=in:st=0:d=1,afade=out:st=5:d=5 slide_fade_in.mp4
 ```
 
 ## rotation
 
 ```sh
-ffmpeg -y -i IMG_0434.MOV -ss 15 -vf "transpose=cclock" test-rotate.mp4
+ffmpeg -i IMG_0434.MOV -ss 15 -vf "transpose=cclock" test-rotate.mp4
 ```
 
 ## concatenation with same codec
 
 ```sh
-ffmpeg -y -f concat -safe 0 -i clips.txt -c copy test-combine.mp4
+ffmpeg -f concat -safe 0 -i clips.txt -c copy test-combine.mp4
 ```
 
 ## scaling
@@ -51,13 +51,13 @@ ffmpeg -y -f concat -safe 0 -i clips.txt -c copy test-combine.mp4
 ### scale to size
 
 ```sh
-ffmpeg -y -i start.MOV -vf scale=568:320 test-scale.mp4
+ffmpeg -i start.MOV -vf scale=568:320 test-scale.mp4
 ```
 
 ### scale w/ black borders
 
 ```sh
-ffmpeg -y -i start.MOV -vf "scale=568:320:force_original_aspect_ratio=decrease,pad=568:320:(ow-iw)/2:(oh-ih)/2" test-scale.mp4
+ffmpeg -i start.MOV -vf "scale=568:320:force_original_aspect_ratio=decrease,pad=568:320:(ow-iw)/2:(oh-ih)/2" test-scale.mp4
 ```
 
 ## download portion of file and clip it
@@ -116,6 +116,45 @@ Twitter requirements:
 
 ```sh
 ffmpeg -i input.mp4 -vc 264 out-264.mp4
+```
+
+## overlays
+
+### single blur overlay
+
+```sh
+ffmpeg -i input.mp4 -filter_complex \
+ "[0:v]crop=75:40:305:365,boxblur=10[fg]; \
+  [0:v][fg]overlay=305:365[v]" \
+-map "[v]" -map 0:a output.mp4
+```
+
+### multi blur overlay
+
+```sh
+ffmpeg -i input.mp4 -filter_complex \
+  "[0:v]crop=75:40:525:400,boxblur=10[b0]; \
+   [0:v]crop=75:40:305:365,boxblur=10[b1]; \
+   [0:v][b0]overlay=525:400[ovr0]; \
+   [ovr0][b1]overlay=305:365[ovr1]" \
+-map "[ovr1]" -map 0:a output.mp4
+```
+
+### single box overlay
+
+```sh
+ffmpeg -i input.mp4 -vf \
+  "drawbox=x=0:y=405:w=640:h=35:color=#333632@1.0:t=fill" \
+   output.mp4
+```
+
+### multi box overlay
+
+```sh
+ffmpeg -i input.mp4 -filter_complex \
+  "[0:v]drawbox=x=140:y=375:w=420:h=30:color=#333632@1.0:t=fill[b0]; \
+   [b0]drawbox=x=0:y=400:w=640:h=40:color=#333632@1.0:t=fill[b1]" \
+   -map "[b1]" -map 0:a output.mp4
 ```
 
 ## flags
