@@ -203,13 +203,23 @@ sudo woeusb \
 
 ### Luks
 
-#### dump master key
+#### setup and format luks partition
 
-```bash
-sudo cryptsetup luksDump --dump-master-key /dev/nvme0n1p2
+note: you may want to setup a normal partition using `parted` prior to this to give you a partition accessible at something like `/dev/sda1` rather than using the disk as in `/dev/sda`, but I don't see any advantage at this time since we want the entire disk encrypted
+
+```sh
+cryptsetup luksFormat /dev/sda
+cryptsetup open /dev/sda encrypted
+mkfs.ext4 /dev/mapper/encrypted
 ```
 
-#### mount encrypted partition
+optionally modify ownership after encrypted partition is mounted
+
+```sh
+chown bob.bob /home/bob/dev_mounts/mnt
+```
+
+#### open and mount encrypted partition
 
 ```sh
 # decrypt (encrypted_partition, decrypted_partition_name)
@@ -219,13 +229,19 @@ sudo cryptsetup open /dev/sda1 decrypted_partition
 sudo mount /dev/mapper/decrypted_partition ~/temp/temp_mount_dir
 ```
 
-#### un-mount encrypted partition
+#### un-mount and close encrypted partition
 
 ```sh
 #un-mount (mountdir)
 sudo umount ~/temp/temp_mount_dir
 # decrypt (decrypted_partition_name)
 sudo cryptsetup close decrypted_partition
+```
+
+#### dump master key
+
+```bash
+sudo cryptsetup luksDump --dump-master-key /dev/nvme0n1p2
 ```
 
 ### `gocryptfs`
@@ -249,6 +265,23 @@ gocryptfs --extpass="secret-tool lookup $gnome_key_path" $cipher_dir $mount_dir
 
 ## SSH
 
+### login using ssh keys
+
+copy public key(s) to target machine
+
+```sh
+ssh-copy-id user@host
+```
+
+disable password authentication
+
+```sh
+# /etc/ssh/sshd_config
+PasswordAuthentication no
+ChallengeResponseAuthentication no
+UsePAM no
+```
+
 ### SFTP via Nautilus
 
 ```sh
@@ -261,16 +294,6 @@ sftp://funky@ip.to.your.server:7000
 ```sh
 scp -r pi@192.168.1.2:/home/pi/gitbase/downloader/web_server/.cache .
 ```
-
-## 7 Zip
-
-* Installation
-  * ```sudo apt install p7zip-full```
-* Usage
-  * ```7z```
-  * ```x```: extract
-  * ```l```: list archive
-  * ```-otemp```: set output directory to 'temp'
 
 ## Links / Shortcuts
 
@@ -307,19 +330,14 @@ Encoding=UTF-8
   * `@reboot ~/scripts/run.sh`
 * add `.desktop` file to `~/.config/autostart/`
 
-## Ignore case in terminal
+## terminal
+
+### Ignore case in terminal
 
 Add the following to ```~/.inputrc``` for current user or ```/etc/inputrc``` for all users:
 
 ```bash
 set completion-ignore-case On
-```
-
-## Git Credential libsecret
-
-```sh
-sudo dnf install git-credential-libsecret
-git config --global credential.helper /usr/libexec/git-core/git-credential-libsecret
 ```
 
 ## OpenSSL
@@ -389,92 +407,6 @@ openssl x509 -text -noout -in cert.cer
 
 ```sh
 openssl x509 -pubkey -noout -in cert.pem  
-```
-
-## Misc
-
-### iPhone detection fix
-
- ```bash
- sudo usbmuxd -u -U usbmux
-```
-
-* <https://ubuntuforums.org/showthread.php?t=2376741>
-
-#### Allow new directory to be used by super users
-
-Open `/etc/sudoers` and add new directory to ```secure_path```:
-
-```bash
-secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/opt/node-v10.13.0-li
-nux-x64/bin"
-```
-
-### Print Current Directory
-
-```bash
-pwd
-```
-
-### Search Text
-
-```bash
-echo data this is ata my text data | grep ata
-```
-
-```bash
-grep ata test.txt
-```
-
-### Get Count of Search Text
-
-```bash
-echo data this is ata my text data | grep -o ata | wc -l
-```
-
-```bash
-grep -o ata test.txt| wc -l
-```
-
-### Customize Bookmarks
-
-```bash
-# default bookmarks
-vim ~/.config/user-dirs.dirs
-```
-
-```bash
-# custom bookmarks
-vim ~/.config/gtk-3.0/bookmarks
-```
-
-### verify a password against the stored hash
-
-* `/etc/shadow` hash entry
-  * `:` - delimiter
-  * order
-    * user
-    * password hash
-    * last changed?
-    * ...
-
-```sh
-sudo cat /etc/shadow | grep test_user
-
-# test_user:$6$rXT52XGHPU0MpT9f$n8jVgWOh.0jJiZrdAYATX.jD02Va.oNHSph05OxymFJI83w84l2X75iLsFqS2Wa/XKce3re7EaTlT8a2Zfkyo0:18246:0:99999:7:::
-```
-
-verifying the hash
-
-* `$` - start of hash segment
-* order
-  * hash type
-  * salt
-  * hash
-
-```sh
-openssl passwd -6 -salt rXT52XGHPU0MpT9f
-# $6$rXT52XGHPU0MpT9f$n8jVgWOh.0jJiZrdAYATX.jD02Va.oNHSph05OxymFJI83w84l2X75iLsFqS2Wa/XKce3re7EaTlT8a2Zfkyo0
 ```
 
 ## Network
@@ -621,4 +553,190 @@ pgpdump file.asc
 
 ```sh
 gpg --list-packets < file.asc
+```
+
+## administration
+
+### change hostname
+
+update hostname in both of the below files
+
+```sh
+sudo vim /etc/hosts
+sudo vim /etc/hostname
+sudo reboot
+```
+
+### add user
+
+`adduser` will properly setup home directories and files by default whereas `useradd` will not
+
+```sh
+sudo adduser bob
+```
+
+### add user to group
+
+```sh
+sudo adduser bob sudo
+```
+
+### modify sudo permissions
+
+modify the `/etc/sudoers` file or a file it references by specifying it specifically
+
+```sh
+sudo visudo
+```
+
+### disable raspberry pi no password sudo permissions
+
+comment out the lines in the below file or perhaps just delete it
+
+```sh
+sudo visudo `/etc/sudoers.d/010_pi-nopasswd`
+```
+
+### change user password
+
+change a user's password or the current user's password if no user is specified
+
+```sh
+sudo passwd bob
+```
+
+### remove/delete user
+
+```sh
+sudo deluser --remove-home bob
+```
+
+### disable wireless/bluetooth devices/interfaces
+
+```sh
+sudo rfkill block wlan bluetooth
+```
+
+## Misc
+
+### iPhone detection fix
+
+ ```bash
+ sudo usbmuxd -u -U usbmux
+```
+
+* <https://ubuntuforums.org/showthread.php?t=2376741>
+
+#### Allow new directory to be used by super users
+
+Open `/etc/sudoers` and add new directory to ```secure_path```:
+
+```bash
+secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/opt/node-v10.13.0-li
+nux-x64/bin"
+```
+
+### Print Current Directory
+
+```bash
+pwd
+```
+
+### Search Text
+
+```bash
+echo data this is ata my text data | grep ata
+```
+
+```bash
+grep ata test.txt
+```
+
+### Get Count of Search Text
+
+```bash
+echo data this is ata my text data | grep -o ata | wc -l
+```
+
+```bash
+grep -o ata test.txt| wc -l
+```
+
+### Customize Bookmarks
+
+```bash
+# default bookmarks
+vim ~/.config/user-dirs.dirs
+```
+
+```bash
+# custom bookmarks
+vim ~/.config/gtk-3.0/bookmarks
+```
+
+### verify a password against the stored hash
+
+* `/etc/shadow` hash entry
+  * `:` - delimiter
+  * order
+    * user
+    * password hash
+    * last changed?
+    * ...
+
+```sh
+sudo cat /etc/shadow | grep test_user
+
+# test_user:$6$rXT52XGHPU0MpT9f$n8jVgWOh.0jJiZrdAYATX.jD02Va.oNHSph05OxymFJI83w84l2X75iLsFqS2Wa/XKce3re7EaTlT8a2Zfkyo0:18246:0:99999:7:::
+```
+
+verifying the hash
+
+* `$` - start of hash segment
+* order
+  * hash type
+  * salt
+  * hash
+
+```sh
+openssl passwd -6 -salt rXT52XGHPU0MpT9f
+# $6$rXT52XGHPU0MpT9f$n8jVgWOh.0jJiZrdAYATX.jD02Va.oNHSph05OxymFJI83w84l2X75iLsFqS2Wa/XKce3re7EaTlT8a2Zfkyo0
+```
+
+### Git Credential libsecret
+
+```sh
+sudo dnf install git-credential-libsecret
+git config --global credential.helper /usr/libexec/git-core/git-credential-libsecret
+```
+
+### 7 Zip
+
+* Installation
+  * ```sudo apt install p7zip-full```
+* Usage
+  * ```7z```
+  * ```x```: extract
+  * ```l```: list archive
+  * ```-otemp```: set output directory to 'temp'
+
+### check if os is 32 bit or 64 bit
+
+```sh
+getconf LONG_BIT
+```
+
+### find all text files
+
+```sh
+find . -type f -exec grep -Iq . {} \; -print
+```
+
+### find text in text files
+
+calling grep first allows us by default to have the filename printed along with the matches.
+This is useful for searching the text of many files.
+
+```sh
+grep -iI "search text" $(find . -type f | xargs)
 ```
