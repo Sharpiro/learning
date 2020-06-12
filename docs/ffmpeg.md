@@ -42,6 +42,14 @@ ffmpeg -i IMG_0434.MOV -ss 15 -vf "transpose=cclock" test-rotate.mp4
 
 ## concatenation with same codec
 
+glob pattern / no file
+
+```sh
+ffmpeg -f concat -safe 0 -i <(for f in ./p*.mp4; do echo "file '$PWD/$f'"; done) -c copy output.mp4
+```
+
+clips file
+
 ```sh
 ffmpeg -f concat -safe 0 -i clips.txt -c copy test-combine.mp4
 ```
