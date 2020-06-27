@@ -295,6 +295,22 @@ sftp://funky@ip.to.your.server:7000
 scp -r pi@192.168.1.2:/home/pi/gitbase/downloader/web_server/.cache .
 ```
 
+### local port forwarding
+
+Allows the forwarding of local traffic to ports on remote machines.
+
+* uses
+  * bypass firewalls (only ssh port needs to be open)
+  * encrypt traffic that would otherwise not be (http)
+  * trick applications into thinking they're connecting to local ports/services
+
+```sh
+ssh -fNT -L 8080:remote_machine:8080 remote_machine
+```
+
+* `-fNT` - run detached, disable commands, disable terminal allocation
+* `-L` - forward requests to localhost:port to remote_machine:port.
+
 ## Links / Shortcuts
 
 ### Symbolic Links
