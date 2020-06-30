@@ -633,6 +633,24 @@ sudo deluser --remove-home bob
 sudo rfkill block wlan bluetooth
 ```
 
+## vim
+
+### config locations
+
+* `/etc/vim/vimrc`
+* `~/.vimrc`
+
+## disable visual mouse mode
+
+This mode breaks copy/paste when in an ssh session.
+
+execute `:set mouse-=a` or comment out `set mouse=a` setting in `vimrc`
+
+## misc vim commands
+
+* `:echo $VIMRUNTIME`
+  * get vim env variables while running
+
 ## Misc
 
 ### iPhone detection fix
