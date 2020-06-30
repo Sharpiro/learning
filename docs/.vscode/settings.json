@@ -1,41 +1,42 @@
 {
-    "cSpell.words": [
-        "CMKs",
-        "HSDIR",
-        "HSDIRS",
-        "Luks",
-        "MITM",
-        "VPCs",
-        "atempo",
-        "chmod",
-        "cloudwatch",
-        "distro",
-        "fdisk",
-        "inputrc",
-        "libsecret",
-        "lsblk",
-        "normie",
-        "openvpn",
-        "pkcs",
-        "postgre",
-        "redshift",
-        "sbin",
-        "setxkbmap",
-        "stty",
-        "subcredential",
-        "subnet",
-        "subnets",
-        "sudoers",
-        "tempfs",
-        "torrc",
-        "woeusb"
-    ],
-    "markdownlint.config": {
-        "MD024": {
-            "siblings_only": true
-        }
-    },
-    "cSpell.ignoreRegExpList": [
-        "`[\\w\\W]*?`"
-    ]
+  "cSpell.words": [
+    "CMKs",
+    "HSDIR",
+    "HSDIRS",
+    "Luks",
+    "MITM",
+    "VPCs",
+    "atempo",
+    "chmod",
+    "cloudwatch",
+    "distro",
+    "fdisk",
+    "inputrc",
+    "libsecret",
+    "lsblk",
+    "normie",
+    "openvpn",
+    "pkcs",
+    "postgre",
+    "redshift",
+    "sbin",
+    "setxkbmap",
+    "stty",
+    "subcredential",
+    "subnet",
+    "subnets",
+    "sudoers",
+    "tempfs",
+    "torrc",
+    "vimrc",
+    "woeusb"
+  ],
+  "markdownlint.config": {
+    "MD024": {
+      "siblings_only": true
+    }
+  },
+  "cSpell.ignoreRegExpList": [
+    "`[\\w\\W]*?`"
+  ]
 }

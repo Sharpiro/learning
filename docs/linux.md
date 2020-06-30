@@ -635,16 +635,36 @@ sudo rfkill block wlan bluetooth
 
 ## vim
 
-### config locations
+### default config
 
 * `/etc/vim/vimrc`
 * `~/.vimrc`
 
-## disable visual mouse mode
+### my default .vimrc
+
+```sh
+source $VIMRUNTIME/defaults.vim
+set mouse-=a
+```
+
+### disable visual mouse mode
 
 This mode breaks copy/paste when in an ssh session.
 
-execute `:set mouse-=a` or comment out `set mouse=a` setting in `vimrc`
+* **Any** of the following can fix it.
+  * press `shift` while selecting with mouse to bypass
+  * execute `:set mouse-=a` in vim to disable
+  * comment out `set mouse=a` setting in `vimrc`
+  * add `set mouse-=a` setting in `vimrc`
+
+### binary conversion
+
+* `:%!xxd`
+  * convert text to binary
+* `:%!xxd -r`
+  * convert binary to text
+* `-p`
+  * modify xxd to use "plain" style for continuous bytes w/ no line numbers or columns
 
 ## misc vim commands
 
