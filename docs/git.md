@@ -34,6 +34,36 @@ From inside out
 * revision control system
 * distributed revision control system
 
+## dot syntax
+
+<!-- commit ranges -->
+* log
+  * double dot
+    * `git log A..B`
+    * all commits in `B` that aren’t in `A`
+    * all commits in `B` since common ancestor of `A` and `B`
+    * all commits as if `B` is merged into `A` (3-way merge)
+  * triple dot
+    * `git log --left-right A...B`
+    * all commits in *either* but *not both* (XOR)
+    * all commits in *either* since common ancestor of `A` and `B`
+* diff
+  * double dot
+    * `git diff A..B`
+    * compare tree of `A` to tree of `B`
+  * triple dot
+    * `git diff A...B`
+    * compare tree of common ancestor of `A` and `B` to tree of `B`
+    * compare tree changes by `B` when `B` is merged into `A` (3-way merge)
+* refs
+  * [git diff dot syntax](https://stackoverflow.com/a/7252067/5344498)
+  * [Using Commit Ranges with Git Log](https://stackoverflow.com/a/24186641/5344498)
+  * [commit ranges](https://git-scm.com/book/en/v2/Git-Tools-Revision-Selection#_commit_ranges)
+
+<!-- markdownlint-disable MD033 -->
+<img src="content/git/git_dot_syntax.png" width="800px" alt="https://stackoverflow.com/a/46345364/5344498">
+<!-- markdownlint-enable MD033 -->
+
 ## diff
 
 ### diff file with working
