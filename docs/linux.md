@@ -425,6 +425,12 @@ openssl x509 -text -noout -in cert.cer
 openssl x509 -pubkey -noout -in cert.pem  
 ```
 
+### extract cert from pfx (pkcs12)
+
+```sh
+openssl pkcs12 -in in.pfx -clcerts -nokeys -out out.crt
+```
+
 ## Network
 
 ### VPN settings
@@ -610,7 +616,7 @@ sudo visudo
 comment out the lines in the below file or perhaps just delete it
 
 ```sh
-sudo visudo `/etc/sudoers.d/010_pi-nopasswd`
+sudo visudo "/etc/sudoers.d/010_pi-nopasswd"
 ```
 
 ### change user password
@@ -666,10 +672,20 @@ This mode breaks copy/paste when in an ssh session.
 * `-p`
   * modify xxd to use "plain" style for continuous bytes w/ no line numbers or columns
 
-## misc vim commands
+### misc vim commands
 
 * `:echo $VIMRUNTIME`
   * get vim env variables while running
+
+## podman
+
+### volumes
+
+* a volume mount to a file is equivalent to copying from host to container on start
+  * useful for configs that shouldn't change until a container is restarted
+* a volume mount to a directory is equivalent to sharing the directory
+  * useful for files and subdirectories that needs to be constantly updated
+  * useful when multiple containers are sharing files to keep them in sync
 
 ## Misc
 
