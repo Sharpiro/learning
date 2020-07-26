@@ -67,54 +67,6 @@
   * files and directories expected to grow in size
   * logs
 
-## Environment Variables And Aliases
-
-### Current User
-
-#### Add Aliases (current user)
-
-```bash
-vim ~/.bashrc
-
-# add alias
-alias py=python3
-```
-
-#### Add to path (current user)
-
-Open `~/.profile` and add new directory to ```PATH```:
-
-```bash
-export PATH="$HOME/.cargo/bin:$PATH"
-```
-
-#### Add Script or Program
-
-Copy program to ```/usr/bin```
-
-### All Users
-
-#### Add Aliases (all users)
-
-Copy ```.sh``` script to ```/etc/profile.d```
-
-ex: ```test.sh```:
-
-```bash
-sudo vim /etc/profile.d/test.sh
-
-# add alias
-alias py=python3
-```
-
-#### Add to path (all users)
-
-Copy ```.sh``` script to ```/etc/profile.d```
-
-```bash
-export PATH="$HOME/.cargo/bin:$PATH"
-```
-
 ## Keyboard Mapping
 
 ### Terminal
@@ -339,21 +291,41 @@ Encoding=UTF-8
 
 > **note:** `StartupNotify` is likely only for taskbar notifications
 
-### add application to startup
+## startup locations
 
-* add command or script to `~/.bash_profile` //todo: verify
-* add line to crontab
-  * `@reboot ~/scripts/run.sh`
-* add `.desktop` file to `~/.config/autostart/`
+* login shell // todo: test
+  * ~/.bash_profile
+  * ~/.profile
+  * /etc/profile
+  * /etc/profile.d
+  * add `.desktop` file to `~/.config/autostart/`
+* startup
+  * @reboot in crontab
 
-## terminal
+## bash
 
-### Ignore case in terminal
+### Ignore case
 
 Add the following to ```~/.inputrc``` for current user or ```/etc/inputrc``` for all users:
 
 ```bash
 set completion-ignore-case On
+```
+
+### aliases
+
+[auto-complete only seems to work on debian](https://unix.stackexchange.com/a/224228/297767)
+
+```bash
+alias pm=podman
+complete | grep podman
+complete -F _cli_bash_autocomplete pm
+```
+
+#### path
+
+```bash
+export PATH="$HOME/.cargo/bin:$PATH"
 ```
 
 ## OpenSSL
