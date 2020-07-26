@@ -257,7 +257,7 @@ Allows the forwarding of local traffic to ports on remote machines.
   * trick applications into thinking they're connecting to local ports/services
 
 ```sh
-ssh -fNT -L 8080:remote_machine:8080 remote_machine
+ssh -fNT -L localhost:8080:remote_machine:8080 remote_machine
 ```
 
 * `-fNT` - run detached, disable commands, disable terminal allocation
