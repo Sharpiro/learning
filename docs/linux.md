@@ -129,7 +129,7 @@ setxkbmap custom
 
 ### List information
 
-```bash
+```sh
 sudo fdisk -l
 
 df
@@ -139,7 +139,7 @@ lsblk
 
 ### Create Windows ISO in Linux
 
-```bash
+```sh
 # format filesystem NTFS
 
 # install WoeUSB
@@ -192,7 +192,7 @@ sudo cryptsetup close decrypted_partition
 
 #### dump master key
 
-```bash
+```sh
 sudo cryptsetup luksDump --dump-master-key /dev/nvme0n1p2
 ```
 
@@ -267,7 +267,7 @@ ssh -fNT -L localhost:8080:remote_machine:8080 remote_machine
 
 ### Symbolic Links
 
-```bash
+```sh
 # ln -s source target
 sudo ln -s /usr/lib64/libssl.so.1.1.1 /usr/lib64/libssl.so.1.0.0
 ```
@@ -304,11 +304,32 @@ Encoding=UTF-8
 
 ## bash
 
+### shell parameters
+
+[special parameters](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Special-Parameters)
+
+* `$0`
+  * current shell script name or just shell name if not a script
+* `$<1..x>`
+  * a positional parameters provided to the script
+* `$*` or `$@`
+  * all positional parameters provided to the script
+  * `"$*"` surrounds all parameters in a quote group
+  * `"$@"` surrounds each parameter in quote groups
+* `$#`
+  * gets the count of positional parameters
+* `$?`
+  * exit status of most recent command
+* `$$`
+  * process id of shell
+* `$!`
+  * process id of most recent job placed in background
+
 ### Ignore case
 
 Add the following to ```~/.inputrc``` for current user or ```/etc/inputrc``` for all users:
 
-```bash
+```sh
 set completion-ignore-case On
 ```
 
@@ -316,23 +337,86 @@ set completion-ignore-case On
 
 [auto-complete only seems to work on debian](https://unix.stackexchange.com/a/224228/297767)
 
-```bash
+```sh
 alias pm=podman
 complete | grep podman
 complete -F _cli_bash_autocomplete pm
 ```
 
-#### path
+### path
 
-```bash
+```sh
 export PATH="$HOME/.cargo/bin:$PATH"
 ```
 
-## OpenSSL
+### get script directory
 
-### Links
+```sh
+cipher_dir=$(dirname "$0")/gcfs_cipher
+```
+
+### redirect stdout and stderr to file
+
+```sh
+# shorthand for: cat test_file > /dev/null 2>&1
+cat test_file &> /dev/null
+```
+
+### if statement
+
+```sh
+cat test_file
+
+# double parens allow for more familiar logical operators
+if (($? == 0)); then
+  echo "'test_file' exists"
+else
+  echo "'test_file' does not exist"
+fi
+```
+
+### flag parameters
+
+```sh
+# script.sh
+while getopts u:a:f: flag
+  do
+    case "${flag}" in
+      u) username=${OPTARG};;
+      a) age=${OPTARG};;
+      f) fullname=${OPTARG};;
+    esac
+  done
+echo "Username: $username"
+echo "Age: $age"
+echo "Full Name: $fullname"
+
+# usage
+./script.sh -a 99 -u test -f a
+```
+
+## openssl
+
+### definitions
+
+* pkcs1
+  * cert format for rsa
+* pkcs7
+  * cryptographic message syntax (uncommon)
+* pkcs8
+  * like pkcs1 but for any algorithm
+  * typical cert format
+* pkcs12
+  * pfx encrypted format
+* der
+  * binary cert format
+* pem
+  * base64 encoding of `der` format
+
+### links
 
 * [What data is saved in RSA private key?](https://crypto.stackexchange.com/a/7964)
+* [PKCS#1 and PKCS#8 format for RSA private key](https://stackoverflow.com/q/48958304/5344498)
 
 ### gen private key only
 
@@ -663,7 +747,7 @@ This mode breaks copy/paste when in an ssh session.
 
 ### iPhone detection fix
 
- ```bash
+ ```sh
  sudo usbmuxd -u -U usbmux
 ```
 
@@ -673,45 +757,45 @@ This mode breaks copy/paste when in an ssh session.
 
 Open `/etc/sudoers` and add new directory to ```secure_path```:
 
-```bash
+```sh
 secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/opt/node-v10.13.0-li
 nux-x64/bin"
 ```
 
 ### Print Current Directory
 
-```bash
+```sh
 pwd
 ```
 
 ### Search Text
 
-```bash
+```sh
 echo data this is ata my text data | grep ata
 ```
 
-```bash
+```sh
 grep ata test.txt
 ```
 
 ### Get Count of Search Text
 
-```bash
+```sh
 echo data this is ata my text data | grep -o ata | wc -l
 ```
 
-```bash
+```sh
 grep -o ata test.txt| wc -l
 ```
 
 ### Customize Bookmarks
 
-```bash
+```sh
 # default bookmarks
 vim ~/.config/user-dirs.dirs
 ```
 
-```bash
+```sh
 # custom bookmarks
 vim ~/.config/gtk-3.0/bookmarks
 ```
