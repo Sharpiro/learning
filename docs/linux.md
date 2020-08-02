@@ -395,6 +395,36 @@ echo "Full Name: $fullname"
 ./script.sh -a 99 -u test -f a
 ```
 
+### Copying hidden files
+
+#### When destination directory does not exist
+
+The simplest way to ensure hidden files are copied is to copy the entire source directory (no globs) to a destination that will be created via the command
+
+```sh
+cp -r src dest
+```
+
+#### Dot globbing to existing directory
+
+`*` globbing in bash does not include hidden files.  `.` will include every file
+
+```sh
+cp -r src/. dest
+```
+
+#### No target directory option
+
+`-T (--no-target-directory)` treats `dest` as a normal file, i.e., it creates a merged copy of `src` at `dest`, not in `dest`.
+
+If `dest` does not exist, it will be created.
+
+If `dest` does exist it will be merged with the copied contents of `src`, and any conflicts will be auto-replaced in `dest`.
+
+```sh
+cp -rT src dest
+```
+
 ## openssl
 
 ### definitions
