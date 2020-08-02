@@ -425,6 +425,12 @@ If `dest` does exist it will be merged with the copied contents of `src`, and an
 cp -rT src dest
 ```
 
+### Get checksum of directory file data recursively
+
+```sh
+find <dirname> -type f | xargs sha1sum | awk '{print $1}' | sha1sum
+```
+
 ## openssl
 
 ### definitions
