@@ -355,11 +355,23 @@ export PATH="$HOME/.cargo/bin:$PATH"
 cipher_dir=$(dirname "$0")/gcfs_cipher
 ```
 
-### redirect stdout and stderr to file
+### log to stderr from script
 
 ```sh
-# shorthand for: cat test_file > /dev/null 2>&1
-cat test_file &> /dev/null
+1>&2 echo "error 1" # '1' is implied, redirect for this line only
+echo "error 2" >> /dev/stderr # append is important here
+```
+
+### redirect stdout and stderr to different files
+
+```sh
+cat test_file 1>> stdout 2>> stderr
+```
+
+### redirect stdout and stderr to same file
+
+```sh
+cat test_file &>> /dev/null # cat test_file >> /dev/null 2>&1
 ```
 
 ### if statement
