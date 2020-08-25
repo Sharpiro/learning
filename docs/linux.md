@@ -374,6 +374,12 @@ cat test_file 1>> stdout 2>> stderr
 cat test_file &>> /dev/null # cat test_file >> /dev/null 2>&1
 ```
 
+### Send stdout and stderr to different programs
+
+```sh
+(bash run.sh | logger -t testing) 2>&1 | logger -t testing -p user.error
+```
+
 ### if statement
 
 ```sh
