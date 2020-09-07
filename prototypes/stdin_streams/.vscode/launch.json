@@ -1,0 +1,42 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug executable 'stdin_streams'",
+      "cargo": {
+        "args": [
+          "build",
+          "--bin=stdin_streams",
+          "--package=stdin_streams"
+        ],
+        "filter": {
+          "name": "stdin_streams",
+          "kind": "bin"
+        }
+      },
+      "args": [],
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug unit tests in executable 'stdin_streams'",
+      "cargo": {
+        "args": [
+          "test",
+          "--no-run",
+          "--bin=stdin_streams",
+          "--package=stdin_streams"
+        ],
+        "filter": {
+          "name": "stdin_streams",
+          "kind": "bin"
+        }
+      },
+      "args": [],
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}
