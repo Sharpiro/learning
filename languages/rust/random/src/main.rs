@@ -19,6 +19,7 @@ fn _random_byte_vector() {
     // let my_vec = vec![1, 2, 3, 4, 5, 6, 7, 8, 9];
 
     let random_bytes = (0..64).map(|_| rand::random::<u8>()).collect::<Vec<u8>>();
+    let _rand_vec = Vec::from(rand::random::<[u8; 32]>());
     println!("{:?}", random_bytes);
 }
 
