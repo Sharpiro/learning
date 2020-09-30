@@ -797,6 +797,53 @@ This mode breaks copy/paste when in an ssh session.
   * useful for files and subdirectories that needs to be constantly updated
   * useful when multiple containers are sharing files to keep them in sync
 
+## Nginx
+
+### Default Config
+
+`/etc/nginx/sites-enabled/default`
+
+### Proxy pass and URL rewrite
+
+```sh
+location /health {
+        rewrite ^/health(.*)$ $1 break;
+        proxy_pass http://localhost:8080;
+}
+```
+
+### Listen on other port & change root dir
+
+Add the below section to the config file.
+Can be side-by-side another `server` block.
+
+```sh
+server {
+        listen 127.0.0.1:8081;
+        root /home/pi/read_later;
+}
+```
+
+## UFW Firewall
+
+### Simple SSH rule
+
+```sh
+sudo ufw allow 22
+```
+
+### Allow HTTP & HTTPS
+
+```sh
+sudo ufw allow proto tcp from any to any port 80,443
+```
+
+### Whitelist IP Address
+
+```sh
+sudo ufw allow proto tcp from 15.15.15.51 to any port 22
+```
+
 ## Misc
 
 ### iPhone detection fix
