@@ -19,10 +19,12 @@ const canvasImageData = canvasContext.createImageData(
 let wasmInstance;
 const importObject = {
   js: {
-    memory: new WebAssembly.Memory({ initial: 16 })
+    memory: new WebAssembly.Memory({ initial: 16, maximum: 16 })
   }
 };
-const buffer = canvasImageData.data;
+const canvasBuffer = canvasImageData.data;
+const wasmBuffer = new Uint8Array(importObject.js.memory.buffer);
+console.log(importObject.js.memory.buffer);
 let iVal = 0;
 updateBufferJS(iVal);
 canvasContext.putImageData(canvasImageData, 0, 0);
@@ -30,19 +32,20 @@ canvasContext.putImageData(canvasImageData, 0, 0);
 window.update = () => {
   console.log("updating...");
   wasmInstance.exports.updateBuffer();
-  const colorDiff = new Uint8Array(importObject.js.memory.buffer)[0];
+  // const colorDiff = new Uint8Array(importObject.js.memory.buffer)[0];
+  const colorDiff = wasmBuffer[0];
   console.log(colorDiff);
   iVal += colorDiff;
   updateBufferJS(iVal);
-  console.log(buffer);
+  console.log(canvasBuffer);
   canvasContext.putImageData(canvasImageData, 0, 0);
 };
 
 function updateBufferJS(iVal) {
-  for (let i = 0; i < buffer.length; i += 4) {
-    buffer[i] = iVal;
-    buffer[i + 1] = iVal;
-    buffer[i + 2] = iVal;
-    buffer[i + 3] = 255;
+  for (let i = 0; i < canvasBuffer.length; i += 4) {
+    canvasBuffer[i] = iVal;
+    canvasBuffer[i + 1] = iVal;
+    canvasBuffer[i + 2] = iVal;
+    canvasBuffer[i + 3] = 255;
   }
 }
