@@ -641,6 +641,12 @@ https://www.youtube.com/channel/channel_id
 youtube-dl -f bestvideo+m4a --merge-output-format mp4 video_id
 ```
 
+### stream to HLS/RTMP server
+
+```sh
+youtube-dl --hls-prefer-native --no-part --no-continue --hls-use-mpegts --fixup warn   -o /tmp/TEMPVIDEO.ts https://www.youtube.com/watch?v=g-CAT3QwCOY
+```
+
 ### formats
 
 * best audio/video pre-packaged video (max 720p?)

@@ -173,10 +173,19 @@ ffmpeg -i input.mp4 -filter_complex \
 | -vn           | -vn               | disable video(fixes 'invalid pixel' bug even on some audio files in rare cases)
 | -s            | -s 640x480        | resolution
 | -af           | -af "atempo=1.5"  | audio format for changing playback speed
+| -re           | -re               | used to stream a video file
+| -bsf          | -bsf              | apply a bitstream filter
+| -g            | -g                | keyframe interval / Group of Pictures (GOP) length
 
 ## get file info
 
 ```sh
 # print file format and streams in json format to stdout
 ffprobe -v quiet -print_format json -show_format -show_streams big_test_vid.mp4
+```
+
+## stream file to RTMP server
+
+```sh
+ffmpeg -re -i /tmp/TEMPVIDEO.ts -c copy -bsf:a aac_adtstoasc -g 50 -f flv rtmp://localhost/live/test_stream_x
 ```
