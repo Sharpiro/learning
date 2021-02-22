@@ -190,17 +190,17 @@ growisofs -dvd-compat -Z /dev/sr0=output.iso
 
 ## flags
 
-| flag          | usage             | description
-| ------------- |------------------ |-------------
-| -aq           | -aq               | audio quality(lower better, fixes common iTunes length bug)
-| -vn           | -vn               | disable video(fixes 'invalid pixel' bug even on some audio files in rare cases)
-| -s            | -s 640x480        | resolution
-| -af           | -af "atempo=1.5"  | audio format for changing playback speed
-| -re           | -re               | used to stream a video file
-| -bsf          | -bsf              | apply a bitstream filter
-| -g            | -g                | keyframe interval / Group of Pictures (GOP) length
-| -c            | -c copy           | (codec) - in this case copy audio & video codecs and do not re-encode
-| -c:a          | -c:a copy           | (codec audio) - do not re-encode audio
+| flag | usage            | description                                                                     |
+| ---- | ---------------- | ------------------------------------------------------------------------------- |
+| -aq  | -aq              | audio quality(lower better, fixes common iTunes length bug)                     |
+| -vn  | -vn              | disable video(fixes 'invalid pixel' bug even on some audio files in rare cases) |
+| -s   | -s 640x480       | resolution                                                                      |
+| -af  | -af "atempo=1.5" | audio format for changing playback speed                                        |
+| -re  | -re              | used to stream a video file                                                     |
+| -bsf | -bsf             | apply a bitstream filter                                                        |
+| -g   | -g               | keyframe interval / Group of Pictures (GOP) length                              |
+| -c   | -c copy          | (codec) - in this case copy audio & video codecs and do not re-encode           |
+| -c:a | -c:a copy        | (codec audio) - do not re-encode audio                                          |
 
 ## get file info
 
@@ -210,6 +210,16 @@ ffprobe -v quiet -print_format json -show_format -show_streams big_test_vid.mp4
 ```
 
 ## stream file to RTMP server
+
+### simple
+
+```sh
+ffmpeg -re -i vid.mp4 -c copy -f flv rtmp://username:password@server.domain.tld:1935/live/streamkey
+ffmpeg -re -i vid.mp4 -c copy -f flv rtmps://username:password@server.domain.tld:1934/live/streamkey
+https://server.domain.tld/live/streamkey/playlist.m3u8
+```
+
+### unknown options
 
 ```sh
 ffmpeg -re -i /tmp/TEMPVIDEO.ts -c copy -bsf:a aac_adtstoasc -g 50 -f flv rtmp://localhost/live/test_stream_x

@@ -217,6 +217,14 @@ gocryptfs --extpass="secret-tool lookup $gnome_key_path" $cipher_dir $mount_dir
 
 ## SSH
 
+### keygen
+
+generate ssh key into "test" file with a given comment, which removes the default comment "user@hostname"
+
+```sh
+ssh-keygen -f test -C "anon1"
+```
+
 ### login using ssh keys
 
 copy public key(s) to target machine
@@ -232,6 +240,17 @@ disable password authentication
 PasswordAuthentication no
 ChallengeResponseAuthentication no
 UsePAM no
+```
+
+### ssh connect shortcut
+
+`~/.ssh/config`
+
+```sh
+host shortname
+  hostname server.domain.net
+  user myuser
+  identityfile ~/.ssh/realname_rsa_priv
 ```
 
 ### SFTP via Nautilus
@@ -327,7 +346,7 @@ Encoding=UTF-8
 
 ### Ignore case
 
-Add the following to ```~/.inputrc``` for current user or ```/etc/inputrc``` for all users:
+Add the following to `~/.inputrc` for current user or `/etc/inputrc` for all users:
 
 ```sh
 set completion-ignore-case On
@@ -425,7 +444,7 @@ cp -r src dest
 
 #### Dot globbing to existing directory
 
-`*` globbing in bash does not include hidden files.  `.` will include every file
+`*` globbing in bash does not include hidden files. `.` will include every file
 
 ```sh
 cp -r src/. dest
@@ -532,7 +551,7 @@ openssl x509 -text -noout -in cert.cer
 ### extract public key from x509
 
 ```sh
-openssl x509 -pubkey -noout -in cert.pem  
+openssl x509 -pubkey -noout -in cert.pem
 ```
 
 ### extract cert from pfx (pkcs12)
@@ -854,15 +873,15 @@ sudo ufw allow proto tcp from 15.15.15.51 to any port 22
 
 ### iPhone detection fix
 
- ```sh
- sudo usbmuxd -u -U usbmux
+```sh
+sudo usbmuxd -u -U usbmux
 ```
 
 * <https://ubuntuforums.org/showthread.php?t=2376741>
 
 #### Allow new directory to be used by super users
 
-Open `/etc/sudoers` and add new directory to ```secure_path```:
+Open `/etc/sudoers` and add new directory to `secure_path`:
 
 ```sh
 secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/opt/node-v10.13.0-li
