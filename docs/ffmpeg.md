@@ -82,8 +82,8 @@ ffmpeg -ss 10 -i $(youtube-dl -f 22 -g  https://youtu.be/url) -t 5 test_out.mp4
 
 **warning**: all "streaming" outputs are currently incompatible with twitter video upload
 
-* `-f ismv`
-  * similar to `mp4` but is optimized for streaming to stdout rather than a file
+- `-f ismv`
+  - similar to `mp4` but is optimized for streaming to stdout rather than a file
 
 **warning**: `ismv` causes audio sync/corruption issues
 
@@ -120,11 +120,11 @@ Allows for video to be converted to a format acceptable to twitter.
 
 Twitter requirements:
 
-* `mp4` container
-* `H264` video codec
-* `AAC` audio codec
-* `512MB` size limit
-* `00:02:20` duration limit
+- `mp4` container
+- `H264` video codec
+- `AAC` audio codec
+- `512MB` size limit
+- `00:02:20` duration limit
 
 ```sh
 ffmpeg -i input.mp4 -vc 264 out-264.mp4
@@ -188,6 +188,32 @@ genisoimage -dvd-video -V "video_title" -o output.iso dvdauthor_export/
 growisofs -dvd-compat -Z /dev/sr0=output.iso
 ```
 
+## get file info
+
+```sh
+# print file format and streams in json format to stdout
+ffprobe -v quiet -print_format json -show_format -show_streams big_test_vid.mp4
+```
+
+## stream file to nginx RTMP server
+
+Command to have HLS stream available at
+`https://server.domain.tld/live/streamkey/index.m3u8` or `https://server.domain.tld/live/streamkey.m3u8` depending on if `hls_nested` option
+
+### stream w/o re-encoding
+
+```sh
+ffmpeg -re -i vid.mp4 -c copy -f flv rtmps://[username]:[password]@server.domain.tld:1934/publish/streamkey
+```
+
+### keyframe interval = 1
+
+`-g 24` would be give a key frame interval of 1 for a 24 fps video
+
+```sh
+ffmpeg -re -i vid.mp4 -vcodec libx264 -g 24 -acodec copy -f flv rtmps://server.domain.tld:1934/publish/streamkey
+```
+
 ## flags
 
 | flag | usage            | description                                                                     |
@@ -201,26 +227,4 @@ growisofs -dvd-compat -Z /dev/sr0=output.iso
 | -g   | -g               | keyframe interval / Group of Pictures (GOP) length                              |
 | -c   | -c copy          | (codec) - in this case copy audio & video codecs and do not re-encode           |
 | -c:a | -c:a copy        | (codec audio) - do not re-encode audio                                          |
-
-## get file info
-
-```sh
-# print file format and streams in json format to stdout
-ffprobe -v quiet -print_format json -show_format -show_streams big_test_vid.mp4
-```
-
-## stream file to RTMP server
-
-### simple
-
-```sh
-ffmpeg -re -i vid.mp4 -c copy -f flv rtmp://username:password@server.domain.tld:1935/live/streamkey
-ffmpeg -re -i vid.mp4 -c copy -f flv rtmps://username:password@server.domain.tld:1934/live/streamkey
-https://server.domain.tld/live/streamkey/playlist.m3u8
-```
-
-### unknown options
-
-```sh
-ffmpeg -re -i /tmp/TEMPVIDEO.ts -c copy -bsf:a aac_adtstoasc -g 50 -f flv rtmp://localhost/live/test_stream_x
-```
+| -f   | -f flv           | output video format                                                             |
