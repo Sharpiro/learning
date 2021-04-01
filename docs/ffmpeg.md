@@ -169,6 +169,17 @@ ffmpeg -i input.mp4 -filter_complex \
    -map "[b1]" -map 0:a output.mp4
 ```
 
+### image overlay
+
+```sh
+ffmpeg -i input.mp4 -i overlay.png \
+  -c:a copy \
+  # move image to lower right and only for specified duration
+  # -filter_complex "[0:v][1:v] overlay=W-w:H-h:enable='between(t,0,20)'" \
+  -filter_complex "[0:v][1:v] overlay=0:158" \
+  out.mp4
+```
+
 ## burn file to dvd w/ autoplay
 
 all tools are available via linux distro
