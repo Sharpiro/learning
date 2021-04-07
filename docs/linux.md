@@ -2,70 +2,70 @@
 
 ## General
 
-* Everything is a file
+- Everything is a file
 
 ## Root Directories
 
-* bin (binaries)
-  * os binaries and programs like `cat` and `ls`
-* boot
-  * os boot loader
-* cd-rom
-  * legacy mount point for cd-rom
-* dev (devices)
-  * hardware devices
-    * discs
-    * webcams
-    * keyboards
-    * etc
-  * first hard drive partition
-    * /dev/sda1
-* etc (etcetera)
-  * system-wide configurations
-* home
-  * personal docs
-  * can be installed on different drives which allows for easier re-install
-* libs (libraries)
-  * where libraries of functions are stored for use by binaries
-  * lib
-  * lib32
-  * lib64
-* media
-  * where os managed mounted devices
-  * leave this to the OS to manage
-* mnt (mount)
-  * where you should mount things manually
-* opt (optional)
-  * where manually installed software from vendors resides
-  * where you can install software you've created yourself
-* proc (processes)
-  * information about processes
-  * cpu info
-    * `cat /proc/cpuinfo`
-* root
-  * root user's home folder
-  * does not reside in `home` directory like other users
-* run
-  * tempfs file system
-    * all in ram
-    * gone on reboot
-* sbin
-  * binaries for root user
-* snap (snap packages)
-  * self-contained applications
-* srv (services)
-  * files served to http/ftp
-* sys (system)
-  * way to interact with kernel
-  * also not physically written to disc like `run`
-* tmp (temporary)
-  * files are temporarily stored during application session
-* usr (user)
-  * non-essential software
-  * most software installed from source ends up in local folders
-* var (variable)
-  * files and directories expected to grow in size
-  * logs
+- bin (binaries)
+  - os binaries and programs like `cat` and `ls`
+- boot
+  - os boot loader
+- cd-rom
+  - legacy mount point for cd-rom
+- dev (devices)
+  - hardware devices
+    - discs
+    - webcams
+    - keyboards
+    - etc
+  - first hard drive partition
+    - /dev/sda1
+- etc (etcetera)
+  - system-wide configurations
+- home
+  - personal docs
+  - can be installed on different drives which allows for easier re-install
+- libs (libraries)
+  - where libraries of functions are stored for use by binaries
+  - lib
+  - lib32
+  - lib64
+- media
+  - where os managed mounted devices
+  - leave this to the OS to manage
+- mnt (mount)
+  - where you should mount things manually
+- opt (optional)
+  - where manually installed software from vendors resides
+  - where you can install software you've created yourself
+- proc (processes)
+  - information about processes
+  - cpu info
+    - `cat /proc/cpuinfo`
+- root
+  - root user's home folder
+  - does not reside in `home` directory like other users
+- run
+  - tempfs file system
+    - all in ram
+    - gone on reboot
+- sbin
+  - binaries for root user
+- snap (snap packages)
+  - self-contained applications
+- srv (services)
+  - files served to http/ftp
+- sys (system)
+  - way to interact with kernel
+  - also not physically written to disc like `run`
+- tmp (temporary)
+  - files are temporarily stored during application session
+- usr (user)
+  - non-essential software
+  - most software installed from source ends up in local folders
+- var (variable)
+  - files and directories expected to grow in size
+  - logs
 
 ## Keyboard Mapping
 
@@ -270,17 +270,17 @@ scp -r pi@192.168.1.2:/home/pi/gitbase/downloader/web_server/.cache .
 
 Allows the forwarding of local traffic to ports on remote machines.
 
-* uses
-  * bypass firewalls (only ssh port needs to be open)
-  * encrypt traffic that would otherwise not be (http)
-  * trick applications into thinking they're connecting to local ports/services
+- uses
+  - bypass firewalls (only ssh port needs to be open)
+  - encrypt traffic that would otherwise not be (http)
+  - trick applications into thinking they're connecting to local ports/services
 
 ```sh
 ssh -fNT -L localhost:8080:remote_machine:8080 remote_machine
 ```
 
-* `-fNT` - run detached, disable commands, disable terminal allocation
-* `-L` - forward requests to localhost:port to remote_machine:port.
+- `-fNT` - run detached, disable commands, disable terminal allocation
+- `-L` - forward requests to localhost:port to remote_machine:port.
 
 ## Links / Shortcuts
 
@@ -312,14 +312,14 @@ Encoding=UTF-8
 
 ## startup locations
 
-* login shell // todo: test
-  * ~/.bash_profile
-  * ~/.profile
-  * /etc/profile
-  * /etc/profile.d
-  * add `.desktop` file to `~/.config/autostart/`
-* startup
-  * @reboot in crontab
+- login shell // todo: test
+  - ~/.bash_profile
+  - ~/.profile
+  - /etc/profile
+  - /etc/profile.d
+  - add `.desktop` file to `~/.config/autostart/`
+- startup
+  - @reboot in crontab
 
 ## bash
 
@@ -327,22 +327,22 @@ Encoding=UTF-8
 
 [special parameters](https://www.gnu.org/savannah-checkouts/gnu/bash/manual/bash.html#Special-Parameters)
 
-* `$0`
-  * current shell script name or just shell name if not a script
-* `$<1..x>`
-  * a positional parameters provided to the script
-* `$*` or `$@`
-  * all positional parameters provided to the script
-  * `"$*"` surrounds all parameters in a quote group
-  * `"$@"` surrounds each parameter in quote groups
-* `$#`
-  * gets the count of positional parameters
-* `$?`
-  * exit status of most recent command
-* `$$`
-  * process id of shell
-* `$!`
-  * process id of most recent job placed in background
+- `$0`
+  - current shell script name or just shell name if not a script
+- `$<1..x>`
+  - a positional parameters provided to the script
+- `$*` or `$@`
+  - all positional parameters provided to the script
+  - `"$*"` surrounds all parameters in a quote group
+  - `"$@"` surrounds each parameter in quote groups
+- `$#`
+  - gets the count of positional parameters
+- `$?`
+  - exit status of most recent command
+- `$$`
+  - process id of shell
+- `$!`
+  - process id of most recent job placed in background
 
 ### Ignore case
 
@@ -472,24 +472,24 @@ find <dirname> -type f | xargs sha1sum | awk '{print $1}' | sha1sum
 
 ### definitions
 
-* pkcs1
-  * cert format for rsa
-* pkcs7
-  * cryptographic message syntax (uncommon)
-* pkcs8
-  * like pkcs1 but for any algorithm
-  * typical cert format
-* pkcs12
-  * pfx encrypted format
-* der
-  * binary cert format
-* pem
-  * base64 encoding of `der` format
+- pkcs1
+  - cert format for rsa
+- pkcs7
+  - cryptographic message syntax (uncommon)
+- pkcs8
+  - like pkcs1 but for any algorithm
+  - typical cert format
+- pkcs12
+  - pfx encrypted format
+- der
+  - binary cert format
+- pem
+  - base64 encoding of `der` format
 
 ### links
 
-* [What data is saved in RSA private key?](https://crypto.stackexchange.com/a/7964)
-* [PKCS#1 and PKCS#8 format for RSA private key](https://stackoverflow.com/q/48958304/5344498)
+- [What data is saved in RSA private key?](https://crypto.stackexchange.com/a/7964)
+- [PKCS#1 and PKCS#8 format for RSA private key](https://stackoverflow.com/q/48958304/5344498)
 
 ### gen private key only
 
@@ -586,15 +586,15 @@ sudo openvpn --config /etc/openvpn/ovpn_udp/us4111.nordvpn.com.udp.ovpn --auth-u
 
 If a duplicate package exists in Software, try to use the one directly from your distro as opposed to from GNOME
 
-* Gnome Tweaks
-  * tweaks for gnome
-* Hide Top Bar
-  * hides the top bar when windows are maximized
-* Dash to Dock
-  * moves dash to bottom of screen for a more windows like experience
-  * 24 px
-* TopIcons Plus
-  * Adds tray icons for running applications to top bar
+- Gnome Tweaks
+  - tweaks for gnome
+- Hide Top Bar
+  - hides the top bar when windows are maximized
+- Dash to Dock
+  - moves dash to bottom of screen for a more windows like experience
+  - 24 px
+- TopIcons Plus
+  - Adds tray icons for running applications to top bar
 
 ## Dropbox
 
@@ -609,19 +609,19 @@ sudo dnf install libatomic
 ### good test videos
 
 <!-- cspell:disable -->
-* [Audio Video Sync Test---ucZl6vQ_8Uo](https://youtu.be/ucZl6vQ_8Uo)
-* [costa_rica_4k_60fps_hdr---LXb3EKWsInQ](https://youtu.be/LXb3EKWsInQ)
-* [clippable cheetah video---v7p6VZiRInQ](https://youtu.be/v7p6VZiRInQ)
-  * start
-    * 00:00:05
-  * stop
-    * 00:00:15
-* [long aquarium video---zJ7hUvU-d2Q](https://youtu.be/zJ7hUvU-d2Q)
-  * start
-    * 05:43:50
-  * stop
-    * 05:43:60
-<!-- cspell:enable -->
+
+- [Audio Video Sync Test---ucZl6vQ_8Uo](https://youtu.be/ucZl6vQ_8Uo)
+- [costa_rica_4k_60fps_hdr---LXb3EKWsInQ](https://youtu.be/LXb3EKWsInQ)
+- [clippable cheetah video---v7p6VZiRInQ](https://youtu.be/v7p6VZiRInQ)
+  - start
+    - 00:00:05
+  - stop
+    - 00:00:15
+- [long aquarium video---zJ7hUvU-d2Q](https://youtu.be/zJ7hUvU-d2Q)
+  - start
+    - 05:43:50
+  - stop \* 05:43:60
+  <!-- cspell:enable -->
 
 ### socks 5 proxy
 
@@ -639,14 +639,14 @@ youtube-dl -f 22 -g  https://youtu.be/url
 
 ### download entire channel (all videos playlist?)
 
-* select best video and best mp4 compatible audio format (m4a)
-* select output merge format (mp4 for web)
-* force continue a partially downloaded video (?)
-* use template to create video-related file name
-* ignore errors (?)
-* do not overwrite files
-* do not re-download previously downloaded files (even if they are subsequently deleted or renamed)
-* show verbose details
+- select best video and best mp4 compatible audio format (m4a)
+- select output merge format (mp4 for web)
+- force continue a partially downloaded video (?)
+- use template to create video-related file name
+- ignore errors (?)
+- do not overwrite files
+- do not re-download previously downloaded files (even if they are subsequently deleted or renamed)
+- show verbose details
 
 ```sh
 youtube-dl -f bestvideo+m4a --merge-output-format mp4 -ciw \
@@ -668,25 +668,25 @@ youtube-dl --hls-prefer-native --no-part --no-continue --hls-use-mpegts --fixup 
 
 ### formats
 
-* best audio/video pre-packaged video (max 720p?)
-  * `-f best`
-* best video only (no audio)
-  * `-f bestvideo`
-* best video and audio and then combine them (default)
-  * `-f bestvideo+bestaudio`
-* best video and best audio that can be combined in an mp4 (see prev section)
-  * `f bestvideo+m4a`
-* 360p audio/video pre-packaged
-  * `-f 18`
-* 720p (best audio/video pre-packaged?)
-  * `-f 22`
+- best audio/video pre-packaged video (max 720p?)
+  - `-f best`
+- best video only (no audio)
+  - `-f bestvideo`
+- best video and audio and then combine them (default)
+  - `-f bestvideo+bestaudio`
+- best video and best audio that can be combined in an mp4 (see prev section)
+  - `f bestvideo+m4a`
+- 360p audio/video pre-packaged
+  - `-f 18`
+- 720p (best audio/video pre-packaged?)
+  - `-f 22`
 
 ### misc
 
-* video format query parameter in direct url
-  * `itag=${format}`
-* force output format to be merged into `mp4` instead of probably `mkv`
-  * `--merge-output-format mp4`
+- video format query parameter in direct url
+  - `itag=${format}`
+- force output format to be merged into `mp4` instead of probably `mkv`
+  - `--merge-output-format mp4`
 
 ## PGP/GPG
 
@@ -778,8 +778,8 @@ sudo rfkill block wlan bluetooth
 
 ### default config
 
-* `/etc/vim/vimrc`
-* `~/.vimrc`
+- `/etc/vim/vimrc`
+- `~/.vimrc`
 
 ### my default .vimrc
 
@@ -792,35 +792,35 @@ set mouse-=a
 
 This mode breaks copy/paste when in an ssh session.
 
-* **Any** of the following can fix it.
-  * press `shift` while selecting with mouse to bypass
-  * execute `:set mouse-=a` in vim to disable
-  * comment out `set mouse=a` setting in `vimrc`
-  * add `set mouse-=a` setting in `vimrc`
+- **Any** of the following can fix it.
+  - press `shift` while selecting with mouse to bypass
+  - execute `:set mouse-=a` in vim to disable
+  - comment out `set mouse=a` setting in `vimrc`
+  - add `set mouse-=a` setting in `vimrc`
 
 ### binary conversion
 
-* `:%!xxd`
-  * convert text to binary
-* `:%!xxd -r`
-  * convert binary to text
-* `-p`
-  * modify xxd to use "plain" style for continuous bytes w/ no line numbers or columns
+- `:%!xxd`
+  - convert text to binary
+- `:%!xxd -r`
+  - convert binary to text
+- `-p`
+  - modify xxd to use "plain" style for continuous bytes w/ no line numbers or columns
 
 ### misc vim commands
 
-* `:echo $VIMRUNTIME`
-  * get vim env variables while running
+- `:echo $VIMRUNTIME`
+  - get vim env variables while running
 
 ## podman
 
 ### volumes
 
-* a volume mount to a file is equivalent to copying from host to container on start
-  * useful for configs that shouldn't change until a container is restarted
-* a volume mount to a directory is equivalent to sharing the directory
-  * useful for files and subdirectories that needs to be constantly updated
-  * useful when multiple containers are sharing files to keep them in sync
+- a volume mount to a file is equivalent to copying from host to container on start
+  - useful for configs that shouldn't change until a container is restarted
+- a volume mount to a directory is equivalent to sharing the directory
+  - useful for files and subdirectories that needs to be constantly updated
+  - useful when multiple containers are sharing files to keep them in sync
 
 ## Nginx
 
@@ -869,6 +869,33 @@ sudo ufw allow proto tcp from any to any port 80,443
 sudo ufw allow proto tcp from 15.15.15.51 to any port 22
 ```
 
+## Finding files
+
+### find all text files
+
+```sh
+find . -type f -exec grep -Iq . {} \; -print
+```
+
+## Searching files
+
+### find text in text files
+
+calling grep first allows us by default to have the filename printed along with the matches.
+This is useful for searching the text of many files.
+
+```sh
+grep -iI "search text" $(find . -type f | xargs)
+```
+
+### find text in text files 2
+
+also shows file name as well as line number.
+
+```sh
+grep -iInr "search text" *
+```
+
 ## Misc
 
 ### iPhone detection fix
@@ -877,7 +904,7 @@ sudo ufw allow proto tcp from 15.15.15.51 to any port 22
 sudo usbmuxd -u -U usbmux
 ```
 
-* <https://ubuntuforums.org/showthread.php?t=2376741>
+- <https://ubuntuforums.org/showthread.php?t=2376741>
 
 #### Allow new directory to be used by super users
 
@@ -928,13 +955,13 @@ vim ~/.config/gtk-3.0/bookmarks
 
 ### verify a password against the stored hash
 
-* `/etc/shadow` hash entry
-  * `:` - delimiter
-  * order
-    * user
-    * password hash
-    * last changed?
-    * ...
+- `/etc/shadow` hash entry
+  - `:` - delimiter
+  - order
+    - user
+    - password hash
+    - last changed?
+    - ...
 
 ```sh
 sudo cat /etc/shadow | grep test_user
@@ -944,11 +971,11 @@ sudo cat /etc/shadow | grep test_user
 
 verifying the hash
 
-* `$` - start of hash segment
-* order
-  * hash type
-  * salt
-  * hash
+- `$` - start of hash segment
+- order
+  - hash type
+  - salt
+  - hash
 
 ```sh
 openssl passwd -6 -salt rXT52XGHPU0MpT9f
@@ -964,31 +991,16 @@ git config --global credential.helper /usr/libexec/git-core/git-credential-libse
 
 ### 7 Zip
 
-* Installation
-  * ```sudo apt install p7zip-full```
-* Usage
-  * ```7z```
-  * ```x```: extract
-  * ```l```: list archive
-  * ```-otemp```: set output directory to 'temp'
+- Installation
+  - `sudo apt install p7zip-full`
+- Usage
+  - `7z`
+  - `x`: extract
+  - `l`: list archive
+  - `-otemp`: set output directory to 'temp'
 
 ### check if os is 32 bit or 64 bit
 
 ```sh
 getconf LONG_BIT
-```
-
-### find all text files
-
-```sh
-find . -type f -exec grep -Iq . {} \; -print
-```
-
-### find text in text files
-
-calling grep first allows us by default to have the filename printed along with the matches.
-This is useful for searching the text of many files.
-
-```sh
-grep -iI "search text" $(find . -type f | xargs)
 ```
