@@ -180,6 +180,12 @@ ffmpeg -i input.mp4 -i overlay.png \
   out.mp4
 ```
 
+### create blacked out video
+
+```sh
+ffmpeg -f lavfi -i color=size=1280x720:rate=25:color=black -f lavfi -i anullsrc=channel_layout=stereo:sample_rate=44100 -t 10 output.mp4
+```
+
 ## burn file to dvd w/ autoplay
 
 all tools are available via linux distro
@@ -223,6 +229,12 @@ ffmpeg -re -i vid.mp4 -c copy -f flv rtmps://[username]:[password]@server.domain
 
 ```sh
 ffmpeg -re -i vid.mp4 -vcodec libx264 -g 24 -acodec copy -f flv rtmps://server.domain.tld:1934/publish/streamkey
+```
+
+### fix stream stutter w/ no re-encoding
+
+```sh
+./ffmpeg -i input.mp4 -vf "setdar=dar=0,setsar=sar=0" -video_track_timescale 10240 -r 30 -vcodec libx264 -g 24 -t 50 -acodec copy out.mp4
 ```
 
 ## flags
