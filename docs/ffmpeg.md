@@ -231,7 +231,7 @@ ffmpeg -re -i vid.mp4 -c copy -f flv rtmps://[username]:[password]@server.domain
 ffmpeg -re -i vid.mp4 -vcodec libx264 -g 24 -acodec copy -f flv rtmps://server.domain.tld:1934/publish/streamkey
 ```
 
-### fix stream stutter w/ no re-encoding
+### remove dar/sar in ffmpeg for whatever reason
 
 ```sh
 ./ffmpeg -i input.mp4 -vf "setdar=dar=0,setsar=sar=0" -video_track_timescale 10240 -r 30 -vcodec libx264 -g 24 -t 50 -acodec copy out.mp4
