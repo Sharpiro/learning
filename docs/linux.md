@@ -462,10 +462,12 @@ If `dest` does exist it will be merged with the copied contents of `src`, and an
 cp -rT src dest
 ```
 
-### Get checksum of directory file data recursively
+### Get checksum/hash of directory file data recursively
 
 ```sh
-find <dirname> -type f | xargs sha1sum | awk '{print $1}' | sha1sum
+checksum() {
+  find $1 -type f -print0 | sort -z | xargs -0 sha1sum | tee >(sha1sum)
+}
 ```
 
 ## openssl
@@ -894,6 +896,14 @@ also shows file name as well as line number.
 
 ```sh
 grep -iInr "search text" *
+```
+
+## Reading and processing files
+
+### modify file, and execute command per line
+
+```sh
+sed -ne "s/^file '\(.*\)'/\1/p" playlist.txt | while read line; do echo ${line:1:-1}; done
 ```
 
 ## Misc
