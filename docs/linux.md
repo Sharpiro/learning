@@ -1014,3 +1014,11 @@ git config --global credential.helper /usr/libexec/git-core/git-credential-libse
 ```sh
 getconf LONG_BIT
 ```
+
+### null term args/ whitespace in line
+
+- `sed` can be used to replace " " with the escaped "\ "
+- `tr` can be used to translate "\n" to "\0"
+- `find` can use `-print0` option to use `\0` as delimiter
+- `xargs` can use `--null` option to use `\0` as delimiter
+- `cut` can be used instead of `awk` for slicing out tab delimited lines
