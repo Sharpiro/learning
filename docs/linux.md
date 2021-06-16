@@ -384,13 +384,13 @@ echo "error 2" >> /dev/stderr # append is important here
 ### redirect stdout and stderr to different files
 
 ```sh
-cat test_file 1>> stdout 2>> stderr
+cat test_file 1> stdout 2> stderr
 ```
 
 ### redirect stdout and stderr to same file
 
 ```sh
-cat test_file &>> /dev/null # cat test_file >> /dev/null 2>&1
+cat test_file &> /dev/null # cat test_file > /dev/null 2>&1
 ```
 
 ### Send stdout and stderr to different programs
@@ -399,7 +399,31 @@ cat test_file &>> /dev/null # cat test_file >> /dev/null 2>&1
 (bash run.sh | logger -t testing) 2>&1 | logger -t testing -p user.error
 ```
 
-### if statement
+### if statements
+
+#### overview
+
+- `[[...]]`
+  - bash conditional expression
+- `((...))`
+  - arithmetic expression
+
+#### bash conditional expression - boolean
+
+```sh
+  if [[ $trim_start == true ]]; then
+  fi
+```
+
+#### bash conditional expression - regex
+
+```sh
+if [[ $@ =~ "--concat" ]]; then
+  concat=true
+fi
+```
+
+#### arithmetic expression
 
 ```sh
 cat test_file
@@ -410,6 +434,16 @@ if (($? == 0)); then
 else
   echo "'test_file' does not exist"
 fi
+```
+
+### while statements
+
+#### for each line in input, do something
+
+```sh
+while read file_name; do
+  echo $file_name
+done <<< "$lines"
 ```
 
 ### flag parameters
@@ -468,6 +502,17 @@ cp -rT src dest
 checksum() {
   find $1 -type f -print0 | sort -z | xargs -0 sha1sum | tee >(sha1sum)
 }
+```
+
+### here doc
+
+#### write here doc to file
+
+```sh
+cat << EOF > file.txt
+some
+data
+EOF
 ```
 
 ## openssl
