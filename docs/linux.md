@@ -151,18 +151,30 @@ sudo woeusb \
     --device Win10_1809Oct_English_x64.iso /dev/sdc
 ```
 
+### Partition Disk
+
+```sh
+sudo parted -s /dev/sda mktable gpt
+sudo parted -s /dev/sda mkpart primary 0% 100%
+# if you want to create a fs as well
+sudo mkfs.ext4 /dev/sda1
+```
+
 ## Encryption
 
 ### Luks
 
 #### setup and format luks partition
 
-note: you may want to setup a normal partition using `parted` prior to this to give you a partition accessible at something like `/dev/sda1` rather than using the disk as in `/dev/sda`, but I don't see any advantage at this time since we want the entire disk encrypted
+> note: you may want to setup a normal partition using `parted` prior to this to give you a partition accessible at something like `/dev/sda1` rather than using the disk as in `/dev/sda`, but I don't see any advantage at this time since we want the entire disk encrypted
+
+> update: my no-partition disk broke w/ a `cryptsetup` dependency(?) update, while my other disk with a partition did not.
+So it's a good idea to use a partition.
 
 ```sh
-cryptsetup luksFormat /dev/sda
-cryptsetup open /dev/sda encrypted
-mkfs.ext4 /dev/mapper/encrypted
+sudo cryptsetup luksFormat /dev/sda1
+sudo cryptsetup open /dev/sda1 encrypted
+sudo mkfs.ext4 /dev/mapper/encrypted
 ```
 
 optionally modify ownership after encrypted partition is mounted
@@ -196,7 +208,7 @@ sudo cryptsetup close decrypted_partition
 sudo cryptsetup luksDump --dump-master-key /dev/nvme0n1p2
 ```
 
-### `gocryptfs`
+### gocryptfs
 
 #### mount encrypted folder
 
