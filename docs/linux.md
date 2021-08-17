@@ -251,7 +251,8 @@ disable password authentication
 # /etc/ssh/sshd_config
 PasswordAuthentication no
 ChallengeResponseAuthentication no
-UsePAM no
+# turns out this as 'yes' is useful for rootless docker systemd detection!
+UsePAM yes
 ```
 
 ### ssh connect shortcut
