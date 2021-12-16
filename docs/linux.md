@@ -656,6 +656,12 @@ If a duplicate package exists in Software, try to use the one directly from your
 - TopIcons Plus
   - Adds tray icons for running applications to top bar
 
+### Force refresh DNS cache
+
+```sh
+sudo systemd-resolve --flush-caches
+```
+
 ## Dropbox
 
 ### fedora 31 dependency
