@@ -154,10 +154,18 @@ sudo woeusb \
 ### Partition Disk
 
 ```sh
-sudo parted -s /dev/sda mktable gpt
-sudo parted -s /dev/sda mkpart primary 0% 100%
-# if you want to create a fs as well
-sudo mkfs.ext4 /dev/sda1
+# create gpt partition table if it doesn't exist
+parted /dev/disk/by-id/ata-MAKER_SSD_MODEL_1TB_SN mklabel gpt
+# create single partition 100% of disk
+parted -a opt /dev/disk/by-id/ata-MAKER_SSD_MODEL_1TB_SN mkpart primary 0% 100%
+# make xfs(ext4 etc.) filesystem on new partition (WARNING: partition path is used from now on)
+mkfs.xfs /dev/disk/by-id/ata-MAKER_SSD_MODEL_1TB_SN-part1
+# create mount dir
+mkdir /mnt/1tb_ssd_1
+# mount
+mount -o defaults,nofail,discard,noatime /dev/disk/by-id/ata-MAKER_SSD_MODEL_1TB_SN-part1 /mnt/1tb_ssd_1
+# persist mount to /etc/fstab
+/dev/disk/by-id/ata-MAKER_SSD_MODEL_1TB_SN-part1 /mnt/1tb_ssd_1 xfs defaults,nofail,discard,noatime 0 2
 ```
 
 ## Encryption
@@ -1086,3 +1094,11 @@ getconf LONG_BIT
 - `find` can use `-print0` option to use `\0` as delimiter
 - `xargs` can use `--null` option to use `\0` as delimiter
 - `cut` can be used instead of `awk` for slicing out tab delimited lines
+
+### SELinux
+
+#### grant nginx access to folder for selinux
+
+```sh
+chcon -R -t httpd_sys_rw_content_t /mnt/1tb_ssd_1/my_dir
+```
