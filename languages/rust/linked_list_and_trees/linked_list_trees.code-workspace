@@ -1,0 +1,31 @@
+{
+  "folders": [
+    {
+      "path": "rust"
+    },
+    {
+      "path": "c"
+    }
+  ],
+  "settings": {
+    "files.associations": {
+      ".env": "properties",
+      "*.env": "properties",
+      ".env.sample": "properties",
+      "stdlib.h": "c",
+      "test.h": "c",
+      "stdint.h": "c",
+      "types.h": "c",
+      "vec.h": "c",
+      "bit": "cpp",
+      "*.tcc": "cpp",
+      "functional": "cpp",
+      "string_view": "cpp",
+      "random": "cpp",
+      "limits": "cpp",
+      "numeric": "cpp",
+      "algorithm": "cpp",
+      "temp.h": "c"
+    }
+  }
+}
