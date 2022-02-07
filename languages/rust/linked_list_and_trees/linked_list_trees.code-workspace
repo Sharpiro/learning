@@ -25,7 +25,9 @@
       "limits": "cpp",
       "numeric": "cpp",
       "algorithm": "cpp",
-      "temp.h": "c"
-    }
+      "temp.h": "c",
+      "type_traits": "cpp"
+    },
+    "C_Cpp.default.cppStandard": "gnu++20"
   }
 }
