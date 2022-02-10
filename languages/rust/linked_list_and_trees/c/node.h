@@ -3,14 +3,17 @@
 #include "types.h"
 #include "vec.h"
 
-typedef struct Node
+struct Node
 {
-  u8 value;
+  int value;
   struct Node *next;
-} Node;
+  Vec<int> to_vec() const;
+  Node *find(int value);
+  Node *last();
+  Vec<Node *> to_vec_ref();
+  Node *reverse();
+};
 
-Node get_test_list(int size, int current);
+Node *get_test_list(int size, int current);
 
-Vec to_vec(Node *node);
-
-void print_node(Node *node);
+void print_node(Node const &node);

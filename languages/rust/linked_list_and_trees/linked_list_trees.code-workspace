@@ -26,7 +26,18 @@
       "numeric": "cpp",
       "algorithm": "cpp",
       "temp.h": "c",
-      "type_traits": "cpp"
+      "type_traits": "cpp",
+      "node.h": "c",
+      "optional": "cpp",
+      "istream": "cpp",
+      "ostream": "cpp",
+      "system_error": "cpp",
+      "array": "cpp",
+      "tuple": "cpp",
+      "utility": "cpp",
+      "string": "c",
+      "list": "cpp",
+      "ranges": "cpp"
     },
     "C_Cpp.default.cppStandard": "gnu++20"
   }

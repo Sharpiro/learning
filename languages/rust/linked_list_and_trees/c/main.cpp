@@ -1,72 +1,68 @@
 #include <stdio.h>
 #include "./types.h"
 #include "./vec.h"
-// #include "test.h"
-// #include <stdbool.h>
-// #include <unistd.h>
-// #include "node.h"
-// #include "temp.h"
-#include <string>
-#include <cstddef>
-#include <concepts>
-#include <iostream>
+#include "test.h"
+#include "node.h"
 
-// void test_to_vec()
-// {
-//   Node root = get_test_list(5, 1);
-//   print_node(&root);
-//   Vec vec = to_vec(&root);
-//   print_vec(&vec);
-
-//   assert_eq(vec.len, 5);
-//   assert_eq(vec.raw[0], 1);
-//   assert_eq(vec.raw[1], 2);
-//   assert_eq(vec.raw[2], 3);
-//   assert_eq(vec.raw[3], 4);
-//   assert_eq(vec.raw[4], 5);
-// }
-
-// template <typename T>
-// concept Debug = requires(T a)
-// {
-//   {
-//     a.x
-//     } -> std::convertible_to<int>;
-// };
-
-// template <Debug T>
-// void format_debug(T *my_struct)
-// {
-//   // std::cout << "hi????\n";
-//   std::cout << 1;
-//   // auto temp = my_struct->myFunc();
-//   const auto [x, y, z] = *my_struct;
-//   printf("{ x: %d, y: %f, z: %d }\n", x, y, z);
-//   // printf("{ x: %d, y: %f, z: %d }\n", my_struct->x, my_struct->y, my_struct->z);
-// }
-
-// template <typename T, typename U>
-// concept SomeConcept = std::is_base_of<U, T>::value;
-
-struct SimpleStruct
+void print_debug(Vec<int> const &vec)
 {
-  int x;
-};
+  printf("[");
+  for (int i = 0; i < vec.len; i++)
+  {
+    printf("%d,", vec.raw[i]);
+  }
+  puts("]");
+}
 
-struct MyStruct
+void test_to_vec()
 {
-  int x;
-  double y;
-  bool z;
-};
+  auto root = get_test_list(5, 1);
+  auto vec = root->to_vec();
 
-void do_something(MyStruct &book)
+  assert_eq(vec.len, 5);
+  assert_eq(vec.raw[0], 1);
+  assert_eq(vec.raw[1], 2);
+  assert_eq(vec.raw[2], 3);
+  assert_eq(vec.raw[3], 4);
+  assert_eq(vec.raw[4], 5);
+
+  puts("test_to_vec succeeded");
+}
+
+void test_find()
 {
-  book = MyStruct{.x = 88};
+  auto root = get_test_list(5, 1);
+
+  assert_eq(root->find(1)->value, 1);
+  assert_eq(root->find(3)->value, 3);
+  assert_eq(root->find(0), nullptr);
+
+  puts("test_find succeeded");
+}
+
+void test_reverse()
+{
+  auto root = get_test_list(5, 1);
+  print_node(*root);
+  puts("");
+
+  root = root->reverse();
+  print_node(*root);
+  auto vec = root->to_vec();
+  print_debug(vec);
+  assert_eq(vec.len, 5);
+  assert_eq(vec.raw[0], 5);
+  assert_eq(vec.raw[1], 4);
+  assert_eq(vec.raw[2], 3);
+  assert_eq(vec.raw[3], 2);
+  assert_eq(vec.raw[4], 1);
+
+  puts("test_to_vec_ref succeeded");
 }
 
 int main()
 {
-  auto my_struct = MyStruct{.x = 99};
-  do_something(my_struct);
+  // test_to_vec();
+  // test_find();
+  test_reverse();
 }

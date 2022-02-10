@@ -2,19 +2,23 @@
 
 #include <stdlib.h>
 #include <string.h>
-// #include "./types.h"
+#include <stdio.h>
 
 template <typename T>
 struct Vec
 {
-  // u8 *raw;
   T *raw;
   int len;
   int capacity;
   void push(T val);
-  void append(Vec<T> *other_vec);
-  void print_debug();
+  void append(Vec<T> const &other_vec);
   static Vec<T> new_vec();
+
+  ~Vec()
+  {
+    // printf("deallocating vec of size: %d\n", this->len);
+    free(this->raw);
+  }
 };
 
 template <typename T>
@@ -23,8 +27,8 @@ void Vec<T>::push(T val)
   if (this->len == this->capacity)
   {
     int new_capacity = this->capacity * 2;
-    T *new_raw = (T *)malloc(new_capacity);
-    memcpy(new_raw, this->raw, this->len);
+    T *new_raw = (T *)malloc(new_capacity * sizeof(T));
+    memcpy(new_raw, this->raw, this->len * sizeof(T));
     free(this->raw);
     this->raw = new_raw;
     this->capacity = new_capacity;
@@ -41,27 +45,18 @@ template <typename T>
 Vec<T> Vec<T>::new_vec()
 {
   int default_capacity = 2;
-  T *raw = (T *)malloc(default_capacity);
+  int temp_size = default_capacity * sizeof(T);
+  T *raw = (T *)malloc(default_capacity * sizeof(T));
   Vec<T> vec = {.raw = raw, .capacity = default_capacity};
   return vec;
 }
 
 template <typename T>
-void Vec<T>::append(Vec<T> *other_vec)
+void Vec<T>::append(Vec<T> const &other_vec)
 {
-  for (int i = 0; i < other_vec->len; i++)
+  for (int i = 0; i < other_vec.len; i++)
   {
-    this->push(other_vec->raw[i]);
+    auto value = other_vec.raw[i];
+    this->push(value);
   }
-}
-
-template <typename T>
-void Vec<T>::print_debug()
-{
-  printf("[");
-  for (int i = 0; i < this->len; i++)
-  {
-    printf("%d,", this->raw[i]);
-  }
-  puts("]");
 }
