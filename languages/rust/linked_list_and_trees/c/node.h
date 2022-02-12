@@ -16,4 +16,4 @@ struct Node
 
 Node *get_test_list(int size, int current);
 
-void print_node(Node const &node);
+void print_node(const Node *node);

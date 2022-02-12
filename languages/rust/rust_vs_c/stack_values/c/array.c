@@ -2,7 +2,7 @@
 
 typedef unsigned char u8;
 
-void print_arr(u8 arr[], int len)
+void print_arr(const u8 *arr, int len)
 {
   putchar('[');
   for (int i = 0; i < len; i++)

@@ -12,12 +12,12 @@ Node *get_test_list(int size, int current)
   return node;
 }
 
-void print_node(Node const &node)
+void print_node(const Node *node)
 {
-  printf("%p: { value: %d, next: %p }\n", &node, node.value, node.next);
-  if (node.next != NULL)
+  printf("%p: { value: %d, next: %p }\n", &node, node->value, node->next);
+  if (node->next != NULL)
   {
-    print_node(*node.next);
+    print_node(node->next);
   }
 }
 
@@ -28,7 +28,7 @@ Vec<int> Node::to_vec() const
   if (this->next != NULL)
   {
     Vec<int> sub_vec = this->next->to_vec();
-    vec.append(sub_vec);
+    vec.append(&sub_vec);
   }
   return vec;
 }
@@ -84,7 +84,7 @@ Vec<Node *> Node::to_vec_ref()
   if (this->next != nullptr)
   {
     auto sub_vec = this->next->to_vec_ref();
-    vec.append(sub_vec);
+    vec.append(&sub_vec);
   }
 
   return vec;

@@ -11,7 +11,7 @@ struct Vec
   int len;
   int capacity;
   void push(T val);
-  void append(Vec<T> const &other_vec);
+  void append(const Vec<T> *other_vec);
   static Vec<T> new_vec();
 
   ~Vec()
@@ -52,11 +52,11 @@ Vec<T> Vec<T>::new_vec()
 }
 
 template <typename T>
-void Vec<T>::append(Vec<T> const &other_vec)
+void Vec<T>::append(const Vec<T> *other_vec)
 {
-  for (int i = 0; i < other_vec.len; i++)
+  for (int i = 0; i < other_vec->len; i++)
   {
-    auto value = other_vec.raw[i];
+    auto value = other_vec->raw[i];
     this->push(value);
   }
 }
