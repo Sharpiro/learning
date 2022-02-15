@@ -14,7 +14,7 @@ Node *get_test_list(int size, int current)
 
 void print_node(const Node *node)
 {
-  printf("%p: { value: %d, next: %p }\n", &node, node->value, node->next);
+  printf("%p: { value: %d, next: %p }\n", node, node->value, node->next);
   if (node->next != NULL)
   {
     print_node(node->next);
@@ -60,11 +60,20 @@ Node *Node::last()
   }
 }
 
+Node *Node::swap_with_child()
+{
+  Node *child = this->next;
+  child->next = this;
+  this->next = nullptr;
+  return child;
+}
+
 Node *Node::reverse()
 {
   auto vec = this->to_vec_ref();
-  vec.raw[0]->next = nullptr;
-  for (int i = vec.len - 1; i >= 0; i--)
+  // vec.raw[0]->next = nullptr;
+  this->next = nullptr;
+  for (int i = vec.len - 1; i >= 1; i--)
   {
     auto node = vec.raw[i];
     auto prev_index = i - 1;

@@ -40,6 +40,15 @@ void test_find()
   puts("test_find succeeded");
 }
 
+void test_swap_with_child()
+{
+  auto root = get_test_list(2, 1);
+  print_node(root);
+
+  auto swap = root->swap_with_child();
+  print_node(swap);
+}
+
 void test_reverse()
 {
   auto root = get_test_list(5, 1);
@@ -47,6 +56,7 @@ void test_reverse()
   puts("");
 
   root = root->reverse();
+  // root->reverse();
   print_node(root);
   auto vec = root->to_vec();
   print_debug(&vec);
@@ -62,7 +72,8 @@ void test_reverse()
 
 int main()
 {
-  test_to_vec();
-  test_find();
-  test_reverse();
+  // test_to_vec();
+  // test_find();
+  test_swap_with_child();
+  // test_reverse();
 }

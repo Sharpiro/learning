@@ -11,6 +11,7 @@ struct Node
   Node *find(int value);
   Node *last();
   Vec<Node *> to_vec_ref();
+  Node *swap_with_child();
   Node *reverse();
 };
 
