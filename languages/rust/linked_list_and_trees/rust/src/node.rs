@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-use std::{cell::RefCell, mem, ptr, rc::Rc};
+use std::{cell::RefCell, rc::Rc};
 
 // #![allow(unused_variables)]
 
@@ -78,45 +78,42 @@ impl Node {
     }
 
     fn push_internal(node: Rc<RefCell<Node>>, value: i32) -> Rc<RefCell<Node>> {
-        // note: rust not smart enough to drop borrow in else block
-        // if let Some(next_cell) = &node.borrow().next {
-        //     let next = Rc::clone(next_cell);
-        //     return Node::push_internal(next, value);
-        // }
-
         let last_node = Node::last(&node);
         let new_node = Rc::from(RefCell::from(Node { value, next: None }));
         last_node.borrow_mut().next = Some(Rc::clone(&new_node));
         new_node
     }
 
-    fn pop_internal(node_cell: Rc<RefCell<Node>>) -> Rc<RefCell<Node>> {
-        // let node = node_cell.borrow();
+    fn pop_internal(node_cell: Rc<RefCell<Node>>) -> Option<Rc<RefCell<Node>>> {
         let mut node = node_cell.borrow_mut();
-        let next_node = node.next.as_ref().expect("no good");
+        let next_node = node.next.as_ref()?;
         let is_last_node = next_node.borrow().next.as_ref().is_none();
         if !is_last_node {
             let next_rc = Rc::clone(next_node);
             return Node::pop_internal(next_rc);
         }
 
-        // todo: can this be done w/o braces or drop function?
-        // maybe not, drop is idiomatic for smart pointers managing locks
-        // JK just borrow mutably once at start instead of immutable > drop > mutable
-        // drop(node);
-        // node.next = None;
         let popped = node.next.take().unwrap();
-        // let popped = mem::replace(&mut node.next, None).unwrap();
-        // let popped = unsafe {
-        //     let result = ptr::read(&node.next);
-        //     ptr::write(&mut node.next, None);
-        //     result.unwrap()
-        // };
-        // node_cell.borrow_mut().next = None;
-        // node.next = None;
-        popped
+        Some(popped)
     }
 
+    fn push_start_internal(node_cell: Rc<RefCell<Node>>, value: i32) -> Rc<RefCell<Node>> {
+        let new_node = Rc::from(RefCell::from(Node {
+            value,
+            next: Some(node_cell),
+        }));
+        new_node
+    }
+
+    // pop....this, dll problems
+    fn pop_start_internal(
+        node_cell: Rc<RefCell<Node>>,
+    ) -> (Rc<RefCell<Node>>, Option<Rc<RefCell<Node>>>) {
+        let new_start = node_cell.borrow_mut().next.take();
+        let old_start = node_cell;
+
+        (old_start, new_start)
+    }
     // pub fn reverse(&mut self) -> &Node {
     // pub fn reverse(&mut self) {
     //     // let temp: &Node;
@@ -146,8 +143,16 @@ impl Node {
         Node::push_internal(Rc::clone(node_cell), value)
     }
 
-    pub fn pop(node_cell: &Rc<RefCell<Node>>) -> Rc<RefCell<Node>> {
+    pub fn pop(node_cell: &Rc<RefCell<Node>>) -> Option<Rc<RefCell<Node>>> {
         Node::pop_internal(Rc::clone(node_cell))
+    }
+
+    fn push_start(node_cell: &Rc<RefCell<Node>>, value: i32) -> Rc<RefCell<Node>> {
+        Node::push_start_internal(Rc::clone(node_cell), value)
+    }
+
+    fn pop_start(node_cell: &Rc<RefCell<Node>>) -> (Rc<RefCell<Node>>, Option<Rc<RefCell<Node>>>) {
+        Node::pop_start_internal(Rc::clone(node_cell))
     }
 }
 
@@ -208,14 +213,38 @@ mod tests {
         let root_cell = get_test_list(3, 1);
         println!("{:?}", root_cell);
         let popped = Node::pop(&root_cell);
-        // let old_last_node = Node::last(&root_cell);
-        // let new_node = Node::push(&root_cell, 4);
-        // let last_node = Node::last(&root_cell);
         println!("{:?}", root_cell);
         println!("{:?}", popped);
 
         assert_eq!(root_cell.borrow().to_vec(), [1, 2]);
-        assert_eq!(popped.borrow().to_vec(), [3]);
+        assert_eq!(popped.unwrap().borrow().to_vec(), [3]);
+    }
+
+    #[test]
+    fn test_push_start() {
+        let root_cell = get_test_list(4, 1);
+        println!("{:?}", root_cell);
+        let popped = Node::push_start(&root_cell, 5);
+        println!("{:?}", root_cell.borrow().to_vec());
+        println!("{:?}", popped);
+
+        assert_eq!(root_cell.borrow().to_vec(), [1, 2, 3, 4]);
+        assert_eq!(popped.borrow().to_vec(), [5, 1, 2, 3, 4]);
+    }
+
+    #[test]
+    fn test_pop_start() {
+        let old_list = get_test_list(4, 1);
+        println!("{:?}", old_list.borrow().to_vec());
+        let (popped, new_list_option) = Node::pop_start(&old_list);
+        let new_list = new_list_option.unwrap();
+        println!("{:?}", old_list.borrow().to_vec());
+        println!("{:?}", new_list.borrow().to_vec());
+        println!("{:?}", popped.borrow().to_vec());
+
+        assert_eq!(old_list.borrow().to_vec(), [1]);
+        assert_eq!(new_list.borrow().to_vec(), [2, 3, 4]);
+        assert_eq!(popped.borrow().to_vec(), [1]);
     }
 
     // #[test]

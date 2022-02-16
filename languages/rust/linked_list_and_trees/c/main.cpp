@@ -47,12 +47,19 @@ void test_push()
   auto new_node = root_cell->push(4);
   auto last_node = root_cell->last();
 
-  // auto last_node_ptr : *const Node = &*last_node.borrow();
-  // auto new_node_ptr : *const Node = &*new_node.borrow();
-  // assert_ne(old_last_node, new_node);
   assert_eq(last_node->value, new_node->value);
   assert_eq(last_node, new_node);
   assert_eq(new_node->value, 4);
+}
+
+void test_pop()
+{
+  auto root_cell = get_test_list(1, 1);
+  auto popped = root_cell->pop();
+
+  assert_eq(root_cell->value, 1);
+  assert_eq(root_cell->next->value, 2);
+  assert_eq(popped->value, 3);
 }
 
 void test_reverse()
@@ -80,6 +87,7 @@ int main()
 {
   // test_to_vec();
   // test_find();
-  test_push();
+  // test_push();
+  test_pop();
   // test_reverse();
 }

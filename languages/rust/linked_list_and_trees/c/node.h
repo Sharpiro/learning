@@ -12,6 +12,7 @@ struct Node
   Node *last();
   Vec<Node *> to_vec_ref();
   Node *push(int value);
+  Node *pop();
   Node *reverse();
 };
 

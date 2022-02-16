@@ -1,6 +1,7 @@
 #include "node.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "test.h"
 
 Node *get_test_list(int size, int current)
 {
@@ -66,6 +67,23 @@ Node *Node::push(int value)
   auto new_node = new Node{value};
   last->next = new_node;
   return new_node;
+}
+
+Node *Node::pop()
+{
+  auto first_child = this->next;
+  if (first_child == nullptr)
+  {
+    return nullptr;
+  }
+
+  if (first_child->next == nullptr)
+  {
+    this->next = nullptr;
+    return first_child;
+  }
+
+  return this->next->pop();
 }
 
 Node *Node::reverse()
