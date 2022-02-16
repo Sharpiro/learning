@@ -60,12 +60,12 @@ Node *Node::last()
   }
 }
 
-Node *Node::swap_with_child()
+Node *Node::push(int value)
 {
-  Node *child = this->next;
-  child->next = this;
-  this->next = nullptr;
-  return child;
+  auto last = this->last();
+  auto new_node = new Node{value};
+  last->next = new_node;
+  return new_node;
 }
 
 Node *Node::reverse()

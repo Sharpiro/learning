@@ -40,13 +40,19 @@ void test_find()
   puts("test_find succeeded");
 }
 
-void test_swap_with_child()
+void test_push()
 {
-  auto root = get_test_list(2, 1);
-  print_node(root);
+  auto root_cell = get_test_list(3, 1);
+  auto old_last_node = root_cell->last();
+  auto new_node = root_cell->push(4);
+  auto last_node = root_cell->last();
 
-  auto swap = root->swap_with_child();
-  print_node(swap);
+  // auto last_node_ptr : *const Node = &*last_node.borrow();
+  // auto new_node_ptr : *const Node = &*new_node.borrow();
+  // assert_ne(old_last_node, new_node);
+  assert_eq(last_node->value, new_node->value);
+  assert_eq(last_node, new_node);
+  assert_eq(new_node->value, 4);
 }
 
 void test_reverse()
@@ -74,6 +80,6 @@ int main()
 {
   // test_to_vec();
   // test_find();
-  test_swap_with_child();
+  test_push();
   // test_reverse();
 }
