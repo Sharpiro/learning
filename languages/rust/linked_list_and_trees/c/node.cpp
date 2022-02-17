@@ -86,10 +86,22 @@ Node *Node::pop()
   return this->next->pop();
 }
 
+Node *Node::push_start(int value)
+{
+  auto new_node = (Node *)malloc(sizeof(Node));
+  *new_node = {.value = value, .next = this};
+
+  return new_node;
+}
+
+Node *Node::pop_start()
+{
+  return this->next;
+}
+
 Node *Node::reverse()
 {
   auto vec = this->to_vec_ref();
-  // vec.raw[0]->next = nullptr;
   this->next = nullptr;
   for (int i = vec.len - 1; i >= 1; i--)
   {

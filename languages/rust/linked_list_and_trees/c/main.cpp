@@ -54,12 +54,40 @@ void test_push()
 
 void test_pop()
 {
-  auto root_cell = get_test_list(1, 1);
+  auto root_cell = get_test_list(4, 1);
   auto popped = root_cell->pop();
 
   assert_eq(root_cell->value, 1);
   assert_eq(root_cell->next->value, 2);
-  assert_eq(popped->value, 3);
+  assert_eq(popped->value, 4);
+}
+
+void test_push_start()
+{
+  auto root_cell = get_test_list(4, 1);
+  auto new_node = root_cell->push_start(5);
+
+  VEC(4, expected_old, 1, 2, 3, 4);
+  auto actual_old = root_cell->to_vec();
+  assert_eq(&expected_old, &actual_old);
+
+  VEC(5, expected_new, 5, 1, 2, 3, 4);
+  auto actual_new = new_node->to_vec();
+  assert_eq(&expected_new, &actual_new);
+}
+
+void test_pop_start()
+{
+  auto root_cell = get_test_list(5, 1);
+  auto new_node = root_cell->pop_start();
+
+  VEC(5, expected_old, 1, 2, 3, 4, 5);
+  auto actual_old = root_cell->to_vec();
+  assert_eq(&expected_old, &actual_old);
+
+  VEC(4, expected_new, 2, 3, 4, 5);
+  auto actual_new = new_node->to_vec();
+  assert_eq(&expected_new, &actual_new);
 }
 
 void test_reverse()
@@ -69,7 +97,6 @@ void test_reverse()
   puts("");
 
   root = root->reverse();
-  // root->reverse();
   print_node(root);
   auto vec = root->to_vec();
   print_debug(&vec);
@@ -80,14 +107,16 @@ void test_reverse()
   assert_eq(vec.raw[3], 2);
   assert_eq(vec.raw[4], 1);
 
-  puts("test_to_vec_ref succeeded");
+  puts("test_reverse succeeded");
 }
 
 int main()
 {
-  // test_to_vec();
-  // test_find();
-  // test_push();
+  test_to_vec();
+  test_find();
+  test_push();
   test_pop();
-  // test_reverse();
+  test_push_start();
+  test_pop_start();
+  test_reverse();
 }

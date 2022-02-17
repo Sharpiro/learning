@@ -1,6 +1,6 @@
 #![allow(dead_code)]
 
-use std::{cell::RefCell, rc::Rc};
+use std::{cell::RefCell, rc::Rc, vec};
 
 // #![allow(unused_variables)]
 
@@ -8,11 +8,6 @@ use std::{cell::RefCell, rc::Rc};
 pub struct Node {
     pub value: i32,
     pub next: Option<Rc<RefCell<Node>>>,
-    // pub next: Option<Rc<Node>>,
-    // pub next: Option<Box<Node>>,
-    // pub next: Option<*const Node>,
-    // pub next: Option<&'a Node<'a>>,
-    // pub next: Option<Node>,
 }
 
 impl Drop for Node {
@@ -23,8 +18,6 @@ impl Drop for Node {
 
 impl Node {
     fn find_internal(node_cell: Rc<RefCell<Node>>, value: i32) -> Option<Rc<RefCell<Node>>> {
-        // todo: can't borrow once at top
-        // let node = node_cell.borrow();
         if node_cell.borrow().value == value {
             return Some(node_cell);
         }
@@ -45,28 +38,6 @@ impl Node {
         };
         vec
     }
-
-    // fn to_vec_ref(&self) -> Vec<&Node> {
-    //     let mut vec = vec![self];
-    //     if let Some(next) = &self.next {
-    //         let mut sub_vec = next.borrow().to_vec_ref();
-    //         vec.append(&mut sub_vec);
-    //     }
-    //     vec
-    // }
-
-    // fn swap_with_child(&self) {
-    //     // self.next = None;
-    //     // fn swap_with_child(&mut self) -> &Node {
-    //     // let child = self.next.as_ref().unwrap();
-    //     // child.next = Some(self);
-    //     // self.next = None;
-    //     // child.next = None;
-    //     // let wannabe = Box::from(self);
-    //     // let wannabe2 = Some(wannabe);
-    //     // child
-    //     // self
-    // }
 
     fn last_internal(node: Rc<RefCell<Node>>) -> Rc<RefCell<Node>> {
         if let Some(next_cell) = &node.borrow().next {
@@ -105,29 +76,33 @@ impl Node {
         new_node
     }
 
-    // pop....this, dll problems
-    fn pop_start_internal(
-        node_cell: Rc<RefCell<Node>>,
-    ) -> (Rc<RefCell<Node>>, Option<Rc<RefCell<Node>>>) {
-        let new_start = node_cell.borrow_mut().next.take();
-        let old_start = node_cell;
-
-        (old_start, new_start)
+    fn pop_start_internal(node_cell: Rc<RefCell<Node>>) -> Option<Rc<RefCell<Node>>> {
+        let node = node_cell.borrow();
+        let next_cell = node.next.as_ref()?;
+        Some(Rc::clone(next_cell))
     }
-    // pub fn reverse(&mut self) -> &Node {
-    // pub fn reverse(&mut self) {
-    //     // let temp: &Node;
-    //     {
-    //         let mut vec_ref = self.to_vec_ref();
-    //         // vec_ref
-    //         for (_, node) in vec_ref.iter_mut().skip(1).enumerate().rev() {
-    //             node.next = None;
-    //             dbg!(node.value);
-    //         }
-    //         // temp = vec_ref[vec_ref.len() - 1];
-    //     }
-    //     // self.next = None;
-    // }
+
+    fn to_vec_ref(node_cell: Rc<RefCell<Node>>) -> Vec<Rc<RefCell<Node>>> {
+        let mut vec = vec![Rc::clone(&node_cell)];
+        if let Some(next) = node_cell.borrow().next.as_ref() {
+            let mut sub_vec = Node::to_vec_ref(Rc::clone(next));
+            vec.append(&mut sub_vec);
+        }
+        vec
+    }
+
+    pub fn reverse_internal(node_cell: Rc<RefCell<Node>>) -> Rc<RefCell<Node>> {
+        let vec_ref = Node::to_vec_ref(Rc::clone(&node_cell));
+        for (i, vec_cell) in vec_ref.iter().enumerate().skip(1).rev() {
+            let prev_index = i - 1;
+            let prev = &vec_ref[prev_index];
+            let mut node = vec_cell.borrow_mut();
+            node.next = Some(Rc::clone(prev));
+        }
+        node_cell.borrow_mut().next = None;
+        let new_start = Rc::clone(vec_ref.last().unwrap());
+        new_start
+    }
 }
 
 impl Node {
@@ -151,8 +126,12 @@ impl Node {
         Node::push_start_internal(Rc::clone(node_cell), value)
     }
 
-    fn pop_start(node_cell: &Rc<RefCell<Node>>) -> (Rc<RefCell<Node>>, Option<Rc<RefCell<Node>>>) {
+    fn pop_start(node_cell: &Rc<RefCell<Node>>) -> Option<Rc<RefCell<Node>>> {
         Node::pop_start_internal(Rc::clone(node_cell))
+    }
+
+    fn reverse(node_cell: &Rc<RefCell<Node>>) -> Rc<RefCell<Node>> {
+        Node::reverse_internal(Rc::clone(node_cell))
     }
 }
 
@@ -224,73 +203,35 @@ mod tests {
     fn test_push_start() {
         let root_cell = get_test_list(4, 1);
         println!("{:?}", root_cell);
-        let popped = Node::push_start(&root_cell, 5);
+        let pushed = Node::push_start(&root_cell, 5);
         println!("{:?}", root_cell.borrow().to_vec());
-        println!("{:?}", popped);
+        println!("{:?}", pushed);
 
         assert_eq!(root_cell.borrow().to_vec(), [1, 2, 3, 4]);
-        assert_eq!(popped.borrow().to_vec(), [5, 1, 2, 3, 4]);
+        assert_eq!(pushed.borrow().to_vec(), [5, 1, 2, 3, 4]);
     }
 
     #[test]
     fn test_pop_start() {
-        let old_list = get_test_list(4, 1);
+        let old_list = get_test_list(5, 1);
         println!("{:?}", old_list.borrow().to_vec());
-        let (popped, new_list_option) = Node::pop_start(&old_list);
-        let new_list = new_list_option.unwrap();
+        let new_list = Node::pop_start(&old_list).unwrap();
         println!("{:?}", old_list.borrow().to_vec());
         println!("{:?}", new_list.borrow().to_vec());
-        println!("{:?}", popped.borrow().to_vec());
 
-        assert_eq!(old_list.borrow().to_vec(), [1]);
-        assert_eq!(new_list.borrow().to_vec(), [2, 3, 4]);
-        assert_eq!(popped.borrow().to_vec(), [1]);
+        assert_eq!(old_list.borrow().to_vec(), [1, 2, 3, 4, 5]);
+        assert_eq!(new_list.borrow().to_vec(), [2, 3, 4, 5]);
     }
 
-    // #[test]
-    // fn test_multi_own_list() {
-    //     let a = Rc::from(1);
-    //     let b = Rc::new(1);
-    //     let a_node = Rc::from(RefCell::from(Node {
-    //         value: 5,
-    //         next: Some(Rc::from(RefCell::from(Node {
-    //             value: 10,
-    //             next: None,
-    //         }))),
-    //     }));
-    //     let b_node = Node {
-    //         value: 3,
-    //         next: Some(Rc::clone(&a_node)),
-    //     };
-    //     let c_node = Node {
-    //         value: 4,
-    //         next: Some(Rc::clone(&a_node)),
-    //     };
+    #[test]
+    fn test_reverse() {
+        let old_list = get_test_list(5, 1);
+        println!("{:?}", old_list.borrow().to_vec());
+        let new_list = Node::reverse(&old_list);
+        println!("{:?}", old_list.borrow().to_vec());
+        println!("{:?}", new_list.borrow().to_vec());
 
-    //     // a_node.borrow_mut().value = 99;
-    //     println!("{:?}", a_node);
-    //     println!("{:?}", b_node);
-    //     println!("{:?}", c_node);
-    // }
-
-    // #[test]
-    // fn test_reverse() {
-    //     let mut root = get_test_list(5, 1);
-    //     println!("{:?}", root);
-    //     {
-    //         // let reversed = root.reverse();
-    //         // let vec = reversed.to_vec();
-    //         root.reverse();
-    //         // let vec = root.to_vec();
-    //         // println!("{:?}", reversed);
-    //     }
-
-    //     println!("{:?}", root);
-    //     // assert_eq!(vec.len(), 5);
-    //     // assert_eq!(vec[0], 5);
-    //     // assert_eq!(vec[1], 4);
-    //     // assert_eq!(vec[2], 3);
-    //     // assert_eq!(vec[3], 2);
-    //     // assert_eq!(vec[4], 1);
-    // }
+        assert_eq!(old_list.borrow().to_vec(), [1]);
+        assert_eq!(new_list.borrow().to_vec(), [5, 4, 3, 2, 1]);
+    }
 }

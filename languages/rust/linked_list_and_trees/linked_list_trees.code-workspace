@@ -37,7 +37,8 @@
       "utility": "cpp",
       "string": "c",
       "list": "cpp",
-      "ranges": "cpp"
+      "ranges": "cpp",
+      "vector": "c"
     },
     "C_Cpp.default.cppStandard": "gnu++20"
   }
