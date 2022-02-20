@@ -988,6 +988,12 @@ docker exec container_name sh -c \
   > archive_file_name
 ```
 
+### Restore db
+
+```sh
+mongorestore --archive archive_file_name
+```
+
 ## Misc
 
 ### iPhone detection fix
