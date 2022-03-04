@@ -46,31 +46,34 @@ ldd main.out
 
 ```c
 // both are pointer to int or pointer to first element of array of int
-// both degrade to `int *a`
 void test2(int *a)
+// degrades to `int *a`
 void test3(int a[])
 ```
 
 # 2 dimension
 
 ```c
-// pointer to pointer of int or pointer to first element of first array of int
+// pointer to pointer to int or pointer to first element of first array of int
 // cannot use a[0][0], would error or segfault b/c *a is actually a value, not a memory address
 void test1(int **a);
 // array of int pointers
-// degrades to double int pointer to int like above
+// degrades to pointer to pointer to int like above
+// AKA: array of pointer to int
 void test2(int *a[SIZE]);
 // array of int array of size SIZE
 // degrades to pointer to int array of size SIZE
 void test3(int a[][SIZE]);
+// degrades to pointer to int array of size SIZE
+void test4(int a[99][SIZE]);
 // no degrade, same as test3
-void test4(int (*a)[SIZE]);
+void test5(int (*a)[SIZE]);
 // degrades to double char pointer
 // argv[0][0] works and gets the first char of the first c string
 int main(int argc, char *argv[])
 // same as above
 // argv[0][0] likely works b/c c strings can be delimitted by 0x00
-// (char **) is handled differently than (int **) b/c c strings have delimiter
+// (char **) is handled differently than (int **) b/c C can determine size of (char *)
 int main(int argc, char **argv)
 ```
 
