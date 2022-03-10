@@ -4,6 +4,7 @@
 #customs
 package-lock.json
 dist
+target
 
 *.exe
 *.out
