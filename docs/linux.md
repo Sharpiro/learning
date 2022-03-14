@@ -994,6 +994,52 @@ docker exec container_name sh -c \
 mongorestore --archive archive_file_name
 ```
 
+## DVD
+
+## apps
+
+- menus
+  - [devedeng](https://gitlab.com/rastersoft/devedeng/-/tags)
+    - simple ui
+    - better for quick import
+    - menus look bad
+    - potentially script-able if you can extract the python
+  - [dvd-slideshow](https://sourceforge.net/projects/dvd-slideshow/files)
+    - not in fedora package manager
+    - the `dvd-menu` sub-tool can create dvd menus from shell
+    - no "play all" option
+    - [possibly add play all manually](https://forum.videohelp.com/threads/193620-Q-Multiple-titles-chapter-menus-in-dvdauthorgui-dvdauthor)
+  - `dvdstyler`
+    - prettier ui
+    - better for custom ui
+  - [qvdvauthor](http://qdvdauthor.sourceforge.net)
+    - not in package manager
+    - not tested
+- other
+  - `brasero`
+    - burner
+  - `imagination`
+    - slide show
+
+## burn file to dvd w/ autoplay
+
+all tools are available via linux distro
+
+[reference](https://evilshit.wordpress.com/2015/08/10/how-to-create-a-video-dvd-with-command-line-tools)
+
+```sh
+# make file dvd compatable
+ffmpeg -i input.mov -target ntsc-dvd -aspect 16:9 dvd_out.mpg
+# make appropriate DVD folders
+dvdauthor -o dvdauthor_export/ -t dvd_out.mpg
+# setup DVD folders & data to be in North America DVD format with autoplay
+export VIDEO_FORMAT=NTSC && dvdauthor -o dvdauthor_export/ -T
+# create an ISO image from the DVD folders
+genisoimage -dvd-video -V "video_title" -o output.iso dvdauthor_export/
+# burn the ISO image to a DVD writer device (check devices)
+growisofs -dvd-compat -Z /dev/sr0=output.iso
+```
+
 ## Misc
 
 ### iPhone detection fix
