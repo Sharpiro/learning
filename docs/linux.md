@@ -1164,3 +1164,29 @@ getconf LONG_BIT
 ```sh
 chcon -R -t httpd_sys_rw_content_t /mnt/1tb_ssd_1/my_dir
 ```
+
+### bootloader repair
+
+```sh
+# setup
+sudo cryptsetup luksOpen /dev/nvme0n1p2 myvolume
+sudo vgchange -ay fedora_localhost-live
+
+# mounts
+sudo mount /dev/fedora_localhost-live/root /mnt
+sudo mount /dev/nvme0n1p1 /mnt/boot
+sudo mount --bind /dev /mnt/dev
+sudo mount --bind /dev/pts /mnt/dev/pts
+sudo mount --bind /proc /mnt/proc
+sudo mount --bind /sys /mnt/sys
+
+# change root to hard drive
+sudo chroot /mnt
+
+# grub
+grub2-mkconfig -o /boot/grub2/grub.cfg
+grub2-install /dev/nvme0n1
+
+# fix broken linux install
+fsck -y /dev/fedora_localhost-live/home
+```
