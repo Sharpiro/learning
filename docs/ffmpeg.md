@@ -30,7 +30,11 @@ ffmpeg -i "input.mp4" -ss 00:30:00.0 -t 00:10:00.0 "output.mp4"
 ## fade in/out
 
 ```sh
-# clip w/ fade in/out
+ffmpeg -i input.mp4 -vf 'fade=t=out:st=153:d=5' -af 'afade=t=out:st=153:d=5' faded.mp4
+```
+
+```sh
+# deprecated, probably only useful if you need to specify fade-out on at the  frame-level
 ffmpeg -i input.mp4 -ss 00:00:00.0 -t 00:00:10.0 -vf fade=in:0:60,fade=out:240:30 -af afade=in:st=0:d=1,afade=out:st=5:d=5 slide_fade_in.mp4
 ```
 
