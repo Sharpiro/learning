@@ -980,11 +980,17 @@ sed -ne "s/^file '\(.*\)'/\1/p" playlist.txt | while read line; do echo ${line:1
 
 ## MongoDB
 
+## shell login
+
+```sh
+mongosh "mongodb://user@localhost:27017"
+```
+
 ### Backup db in docker container
 
 ```sh
 docker exec container_name sh -c \
-  'mongodump --uri mongodb://user:password@localhost:27017/?authSource=admin -d db_name --archive' \ 
+  'mongodump --uri mongodb://user:password@localhost:27017/?authSource=admin -d db_name --archive' \
   > archive_file_name
 ```
 
