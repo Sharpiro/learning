@@ -990,14 +990,16 @@ mongosh "mongodb://user@localhost:27017"
 
 ```sh
 docker exec container_name sh -c \
-  'mongodump --uri mongodb://user:password@localhost:27017/?authSource=admin -d db_name --archive' \
+  'mongodump --uri mongodb://user:password@localhost:27017/?authSource=admin --archive -d db_name' \
   > archive_file_name
 ```
 
 ### Restore db
 
 ```sh
-mongorestore --archive archive_file_name
+docker exec -i container_name sh -c \
+  'mongorestore --uri mongodb://user:password@localhost:27017/?authSource=admin --archive' \
+  < archive_file_name
 ```
 
 ## DVD
