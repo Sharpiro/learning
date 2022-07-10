@@ -1002,6 +1002,19 @@ docker exec -i container_name sh -c \
   < archive_file_name
 ```
 
+### update documents using javascript
+
+```sh
+db.articles.find().sort({_id:1}).limit(5).forEach(function(obj) { 
+  let newSections = [obj.section];
+  if(obj.isFeatured){
+    newSections = [...newSections, "featured"];
+  }
+  obj.sections = newSections;
+  db.articles.save(obj);
+});
+```
+
 ## DVD
 
 ## apps
