@@ -168,6 +168,17 @@ mount -o defaults,nofail,discard,noatime /dev/disk/by-id/ata-MAKER_SSD_MODEL_1TB
 /dev/disk/by-id/ata-MAKER_SSD_MODEL_1TB_SN-part1 /mnt/1tb_ssd_1 xfs defaults,nofail,discard,noatime 0 2
 ```
 
+### create swap space
+
+```sh
+fallocate -l 2G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+swapon --show
+```
+
 ## Encryption
 
 ### Luks
@@ -980,7 +991,7 @@ sed -ne "s/^file '\(.*\)'/\1/p" playlist.txt | while read line; do echo ${line:1
 
 ## MongoDB
 
-## shell login
+### shell login
 
 ```sh
 mongosh "mongodb://user@localhost:27017"
@@ -1017,7 +1028,7 @@ db.articles.find().sort({_id:1}).limit(5).forEach(function(obj) {
 
 ## DVD
 
-## apps
+### apps
 
 - menus
   - [devedeng](https://gitlab.com/rastersoft/devedeng/-/tags)
@@ -1042,7 +1053,7 @@ db.articles.find().sort({_id:1}).limit(5).forEach(function(obj) {
   - `imagination`
     - slide show
 
-## burn file to dvd w/ autoplay
+### burn file to dvd w/ autoplay
 
 all tools are available via linux distro
 
