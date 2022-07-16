@@ -90,6 +90,7 @@ git log --oneline master~5..master~3
 
 ```sh
 git log --pretty=format:"%h - %ae, %ce : %s" -1
+git log --pretty=fuller
 ```
 
 ## log count
@@ -130,7 +131,7 @@ git cat-file -t c24f14a3a4297b057cb03cbf22f90b084fccd1ab
 git cat-file -p c24f14a3a4297b057cb03cbf22f90b084fccd1ab
 ```
 
-## advanced commands
+## changing history
 
 ### move folder to new repository
 
@@ -151,6 +152,36 @@ git filter-branch --force --index-filter \
 
 ```sh
 git filter-branch --tree-filter 'rm -rf sniffing_proxy' --prune-empty HEAD
+```
+
+### changing author and committer
+
+```sh
+git rebase --root --exec 'git commit --amend --no-edit --reset-author --date="$(git log -n 1 --format=%aD)"'
+git rebase --root --committer-date-is-author-date
+```
+
+## repository maintenance
+
+### purge reflog
+
+```sh
+git reflog expire --expire=now --all
+```
+
+### pruning
+
+```sh
+git gc
+git prune -v
+```
+
+## configuration
+
+### proxy
+
+```sh
+http.proxy=socks5h://127.0.0.1:1234
 ```
 
 ## The Four Areas: Introduction
