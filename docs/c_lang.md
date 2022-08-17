@@ -49,6 +49,8 @@ ldd main.out
 void test2(int *a)
 // degrades to `int *a`
 void test3(int a[])
+// no degrade, a is pointer to a SIZE element array of int
+void test5(int (*a)[SIZE]);
 ```
 
 ### 2 dimension
@@ -75,6 +77,24 @@ int main(int argc, char *argv[])
 // argv[0][0] likely works b/c c strings can be delimitted by 0x00
 // (char **) is handled differently than (int **) b/c C can determine size of (char *)
 int main(int argc, char **argv)
+```
+
+## misc language
+
+### variable initialization
+
+```c
+  // declaration w/o instantitation, data will be garbage
+  struct TestStruct temp1;
+  // declaration w instantitation, data will be initialized to defaults
+  struct TestStruct temp2 = {};
+```
+
+### function pointer
+
+```c
+  // pointer to function fun: void fun(int);
+  void (*fun_ptr)(int) = &fun;
 ```
 
 ## common options
